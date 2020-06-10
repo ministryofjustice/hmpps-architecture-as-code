@@ -6,7 +6,7 @@ import com.structurizr.Workspace
 import com.structurizr.api.StructurizrClient
 import com.structurizr.util.WorkspaceUtils
 
-import uk.gov.justice.hmpps.architecture.custody.CustodyModel
+import uk.gov.justice.hmpps.architecture.custody.*
 
 object App {
   @JvmStatic
@@ -17,6 +17,7 @@ object App {
     val workspace = Workspace("Custody systems", "Systems related to the confinement of offenders")
 
     CustodyModel(workspace.model)
+    CustodyViews(workspace.model, workspace.views)
 
     client.putWorkspace(workspaceId, workspace)
   }
