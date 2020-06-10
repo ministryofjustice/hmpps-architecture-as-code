@@ -14,10 +14,7 @@ object App {
     val workspaceId: Long = 55246
 
     val client = StructurizrClient(System.getenv("STRUCTURIZR_API_KEY"), System.getenv("STRUCTURIZR_API_SECRET"))
-    val workspace = client.getWorkspace(workspaceId).apply {
-      name = "Custody systems"
-      description = "Systems related to the confinement of offenders"
-    }
+    val workspace = Workspace("Custody systems", "Systems related to the confinement of offenders")
 
     CustodyModel(workspace.model)
 
