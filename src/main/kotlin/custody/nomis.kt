@@ -1,8 +1,7 @@
 package uk.gov.justice.hmpps.architecture.custody
 
-import com.structurizr.model.SoftwareSystem
-import com.structurizr.model.Container
 import com.structurizr.model.Model
+import com.structurizr.model.SoftwareSystem
 
 class NOMIS(model: Model) {
   val system: SoftwareSystem

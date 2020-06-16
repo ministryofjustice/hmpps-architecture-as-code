@@ -3,16 +3,15 @@ package uk.gov.justice.hmpps.architecture.custody
 import com.structurizr.model.Model
 import com.structurizr.view.ViewSet
 
-class CustodyViews(model: Model, views: ViewSet) {
-  init {
-    views.createSystemLandscapeView("everything", "Absolutely everything").apply {
-      addAllElements()
-      enableAutomaticLayout()
-    }
+fun custodyViews(model: Model, views: ViewSet) {
+  views.createSystemLandscapeView("everything", "Absolutely everything").apply {
+    addAllElements()
+    enableAutomaticLayout()
+  }
 
-    views.createContainerView(model.getSoftwareSystemWithName("NOMIS"), "nomiscontainer", null).apply {
-      addAllElements()
-      enableAutomaticLayout()
-    }
+  val nomis = model.getSoftwareSystemWithName("NOMIS")!!
+  views.createContainerView(nomis, "nomiscontainer", null).apply {
+    addNearestNeighbours(nomis)
+    enableAutomaticLayout()
   }
 }

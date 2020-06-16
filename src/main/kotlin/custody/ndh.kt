@@ -1,7 +1,7 @@
 package uk.gov.justice.hmpps.architecture.custody
 
-import com.structurizr.model.SoftwareSystem
 import com.structurizr.model.Model
+import com.structurizr.model.SoftwareSystem
 
 class NDH(model: Model) {
   val system: SoftwareSystem
