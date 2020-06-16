@@ -18,6 +18,11 @@ The CLI has two operations:
 1. **Required** Choose the workspace with `--custody` or `--rehabilitation`
 1. By default, the CLI writes the workspace to a JSON file. Enable pushing to the workspace with `--push`.
 
+### :rotating_light: Remote-only changes will be lost
+
+The remote workspace's content is _replaced_ with the content in this repository.
+Remote-only changes will be **lost**.
+
 ## Secrets
 
 The API requires a workspace-specific API key and secret:
