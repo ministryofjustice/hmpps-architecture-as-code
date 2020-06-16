@@ -3,3 +3,6 @@
 
 # Ignore Gradle build output directory
 build
+
+# files saved by Structurizr API or CLI without `--push`
+*workspace*.json
