@@ -8,45 +8,34 @@ import uk.gov.justice.hmpps.architecture.custody.*
 import uk.gov.justice.hmpps.architecture.rehabilitation.*
 
 object App {
-  const val CUSTODY_WORKSPACE_ID: Long = 55246
-  const val REHABILITATION_WORKSPACE_ID: Long = 54669
-
   @JvmStatic
   fun main(args: Array<String>) {
+    val workspace = chooseWorkspace(args)
     if (args.contains("--push")) {
-      push()
+      push(workspace)
     } else {
-      show()
+      show(workspace)
     }
   }
 
-  fun push() {
+  fun push(workspace: Workspace) {
     val client = StructurizrClient(System.getenv("STRUCTURIZR_API_KEY"), System.getenv("STRUCTURIZR_API_SECRET"))
-    client.putWorkspace(CUSTODY_WORKSPACE_ID, custodyWorkspace())
-    client.putWorkspace(REHABILITATION_WORKSPACE_ID, rehabilitationWorkspace())
+    client.putWorkspace(workspace.id, workspace)
   }
 
-  fun show() {
-    WorkspaceUtils.saveWorkspaceToJson(custodyWorkspace(), File("custody-workspace.json"))
-    WorkspaceUtils.saveWorkspaceToJson(rehabilitationWorkspace(), File("rehabilitation-workspace.json"))
+  fun show(workspace: Workspace) {
+    val targetFile = File("workspace-${workspace.id}.json")
+    WorkspaceUtils.saveWorkspaceToJson(workspace, targetFile)
+    println("Wrote workspace to '$targetFile'")
   }
 
-  fun custodyWorkspace(): Workspace {
-    val workspace = Workspace("Custody systems", "Systems related to the confinement of offenders")
-
-    custodyModel(workspace.model)
-    custodyViews(workspace.model, workspace.views)
-
-    return workspace
-  }
-
-  fun rehabilitationWorkspace(): Workspace {
-    val workspace = Workspace("Rehabilitation systems", "Systems related to the rehabilitation of offenders")
-
-    rehabilitationModel(workspace.model)
-    rehabilitationViews(workspace.model, workspace.views)
-    rehabilitationStyles(workspace.views.configuration.styles)
-
-    return workspace
+  fun chooseWorkspace(args: Array<String>): Workspace {
+    if (args.contains("--custody")) {
+      return custodyWorkspace()
+    }
+    if (args.contains("--rehabilitation")) {
+      return rehabilitationWorkspace()
+    }
+    throw IllegalArgumentException("Please choose --custody or --rehabilitation")
   }
 }
