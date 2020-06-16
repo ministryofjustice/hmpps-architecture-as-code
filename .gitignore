@@ -5,4 +5,4 @@
 build
 
 # files saved by Structurizr API or CLI without `--push`
-*workspace*.json
+structurizr-*.json

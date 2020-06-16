@@ -24,7 +24,7 @@ object App {
   }
 
   fun show(workspace: Workspace) {
-    val targetFile = File("workspace-${workspace.id}.json")
+    val targetFile = File("structurizr-${workspace.id}-local.json")
     WorkspaceUtils.saveWorkspaceToJson(workspace, targetFile)
     println("Wrote workspace to '$targetFile'")
   }
