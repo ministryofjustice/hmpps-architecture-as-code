@@ -4,8 +4,8 @@ import com.structurizr.Workspace
 import com.structurizr.api.StructurizrClient
 import com.structurizr.util.WorkspaceUtils
 import java.io.File
-import uk.gov.justice.hmpps.architecture.custody.*
-import uk.gov.justice.hmpps.architecture.rehabilitation.*
+import uk.gov.justice.hmpps.architecture.prison.*
+import uk.gov.justice.hmpps.architecture.probation.*
 
 object App {
   @JvmStatic
@@ -30,12 +30,12 @@ object App {
   }
 
   fun chooseWorkspace(args: Array<String>): Workspace {
-    if (args.contains("--custody")) {
-      return custodyWorkspace()
+    if (args.contains("--prison")) {
+      return prisonWorkspace()
     }
-    if (args.contains("--rehabilitation")) {
-      return rehabilitationWorkspace()
+    if (args.contains("--probation")) {
+      return probationWorkspace()
     }
-    throw IllegalArgumentException("Please choose --custody or --rehabilitation")
+    throw IllegalArgumentException("Please choose --prison or --probation")
   }
 }

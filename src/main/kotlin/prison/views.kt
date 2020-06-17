@@ -1,9 +1,9 @@
-package uk.gov.justice.hmpps.architecture.custody
+package uk.gov.justice.hmpps.architecture.prison
 
 import com.structurizr.model.Model
 import com.structurizr.view.ViewSet
 
-fun custodyViews(model: Model, views: ViewSet) {
+fun prisonViews(model: Model, views: ViewSet) {
   views.createSystemLandscapeView("everything", "Absolutely everything").apply {
     addAllElements()
     enableAutomaticLayout()

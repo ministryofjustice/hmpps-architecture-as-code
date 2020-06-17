@@ -1,8 +1,8 @@
-package uk.gov.justice.hmpps.architecture.rehabilitation
+package uk.gov.justice.hmpps.architecture.probation
 
 import com.structurizr.model.Model
 
-fun rehabilitationModel(model: Model) {
+fun probationModel(model: Model) {
   val pContractManager = model.addPerson("Contract Manager for CRCs", null)
   val pEPFManager = model.addPerson("EPF Product Manager", "Product manager for the Effective Proposals Framework tool")
   val pInterventionServices = model.addPerson("Intervention Services Team", "They accredit intervention programmes and do business development of the interventions.")

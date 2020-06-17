@@ -1,8 +1,8 @@
-package uk.gov.justice.hmpps.architecture.custody
+package uk.gov.justice.hmpps.architecture.prison
 
 import com.structurizr.model.Model
 
-fun custodyModel(model: Model) {
+fun prisonModel(model: Model) {
   val nomis = NOMIS(model).system
   val ndh = NDH(model).system
 

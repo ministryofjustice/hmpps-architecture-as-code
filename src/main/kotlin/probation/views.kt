@@ -1,10 +1,10 @@
-package uk.gov.justice.hmpps.architecture.rehabilitation
+package uk.gov.justice.hmpps.architecture.probation
 
 import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ViewSet
 
-fun rehabilitationViews(model: Model, views: ViewSet) {
+fun probationViews(model: Model, views: ViewSet) {
   views.createSystemLandscapeView("everything", "Absolutely everything").apply {
     addAllElements()
     enableAutomaticLayout()
