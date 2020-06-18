@@ -21,6 +21,8 @@ object App {
   fun pushToRemote(workspace: Workspace) {
     val client = StructurizrClient(System.getenv("STRUCTURIZR_API_KEY"), System.getenv("STRUCTURIZR_API_SECRET"))
     val workspaceId = System.getenv("STRUCTURIZR_WORKSPACE_ID")?.toLongOrNull() ?: workspace.id
+
+    workspace.version = System.getenv("BUILD_CONTEXT")
     client.putWorkspace(workspaceId, workspace)
   }
 
