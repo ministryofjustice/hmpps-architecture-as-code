@@ -13,6 +13,6 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib"))
-    implementation("com.structurizr:structurizr-client:1.3.5")
-    implementation("com.structurizr:structurizr-core:1.3.5")
+    implementation("com.structurizr:structurizr-client:1.4.1")
+    implementation("com.structurizr:structurizr-core:1.4.1")
 }
