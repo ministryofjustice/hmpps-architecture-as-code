@@ -12,19 +12,19 @@ object App {
   fun main(args: Array<String>) {
     val workspace = chooseWorkspace(args)
     if (args.contains("--push")) {
-      push(workspace)
+      pushToRemote(workspace)
     } else {
-      show(workspace)
+      writeToFile(workspace)
     }
   }
 
-  fun push(workspace: Workspace) {
+  fun pushToRemote(workspace: Workspace) {
     val client = StructurizrClient(System.getenv("STRUCTURIZR_API_KEY"), System.getenv("STRUCTURIZR_API_SECRET"))
     val workspaceId = System.getenv("STRUCTURIZR_WORKSPACE_ID")?.toLongOrNull() ?: workspace.id
     client.putWorkspace(workspaceId, workspace)
   }
 
-  fun show(workspace: Workspace) {
+  fun writeToFile(workspace: Workspace) {
     val targetFile = File("structurizr-${workspace.id}-local.json")
     WorkspaceUtils.saveWorkspaceToJson(workspace, targetFile)
     println("Wrote workspace to '$targetFile'")
