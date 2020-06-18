@@ -20,7 +20,8 @@ object App {
 
   fun push(workspace: Workspace) {
     val client = StructurizrClient(System.getenv("STRUCTURIZR_API_KEY"), System.getenv("STRUCTURIZR_API_SECRET"))
-    client.putWorkspace(workspace.id, workspace)
+    val workspaceId = System.getenv("STRUCTURIZR_WORKSPACE_ID")?.toLongOrNull() ?: workspace.id
+    client.putWorkspace(workspaceId, workspace)
   }
 
   fun show(workspace: Workspace) {
