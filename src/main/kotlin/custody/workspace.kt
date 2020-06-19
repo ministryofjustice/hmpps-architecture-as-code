@@ -8,6 +8,7 @@ fun custodyWorkspace(): Workspace {
 
   custodyModel(workspace.model)
   custodyViews(workspace.model, workspace.views)
+  custodyStyles(workspace.views.configuration.styles)
 
   return workspace
 }
