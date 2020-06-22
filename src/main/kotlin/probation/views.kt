@@ -24,6 +24,12 @@ fun probationViews(model: Model, views: ViewSet) {
   }
 
   addDelius(model.getSoftwareSystemWithName("nDelius")!!, views)
+
+  val ndmis = model.getSoftwareSystemWithName("NDMIS")!!
+  views.createSystemContextView(ndmis, "ndmiscontext", null).apply {
+    addNearestNeighbours(ndmis)
+    enableAutomaticLayout()
+  }
 }
 
 private fun addDelius(delius: SoftwareSystem, views: ViewSet) {
