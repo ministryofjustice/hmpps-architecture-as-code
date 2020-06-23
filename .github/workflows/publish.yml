@@ -8,8 +8,6 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    env:
-      BUILD_CONTEXT: "commit:$GITHUB_SHA github:$GITHUB_REPOSITORY"
 
     steps:
       - uses: actions/checkout@v2
@@ -22,10 +20,10 @@ jobs:
         env:
           STRUCTURIZR_API_KEY: ${{ secrets.PRISON_STRUCTURIZR_API_KEY }}
           STRUCTURIZR_API_SECRET: ${{ secrets.PRISON_STRUCTURIZR_API_SECRET }}
-        run: ./gradlew run --args='--prison --push'
+        run: .github/workflows/set_version ./gradlew run --args='--prison --push'
 
       - name: Push to probation workspace
         env:
           STRUCTURIZR_API_KEY: ${{ secrets.PROBATION_STRUCTURIZR_API_KEY }}
           STRUCTURIZR_API_SECRET: ${{ secrets.PROBATION_STRUCTURIZR_API_SECRET }}
-        run: ./gradlew run --args='--probation --push'
+        run: .github/workflows/set_version ./gradlew run --args='--probation --push'
