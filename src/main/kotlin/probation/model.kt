@@ -11,10 +11,19 @@ fun probationModel(model: Model) {
   val deliusSupport = model.addPerson("National Delius Support Team", null)
   val epfManager = model.addPerson("EPF Product Manager", "Product manager for the Effective Proposals Framework tool")
   val interventionServices = model.addPerson("Intervention Services Team", "They accredit intervention programmes and do business development of the interventions.")
-  val nart = model.addPerson("National Applications Reporting Team", "Responsible for the delivery of reporting to stakeholders")
   val npsOffenderManager = model.addPerson("NPS offender manager", "National Probation Service employed probation officers in custody, court and the community")
   val npsProgrammeManager = model.addPerson("NPS programme manager", null)
   val sentencingPolicy = model.addPerson("Sentencing Policy", "Pseudo-team to capture sentencing policy meeting participants")
+
+  val communityPerformance = model.addPerson("Community Performance team", "Reporting on HMPPS performance in the community")
+  val crcPerformanceAnalyst = model.addPerson("CRC performance analyst", null).apply { addTags("external") }
+  val dataInnovation = model.addPerson("Data Innovation, Analysis and Linking team", "Works on linked data from various non-HMPPS government departments")
+  val hmip = model.addPerson("HM Inspectorate of Probation", "Reports to the government on the effectiveness of work with people who offended to reduce reoffending and protect the public")
+  val nart = model.addPerson("National Applications Reporting Team", "Responsible for the delivery of reporting to stakeholders")
+  val npsPerformanceOfficer = model.addPerson("NPS performance and quality officer", null)
+  val prisonPerformance = model.addPerson("Prison Performance team", "Reporting on HMPPS performance in prison")
+
+  listOf(communityPerformance, prisonPerformance, dataInnovation).forEach { it.addProperty("org", "DASD") }
 
   val caseNotesToProbation = model.addSoftwareSystem("Case Notes to Probation", "Polls for case notes and pushes them to probation systems")
   val crcSystem = model.addSoftwareSystem("CRC software systems", null).apply { addTags("external") }
@@ -56,7 +65,6 @@ fun probationModel(model: Model) {
   interventionServices.uses(delius, "creates new interventions in")
   interventionServices.uses(interventionsManager, "creates new interventions in")
   interventionsManager.uses(delius, "pushes contact information of interest to")
-  nart.uses(ndmis, "creates reports from")
   ndh.uses(nomis, "extract offender data")
   ndmis.uses(delius, "extracts and transforms data from")
   nomis.uses(delius, "offender data is copied into", "NDH")
@@ -77,4 +85,12 @@ fun probationModel(model: Model) {
   prisonToProbation.uses(delius, "update offender sentence information in")
   probationCaseSampler.uses(delius, "gets list of probation cases")
   wmt.uses(ndmis, "draws offender risk and allocation data from")
+
+  communityPerformance.uses(ndmis, "uses reports in")
+  crcPerformanceAnalyst.uses(ndmis, "uses reports in")
+  dataInnovation.uses(ndmis, "uses data from")
+  hmip.uses(ndmis, "uses data from")
+  nart.uses(ndmis, "creates reports in")
+  npsPerformanceOfficer.uses(ndmis, "uses reports in")
+  prisonPerformance.uses(ndmis, "to provide details of offenders released into the community, looks into")
 }
