@@ -1,10 +1,12 @@
 package uk.gov.justice.hmpps.architecture.prison
 
 import com.structurizr.model.Model
+import com.structurizr.model.Container
 import com.structurizr.model.SoftwareSystem
 
 class NOMIS(model: Model) {
   val system: SoftwareSystem
+  val db: Container
 
   init {
     val nomis = model.addSoftwareSystem("NOMIS", """
@@ -12,7 +14,7 @@ class NOMIS(model: Model) {
     the case management system for offender data in use in custody - both public and private prisons
     """.trimIndent())
 
-    val db = nomis.addContainer("NOMIS database", null, "Oracle").apply {
+    db = nomis.addContainer("NOMIS database", null, "Oracle").apply {
       addTags("database")
     }
 
