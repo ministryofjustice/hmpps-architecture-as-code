@@ -2,6 +2,7 @@ package uk.gov.justice.hmpps.architecture.probation
 
 import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
+import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
 
 fun probationViews(model: Model, views: ViewSet) {
@@ -28,7 +29,7 @@ fun probationViews(model: Model, views: ViewSet) {
   val ndmis = model.getSoftwareSystemWithName("NDMIS")!!
   views.createSystemContextView(ndmis, "ndmiscontext", null).apply {
     addNearestNeighbours(ndmis)
-    enableAutomaticLayout()
+    enableAutomaticLayout(AutomaticLayout.RankDirection.LeftRight, 200, 200)
   }
 }
 
