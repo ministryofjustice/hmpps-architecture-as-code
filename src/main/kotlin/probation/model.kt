@@ -7,9 +7,9 @@ import uk.gov.justice.hmpps.architecture.shared.Tags
 fun probationModel(model: Model) {
   val contractManager = model.addPerson("Contract Manager for CRCs", null)
   val courtAdmin = model.addPerson("NPS court administrator", null)
-  val crcOffenderManager = model.addPerson("CRC offender manager", "Probation officers in custody, court and the community employed by intervention providers").apply { Tags.EXTERNAL.addTo(this) }
-  val crcProgrammeManager = model.addPerson("CRC programme manager", "People who provide interventions on behalf of Community Rehabilitation Companies").apply { Tags.EXTERNAL.addTo(this) }
-  val crcTreatmentManager = model.addPerson("CRC treatment manager", null).apply { Tags.EXTERNAL.addTo(this) }
+  val crcOffenderManager = model.addPerson("CRC offender manager", "Probation officers in custody, court and the community employed by intervention providers").apply { Tags.PROVIDER.addTo(this) }
+  val crcProgrammeManager = model.addPerson("CRC programme manager", "People who provide interventions on behalf of Community Rehabilitation Companies").apply { Tags.PROVIDER.addTo(this) }
+  val crcTreatmentManager = model.addPerson("CRC treatment manager", null).apply { Tags.PROVIDER.addTo(this) }
   val deliusSupport = model.addPerson("National Delius Support Team", null)
   val epfManager = model.addPerson("EPF Product Manager", "Product manager for the Effective Proposals Framework tool")
   val interventionServices = model.addPerson("Intervention Services Team", "They accredit intervention programmes and do business development of the interventions.")
@@ -18,7 +18,7 @@ fun probationModel(model: Model) {
   val sentencingPolicy = model.addPerson("Sentencing Policy", "Pseudo-team to capture sentencing policy meeting participants")
 
   val communityPerformance = model.addPerson("Community Performance team", "Reporting on HMPPS performance in the community")
-  val crcPerformanceAnalyst = model.addPerson("CRC performance analyst", null).apply { Tags.EXTERNAL.addTo(this) }
+  val crcPerformanceAnalyst = model.addPerson("CRC performance analyst", null).apply { Tags.PROVIDER.addTo(this) }
   val dataInnovation = model.addPerson("Data Innovation, Analysis and Linking team", "Works on linked data from various non-HMPPS government departments")
   val hmip = model.addPerson("HM Inspectorate of Probation", "Reports to the government on the effectiveness of work with people who offended to reduce reoffending and protect the public")
   val nart = model.addPerson("National Applications Reporting Team", "Responsible for the delivery of reporting to stakeholders")
@@ -28,7 +28,7 @@ fun probationModel(model: Model) {
   listOf(communityPerformance, prisonPerformance, dataInnovation).forEach { it.addProperty("org", "DASD") }
 
   val caseNotesToProbation = model.addSoftwareSystem("Case Notes to Probation", "Polls for case notes and pushes them to probation systems")
-  val crcSystem = model.addSoftwareSystem("CRC software systems", null).apply { Tags.EXTERNAL.addTo(this) }
+  val crcSystem = model.addSoftwareSystem("CRC software systems", null).apply { Tags.PROVIDER.addTo(this) }
   val delius = model.addSoftwareSystem("nDelius", "National Delius\nSupporting the management of offenders and delivering national reporting and performance monitoring data")
   val epf = model.addSoftwareSystem("EPF", "Effective Proposal Framework\nPresents sentencing options to NPS staff in court who are providing sentencing advice to sentencers")
   val equip = model.addSoftwareSystem("EQuiP", "Central repository for all step-by-step business processes (in probation?)")
