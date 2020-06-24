@@ -1,0 +1,6 @@
+#!/bin/sh -e
+DATE="$(date '+%Y-%m-%d')"
+SHORT_SHA1=$(echo "$GITHUB_SHA" | cut -c1-7)
+export BUILD_VERSION="$DATE.$GITHUB_RUN_NUMBER.$SHORT_SHA1@$GITHUB_WORKSPACE"
+echo "Using BUILD_VERSION: ${BUILD_VERSION}"
+exec "$@"
