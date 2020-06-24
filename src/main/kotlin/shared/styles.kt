@@ -13,4 +13,5 @@ fun styles(styles: Styles) {
 
   styles.addElementStyle("external").color("#000000").background("#ccff99")
   styles.addElementStyle("deprecated").background("#999999")
+  styles.addElementStyle("prison-service").color("#000000").background("#ffdf2d")
 }
