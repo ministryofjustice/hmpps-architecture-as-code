@@ -6,8 +6,8 @@ import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
 
 fun probationViews(model: Model, views: ViewSet) {
-  views.createSystemLandscapeView("everything", "Absolutely everything").apply {
-    addAllElements()
+  views.createSystemLandscapeView("system-overview", "All systems in HM Probations").apply {
+    addAllSoftwareSystems()
     enableAutomaticLayout()
   }
 
