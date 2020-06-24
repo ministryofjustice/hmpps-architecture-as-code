@@ -13,14 +13,14 @@ fun probationViews(model: Model, views: ViewSet) {
 
   val epf = model.getSoftwareSystemWithName("EPF")!!
   views.createSystemContextView(epf, "epfcontext", null).apply {
-    addNearestNeighbours(epf)
+    addDefaultElements()
     addNearestNeighbours(model.getPersonWithName("EPF Product Manager")!!)
     enableAutomaticLayout()
   }
 
   val im = model.getSoftwareSystemWithName("IM")!!
   views.createSystemContextView(im, "interventionsmanagercontext", null).apply {
-    addNearestNeighbours(im)
+    addDefaultElements()
     enableAutomaticLayout()
   }
 
@@ -28,21 +28,21 @@ fun probationViews(model: Model, views: ViewSet) {
 
   val ndmis = model.getSoftwareSystemWithName("NDMIS")!!
   views.createSystemContextView(ndmis, "ndmiscontext", null).apply {
-    addNearestNeighbours(ndmis)
+    addDefaultElements()
     enableAutomaticLayout(AutomaticLayout.RankDirection.LeftRight, 200, 200)
   }
 }
 
 private fun addDelius(delius: SoftwareSystem, views: ViewSet) {
   views.createSystemContextView(delius, "deliusdatacontext", null).apply {
-    addNearestNeighbours(delius)
+    addDefaultElements()
     model.people.forEach(this::remove)
     enableAutomaticLayout()
   }
 
   views.createSystemContextView(delius, "deliuspeoplecontext", null).apply {
-    addNearestNeighbours(delius)
-    model.softwareSystems.filter { s -> s != delius }.forEach(this::remove)
+    addDefaultElements()
+    model.softwareSystems.filter { it != delius }.forEach(this::remove)
     enableAutomaticLayout()
   }
 }
