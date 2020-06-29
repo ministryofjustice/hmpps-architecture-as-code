@@ -6,23 +6,23 @@ import com.structurizr.view.ViewSet
 
 fun prisonViews(model: Model, views: ViewSet) {
   views.createSystemLandscapeView("everything", "Absolutely everything").apply {
-    addAllElements()
+    addDefaultElements()
     enableAutomaticLayout()
   }
 
   val nomis = model.getSoftwareSystemWithName("NOMIS")!!
   views.createContainerView(nomis, "nomiscontainer", null).apply {
-    addNearestNeighbours(nomis)
+    addDefaultElements()
     enableAutomaticLayout()
   }
 
   val pathfinder = model.getSoftwareSystemWithName("Pathfinder")!!
-  views.createContainerView(pathfinder, "pathfinderContainer", null).apply {
-    addAllPeople()
-    addAllContainersAndInfluencers()
-    add(nomis)
+  views.createContainerView(pathfinder, "pathfinderContainer", "The container diagram for the Pathfinder System.").apply {
+    addDefaultElements()
+    add(model.getSoftwareSystemWithName("NOMIS")?.getContainerWithName("Elite2 API"))
     paperSize = PaperSize.A5_Landscape
     enableAutomaticLayout()
+    externalSoftwareSystemBoundariesVisible = true
   }
 
 }

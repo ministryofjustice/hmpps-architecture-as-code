@@ -1,12 +1,15 @@
 package uk.gov.justice.hmpps.architecture.prison
 
+import com.structurizr.model.CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy
 import com.structurizr.model.Model
 
 fun prisonModel(model: Model) {
-  val nomis = NOMIS(model).system
-  val ndh = NDH(model).system
-  val pathfinder = Pathfinder(model).system
+  model.setImpliedRelationshipsStrategy(CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy())
 
-  ndh.uses(nomis, "extract offender data")
-  pathfinder.uses(nomis, "retrieves offender data via Elite2Api")
+  val nomis = NOMIS(model)
+  val ndh = NDH(model).system
+  val pathfinder = Pathfinder(model)
+
+  ndh.uses(nomis.db, "extract offender data")
+  pathfinder.webApp.uses(nomis.elite2api, "extract offender data")
 }
