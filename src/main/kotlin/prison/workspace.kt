@@ -8,6 +8,6 @@ fun prisonWorkspace(): Workspace {
 
   prisonModel(workspace.model)
   prisonViews(workspace.model, workspace.views)
-
+  prisonStyles(workspace.views.configuration.styles)
   return workspace
 }
