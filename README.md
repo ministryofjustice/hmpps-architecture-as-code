@@ -13,10 +13,14 @@ This repository defines two workspaces:
 
 ## Running
 
-The CLI has two operations:
+The project is built with `gradle`. The CLI has two arguments:
 
 1. **Required** Choose the workspace with `--prison` or `--probation`
-1. By default, the CLI writes the workspace to a JSON file. Enable pushing to the workspace with `--push`.
+2. By default, the CLI writes the workspace to a JSON file. Enable pushing to the workspace with `--push`.
+
+```
+./gradlew run --args="--prison"
+```
 
 ### :rotating_light: Remote-only changes will be lost
 
