@@ -8,7 +8,7 @@ fun prisonModel(model: Model) {
 
     val aws = model.addSoftwareSystem("AWS", "Amazon Web Services").apply {
         addTags("External")
-        addContainer("ElasticSearch", "Elastic Search Service", null)
+
     }
 
     HmmpsAuth(model)

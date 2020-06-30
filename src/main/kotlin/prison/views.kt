@@ -21,13 +21,14 @@ fun prisonViews(model: Model, views: ViewSet) {
         addDefaultElements()
         add(model.getSoftwareSystemWithName("NOMIS")?.getContainerWithName("NOMIS database"))
         add(model.getSoftwareSystemWithName("NOMIS")?.getContainerWithName("Elite2API"))
+        add(model.getSoftwareSystemWithName("NOMIS")?.getContainerWithName("ElasticSearch"))
         add(model.getSoftwareSystemWithName("NOMIS")?.getContainerWithName("PrisonerSearch"))
         add(model.getSoftwareSystemWithName("nDelius")?.getContainerWithName("nDelius database"))
         add(model.getSoftwareSystemWithName("nDelius")?.getContainerWithName("CommunityAPI"))
+        add(model.getSoftwareSystemWithName("nDelius")?.getContainerWithName("ElasticSearch"))
         add(model.getSoftwareSystemWithName("nDelius")?.getContainerWithName("OffenderSearch"))
 
         add(model.getSoftwareSystemWithName("HMPPS Auth")!!)
-        add(model.getSoftwareSystemWithName("AWS")?.getContainerWithName("ElasticSearch"))
 
         paperSize = PaperSize.A3_Landscape
         externalSoftwareSystemBoundariesVisible = true

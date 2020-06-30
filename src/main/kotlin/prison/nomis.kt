@@ -27,8 +27,12 @@ class NOMIS(model: Model) {
             uses(db, "JDBC")
         }
 
+        val elasticSearch = nomis.addContainer("ElasticSearch", "Elasticsearch index of NOMIS data", "Java").apply {
+            addTags("External")
+        }
+
         nomis.addContainer("PrisonerSearch", "API over the NOMIS prisoner data held in Elasticsearch", "Java").apply {
-            uses(model.getSoftwareSystemWithName("AWS")!!.getContainerWithName("ElasticSearch")!!, "Queries prisoner data from NOMIS Elasticsearch Index")
+            uses(elasticSearch, "Queries prisoner data from NOMIS Elasticsearch Index")
         }
 
         nomis.addContainer("Custody API (Deprecated)", "(Deprecated) Offender API.  The service provides REST access to the Nomis Oracle DB offender information. Deprecated - please use Elite2 API instead.", null).apply {

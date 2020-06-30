@@ -20,8 +20,12 @@ class nDelius(model: Model) {
             uses(db, "JDBC")
         }
 
+        val elasticSearch = delius.addContainer("ElasticSearch", "Elasticsearch index of nDelius data", null).apply {
+            addTags("External")
+        }
+
         delius.addContainer("OffenderSearch", "API over the nDelius offender data held in Elasticsearch", "Java").apply {
-            uses(model.getSoftwareSystemWithName("AWS")!!.getContainerWithName("ElasticSearch")!!, "Queries offender data from nDelius Elasticsearch Index")
+            uses(elasticSearch, "Queries offender data from nDelius Elasticsearch Index")
         }
 
         system = delius
