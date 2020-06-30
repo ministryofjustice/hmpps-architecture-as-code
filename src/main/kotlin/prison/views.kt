@@ -14,4 +14,10 @@ fun prisonViews(model: Model, views: ViewSet) {
     addDefaultElements()
     enableAutomaticLayout()
   }
+
+  val prisonerContentHub = model.getSoftwareSystemWithName("Prisoner Content Hub")!!
+  views.createContainerView(prisonerContentHub, "prisonerContentHubContainer", null).apply {
+    addDefaultElements()
+    enableAutomaticLayout()
+  }
 }
