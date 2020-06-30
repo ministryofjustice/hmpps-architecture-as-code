@@ -7,7 +7,6 @@ import com.structurizr.view.ViewSet
 fun prisonViews(model: Model, views: ViewSet) {
     views.createSystemLandscapeView("everything", "Absolutely everything").apply {
         addDefaultElements()
-        enableAutomaticLayout()
         paperSize = PaperSize.A3_Landscape
     }
 
