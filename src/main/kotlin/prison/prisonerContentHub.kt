@@ -20,6 +20,10 @@ class PrisonerContentHub(model: Model) {
    */
 
   init {
+    val cloudPlatform = model.getDeploymentNodeWithName("Cloud Platform")
+    val rds = cloudPlatform.getDeploymentNodeWithName("RDS")
+    val s3 = cloudPlatform.getDeploymentNodeWithName("RDS")
+    val kubernetes = cloudPlatform.getDeploymentNodeWithName("Kubernetes")
 
     system = model.addSoftwareSystem(
       "Prisoner Content Hub", 
@@ -29,41 +33,41 @@ class PrisonerContentHub(model: Model) {
 
     val elasticSearchStore = system.addContainer("ElasticSearch store", "Data store for feedback collection, and indexing for Drupal CMS content", "ElasticSearch").apply {
       addTags(DATABASE_TAG)
-      addTags(CLOUD_PLATFORM_TAG)
       addTags(SOFTWARE_AS_A_SERVICE_TAG)
+      cloudPlatform.add(this)
     }
 
     val drupalDatabase = system.addContainer("Drupal database", null, "MariaDB").apply {
       addTags(DATABASE_TAG)
-      addTags(CLOUD_PLATFORM_TAG)
       addTags(SOFTWARE_AS_A_SERVICE_TAG)
+      rds.add(this)
     }
 
     val s3ContentStore = system.addContainer("Content Store", "Stores audio, video, PDF and image content", "S3").apply {
       addTags(DATABASE_TAG)
-      addTags(CLOUD_PLATFORM_TAG)
       addTags(SOFTWARE_AS_A_SERVICE_TAG)
+      s3.add(this)
     }
 
     val drupal = system.addContainer("Prisoner Content Hub CMS", "Content Management System for HMPPS Digital and prison staff to curate content for prisoners", "Drupal").apply {
       setUrl("https://github.com/ministryofjustice/prisoner-content-hub-backend")
-      addTags(CLOUD_PLATFORM_TAG)
       uses(drupalDatabase, "MariaDB connection")
       uses(elasticSearchStore, "HTTPS REST API")
       uses(s3ContentStore, "HTTPS REST API")
+      kubernetes.add(this)
     }
 
     contentHubFrontend = system.addContainer("Prisoner Content Hub frontend", "Prisoner-facing view of the Content Hub", "Node").apply {
       setUrl("https://github.com/ministryofjustice/prisoner-content-hub-frontend")
-      addTags(CLOUD_PLATFORM_TAG)
       uses(drupal, "HTTPS Rest API")
       uses(elasticSearchStore, "HTTPS REST API")
+      kubernetes.add(this)
     }
 
     val kibanaDashboard = system.addContainer("Kibana dashboard", "Feedback reports and analytics dashboard", "Kibana").apply {
       //setUrl("TODO")
       uses(elasticSearchStore, "HTTPS Rest API")
-      addTags(CLOUD_PLATFORM_TAG)
+      cloudPlatform.add(this)
     }
 
     /**
