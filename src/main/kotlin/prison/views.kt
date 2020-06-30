@@ -45,6 +45,5 @@ fun prisonViews(model: Model, views: ViewSet) {
     systemContextView.add(model.getSoftwareSystemWithName("NOMIS")!!)
     systemContextView.add(model.getSoftwareSystemWithName("nDelius")!!)
     systemContextView.add(model.getSoftwareSystemWithName("HMPPS Auth")!!)
-    systemContextView.add(model.getSoftwareSystemWithName("AWS")!!)
 
 }
