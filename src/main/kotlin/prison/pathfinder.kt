@@ -21,6 +21,10 @@ class Pathfinder(model: Model) {
         webApp = pathfinder.addContainer("Pathfinder Web Application", "Web application for the case management of Pathfinder nominals", "Node Express app").apply {
             addTags("WebBrowser")
             uses(db, null)
+            uses(model.getSoftwareSystemWithName("NOMIS")!!.getContainerWithName("Elite2API")!!, "extract NOMIS offender data")
+            uses(model.getSoftwareSystemWithName("NOMIS")!!.getContainerWithName("PrisonerSearch")!!, "to search for prisoners")
+            uses(model.getSoftwareSystemWithName("nDelius")!!.getContainerWithName("CommunityAPI")!!, "extract nDelius offender data")
+            uses(model.getSoftwareSystemWithName("nDelius")!!.getContainerWithName("OffenderSearch")!!, "to search for offenders")
         }
 
         pathfinder.addContainer("Pathfinder API", "API over the Pathfinder DB used by internal applications", "Kotlin Spring Boot App").apply {
@@ -28,29 +32,32 @@ class Pathfinder(model: Model) {
             uses(db, "JDBC")
         }
 
+        val hmppsAuth: SoftwareSystem = model.getSoftwareSystemWithName("HMPPS Auth")!!
+        hmppsAuth.addTags("")
+
         val pPrisonPreventLead = model.addPerson("Prison Prevent Lead", "They case manage Pathfinder Nominals in custody")
-        pPrisonPreventLead.uses(pathfinder, null)
         pPrisonPreventLead.uses(webApp, "Visits pathfinder.service.justice.gov.uk using", "HTTPS")
+        pPrisonPreventLead.uses(hmppsAuth, "Login")
 
         val pRegionalPrisonPreventLead = model.addPerson("Regional Prison Prevent Lead", "They case manage a region of Pathfinder Nominals in custody")
-        pRegionalPrisonPreventLead.uses(pathfinder, null)
         pRegionalPrisonPreventLead.uses(webApp, "Visits pathfinder.service.justice.gov.uk using", "HTTPS")
+        pRegionalPrisonPreventLead.uses(hmppsAuth, "Login")
 
         val pProbationOffenderManager = model.addPerson("Probation Offender Manager", "They case manage Pathfinder Nominals in the community")
-        pProbationOffenderManager.uses(pathfinder, null)
         pProbationOffenderManager.uses(webApp, "Visits pathfinder.service.justice.gov.uk using", "HTTPS")
+        pProbationOffenderManager.uses(hmppsAuth, "Login")
 
         val pRegionalPoliceUser = model.addPerson("Regional Police User", "They access limited regional data of Pathfinder Nominals")
-        pRegionalPoliceUser.uses(pathfinder, null)
         pRegionalPoliceUser.uses(webApp, "Visits pathfinder.service.justice.gov.uk using", "HTTPS")
+        pRegionalPoliceUser.uses(hmppsAuth, "Login")
 
         val pNationalPoliceUser = model.addPerson("National Police User", "They access limited National data of Pathfinder Nominals")
-        pNationalPoliceUser.uses(pathfinder, null)
         pNationalPoliceUser.uses(webApp, "Visits pathfinder.service.justice.gov.uk using", "HTTPS")
+        pNationalPoliceUser.uses(hmppsAuth, "Login")
 
         val pNationalIntelligenceUnitUser = model.addPerson("National Prison User", "They have access to all Pathfinder nominals")
-        pNationalIntelligenceUnitUser.uses(pathfinder, null)
         pNationalIntelligenceUnitUser.uses(webApp, "Visits pathfinder.service.justice.gov.uk using", "HTTPS")
+        pNationalIntelligenceUnitUser.uses(hmppsAuth, "Login")
 
         system = pathfinder
     }

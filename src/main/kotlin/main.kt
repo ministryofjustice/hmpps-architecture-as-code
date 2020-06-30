@@ -8,6 +8,11 @@ import uk.gov.justice.hmpps.architecture.prison.*
 import uk.gov.justice.hmpps.architecture.probation.*
 
 object App {
+
+  private const val WORKSPACE_ID: Long = 55600
+  private const val API_KEY = "0c84d004-deaa-4bad-b586-a092d396e2c9"
+  private const val API_SECRET = "671e7e9b-d226-4ede-8d96-02510e39f820"
+
   @JvmStatic
   fun main(args: Array<String>) {
     val workspace = chooseWorkspace(args)
@@ -19,11 +24,8 @@ object App {
   }
 
   fun pushToRemote(workspace: Workspace) {
-    val client = StructurizrClient(System.getenv("STRUCTURIZR_API_KEY"), System.getenv("STRUCTURIZR_API_SECRET"))
-    val workspaceId = System.getenv("STRUCTURIZR_WORKSPACE_ID")?.toLongOrNull() ?: workspace.id
-
-    workspace.version = System.getenv("BUILD_VERSION")
-    client.putWorkspace(workspaceId, workspace)
+    val client = StructurizrClient(API_KEY, API_SECRET)
+    client.putWorkspace(WORKSPACE_ID, workspace)
   }
 
   fun writeToFile(workspace: Workspace) {

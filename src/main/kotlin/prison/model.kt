@@ -4,12 +4,16 @@ import com.structurizr.model.CreateImpliedRelationshipsUnlessAnyRelationshipExis
 import com.structurizr.model.Model
 
 fun prisonModel(model: Model) {
-  model.setImpliedRelationshipsStrategy(CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy())
+    model.setImpliedRelationshipsStrategy(CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy())
 
-  val nomis = NOMIS(model)
-  val ndh = NDH(model).system
-  val pathfinder = Pathfinder(model)
+    val aws = model.addSoftwareSystem("AWS", "Amazon Web Services").apply {
+        addTags("External")
+        addContainer("ElasticSearch", "Elastic Search Service", null)
+    }
 
-  ndh.uses(nomis.db, "extract offender data")
-  pathfinder.webApp.uses(nomis.elite2api, "extract offender data")
+    HmmpsAuth(model)
+    NOMIS(model)
+    nDelius(model)
+    NDH(model).system
+    Pathfinder(model)
 }
