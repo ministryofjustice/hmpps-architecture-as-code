@@ -4,14 +4,18 @@ import com.structurizr.model.CreateImpliedRelationshipsUnlessAnyRelationshipExis
 import com.structurizr.model.Model
 
 fun prisonModel(model: Model) {
-  model.setImpliedRelationshipsStrategy(CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy())
+  model.setImpliedRelationshipsStrategy(
+      CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy())
 
   val nomis = NOMIS(model)
 
-  val ndh = NDH(model).system
-  ndh.uses(nomis.db, "extract offender data")
+  HmmpsAuth(model)
+  DELIUS(model)
+  NDH(model).system
+  PATHFINDER(model)
 
   PrisonerContentHub(model).apply {
     contentHubFrontend.uses(nomis.elite2api, "lookup visits, canteen, etc.")
   }
+
 }
