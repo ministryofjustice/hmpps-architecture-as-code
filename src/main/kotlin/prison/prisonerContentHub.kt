@@ -9,10 +9,6 @@ import uk.gov.justice.hmpps.architecture.shared.Tags
 class PrisonerContentHub(model: Model) {
   val system: SoftwareSystem
   val contentHubFrontend: Container
-
-  companion object { 
-    const val SOFTWARE_AS_A_SERVICE = "SAAS";
-  } 
   
   /**
    * TODO: add Prisoner internet infrastructure, AD
