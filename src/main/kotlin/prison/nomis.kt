@@ -4,8 +4,6 @@ import com.structurizr.model.Model
 import com.structurizr.model.Container
 import com.structurizr.model.SoftwareSystem
 
-import uk.gov.justice.hmpps.architecture.shared.Tags
-
 class NOMIS(model: Model) {
   val system: SoftwareSystem
   val db: Container
@@ -18,7 +16,7 @@ class NOMIS(model: Model) {
     """.trimIndent())
 
     db = nomis.addContainer("NOMIS database", null, "Oracle").apply {
-      addTags(Tags.DATABASE.toString())
+      addTags(DATABASE_TAG)
     }
 
     nomis.addContainer("NOMIS Web Application",
@@ -29,13 +27,13 @@ class NOMIS(model: Model) {
 
     elite2api = nomis.addContainer("Elite2 API", "API over the NOMIS DB used by Digital Prison team applications and services", "Java").apply {
       setUrl("https://github.com/ministryofjustice/elite2-api")
-      addTags(Tags.DATABASE.toString())
+      addTags("database")
       uses(db, "JDBC")
     }
 
     val elasticSearch = nomis.addContainer("ElasticSearch", "Elasticsearch index of NOMIS data",
         "Java").apply {
-      addTags(Tags.EXTERNAL.toString())
+      addTags("External")
     }
 
     nomis.addContainer("PrisonerSearch", "API over the NOMIS prisoner data held in Elasticsearch",
@@ -47,13 +45,13 @@ class NOMIS(model: Model) {
         "(Deprecated) Offender API.  The service provides REST access to the Nomis Oracle DB offender information. Deprecated - please use Elite2 API instead.",
         null).apply {
       setUrl("https://github.com/ministryofjustice/custody-api")
-      addTags(Tags.DEPRECATED.toString())
+      addTags("deprecated")
       uses(db, "JDBC")
     }
 
     nomis.addContainer("NOMIS API (Deprecated)", "(Deprecated) REST API for NOMIS which connects to Oracle DB. Deprecated - please use " + elite2api.getName() + " instead.", null).apply {
       setUrl("https://github.com/ministryofjustice/nomis-api")
-      addTags(Tags.DEPRECATED.toString())
+      addTags("deprecated")
       uses(db, "JDBC")
     }
 

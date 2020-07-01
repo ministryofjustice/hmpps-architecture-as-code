@@ -4,8 +4,6 @@ import com.structurizr.model.Container
 import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 
-import uk.gov.justice.hmpps.architecture.shared.Tags
-
 class PATHFINDER(model: Model) {
   val system: SoftwareSystem
   val webApp: Container
@@ -18,13 +16,13 @@ class PATHFINDER(model: Model) {
 
     val db = pathfinder.addContainer("Pathfinder Database",
         "Database to store Pathfinder case management", "RDS Postgres DB").apply {
-      addTags(Tags.DATABASE.toString())
+      addTags(DATABASE_TAG)
     }
 
     webApp = pathfinder.addContainer("Pathfinder Web Application",
         "Web application for the case management of Pathfinder nominals", "Node Express app")
         .apply {
-          addTags(Tags.WEB_BROWSER.toString())
+          addTags("WebBrowser")
           uses(db, null)
           uses(model.getSoftwareSystemWithName("NOMIS")!!.getContainerWithName("Elite2 API")!!, "extract NOMIS offender data")
           uses(model.getSoftwareSystemWithName("NOMIS")!!.getContainerWithName("PrisonerSearch")!!, "to search for prisoners")
