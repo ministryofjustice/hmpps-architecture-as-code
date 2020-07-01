@@ -7,14 +7,10 @@ fun prisonModel(model: Model) {
   model.setImpliedRelationshipsStrategy(
       CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy())
 
-  val aws = model.addSoftwareSystem("AWS", "Amazon Web Services").apply {
-    addTags("External")
-
-  }
-
   HmmpsAuth(model)
   NOMIS(model)
-  nDelius(model)
+  DELIUS(model)
   NDH(model).system
-  Pathfinder(model)
+  PATHFINDER(model)
+
 }

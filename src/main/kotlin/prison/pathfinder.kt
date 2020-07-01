@@ -4,7 +4,7 @@ import com.structurizr.model.Container
 import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 
-class Pathfinder(model: Model) {
+class PATHFINDER(model: Model) {
   val system: SoftwareSystem
   val webApp: Container
 
@@ -16,7 +16,7 @@ class Pathfinder(model: Model) {
 
     val db = pathfinder.addContainer("Pathfinder Database",
         "Database to store Pathfinder case management", "RDS Postgres DB").apply {
-      addTags("database")
+      addTags(DATABASE_TAG)
     }
 
     webApp = pathfinder.addContainer("Pathfinder Web Application",

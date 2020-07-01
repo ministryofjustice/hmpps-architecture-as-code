@@ -4,7 +4,7 @@ import com.structurizr.model.Model
 import com.structurizr.model.Container
 import com.structurizr.model.SoftwareSystem
 
-class nDelius(model: Model) {
+class DELIUS(model: Model) {
   val system: SoftwareSystem
   val db: Container
 
@@ -13,7 +13,7 @@ class nDelius(model: Model) {
         "National Delius\nSupporting the management of offenders and delivering national reporting and performance monitoring data")
 
     db = delius.addContainer("nDelius database", null, "Oracle").apply {
-      addTags("database")
+      addTags(DATABASE_TAG)
     }
 
     delius.addContainer("CommunityAPI",
