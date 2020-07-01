@@ -16,7 +16,7 @@ class NOMIS(model: Model) {
     """.trimIndent())
 
     db = nomis.addContainer("NOMIS database", null, "Oracle").apply {
-      addTags(DATABASE_TAG)
+      addTags("database")
     }
 
     nomis.addContainer("NOMIS Web Application",
@@ -26,7 +26,7 @@ class NOMIS(model: Model) {
     }
 
     elite2api = nomis.addContainer("Elite2 API", "API over the NOMIS DB used by Digital Prison team applications and services", "Java").apply {
-      setUrl("https://github.com/ministryofjustice/elite2-api")
+    setUrl("https://github.com/ministryofjustice/elite2-api")
       addTags("database")
       uses(db, "JDBC")
     }

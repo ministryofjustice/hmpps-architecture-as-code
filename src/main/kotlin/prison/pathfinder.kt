@@ -16,7 +16,7 @@ class PATHFINDER(model: Model) {
 
     val db = pathfinder.addContainer("Pathfinder Database",
         "Database to store Pathfinder case management", "RDS Postgres DB").apply {
-      addTags(DATABASE_TAG)
+      addTags("database")
     }
 
     webApp = pathfinder.addContainer("Pathfinder Web Application",

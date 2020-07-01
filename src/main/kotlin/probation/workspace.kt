@@ -1,6 +1,7 @@
 package uk.gov.justice.hmpps.architecture.probation
 
 import com.structurizr.Workspace
+import uk.gov.justice.hmpps.architecture.shared.styles
 
 fun probationWorkspace(): Workspace {
   val workspace = Workspace("Probation systems", "Systems related to the probation of offenders")
@@ -8,7 +9,7 @@ fun probationWorkspace(): Workspace {
 
   probationModel(workspace.model)
   probationViews(workspace.model, workspace.views)
-  probationStyles(workspace.views.configuration.styles)
+  styles(workspace.views.configuration.styles)
 
   return workspace
 }
