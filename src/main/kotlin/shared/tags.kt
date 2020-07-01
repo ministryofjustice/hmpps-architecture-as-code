@@ -6,7 +6,7 @@ import com.structurizr.model.Relationship
 enum class Tags() {
   DATABASE, WEB_BROWSER, EXTERNAL, DEPRECATED, SOFTWARE_AS_A_SERVICE, COMMUNITY;
 
-  // Usage example: Tags.DATABASE.add(container)
+  // Usage example: Tags.DATABASE.addTo(container)
   fun addTo(element: Element) {
     element.addTags(this.toString())
   }
