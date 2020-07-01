@@ -13,12 +13,12 @@ class PATHFINDER(model: Model) {
     val rds = cloudPlatform.getDeploymentNodeWithName("RDS")
     val kubernetes = cloudPlatform.getDeploymentNodeWithName("Kubernetes")
 
-    val pathfinder = model.addSoftwareSystem("Pathfinder", """
+    system = model.addSoftwareSystem("Pathfinder", """
     Pathfinder System,
     the case management system for Pathfinder nominals
     """.trimIndent())
 
-    val db = pathfinder.addContainer("Pathfinder Database",
+    val db = system.addContainer("Pathfinder Database",
         "Database to store Pathfinder case management", "RDS Postgres DB").apply {
       addTags(DATABASE_TAG)
       cloudPlatform.add(this)
@@ -26,7 +26,7 @@ class PATHFINDER(model: Model) {
       kubernetes.add(this)
     }
 
-    webApp = pathfinder.addContainer("Pathfinder Web Application",
+    webApp = system.addContainer("Pathfinder Web Application",
         "Web application for the case management of Pathfinder nominals", "Node Express app")
         .apply {
           addTags("WebBrowser")
@@ -39,7 +39,7 @@ class PATHFINDER(model: Model) {
           kubernetes.add(this)
         }
 
-    pathfinder.addContainer("Pathfinder API",
+    system.addContainer("Pathfinder API",
         "API over the Pathfinder DB used by internal applications", "Kotlin Spring Boot App")
         .apply {
           setUrl("https://github.com/ministryofjustice/pathfinder-api")
@@ -74,6 +74,5 @@ class PATHFINDER(model: Model) {
     pNationalIntelligenceUnitUser.uses(webApp, "Visits pathfinder app to manage the performance of the service", "HTTPS")
     pNationalIntelligenceUnitUser.uses(hmppsAuth, "Login")
 
-    system = pathfinder
   }
 }
