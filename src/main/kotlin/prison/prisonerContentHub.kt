@@ -10,7 +10,6 @@ class PrisonerContentHub(model: Model) {
 
   companion object { 
     const val DATABASE_TAG = "database";
-    const val CLOUD_PLATFORM_TAG = "cloud_platform";
     const val SOFTWARE_AS_A_SERVICE_TAG = "SAAS";
   } 
   
@@ -22,7 +21,7 @@ class PrisonerContentHub(model: Model) {
   init {
     val cloudPlatform = model.getDeploymentNodeWithName("Cloud Platform")
     val rds = cloudPlatform.getDeploymentNodeWithName("RDS")
-    val s3 = cloudPlatform.getDeploymentNodeWithName("RDS")
+    val s3 = cloudPlatform.getDeploymentNodeWithName("S3")
     val kubernetes = cloudPlatform.getDeploymentNodeWithName("Kubernetes")
 
     system = model.addSoftwareSystem(
@@ -75,7 +74,7 @@ class PrisonerContentHub(model: Model) {
      */
     
     model.addPerson("Feedback Reporter", "HMPPS Staff collating feedback for protection, product development and analytics").apply {
-      uses(kibanaDashboard, "Extracts CSV files, views individual feedback responses, and analyses sentiment and statistics of feedback")
+      uses(kibanaDashboard, "Extracts CSV files of prisoner feedback, views individual feedback responses, and analyses sentiment and statistics of feedback")
     };
 
     model.addPerson("Prisoner", "A prisoner over 18 years old, held in the public prison estate").apply {
