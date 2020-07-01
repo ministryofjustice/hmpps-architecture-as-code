@@ -2,12 +2,14 @@ package uk.gov.justice.hmpps.architecture.probation
 
 import com.structurizr.model.Model
 
+import uk.gov.justice.hmpps.architecture.shared.Tags
+
 fun probationModel(model: Model) {
   val contractManager = model.addPerson("Contract Manager for CRCs", null)
   val courtAdmin = model.addPerson("NPS court administrator", null)
   val crcOffenderManager = model.addPerson("CRC offender manager", "Probation officers in custody, court and the community employed by intervention providers").apply { addTags("external") }
   val crcProgrammeManager = model.addPerson("CRC programme manager", "People who provide interventions on behalf of Community Rehabilitation Companies").apply { addTags("external") }
-  val crcTreatmentManager = model.addPerson("CRC treatment manager", null).apply { addTags("external") }
+  val crcTreatmentManager = model.addPerson("CRC treatment manager", null).apply { addTags(Tags.EXTERNAL.toString()) }
   val deliusSupport = model.addPerson("National Delius Support Team", null)
   val epfManager = model.addPerson("EPF Product Manager", "Product manager for the Effective Proposals Framework tool")
   val interventionServices = model.addPerson("Intervention Services Team", "They accredit intervention programmes and do business development of the interventions.")
@@ -26,14 +28,14 @@ fun probationModel(model: Model) {
   listOf(communityPerformance, prisonPerformance, dataInnovation).forEach { it.addProperty("org", "DASD") }
 
   val caseNotesToProbation = model.addSoftwareSystem("Case Notes to Probation", "Polls for case notes and pushes them to probation systems")
-  val crcSystem = model.addSoftwareSystem("CRC software systems", null).apply { addTags("external") }
+  val crcSystem = model.addSoftwareSystem("CRC software systems", null).apply { addTags(Tags.EXTERNAL.toString()) }
   val delius = model.addSoftwareSystem("nDelius", "National Delius\nSupporting the management of offenders and delivering national reporting and performance monitoring data")
   val epf = model.addSoftwareSystem("EPF", "Effective Proposal Framework\nPresents sentencing options to NPS staff in court who are providing sentencing advice to sentencers")
   val equip = model.addSoftwareSystem("EQuiP", "Central repository for all step-by-step business processes (in probation?)")
   val interventionsManager = model.addSoftwareSystem("IM", "Interventions Manager\nHolds records of interventions delivered to services users in the community")
   val ndh = model.addSoftwareSystem("NDH", "NOMIS Data Hub,\nresponsible for pulling/pushing data between HMPPS case management systems")
   val ndmis = model.addSoftwareSystem("NDMIS", "National Delius Management Information System,\nresponsible for providing reporting on nDelius data")
-  val nid = model.addSoftwareSystem("National Intervention Database (NID) (deprecated)", "Spreadsheet to store intervention details").apply { addTags("deprecated") }
+  val nid = model.addSoftwareSystem("National Intervention Database (NID) (deprecated)", "Spreadsheet to store intervention details").apply { addTags(Tags.DEPRECATED.toString()) }
   val nomis = model.addSoftwareSystem("NOMIS", "National Offender Management Information System,\nthe case management system for offender data in use in custody - both public and private prisons")
   val oasys = model.addSoftwareSystem("OASys", "Offender Assessment System\nAssesses the risks and needs of offenders")
   val prepareCaseForCourt = model.addSoftwareSystem("Prepare a Case for Court", "Service for Probation Officers working in magistrates' courts, providing them with a single location to access the defendant information they need to provide sound and timely sentencing guidance to magistrates")
