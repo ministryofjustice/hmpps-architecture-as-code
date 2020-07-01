@@ -1,7 +1,6 @@
 package uk.gov.justice.hmpps.architecture.probation
 
 import com.structurizr.Workspace
-import uk.gov.justice.hmpps.architecture.shared.cloudPlatform
 import uk.gov.justice.hmpps.architecture.shared.styles
 
 fun probationWorkspace(): Workspace {
