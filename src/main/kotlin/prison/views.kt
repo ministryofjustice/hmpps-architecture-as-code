@@ -10,18 +10,6 @@ fun prisonViews(model: Model, views: ViewSet) {
     enableAutomaticLayout()
   }
 
-  val nomis = model.getSoftwareSystemWithName("NOMIS")!!
-  views.createContainerView(nomis, "nomiscontainer", null).apply {
-    addDefaultElements()
-    enableAutomaticLayout()
-  }
-
-  val prisonerContentHub = model.getSoftwareSystemWithName("Prisoner Content Hub")!!
-  views.createContainerView(prisonerContentHub, "prisonerContentHubContainer", null).apply {
-    addDefaultElements()
-    enableAutomaticLayout()
-  }
-
   val pathfinder = model.getSoftwareSystemWithName("Pathfinder")!!
   views.createContainerView(pathfinder, "pathfinderContainer",
       "The container diagram for the Pathfinder System.").apply {

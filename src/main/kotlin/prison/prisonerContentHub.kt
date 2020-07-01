@@ -4,20 +4,25 @@ import com.structurizr.model.Container
 import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 
-class PrisonerContentHub(model: Model) {
+import com.structurizr.view.ViewSet
+
+import uk.gov.justice.hmpps.architecture.shared.CloudPlatform
+import uk.gov.justice.hmpps.architecture.shared.SingletonHolder
+
+class PrisonerContentHub private constructor(model: Model) {
+  val DATABASE_TAG = "database";
+  val SOFTWARE_AS_A_SERVICE_TAG = "SAAS";
+
+  companion object : SingletonHolder<PrisonerContentHub, Model>(::PrisonerContentHub)
+
+  val model = model
   val system: SoftwareSystem
   val contentHubFrontend: Container
 
-  companion object { 
-    const val DATABASE_TAG = "database";
-    const val SOFTWARE_AS_A_SERVICE_TAG = "SAAS";
-  } 
-  
   /**
    * TODO: add Prisoner internet infrastructure, AD
    * TODO: add BT PINS
    */
-
   init {
     val cloudPlatform = model.getDeploymentNodeWithName("Cloud Platform")
     val rds = cloudPlatform.getDeploymentNodeWithName("RDS")
@@ -92,5 +97,17 @@ class PrisonerContentHub(model: Model) {
     model.addPerson("Prison Content editor", "A content author on-site in a prison, authoring content for their prison").apply {
       uses(drupal, "Authors and curates content for their prison")
     };
+  }
+
+  fun defineRelationships() {
+    val nomis = NOMIS.getInstance(model)
+    contentHubFrontend.uses(nomis.elite2api, "lookup visits, canteen, etc.")
+  }
+
+  fun defineViews(views: ViewSet) {
+    views.createContainerView(system, "prisonerContentHubContainer", null).apply {
+      addDefaultElements()
+      enableAutomaticLayout()
+    }
   }
 }

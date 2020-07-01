@@ -4,7 +4,14 @@ import com.structurizr.model.Model
 import com.structurizr.model.Container
 import com.structurizr.model.SoftwareSystem
 
-class NOMIS(model: Model) {
+import com.structurizr.view.ViewSet
+
+import uk.gov.justice.hmpps.architecture.shared.SingletonHolder
+
+class NOMIS private constructor(model: Model) {
+
+  companion object : SingletonHolder<NOMIS, Model>(::NOMIS)
+
   val system: SoftwareSystem
   val db: Container
   val elite2api: Container
@@ -61,5 +68,15 @@ class NOMIS(model: Model) {
     }
 
     system = nomis
+  }
+
+  fun defineRelationships() {
+  }
+
+  fun defineViews(views: ViewSet) {
+    views.createContainerView(system, "nomiscontainer", null).apply {
+      addDefaultElements()
+      enableAutomaticLayout()
+    }
   }
 }
