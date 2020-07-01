@@ -15,7 +15,7 @@ class DELIUS(model: Model) {
         "National Delius\nSupporting the management of offenders and delivering national reporting and performance monitoring data")
 
     db = delius.addContainer("nDelius database", null, "Oracle").apply {
-      addTags(Tags.DATABASE.toString())
+      Tags.DATABASE.addTo(this)
     }
 
     delius.addContainer("CommunityAPI",
@@ -27,7 +27,7 @@ class DELIUS(model: Model) {
 
     val elasticSearch = delius.addContainer("ElasticSearch", "Elasticsearch index of nDelius data",
         null).apply {
-      addTags(Tags.EXTERNAL.toString())
+      Tags.EXTERNAL.addTo(this)
     }
 
     delius.addContainer("OffenderSearch",

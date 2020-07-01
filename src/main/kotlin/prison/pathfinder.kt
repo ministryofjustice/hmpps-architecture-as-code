@@ -18,13 +18,13 @@ class PATHFINDER(model: Model) {
 
     val db = pathfinder.addContainer("Pathfinder Database",
         "Database to store Pathfinder case management", "RDS Postgres DB").apply {
-      addTags(Tags.DATABASE.toString())
+      Tags.DATABASE.addTo(this)
     }
 
     webApp = pathfinder.addContainer("Pathfinder Web Application",
         "Web application for the case management of Pathfinder nominals", "Node Express app")
         .apply {
-          addTags(Tags.WEB_BROWSER.toString())
+          Tags.WEB_BROWSER.addTo(this)
           uses(db, null)
           uses(model.getSoftwareSystemWithName("NOMIS")!!.getContainerWithName("Elite2 API")!!, "extract NOMIS offender data")
           uses(model.getSoftwareSystemWithName("NOMIS")!!.getContainerWithName("PrisonerSearch")!!, "to search for prisoners")
