@@ -6,7 +6,7 @@ import uk.gov.justice.hmpps.architecture.shared.styles
 
 fun prisonWorkspace(): Workspace {
   val workspace = Workspace("Prison systems", "Systems related to the confinement of offenders")
-  workspace.id = 54993
+  workspace.id = 55246
 
   cloudPlatform(workspace.model)
   prisonModel(workspace.model)
