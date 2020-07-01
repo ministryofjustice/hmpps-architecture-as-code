@@ -1,13 +1,11 @@
-package uk.gov.justice.hmpps.architecture.prison
+package uk.gov.justice.hmpps.architecture.shared
 
 import com.structurizr.view.Shape
 import com.structurizr.view.Styles
 
 import uk.gov.justice.hmpps.architecture.shared.Tags
 
-const val DATABASE_TAG = "database";
-
-fun prisonStyles(styles: Styles) {
+fun styles(styles: Styles) {
   styles.addElementStyle("Element").color("#ffffff").background("#006699")
 
   styles.addElementStyle(Tags.DATABASE.toString()).shape(Shape.Cylinder)

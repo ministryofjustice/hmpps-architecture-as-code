@@ -15,7 +15,11 @@ class DELIUS(model: Model) {
         "National Delius\nSupporting the management of offenders and delivering national reporting and performance monitoring data")
 
     db = delius.addContainer("nDelius database", null, "Oracle").apply {
+<<<<<<< HEAD
       addTags(Tags.DATABASE.toString())
+=======
+      addTags("database")
+>>>>>>> main
     }
 
     delius.addContainer("CommunityAPI",

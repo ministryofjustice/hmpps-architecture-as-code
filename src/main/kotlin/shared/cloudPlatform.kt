@@ -1,4 +1,4 @@
-package uk.gov.justice.hmpps.architecture.prison
+package uk.gov.justice.hmpps.architecture.shared
 
 import com.structurizr.model.DeploymentNode
 import com.structurizr.model.Model
