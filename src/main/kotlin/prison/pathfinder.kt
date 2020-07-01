@@ -9,6 +9,10 @@ class PATHFINDER(model: Model) {
   val webApp: Container
 
   init {
+    val cloudPlatform = model.getDeploymentNodeWithName("Cloud Platform")
+    val rds = cloudPlatform.getDeploymentNodeWithName("RDS")
+    val kubernetes = cloudPlatform.getDeploymentNodeWithName("Kubernetes")
+
     val pathfinder = model.addSoftwareSystem("Pathfinder", """
     Pathfinder System,
     the case management system for Pathfinder nominals
@@ -17,6 +21,9 @@ class PATHFINDER(model: Model) {
     val db = pathfinder.addContainer("Pathfinder Database",
         "Database to store Pathfinder case management", "RDS Postgres DB").apply {
       addTags(DATABASE_TAG)
+      cloudPlatform.add(this)
+      rds.add(this)
+      kubernetes.add(this)
     }
 
     webApp = pathfinder.addContainer("Pathfinder Web Application",
@@ -28,6 +35,8 @@ class PATHFINDER(model: Model) {
           uses(model.getSoftwareSystemWithName("NOMIS")!!.getContainerWithName("PrisonerSearch")!!, "to search for prisoners")
           uses(model.getSoftwareSystemWithName("nDelius")!!.getContainerWithName("CommunityAPI")!!, "extract nDelius offender data")
           uses(model.getSoftwareSystemWithName("nDelius")!!.getContainerWithName("OffenderSearch")!!, "to search for offenders")
+          cloudPlatform.add(this)
+          kubernetes.add(this)
         }
 
     pathfinder.addContainer("Pathfinder API",
@@ -35,6 +44,8 @@ class PATHFINDER(model: Model) {
         .apply {
           setUrl("https://github.com/ministryofjustice/pathfinder-api")
           uses(db, "JDBC")
+          cloudPlatform.add(this)
+          kubernetes.add(this)
         }
 
     val hmppsAuth: SoftwareSystem = model.getSoftwareSystemWithName("HMPPS Auth")!!
