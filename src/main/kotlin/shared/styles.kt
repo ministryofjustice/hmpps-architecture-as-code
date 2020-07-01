@@ -1,9 +1,9 @@
-package uk.gov.justice.hmpps.architecture.probation
+package uk.gov.justice.hmpps.architecture.shared
 
 import com.structurizr.view.Shape
 import com.structurizr.view.Styles
 
-fun probationStyles(styles: Styles) {
+fun styles(styles: Styles) {
   styles.addElementStyle("Element").color("#ffffff").background("#006699")
 
   styles.addElementStyle("database").shape(Shape.Cylinder)
