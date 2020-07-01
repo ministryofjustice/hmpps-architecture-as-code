@@ -24,7 +24,7 @@ class PATHFINDER(model: Model) {
         .apply {
           addTags("WebBrowser")
           uses(db, null)
-          uses(model.getSoftwareSystemWithName("NOMIS")!!.getContainerWithName("Elite2API")!!, "extract NOMIS offender data")
+          uses(model.getSoftwareSystemWithName("NOMIS")!!.getContainerWithName("Elite2 API")!!, "extract NOMIS offender data")
           uses(model.getSoftwareSystemWithName("NOMIS")!!.getContainerWithName("PrisonerSearch")!!, "to search for prisoners")
           uses(model.getSoftwareSystemWithName("nDelius")!!.getContainerWithName("CommunityAPI")!!, "extract nDelius offender data")
           uses(model.getSoftwareSystemWithName("nDelius")!!.getContainerWithName("OffenderSearch")!!, "to search for offenders")

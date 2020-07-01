@@ -3,6 +3,8 @@ package uk.gov.justice.hmpps.architecture.prison
 import com.structurizr.view.Shape
 import com.structurizr.view.Styles
 
+const val DATABASE_TAG = "database";
+
 fun prisonStyles(styles: Styles) {
   styles.addElementStyle("Element").color("#ffffff").background("#006699")
 
