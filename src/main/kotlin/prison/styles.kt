@@ -3,6 +3,8 @@ package uk.gov.justice.hmpps.architecture.prison
 import com.structurizr.view.Shape
 import com.structurizr.view.Styles
 
+import uk.gov.justice.hmpps.architecture.shared.Tags
+
 const val DATABASE_TAG = "database";
 
 fun prisonStyles(styles: Styles) {
