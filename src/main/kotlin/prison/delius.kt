@@ -4,6 +4,8 @@ import com.structurizr.model.Model
 import com.structurizr.model.Container
 import com.structurizr.model.SoftwareSystem
 
+import uk.gov.justice.hmpps.architecture.shared.Tags
+
 class DELIUS(model: Model) {
   val system: SoftwareSystem
   val db: Container
@@ -13,7 +15,7 @@ class DELIUS(model: Model) {
         "National Delius\nSupporting the management of offenders and delivering national reporting and performance monitoring data")
 
     db = delius.addContainer("nDelius database", null, "Oracle").apply {
-      addTags(DATABASE_TAG)
+      addTags(Tags.DATABASE.toString())
     }
 
     delius.addContainer("CommunityAPI",
@@ -25,7 +27,7 @@ class DELIUS(model: Model) {
 
     val elasticSearch = delius.addContainer("ElasticSearch", "Elasticsearch index of nDelius data",
         null).apply {
-      addTags("External")
+      addTags(Tags.EXTERNAL.toString())
     }
 
     delius.addContainer("OffenderSearch",
