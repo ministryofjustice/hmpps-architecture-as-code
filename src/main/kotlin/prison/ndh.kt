@@ -10,6 +10,9 @@ class NDH(model: Model) {
     system = model.addSoftwareSystem("NDH", """
     NOMIS Data Hub,
     responsible for pulling/pushing data between HMPPS case management systems
-    """.trimIndent())
+    """.trimIndent()).apply {
+      uses(model.getSoftwareSystemWithName("NOMIS")!!.getContainerWithName("NOMIS database")!!,
+          "to search for offenders")
+    }
   }
 }

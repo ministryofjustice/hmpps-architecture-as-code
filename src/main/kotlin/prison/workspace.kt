@@ -9,6 +9,6 @@ fun prisonWorkspace(): Workspace {
   cloudPlatform(workspace.model)
   prisonModel(workspace.model)
   prisonViews(workspace.model, workspace.views)
-
+  prisonStyles(workspace.views.configuration.styles)
   return workspace
 }
