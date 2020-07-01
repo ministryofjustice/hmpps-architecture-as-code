@@ -20,7 +20,7 @@ class PATHFINDER(model: Model) {
 
     val db = system.addContainer("Pathfinder Database",
         "Database to store Pathfinder case management", "RDS Postgres DB").apply {
-      addTags(DATABASE_TAG)
+      addTags(DELIUS.DATABASE_TAG)
       cloudPlatform.add(this)
       rds.add(this)
       kubernetes.add(this)

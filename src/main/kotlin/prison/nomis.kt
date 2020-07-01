@@ -21,7 +21,7 @@ class NOMIS(model: Model) {
     """.trimIndent())
 
     db = system.addContainer("NOMIS database", null, "Oracle").apply {
-      addTags(DATABASE_TAG)
+      addTags(DELIUS.DATABASE_TAG)
     }
 
     system.addContainer("NOMIS Web Application",
