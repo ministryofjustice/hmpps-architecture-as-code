@@ -7,6 +7,7 @@ import com.structurizr.model.SoftwareSystem
 class NOMIS(model: Model) {
   val system: SoftwareSystem
   val db: Container
+  val elite2api: Container
 
   init {
     val nomis = model.addSoftwareSystem("NOMIS", """
@@ -18,7 +19,7 @@ class NOMIS(model: Model) {
       addTags("database")
     }
 
-    val elite2api = nomis.addContainer("Elite2 API", "API over the NOMIS DB used by Digital Prison team applications and services", "Java").apply {
+    elite2api = nomis.addContainer("Elite2 API", "API over the NOMIS DB used by Digital Prison team applications and services", "Java").apply {
       setUrl("https://github.com/ministryofjustice/elite2-api")
       addTags("database")
       uses(db, "JDBC")
