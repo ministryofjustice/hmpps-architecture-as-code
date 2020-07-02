@@ -64,4 +64,9 @@ fun prisonViews(model: Model, views: ViewSet) {
     isEnterpriseBoundaryVisible = false
   }
 
+  views.createDeploymentView(pathfinder, "PathfinderProductionDeployment", "The Production deployment scenario for the Pathfinder service").apply {
+    addDefaultElements()
+    enableAutomaticLayout()
+  }
+
 }
