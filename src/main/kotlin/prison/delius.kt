@@ -32,8 +32,8 @@ class DELIUS(model: Model) {
     val elasticSearchStore = system.addContainer("ElasticSearch store",
         "Data store for Delius content", "ElasticSearch")
         .apply {
-          addTags(DATABASE_TAG)
-          addTags(SOFTWARE_AS_A_SERVICE_TAG)
+          Tags.DATABASE.addTo(this)
+          Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
         }
 
     system.addContainer("CommunityAPI",
