@@ -19,6 +19,7 @@ class PrisonerContentHub(model: Model) {
     val cloudPlatform = model.getDeploymentNodeWithName("Cloud Platform")
     val rds = cloudPlatform.getDeploymentNodeWithName("RDS")
     val s3 = cloudPlatform.getDeploymentNodeWithName("S3")
+    val elasticSearch = cloudPlatform.getDeploymentNodeWithName("ElasticSearch")
     val kubernetes = cloudPlatform.getDeploymentNodeWithName("Kubernetes")
 
     system = model.addSoftwareSystem(
@@ -30,7 +31,7 @@ class PrisonerContentHub(model: Model) {
     val elasticSearchStore = system.addContainer("ElasticSearch store", "Data store for feedback collection, and indexing for Drupal CMS content", "ElasticSearch").apply {
       Tags.DATABASE.addTo(this)
       Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
-      cloudPlatform.add(this)
+      elasticSearch.add(this)
     }
 
     val drupalDatabase = system.addContainer("Drupal database", null, "MariaDB").apply {
@@ -63,7 +64,7 @@ class PrisonerContentHub(model: Model) {
     val kibanaDashboard = system.addContainer("Kibana dashboard", "Feedback reports and analytics dashboard", "Kibana").apply {
       //setUrl("TODO")
       uses(elasticSearchStore, "HTTPS Rest API")
-      cloudPlatform.add(this)
+      elasticSearch.add(this)
     }
 
     /**
