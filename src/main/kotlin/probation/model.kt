@@ -77,7 +77,7 @@ fun probationModel(model: Model) {
   npsOffenderManager.uses(equip, "finds rate cards in")
   npsOffenderManager.uses(oasys, "records offender risk (attendance, contact, etc.) and assessment in")
   npsOffenderManager.uses(prepareCaseForCourt, "view case defendant details")
-  npsOffenderManager.uses(wmt, "finds out their case load by looking at")?.apply { Tags.COMMUNITY.addTo(this) }
+  npsOffenderManager.uses(wmt, "finds out their community case load by looking at")
   npsProgrammeManager.uses(interventionsManager, "create new interventions in")
   oasys.uses(delius, "assessment info, risk measures are copied into", "NDH")
   prepareCaseForCourt.uses(delius, "get offender details from")
