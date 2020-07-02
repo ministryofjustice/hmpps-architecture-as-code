@@ -23,7 +23,7 @@ class NOMIS(model: Model) {
     the case management system for offender data in use in custody - both public and private prisons
     """.trimIndent())
 
-    db = nomis.addContainer("NOMIS database", null, "Oracle").apply {
+    db = system.addContainer("NOMIS database", null, "Oracle").apply {
       Tags.DATABASE.addTo(this)
     }
 

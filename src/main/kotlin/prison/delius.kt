@@ -24,7 +24,7 @@ class DELIUS(model: Model) {
     system = model.addSoftwareSystem("nDelius",
         "National Delius\nSupporting the management of offenders and delivering national reporting and performance monitoring data")
 
-    db = delius.addContainer("nDelius database", null, "Oracle").apply {
+    db = system.addContainer("nDelius database", null, "Oracle").apply {
       Tags.DATABASE.addTo(this)
       Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
     }
