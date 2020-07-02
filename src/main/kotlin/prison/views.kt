@@ -17,10 +17,22 @@ fun prisonViews(model: Model, views: ViewSet) {
   }
 
   val prisonerContentHub = model.getSoftwareSystemWithName("Prisoner Content Hub")!!
+  views.createSystemContextView(prisonerContentHub, "prisonerContentHubSystemContext", "The system context diagram for the Prisoner Content Hub"
+  ).apply {
+    addDefaultElements()
+    enableAutomaticLayout()
+  }
+
   views.createContainerView(prisonerContentHub, "prisonerContentHubContainer", null).apply {
     addDefaultElements()
     enableAutomaticLayout()
   }
+
+  views.createDeploymentView(prisonerContentHub, "prisonerContentHubContainerProductionDeployment", "The Production deployment scenario for the Prisoner Content Hub").apply {
+    addDefaultElements()
+    enableAutomaticLayout()
+  }
+
 
   val pathfinder = model.getSoftwareSystemWithName("Pathfinder")!!
   views.createContainerView(pathfinder, "pathfinderContainer",
