@@ -8,5 +8,6 @@ fun cloudPlatform(model: Model) {
   cloudPlatform.addDeploymentNode("S3", "AWS Simple Storage Service", "AWS")
   cloudPlatform.addDeploymentNode("SNS", "AWS Simple Notification Service", "AWS")
   cloudPlatform.addDeploymentNode("SQS", "AWS Simple Queue Service", "AWS")
+  cloudPlatform.addDeploymentNode("ElasticSearch", "AWS ElasticSearch Service", "AWS")
   cloudPlatform.addDeploymentNode("Kubernetes", "The Cloud Platform Kubernetes cluster", "Kubernetes")
 }
