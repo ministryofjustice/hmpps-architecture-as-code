@@ -28,7 +28,7 @@ class DELIUS(model: Model) {
     }
 
     val elasticSearchStore = system.addContainer("ElasticSearch store",
-        "Data store for feedback collection, and indexing for Drupal CMS content", "ElasticSearch")
+        "Data store for Delius content", "ElasticSearch")
         .apply {
           addTags(DATABASE_TAG)
           addTags(SOFTWARE_AS_A_SERVICE_TAG)
