@@ -4,14 +4,11 @@ import com.structurizr.model.Container
 import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 
+import uk.gov.justice.hmpps.architecture.shared.Tags
+
 class PrisonerContentHub(model: Model) {
   val system: SoftwareSystem
   val contentHubFrontend: Container
-
-  companion object { 
-    const val DATABASE_TAG = "database";
-    const val SOFTWARE_AS_A_SERVICE_TAG = "SAAS";
-  } 
   
   /**
    * TODO: add Prisoner internet infrastructure, AD
@@ -31,20 +28,20 @@ class PrisonerContentHub(model: Model) {
       """.trimIndent())
 
     val elasticSearchStore = system.addContainer("ElasticSearch store", "Data store for feedback collection, and indexing for Drupal CMS content", "ElasticSearch").apply {
-      addTags(DATABASE_TAG)
-      addTags(SOFTWARE_AS_A_SERVICE_TAG)
+      Tags.DATABASE.addTo(this)
+      Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
       cloudPlatform.add(this)
     }
 
     val drupalDatabase = system.addContainer("Drupal database", null, "MariaDB").apply {
-      addTags(DATABASE_TAG)
-      addTags(SOFTWARE_AS_A_SERVICE_TAG)
+      Tags.DATABASE.addTo(this)
+      Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
       rds.add(this)
     }
 
     val s3ContentStore = system.addContainer("Content Store", "Stores audio, video, PDF and image content", "S3").apply {
-      addTags(DATABASE_TAG)
-      addTags(SOFTWARE_AS_A_SERVICE_TAG)
+      Tags.DATABASE.addTo(this)
+      Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
       s3.add(this)
     }
 
