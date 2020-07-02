@@ -14,6 +14,7 @@ class NOMIS(model: Model) {
     val sqs = cloudPlatform.getDeploymentNodeWithName("SQS")
     val sns = cloudPlatform.getDeploymentNodeWithName("SNS")
     val kubernetes = cloudPlatform.getDeploymentNodeWithName("Kubernetes")
+    val elasticSearch = cloudPlatform.getDeploymentNodeWithName("ElasticSearch")
 
     system = model.addSoftwareSystem("NOMIS", """
     National Offender Management Information System,
@@ -34,22 +35,20 @@ class NOMIS(model: Model) {
         "API over the NOMIS DB used by Digital Prison team applications and services", "Java")
         .apply {
           setUrl("https://github.com/ministryofjustice/elite2-api")
-          addTags("database")
           uses(db, "JDBC")
         }
 
     val elasticSearchStore = system.addContainer("ElasticSearch store",
-        "Data store for feedback collection, and indexing for Drupal CMS content", "ElasticSearch")
+        "Data store for NOMIS content", "ElasticSearch")
         .apply {
           addTags(DELIUS.DATABASE_TAG)
           addTags(DELIUS.SOFTWARE_AS_A_SERVICE_TAG)
-          cloudPlatform.add(this)
+          elasticSearch.add(this)
         }
 
     system.addContainer("PrisonerSearch", "API over the NOMIS prisoner data held in Elasticsearch",
         "Java").apply {
       uses(elasticSearchStore, "Queries prisoner data from NOMIS Elasticsearch Index")
-      cloudPlatform.add(this)
       kubernetes.add(this)
     }
 
@@ -73,7 +72,6 @@ class NOMIS(model: Model) {
         "Publishes Events about offender change to Pub / Sub Topics.", "Java").apply {
       setUrl("https://github.com/ministryofjustice/offender-events")
       uses(db, "JDBC")
-      cloudPlatform.add(this)
       sqs.add(this)
       sns.add(this)
       kubernetes.add(this)
