@@ -33,10 +33,9 @@ fun probationModel(model: Model) {
   val epf = model.addSoftwareSystem("EPF", "Effective Proposal Framework\nPresents sentencing options to NPS staff in court who are providing sentencing advice to sentencers")
   val equip = model.addSoftwareSystem("EQuiP", "Central repository for all step-by-step business processes (in probation?)")
   val interventionsManager = model.addSoftwareSystem("IM", "Interventions Manager\nHolds records of interventions delivered to services users in the community")
-  val ndh = model.addSoftwareSystem("NDH", "NOMIS Data Hub,\nresponsible for pulling/pushing data between HMPPS case management systems")
   val ndmis = model.addSoftwareSystem("NDMIS", "National Delius Management Information System,\nresponsible for providing reporting on nDelius data")
   val nid = model.addSoftwareSystem("National Intervention Database (NID) (deprecated)", "Spreadsheet to store intervention details").apply { Tags.DEPRECATED.addTo(this) }
-  val nomis = model.addSoftwareSystem("NOMIS", "National Offender Management Information System,\nthe case management system for offender data in use in custody - both public and private prisons")
+  val nomis = model.addSoftwareSystem("NOMIS", "National Offender Management Information System,\nthe case management system for offender data in use in custody - both public and private prisons").apply { Tags.PRISON_SERVICE.addTo(this) }
   val oasys = model.addSoftwareSystem("OASys", "Offender Assessment System\nAssesses the risks and needs of offenders")
   val prepareCaseForCourt = model.addSoftwareSystem("Prepare a Case for Court", "Service for Probation Officers working in magistrates' courts, providing them with a single location to access the defendant information they need to provide sound and timely sentencing guidance to magistrates")
   val prisonToProbation = model.addSoftwareSystem("Prison to Probation Update", "Listens for events from Prison systems (NOMIS) to update offender sentence information in Probation systems (Delius)")
@@ -67,7 +66,6 @@ fun probationModel(model: Model) {
   interventionServices.uses(delius, "creates new interventions in")
   interventionServices.uses(interventionsManager, "creates new interventions in")
   interventionsManager.uses(delius, "pushes contact information of interest to")
-  ndh.uses(nomis, "extract offender data")
   ndmis.uses(delius, "extracts and transforms data from")
   nomis.uses(delius, "offender data is copied into", "NDH")
   nomis.uses(oasys, "offender data is coped into", "NDH")
