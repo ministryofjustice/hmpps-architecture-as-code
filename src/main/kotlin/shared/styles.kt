@@ -4,7 +4,7 @@ import com.structurizr.view.Shape
 import com.structurizr.view.Styles
 
 fun styles(styles: Styles) {
-  styles.addElementStyle("Element").color("#ffffff").background("#006699")
+  styles.addElementStyle("Software System").color("#ffffff").background("#006699")
 
   styles.addElementStyle("database").shape(Shape.Cylinder)
   styles.addElementStyle("Person").shape(Shape.Person).background("#0099cc")
