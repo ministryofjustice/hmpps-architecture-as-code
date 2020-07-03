@@ -40,6 +40,15 @@ STRUCTURIZR_API_KEY=key STRUCTURIZR_API_SECRET=secret ./gradlew run --args='--pr
 You can view these secrets on the [dashboard](https://structurizr.com/dashboard), after clicking *Show more...* next to
 the desired workspace.
 
+## Generating images locally
+
+Requires `plantuml` and `wget` to be installed (e.g. with `brew install plantuml wget`)
+
+```
+script/generate_images.sh
+```
+
+This command will locally generate all defined workspace diagrams without using the Structurizr web API.
 
 
 [c4]: https://c4model.com/
