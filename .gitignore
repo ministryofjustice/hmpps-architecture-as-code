@@ -4,10 +4,5 @@
 # Ignore Gradle build output directory
 build
 
-# files saved by Structurizr API, CLI or scripts
-structurizr-*.json
-structurizr-*.puml
-structurizr-*.png
-
 # external dependencies
 ext/
