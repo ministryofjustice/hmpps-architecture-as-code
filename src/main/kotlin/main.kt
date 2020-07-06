@@ -8,6 +8,8 @@ import uk.gov.justice.hmpps.architecture.prison.*
 import uk.gov.justice.hmpps.architecture.probation.*
 
 object App {
+  val EXPORT_LOCATION = File("./exports")
+
   @JvmStatic
   fun main(args: Array<String>) {
     val workspace = chooseWorkspace(args)
@@ -21,13 +23,14 @@ object App {
   fun pushToRemote(workspace: Workspace) {
     val client = StructurizrClient(System.getenv("STRUCTURIZR_API_KEY"), System.getenv("STRUCTURIZR_API_SECRET"))
     val workspaceId = System.getenv("STRUCTURIZR_WORKSPACE_ID")?.toLongOrNull() ?: workspace.id
+    client.workspaceArchiveLocation = EXPORT_LOCATION
 
     workspace.version = System.getenv("BUILD_VERSION")
     client.putWorkspace(workspaceId, workspace)
   }
 
   fun writeToFile(workspace: Workspace) {
-    val targetFile = File("structurizr-${workspace.id}-local.json")
+    val targetFile = File(EXPORT_LOCATION, "structurizr-${workspace.id}-local.json")
     WorkspaceUtils.saveWorkspaceToJson(workspace, targetFile)
     println("Wrote workspace to '$targetFile'")
   }
