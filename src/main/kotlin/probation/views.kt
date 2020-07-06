@@ -29,6 +29,7 @@ fun probationViews(model: Model, views: ViewSet) {
   val ndmis = model.getSoftwareSystemWithName("NDMIS")!!
   views.createSystemContextView(ndmis, "ndmis-context", null).apply {
     addDefaultElements()
+    addNearestNeighbours(model.getSoftwareSystemWithName("Offender Management Allocation Manager")!!)
     enableAutomaticLayout(AutomaticLayout.RankDirection.LeftRight, 200, 200)
   }
 }
