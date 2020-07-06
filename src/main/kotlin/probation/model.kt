@@ -2,6 +2,7 @@ package uk.gov.justice.hmpps.architecture.probation
 
 import com.structurizr.model.Model
 
+import uk.gov.justice.hmpps.architecture.prison.OffenderAllocationManager
 import uk.gov.justice.hmpps.architecture.shared.Tags
 
 fun probationModel(model: Model) {
@@ -41,6 +42,7 @@ fun probationModel(model: Model) {
   val prisonToProbation = model.addSoftwareSystem("Prison to Probation Update", "Listens for events from Prison systems (NOMIS) to update offender sentence information in Probation systems (Delius)")
   val probationCaseSampler = model.addSoftwareSystem("Probation Case Sampler", "API which produces a representative and evenly distributed list of probation cases within a region and date range which form the basis of an on-site inspection")
   val wmt = model.addSoftwareSystem("WMT", "Workload Management Tool,\nhelps offender managers schedule their time based on service user risk")
+  val offenderAllocationManager = OffenderAllocationManager(model).system.apply { Tags.PRISON_SERVICE.addTo(this) }
 
   prisonToProbation.setUrl("https://dsdmoj.atlassian.net/wiki/spaces/NOM/pages/1947107651/Prison+to+Probation+Update+-+Delius+DSS+Automatic+updates")
   probationCaseSampler.setUrl("https://dsdmoj.atlassian.net/wiki/spaces/NDSS/pages/1989181486/HMIP+Case+Sampling")
@@ -91,6 +93,7 @@ fun probationModel(model: Model) {
   dataInnovation.uses(ndmis, "uses data from")
   hmip.uses(ndmis, "uses data from")
   nart.uses(ndmis, "creates reports in")
+  nart.uses(offenderAllocationManager, "sends extracts containing service user allocation to", "email")
   npsPerformanceOfficer.uses(ndmis, "uses reports in")
   prisonPerformance.uses(ndmis, "to provide details of offenders released into the community, looks into")
 }
