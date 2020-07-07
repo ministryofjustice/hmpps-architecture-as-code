@@ -4,14 +4,10 @@ import com.structurizr.model.Element
 import com.structurizr.model.Relationship
 
 enum class Tags() {
-  DATABASE, WEB_BROWSER, EXTERNAL, DEPRECATED, SOFTWARE_AS_A_SERVICE, COMMUNITY, PRISON_SERVICE;
+  DATABASE, WEB_BROWSER, PROVIDER, DEPRECATED, SOFTWARE_AS_A_SERVICE, PRISON_SERVICE;
 
-  // Usage example: Tags.DATABASE.addTo(container)
+  // Usage example: Tags.DATABASE.addTo(any_model_element)
   fun addTo(element: Element) {
     element.addTags(this.toString())
-  }
-
-  fun addTo(relationship: Relationship) {
-    relationship.addTags(this.toString())
   }
 }
