@@ -2,6 +2,7 @@ package uk.gov.justice.hmpps.architecture.probation
 
 import com.structurizr.model.Model
 
+import uk.gov.justice.hmpps.architecture.prison.NOMIS
 import uk.gov.justice.hmpps.architecture.prison.OffenderAllocationManager
 import uk.gov.justice.hmpps.architecture.shared.Tags
 
@@ -36,12 +37,13 @@ fun probationModel(model: Model) {
   val interventionsManager = model.addSoftwareSystem("IM", "Interventions Manager\nHolds records of interventions delivered to services users in the community")
   val ndmis = model.addSoftwareSystem("NDMIS", "National Delius Management Information System,\nresponsible for providing reporting on nDelius data")
   val nid = model.addSoftwareSystem("National Intervention Database (NID) (deprecated)", "Spreadsheet to store intervention details").apply { Tags.DEPRECATED.addTo(this) }
-  val nomis = model.addSoftwareSystem("NOMIS", "National Offender Management Information System,\nthe case management system for offender data in use in custody - both public and private prisons").apply { Tags.PRISON_SERVICE.addTo(this) }
   val oasys = model.addSoftwareSystem("OASys", "Offender Assessment System\nAssesses the risks and needs of offenders")
   val prepareCaseForCourt = model.addSoftwareSystem("Prepare a Case for Court", "Service for Probation Officers working in magistrates' courts, providing them with a single location to access the defendant information they need to provide sound and timely sentencing guidance to magistrates")
   val prisonToProbation = model.addSoftwareSystem("Prison to Probation Update", "Listens for events from Prison systems (NOMIS) to update offender sentence information in Probation systems (Delius)")
   val probationCaseSampler = model.addSoftwareSystem("Probation Case Sampler", "API which produces a representative and evenly distributed list of probation cases within a region and date range which form the basis of an on-site inspection")
   val wmt = model.addSoftwareSystem("WMT", "Workload Management Tool,\nhelps offender managers schedule their time based on service user risk")
+
+  val nomis = NOMIS(model).system.apply { Tags.PRISON_SERVICE.addTo(this) }
   val offenderAllocationManager = OffenderAllocationManager(model).system.apply { Tags.PRISON_SERVICE.addTo(this) }
 
   prisonToProbation.setUrl("https://dsdmoj.atlassian.net/wiki/spaces/NOM/pages/1947107651/Prison+to+Probation+Update+-+Delius+DSS+Automatic+updates")
