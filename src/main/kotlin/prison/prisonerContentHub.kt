@@ -1,6 +1,7 @@
 package uk.gov.justice.hmpps.architecture.prison
 
 import com.structurizr.model.Container
+import com.structurizr.model.Location
 import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 
@@ -73,22 +74,27 @@ class PrisonerContentHub(model: Model) {
     
     model.addPerson("Feedback Reporter", "HMPPS Staff collating feedback for protection, product development and analytics").apply {
       uses(kibanaDashboard, "Extracts CSV files of prisoner feedback, views individual feedback responses, and analyses sentiment and statistics of feedback")
+      setLocation(Location.Internal)
     };
 
     model.addPerson("Prisoner", "A prisoner over 18 years old, held in the public prison estate").apply {
       uses(contentHubFrontend, "Views videos, audio programmes, site updates, and rehabilitative material")
+      setLocation(Location.External)
     };
 
     model.addPerson("Young Offender", "A person under 18, held in a Young Offender Institute").apply {
       uses(contentHubFrontend, "Views videos, audio programmes, site updates, and rehabilitative material")
+      setLocation(Location.External)
     };
 
     model.addPerson("Content editor", "HMPPS Digital staff curating content for the entire prison estate and supporting individual prisons").apply {
       uses(drupal, "Authors and curates content for the prison estate")
+      setLocation(Location.Internal)
     };
 
     model.addPerson("Prison Content editor", "A content author on-site in a prison, authoring content for their prison").apply {
       uses(drupal, "Authors and curates content for their prison")
+      setLocation(Location.External)
     };
   }
 }
