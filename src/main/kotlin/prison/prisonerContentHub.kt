@@ -12,9 +12,6 @@ import uk.gov.justice.hmpps.architecture.shared.Tags
 class PrisonerContentHub private constructor() {
 
   companion object {
-    val DATABASE_TAG = "database";
-    val SOFTWARE_AS_A_SERVICE_TAG = "SAAS";
-
     lateinit var model: Model
     lateinit var system: SoftwareSystem
     lateinit var contentHubFrontend: Container
