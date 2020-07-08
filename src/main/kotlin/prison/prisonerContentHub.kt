@@ -34,13 +34,13 @@ class PrisonerContentHub(model: Model) {
       elasticSearch.add(this)
     }
 
-    val drupalDatabase = system.addContainer("Drupal database", null, "MariaDB").apply {
+    val drupalDatabase = system.addContainer("Drupal database", "Prisoner Content Hub CMS data and Drupal metadata", "MariaDB").apply {
       Tags.DATABASE.addTo(this)
       Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
       rds.add(this)
     }
 
-    val s3ContentStore = system.addContainer("Content Store", "Stores audio, video, PDF and image content", "S3").apply {
+    val s3ContentStore = system.addContainer("Content Store", "Audio, video, PDF and image content for the Prisoner Content Hub", "S3").apply {
       Tags.DATABASE.addTo(this)
       Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
       s3.add(this)
