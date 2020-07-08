@@ -43,6 +43,7 @@ fun probationModel(model: Model) {
   val probationCaseSampler = model.addSoftwareSystem("Probation Case Sampler", "API which produces a representative and evenly distributed list of probation cases within a region and date range which form the basis of an on-site inspection")
   val wmt = model.addSoftwareSystem("WMT", "Workload Management Tool,\nhelps offender managers schedule their time based on service user risk")
 
+  NOMIS.defineModelEntities(model)
   val nomis = NOMIS.system.apply { Tags.PRISON_SERVICE.addTo(this) }
   val offenderAllocationManager = OffenderAllocationManager(model).system.apply { Tags.PRISON_SERVICE.addTo(this) }
 
