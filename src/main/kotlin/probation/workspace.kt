@@ -10,7 +10,7 @@ fun probationWorkspace(): Workspace {
   workspace.id = 54669
   workspace.model.enterprise = Enterprise("Probation in HM Prison and Probation Service")
 
-  CloudPlatform.getInstance(workspace.model)
+  CloudPlatform.defineDeploymentNodes(workspace.model)
   probationModel(workspace.model)
   probationViews(workspace.model, workspace.views)
   styles(workspace.views.configuration.styles)
