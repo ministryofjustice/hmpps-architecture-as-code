@@ -10,11 +10,11 @@ fun prisonWorkspace(): Workspace {
   val workspace = Workspace("Prison systems", "Systems related to the confinement of offenders")
   workspace.id = 55246
 
-  CloudPlatform.getInstance(workspace.model)
+  CloudPlatform.defineDeploymentNodes(workspace.model)
 
   // val systems = listOf<SOMETHING>(
-  NOMIS.getInstance(workspace.model)
-  PrisonerContentHub.getInstance(workspace.model)
+  NOMIS.defineModelEntities(workspace.model)
+  PrisonerContentHub.defineModelEntities(workspace.model)
   // )
   
   prisonModel(workspace.model)
@@ -23,14 +23,14 @@ fun prisonWorkspace(): Workspace {
   // systems.forEach {
   //   it.defineRelationships()
   // }
-  NOMIS.getInstance(workspace.model).defineRelationships()
-  PrisonerContentHub.getInstance(workspace.model).defineRelationships()
+  NOMIS.defineRelationships()
+  PrisonerContentHub.defineRelationships()
 
   // systems.forEach {
   //   it.defineViews(workspace.views)
   // }
-  NOMIS.getInstance(workspace.model).defineViews(workspace.views)
-  PrisonerContentHub.getInstance(workspace.model).defineViews(workspace.views)
+  NOMIS.defineViews(workspace.views)
+  PrisonerContentHub.defineViews(workspace.views)
 
   prisonViews(workspace.model, workspace.views)
   styles(workspace.views.configuration.styles)
