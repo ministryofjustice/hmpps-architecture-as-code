@@ -9,8 +9,8 @@ fun prisonWorkspace(): Workspace {
   val hmpps_prisons = Enterprise("HMPPS Prisons")
   val workspace = Workspace("Prison systems", "Systems related to the confinement of offenders").apply {
     model.setEnterprise(hmpps_prisons)
+    setId(55246)
   }
-  workspace.id = 55246
 
   cloudPlatform(workspace.model)
   prisonModel(workspace.model)
