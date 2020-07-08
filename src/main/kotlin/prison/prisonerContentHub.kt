@@ -7,7 +7,6 @@ import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ViewSet
 
 import uk.gov.justice.hmpps.architecture.shared.CloudPlatform
-import uk.gov.justice.hmpps.architecture.shared.SingletonHolder
 import uk.gov.justice.hmpps.architecture.shared.Tags
 
 class PrisonerContentHub private constructor() {

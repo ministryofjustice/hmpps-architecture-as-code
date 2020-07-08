@@ -7,8 +7,6 @@ import com.structurizr.view.ViewSet
 
 import uk.gov.justice.hmpps.architecture.shared.Tags
 
-import uk.gov.justice.hmpps.architecture.shared.SingletonHolder
-
 class NOMIS private constructor() {
 
   companion object {
