@@ -27,7 +27,9 @@ class PrisonerContentHub(model: Model) {
       "Prisoner Content Hub", 
       """
       The Prisoner Content Hub is a platform for prisoners to access data, content and services supporting individual progression and freeing up staff time.
-      """.trimIndent())
+      """.trimIndent()).apply {
+      setLocation(Location.Internal)
+    }
 
     val elasticSearchStore = system.addContainer("ElasticSearch store", "Data store for feedback collection, and indexing for Drupal CMS content", "ElasticSearch").apply {
       Tags.DATABASE.addTo(this)
