@@ -6,12 +6,14 @@ import com.structurizr.model.SoftwareSystem
 
 import com.structurizr.view.ViewSet
 
+import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
+
 import uk.gov.justice.hmpps.architecture.shared.CloudPlatform
 import uk.gov.justice.hmpps.architecture.shared.Tags
 
 class PrisonerContentHub private constructor() {
 
-  companion object {
+  companion object: HMPPSSoftwareSystem {
     lateinit var model: Model
     lateinit var system: SoftwareSystem
     lateinit var contentHubFrontend: Container
@@ -20,7 +22,7 @@ class PrisonerContentHub private constructor() {
      * TODO: add Prisoner internet infrastructure, AD
      * TODO: add BT PINS
      */
-    fun defineModelEntities(model: Model) {
+    override fun defineModelEntities(model: Model) {
       this.model = model
 
       val cloudPlatform = model.getDeploymentNodeWithName("Cloud Platform")
@@ -99,11 +101,11 @@ class PrisonerContentHub private constructor() {
       };
     }
 
-    fun defineRelationships() {
+    override fun defineRelationships() {
       contentHubFrontend.uses(NOMIS.elite2api, "lookup visits, canteen, etc.")
     }
 
-    fun defineViews(views: ViewSet) {
+    override fun defineViews(views: ViewSet) {
       views.createSystemContextView(system, "prisonerContentHubSystemContext", "The system context diagram for the Prisoner Content Hub"
       ).apply {
         addDefaultElements()

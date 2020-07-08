@@ -5,16 +5,17 @@ import com.structurizr.model.Container
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ViewSet
 
+import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
 import uk.gov.justice.hmpps.architecture.shared.Tags
 
 class NOMIS private constructor() {
 
-  companion object {
+  companion object: HMPPSSoftwareSystem {
     lateinit var system: SoftwareSystem
     lateinit var db: Container
     lateinit var elite2api: Container
 
-    fun defineModelEntities(model: Model) {
+    override fun defineModelEntities(model: Model) {
       val cloudPlatform = model.getDeploymentNodeWithName("Cloud Platform")
       val sqs = cloudPlatform.getDeploymentNodeWithName("SQS")
       val sns = cloudPlatform.getDeploymentNodeWithName("SNS")
@@ -83,10 +84,10 @@ class NOMIS private constructor() {
       }
     }
 
-    fun defineRelationships() {
+    override fun defineRelationships() {
     }
 
-    fun defineViews(views: ViewSet) {
+    override fun defineViews(views: ViewSet) {
       views.createContainerView(system, "nomiscontainer", null).apply {
         addDefaultElements()
         enableAutomaticLayout()
