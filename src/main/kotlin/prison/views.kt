@@ -16,11 +16,11 @@ fun prisonViews(model: Model, views: ViewSet) {
     addDefaultElements()
     add(model.getSoftwareSystemWithName("NOMIS")?.getContainerWithName("NOMIS database"))
     add(model.getSoftwareSystemWithName("NOMIS")?.getContainerWithName("Elite2 API"))
-    add(model.getSoftwareSystemWithName("NOMIS")?.getContainerWithName("ElasticSearch"))
+    add(model.getSoftwareSystemWithName("NOMIS")?.getContainerWithName("ElasticSearch store"))
     add(model.getSoftwareSystemWithName("NOMIS")?.getContainerWithName("PrisonerSearch"))
     add(model.getSoftwareSystemWithName("nDelius")?.getContainerWithName("nDelius database"))
     add(model.getSoftwareSystemWithName("nDelius")?.getContainerWithName("CommunityAPI"))
-    add(model.getSoftwareSystemWithName("nDelius")?.getContainerWithName("ElasticSearch"))
+    add(model.getSoftwareSystemWithName("nDelius")?.getContainerWithName("ElasticSearch store"))
     add(model.getSoftwareSystemWithName("nDelius")?.getContainerWithName("OffenderSearch"))
     add(model.getSoftwareSystemWithName("HMPPS Auth")!!)
     enableAutomaticLayout()
@@ -38,6 +38,11 @@ fun prisonViews(model: Model, views: ViewSet) {
     add(model.getSoftwareSystemWithName("HMPPS Auth")!!)
     enableAutomaticLayout()
     isEnterpriseBoundaryVisible = false
+  }
+
+  views.createDeploymentView(pathfinder, "PathfinderProductionDeployment", "The Production deployment scenario for the Pathfinder service").apply {
+    addDefaultElements()
+    enableAutomaticLayout()
   }
 
 }

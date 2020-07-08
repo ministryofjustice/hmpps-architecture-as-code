@@ -8,6 +8,7 @@ import com.structurizr.view.ViewSet
 
 import uk.gov.justice.hmpps.architecture.shared.CloudPlatform
 import uk.gov.justice.hmpps.architecture.shared.SingletonHolder
+import uk.gov.justice.hmpps.architecture.shared.Tags
 
 class PrisonerContentHub private constructor(model: Model) {
   val DATABASE_TAG = "database";
@@ -27,6 +28,7 @@ class PrisonerContentHub private constructor(model: Model) {
     val cloudPlatform = model.getDeploymentNodeWithName("Cloud Platform")
     val rds = cloudPlatform.getDeploymentNodeWithName("RDS")
     val s3 = cloudPlatform.getDeploymentNodeWithName("S3")
+    val elasticSearch = cloudPlatform.getDeploymentNodeWithName("ElasticSearch")
     val kubernetes = cloudPlatform.getDeploymentNodeWithName("Kubernetes")
 
     system = model.addSoftwareSystem(
@@ -36,20 +38,20 @@ class PrisonerContentHub private constructor(model: Model) {
       """.trimIndent())
 
     val elasticSearchStore = system.addContainer("ElasticSearch store", "Data store for feedback collection, and indexing for Drupal CMS content", "ElasticSearch").apply {
-      addTags(DATABASE_TAG)
-      addTags(SOFTWARE_AS_A_SERVICE_TAG)
-      cloudPlatform.add(this)
+      Tags.DATABASE.addTo(this)
+      Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
+      elasticSearch.add(this)
     }
 
     val drupalDatabase = system.addContainer("Drupal database", null, "MariaDB").apply {
-      addTags(DATABASE_TAG)
-      addTags(SOFTWARE_AS_A_SERVICE_TAG)
+      Tags.DATABASE.addTo(this)
+      Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
       rds.add(this)
     }
 
     val s3ContentStore = system.addContainer("Content Store", "Stores audio, video, PDF and image content", "S3").apply {
-      addTags(DATABASE_TAG)
-      addTags(SOFTWARE_AS_A_SERVICE_TAG)
+      Tags.DATABASE.addTo(this)
+      Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
       s3.add(this)
     }
 
@@ -71,7 +73,7 @@ class PrisonerContentHub private constructor(model: Model) {
     val kibanaDashboard = system.addContainer("Kibana dashboard", "Feedback reports and analytics dashboard", "Kibana").apply {
       //setUrl("TODO")
       uses(elasticSearchStore, "HTTPS Rest API")
-      cloudPlatform.add(this)
+      elasticSearch.add(this)
     }
 
     /**
@@ -105,7 +107,18 @@ class PrisonerContentHub private constructor(model: Model) {
   }
 
   fun defineViews(views: ViewSet) {
+    views.createSystemContextView(system, "prisonerContentHubSystemContext", "The system context diagram for the Prisoner Content Hub"
+    ).apply {
+      addDefaultElements()
+      enableAutomaticLayout()
+    }
+
     views.createContainerView(system, "prisonerContentHubContainer", null).apply {
+      addDefaultElements()
+      enableAutomaticLayout()
+    }
+
+    views.createDeploymentView(system, "prisonerContentHubContainerProductionDeployment", "The Production deployment scenario for the Prisoner Content Hub").apply {
       addDefaultElements()
       enableAutomaticLayout()
     }
