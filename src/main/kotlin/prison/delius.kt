@@ -25,8 +25,8 @@ class DELIUS(model: Model) {
         "National Delius\nSupporting the management of offenders and delivering national reporting and performance monitoring data")
 
     db = system.addContainer("nDelius database", null, "Oracle").apply {
-        Tags.DATABASE.addTo(this)
-        Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
+      Tags.DATABASE.addTo(this)
+      Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
     }
 
     val elasticSearchStore = system.addContainer("ElasticSearch store",
