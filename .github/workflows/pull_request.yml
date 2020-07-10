@@ -8,5 +8,5 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: EditorConfig
-        uses: zbeekman/EditorConfig-Action@28b76e718c351dd35b22c8f7216192bb9de5c21b
+      - uses: actions/checkout@v2
+      - uses: zbeekman/EditorConfig-Action@28b76e718c351dd35b22c8f7216192bb9de5c21b
