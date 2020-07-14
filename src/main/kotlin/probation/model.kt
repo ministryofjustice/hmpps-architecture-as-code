@@ -31,7 +31,7 @@ fun probationModel(model: Model) {
 
   val caseNotesToProbation = model.addSoftwareSystem("Case Notes to Probation", "Polls for case notes and pushes them to probation systems")
   val crcSystem = model.addSoftwareSystem("CRC software systems", null).apply { Tags.PROVIDER.addTo(this) }
-  val delius = model.addSoftwareSystem("nDelius", "National Delius\nSupporting the management of offenders and delivering national reporting and performance monitoring data")
+  val delius = model.getSoftwareSystemWithName("nDelius")!!
   val epf = model.addSoftwareSystem("EPF", "Effective Proposal Framework\nPresents sentencing options to NPS staff in court who are providing sentencing advice to sentencers")
   val equip = model.addSoftwareSystem("EQuiP", "Central repository for all step-by-step business processes (in probation?)")
   val interventionsManager = model.addSoftwareSystem("IM", "Interventions Manager\nHolds records of interventions delivered to services users in the community")
