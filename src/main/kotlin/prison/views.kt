@@ -1,6 +1,7 @@
 package uk.gov.justice.hmpps.architecture.prison
 
 import com.structurizr.model.Model
+import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
 
 fun prisonViews(model: Model, views: ViewSet) {
@@ -20,17 +21,17 @@ fun prisonViews(model: Model, views: ViewSet) {
   views.createSystemContextView(prisonerContentHub, "prisonerContentHubSystemContext", "The system context diagram for the Prisoner Content Hub"
   ).apply {
     addDefaultElements()
-    enableAutomaticLayout()
+    enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
   }
 
   views.createContainerView(prisonerContentHub, "prisonerContentHubContainer", null).apply {
     addDefaultElements()
-    enableAutomaticLayout()
+    enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
   }
 
   views.createDeploymentView(prisonerContentHub, "prisonerContentHubContainerProductionDeployment", "The Production deployment scenario for the Prisoner Content Hub").apply {
     addDefaultElements()
-    enableAutomaticLayout()
+    enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
   }
 
 
