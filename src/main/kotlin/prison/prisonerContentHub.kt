@@ -21,9 +21,9 @@ class PrisonerContentHub private constructor() {
     lateinit var contentHubFrontend: Container
 
     /**
-     * TODO: add Prisoner internet infrastructure, AD
-     * TODO: add BT PINS
-     */
+      * TODO: add Prisoner internet infrastructure, AD
+      * TODO: add BT PINS
+      **/
     override fun defineModelEntities(model: Model) {
       this.model = model
 
@@ -39,6 +39,9 @@ class PrisonerContentHub private constructor() {
         The Prisoner Content Hub is a platform for prisoners to access data, content and services supporting individual progression and freeing up staff time.
         """.trimIndent()).apply {
           setLocation(Location.Internal)
+          val PRISON_PROBATION_PROPERTY_NAME = "business_unit"
+          val PRISON_SERVICE = "prisons"
+          addProperty(PRISON_PROBATION_PROPERTY_NAME, PRISON_SERVICE)
         }
 
       val elasticSearchStore = system.addContainer("ElasticSearch store", "Data store for feedback collection, and indexing for Drupal CMS content", "ElasticSearch").apply {
@@ -81,8 +84,8 @@ class PrisonerContentHub private constructor() {
       }
 
       /**
-       * Users
-       */
+        * Users
+        **/
       model.addPerson("Feedback Reporter", "HMPPS Staff collating feedback for protection, product development and analytics").apply {
         uses(kibanaDashboard, "Extracts CSV files of prisoner feedback, views individual feedback responses, and analyses sentiment and statistics of feedback")
         setLocation(Location.Internal)
