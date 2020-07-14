@@ -1,12 +1,16 @@
 package uk.gov.justice.hmpps.architecture.probation
 
+import com.structurizr.model.CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy
 import com.structurizr.model.Model
 
 import uk.gov.justice.hmpps.architecture.prison.NOMIS
-import uk.gov.justice.hmpps.architecture.prison.OffenderAllocationManager
+import uk.gov.justice.hmpps.architecture.prison.OffenderManagementInCustody
 import uk.gov.justice.hmpps.architecture.shared.Tags
 
 fun probationModel(model: Model) {
+  model.setImpliedRelationshipsStrategy(
+    CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy())
+
   val contractManager = model.addPerson("Contract Manager for CRCs", null)
   val courtAdmin = model.addPerson("NPS court administrator", null)
   val crcOffenderManager = model.addPerson("CRC offender manager", "Probation officers in custody, court and the community employed by intervention providers").apply { Tags.PROVIDER.addTo(this) }
@@ -45,7 +49,8 @@ fun probationModel(model: Model) {
 
   NOMIS.defineModelEntities(model)
   val nomis = NOMIS.system.apply { Tags.PRISON_SERVICE.addTo(this) }
-  val offenderAllocationManager = OffenderAllocationManager(model).system.apply { Tags.PRISON_SERVICE.addTo(this) }
+  val omic = OffenderManagementInCustody(model)
+  omic.system.apply { Tags.PRISON_SERVICE.addTo(this) }
 
   prisonToProbation.setUrl("https://dsdmoj.atlassian.net/wiki/spaces/NOM/pages/1947107651/Prison+to+Probation+Update+-+Delius+DSS+Automatic+updates")
   probationCaseSampler.setUrl("https://dsdmoj.atlassian.net/wiki/spaces/NDSS/pages/1989181486/HMIP+Case+Sampling")
@@ -72,6 +77,7 @@ fun probationModel(model: Model) {
   interventionServices.uses(interventionsManager, "creates new interventions in")
   interventionsManager.uses(delius, "pushes contact information of interest to")
   ndmis.uses(delius, "extracts and transforms data from")
+  ndmis.uses(omic.allocationManager, "sends extracts containing service user allocation to", "email")
   nomis.uses(delius, "offender data is copied into", "NDH")
   nomis.uses(oasys, "offender data is coped into", "NDH")
   nomis.uses(prisonToProbation, "notifies changes")
@@ -96,7 +102,7 @@ fun probationModel(model: Model) {
   dataInnovation.uses(ndmis, "uses data from")
   hmip.uses(ndmis, "uses data from")
   nart.uses(ndmis, "creates reports in")
-  nart.uses(offenderAllocationManager, "sends extracts containing service user allocation to", "email")
   npsPerformanceOfficer.uses(ndmis, "uses reports in")
+  omic.ldu.uses(delius, "maintains 'shadow' team assignments for service users during prison-to-probation handover in")
   prisonPerformance.uses(ndmis, "to provide details of offenders released into the community, looks into")
 }
