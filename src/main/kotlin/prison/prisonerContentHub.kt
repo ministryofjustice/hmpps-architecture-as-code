@@ -1,9 +1,11 @@
 package uk.gov.justice.hmpps.architecture.prison
 
 import com.structurizr.model.Container
+import com.structurizr.model.Location
 import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 
+import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
 
 import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
@@ -35,7 +37,9 @@ class PrisonerContentHub private constructor() {
         "Prisoner Content Hub", 
         """
         The Prisoner Content Hub is a platform for prisoners to access data, content and services supporting individual progression and freeing up staff time.
-        """.trimIndent())
+        """.trimIndent()).apply {
+          setLocation(Location.Internal)
+        }
 
       val elasticSearchStore = system.addContainer("ElasticSearch store", "Data store for feedback collection, and indexing for Drupal CMS content", "ElasticSearch").apply {
         Tags.DATABASE.addTo(this)
@@ -79,25 +83,29 @@ class PrisonerContentHub private constructor() {
       /**
        * Users
        */
-      
       model.addPerson("Feedback Reporter", "HMPPS Staff collating feedback for protection, product development and analytics").apply {
         uses(kibanaDashboard, "Extracts CSV files of prisoner feedback, views individual feedback responses, and analyses sentiment and statistics of feedback")
+        setLocation(Location.Internal)
       };
 
       model.addPerson("Prisoner", "A prisoner over 18 years old, held in the public prison estate").apply {
         uses(contentHubFrontend, "Views videos, audio programmes, site updates, and rehabilitative material")
+        setLocation(Location.External)
       };
 
       model.addPerson("Young Offender", "A person under 18, held in a Young Offender Institute").apply {
         uses(contentHubFrontend, "Views videos, audio programmes, site updates, and rehabilitative material")
+        setLocation(Location.External)
       };
 
       model.addPerson("Content editor", "HMPPS Digital staff curating content for the entire prison estate and supporting individual prisons").apply {
         uses(drupal, "Authors and curates content for the prison estate")
+        setLocation(Location.Internal)
       };
 
       model.addPerson("Prison Content editor", "A content author on-site in a prison, authoring content for their prison").apply {
         uses(drupal, "Authors and curates content for their prison")
+        setLocation(Location.Internal)
       };
     }
 
@@ -109,17 +117,17 @@ class PrisonerContentHub private constructor() {
       views.createSystemContextView(system, "prisonerContentHubSystemContext", "The system context diagram for the Prisoner Content Hub"
       ).apply {
         addDefaultElements()
-        enableAutomaticLayout()
+        enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
       }
 
       views.createContainerView(system, "prisonerContentHubContainer", null).apply {
         addDefaultElements()
-        enableAutomaticLayout()
+        enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
       }
 
       views.createDeploymentView(system, "prisonerContentHubContainerProductionDeployment", "The Production deployment scenario for the Prisoner Content Hub").apply {
         addDefaultElements()
-        enableAutomaticLayout()
+        enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
       }
     }
   }
