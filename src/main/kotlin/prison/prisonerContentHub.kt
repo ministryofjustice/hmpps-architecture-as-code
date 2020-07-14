@@ -28,7 +28,7 @@ class PrisonerContentHub private constructor() {
       this.model = model
 
       system = model.addSoftwareSystem(
-        "Prisoner Content Hub", 
+        "Prisoner Content Hub",
         """
         The Prisoner Content Hub is a platform for prisoners to access data, content and services supporting individual progression and freeing up staff time.
         """.trimIndent()).apply {
@@ -107,7 +107,7 @@ class PrisonerContentHub private constructor() {
     }
 
     override fun defineRelationships() {
-      contentHubFrontend.uses(NOMIS.elite2api, "lookup visits, canteen, etc.")
+      contentHubFrontend.uses(NOMIS.prisonApi, "lookup visits, canteen, etc.")
     }
 
     override fun defineViews(views: ViewSet) {

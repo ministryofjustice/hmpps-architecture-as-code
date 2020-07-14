@@ -15,7 +15,7 @@ class NOMIS private constructor() {
   companion object: HMPPSSoftwareSystem {
     lateinit var system: SoftwareSystem
     lateinit var db: Container
-    lateinit var elite2api: Container
+    lateinit var prisonApi: Container
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem("NOMIS", """
@@ -35,10 +35,11 @@ class NOMIS private constructor() {
         uses(db, "connects to", "JDBC")
       }
 
-      elite2api = system.addContainer("Elite2 API",
+      prisonApi = system.addContainer("Prison API",
           "API over the NOMIS DB used by Digital Prison team applications and services", "Java")
           .apply {
-            setUrl("https://github.com/ministryofjustice/elite2-api")
+            addProperty("previous-name", "Elite2 API")
+            setUrl("https://github.com/ministryofjustice/prison-api")
             uses(db, "connects to", "JDBC")
           }
 
@@ -65,7 +66,7 @@ class NOMIS private constructor() {
       }
 
       system.addContainer("NOMIS API (Deprecated)",
-          "(Deprecated) REST API for NOMIS which connects to Oracle DB. Deprecated - please use " + elite2api.getName() + " instead.",
+          "(Deprecated) REST API for NOMIS which connects to Oracle DB. Deprecated - please use " + prisonApi.getName() + " instead.",
           null).apply {
         setUrl("https://github.com/ministryofjustice/nomis-api")
         Tags.DEPRECATED.addTo(this)
