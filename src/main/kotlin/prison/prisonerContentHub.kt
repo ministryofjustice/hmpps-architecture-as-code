@@ -96,7 +96,7 @@ class PrisonerContentHub(model: Model) {
 
     model.addPerson("Prison Content editor", "A content author on-site in a prison, authoring content for their prison").apply {
       uses(drupal, "Authors and curates content for their prison")
-      setLocation(Location.External)
+      setLocation(Location.Internal)
     };
   }
 }
