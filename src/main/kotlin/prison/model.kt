@@ -24,9 +24,6 @@ fun prisonModel(model: Model) {
   NDH(model).system
   PATHFINDER(model)
 
-  OffenderManagementInCustody(model).apply {
-    spo.uses(allocationManager, "look at unallocated service users coming from court in")
-    pom.uses(allocationManager, "look at service users who need handing over to community in")
-    allocationManager.uses(NOMIS.prisonApi, "polls service users currently in the logged in user's prison from")
-  }
+  spo.uses(OffenderManagementInCustody.allocationManager, "look at unallocated service users coming from court in")
+  pom.uses(OffenderManagementInCustody.allocationManager, "look at service users who need handing over to community in")
 }
