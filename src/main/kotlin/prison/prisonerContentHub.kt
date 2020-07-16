@@ -27,12 +27,6 @@ class PrisonerContentHub private constructor() {
     override fun defineModelEntities(model: Model) {
       this.model = model
 
-      val cloudPlatform = model.getDeploymentNodeWithName("Cloud Platform")
-      val rds = cloudPlatform.getDeploymentNodeWithName("RDS")
-      val s3 = cloudPlatform.getDeploymentNodeWithName("S3")
-      val elasticSearch = cloudPlatform.getDeploymentNodeWithName("ElasticSearch")
-      val kubernetes = cloudPlatform.getDeploymentNodeWithName("Kubernetes")
-
       system = model.addSoftwareSystem(
         "Prisoner Content Hub", 
         """
@@ -47,19 +41,19 @@ class PrisonerContentHub private constructor() {
       val elasticSearchStore = system.addContainer("ElasticSearch store", "Data store for feedback collection, and indexing for Drupal CMS content", "ElasticSearch").apply {
         Tags.DATABASE.addTo(this)
         Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
-        elasticSearch.add(this)
+        CloudPlatform.elasticsearch.add(this)
       }
 
       val drupalDatabase = system.addContainer("Drupal database", "Prisoner Content Hub CMS data and Drupal metadata", "MariaDB").apply {
         Tags.DATABASE.addTo(this)
         Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
-        rds.add(this)
+        CloudPlatform.rds.add(this)
       }
 
       val s3ContentStore = system.addContainer("Content Store", "Audio, video, PDF and image content for the Prisoner Content Hub", "S3").apply {
         Tags.DATABASE.addTo(this)
         Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
-        s3.add(this)
+        CloudPlatform.s3.add(this)
       }
 
       val drupal = system.addContainer("Prisoner Content Hub CMS", "Content Management System for HMPPS Digital and prison staff to curate content for prisoners", "Drupal").apply {
@@ -67,20 +61,20 @@ class PrisonerContentHub private constructor() {
         uses(drupalDatabase, "MariaDB connection")
         uses(elasticSearchStore, "HTTPS REST API")
         uses(s3ContentStore, "HTTPS REST API")
-        kubernetes.add(this)
+        CloudPlatform.kubernetes.add(this)
       }
 
       contentHubFrontend = system.addContainer("Prisoner Content Hub frontend", "Prisoner-facing view of the Content Hub", "Node").apply {
         setUrl("https://github.com/ministryofjustice/prisoner-content-hub-frontend")
         uses(drupal, "HTTPS Rest API")
         uses(elasticSearchStore, "HTTPS REST API")
-        kubernetes.add(this)
+        CloudPlatform.kubernetes.add(this)
       }
 
       val kibanaDashboard = system.addContainer("Kibana dashboard", "Feedback reports and analytics dashboard", "Kibana").apply {
         //setUrl("TODO")
         uses(elasticSearchStore, "HTTPS Rest API")
-        elasticSearch.add(this)
+        CloudPlatform.elasticsearch.add(this)
       }
 
       /**

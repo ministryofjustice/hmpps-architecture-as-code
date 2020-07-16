@@ -7,6 +7,7 @@ import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ViewSet
 
 import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
+import uk.gov.justice.hmpps.architecture.shared.CloudPlatform
 import uk.gov.justice.hmpps.architecture.shared.Tags
 
 class NOMIS private constructor() {
@@ -17,12 +18,6 @@ class NOMIS private constructor() {
     lateinit var elite2api: Container
 
     override fun defineModelEntities(model: Model) {
-      val cloudPlatform = model.getDeploymentNodeWithName("Cloud Platform")
-      val sqs = cloudPlatform.getDeploymentNodeWithName("SQS")
-      val sns = cloudPlatform.getDeploymentNodeWithName("SNS")
-      val kubernetes = cloudPlatform.getDeploymentNodeWithName("Kubernetes")
-      val elasticSearch = cloudPlatform.getDeploymentNodeWithName("ElasticSearch")
-
       system = model.addSoftwareSystem("NOMIS", """
       National Offender Management Information System,
       the case management system for offender data in use in custody - both public and private prisons
@@ -52,13 +47,13 @@ class NOMIS private constructor() {
           .apply {
             Tags.DATABASE.addTo(this)
             Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
-            elasticSearch.add(this)
+            CloudPlatform.elasticsearch.add(this)
           }
 
       system.addContainer("PrisonerSearch", "API over the NOMIS prisoner data held in Elasticsearch",
           "Java").apply {
         uses(elasticSearchStore, "Queries prisoner data from NOMIS Elasticsearch Index")
-        kubernetes.add(this)
+        CloudPlatform.kubernetes.add(this)
       }
 
       system.addContainer("Custody API (Deprecated)",
@@ -81,9 +76,9 @@ class NOMIS private constructor() {
           "Publishes Events about offender change to Pub / Sub Topics.", "Java").apply {
         setUrl("https://github.com/ministryofjustice/offender-events")
         uses(db, "JDBC")
-        sqs.add(this)
-        sns.add(this)
-        kubernetes.add(this)
+        CloudPlatform.sqs.add(this)
+        CloudPlatform.sns.add(this)
+        CloudPlatform.kubernetes.add(this)
       }
     }
 
