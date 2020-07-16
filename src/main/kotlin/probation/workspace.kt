@@ -2,7 +2,7 @@ package uk.gov.justice.hmpps.architecture.probation
 
 import com.structurizr.Workspace
 import com.structurizr.model.Enterprise
-import uk.gov.justice.hmpps.architecture.shared.cloudPlatform
+import uk.gov.justice.hmpps.architecture.shared.CloudPlatform
 import uk.gov.justice.hmpps.architecture.shared.styles
 
 fun probationWorkspace(): Workspace {
@@ -10,7 +10,7 @@ fun probationWorkspace(): Workspace {
   workspace.id = 54669
   workspace.model.enterprise = Enterprise("Probation in HM Prison and Probation Service")
 
-  cloudPlatform(workspace.model)
+  CloudPlatform.defineDeploymentNodes(workspace.model)
   Delius(workspace.model)
   probationModel(workspace.model)
   probationViews(workspace.model, workspace.views)

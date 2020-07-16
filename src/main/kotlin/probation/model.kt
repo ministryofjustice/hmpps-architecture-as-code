@@ -43,7 +43,8 @@ fun probationModel(model: Model) {
   val probationCaseSampler = model.addSoftwareSystem("Probation Case Sampler", "API which produces a representative and evenly distributed list of probation cases within a region and date range which form the basis of an on-site inspection")
   val wmt = model.addSoftwareSystem("WMT", "Workload Management Tool,\nhelps offender managers schedule their time based on service user risk")
 
-  val nomis = NOMIS(model).system.apply { Tags.PRISON_SERVICE.addTo(this) }
+  NOMIS.defineModelEntities(model)
+  val nomis = NOMIS.system.apply { Tags.PRISON_SERVICE.addTo(this) }
   val offenderAllocationManager = OffenderAllocationManager(model).system.apply { Tags.PRISON_SERVICE.addTo(this) }
 
   prisonToProbation.setUrl("https://dsdmoj.atlassian.net/wiki/spaces/NOM/pages/1947107651/Prison+to+Probation+Update+-+Delius+DSS+Automatic+updates")
