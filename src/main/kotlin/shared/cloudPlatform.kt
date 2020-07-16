@@ -8,7 +8,6 @@ class CloudPlatform private constructor() {
   
 
   companion object {
-    lateinit var cloudPlatform: DeploymentNode
     lateinit var rds: DeploymentNode
     lateinit var s3: DeploymentNode
     lateinit var sns: DeploymentNode
@@ -17,7 +16,7 @@ class CloudPlatform private constructor() {
     lateinit var kubernetes: DeploymentNode
 
     fun defineDeploymentNodes(model: Model) {
-      cloudPlatform = model.addDeploymentNode("Cloud Platform", "AWS shared hosting platform", "AWS")
+      var cloudPlatform = model.addDeploymentNode("Cloud Platform", "AWS shared hosting platform", "AWS")
       rds = cloudPlatform.addDeploymentNode("RDS", "AWS Relational Database Service database-as-a-service", "AWS")
       s3 = cloudPlatform.addDeploymentNode("S3", "AWS Simple Storage Service", "AWS")
       sns = cloudPlatform.addDeploymentNode("SNS", "AWS Simple Notification Service", "AWS")
