@@ -17,13 +17,14 @@ fun prisonWorkspace(): Workspace {
   // The systems we wish to include in this workspace
   val systems = listOf<HMPPSSoftwareSystem>(
     NOMIS,
+    OffenderManagementInCustody,
     PrisonerContentHub
   )
 
   // We start by defining the deployment nodes. Containers are often associated with deployment nodes
   // during model definition, so we front-load this task to make everything available for that step.
   CloudPlatform.defineDeploymentNodes(workspace.model)
-  
+
   // Define all our models. These are necessary before we start defining relationships
   // between systems
   systems.forEach {
@@ -32,7 +33,7 @@ fun prisonWorkspace(): Workspace {
 
   // TODO: this should be refactored into the approach in this file
   prisonModel(workspace.model)
-  
+
   systems.forEach {
     it.defineRelationships()
   }

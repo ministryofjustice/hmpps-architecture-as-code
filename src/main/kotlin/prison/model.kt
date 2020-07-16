@@ -15,8 +15,15 @@ fun prisonModel(model: Model) {
   model.setImpliedRelationshipsStrategy(
     CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy())
 
+  val spo = model.addPerson("Senior Prison Offender Manager", "manages service users and offender managers")
+  val pom = model.addPerson("Prison Offender Manager", "responsible for the service users in their prison")
+  pom.interactsWith(spo, "managed by")
+
   HmmpsAuth(model)
   Delius(model)
   NDH(model).system
   PATHFINDER(model)
+
+  spo.uses(OffenderManagementInCustody.allocationManager, "look at unallocated service users coming from court in")
+  pom.uses(OffenderManagementInCustody.allocationManager, "look at service users who need handing over to community in")
 }
