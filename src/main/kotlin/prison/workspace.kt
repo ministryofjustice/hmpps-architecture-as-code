@@ -33,12 +33,10 @@ fun prisonWorkspace(): Workspace {
   // TODO: this should be refactored into the approach in this file
   prisonModel(workspace.model)
   
-  // Then we can iterate through the list and gereate relationships and views
   systems.forEach {
     it.defineRelationships()
   }
 
-  // We can now define all our views
   systems.forEach {
     it.defineViews(workspace.views)
   }
