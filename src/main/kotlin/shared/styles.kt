@@ -7,7 +7,7 @@ import uk.gov.justice.hmpps.architecture.shared.Tags
 
 fun styles(styles: Styles) {
   styles.addElementStyle("Software System").color("#ffffff").background("#006699")
-  styles.addElementStyle("Person").shape(Shape.Person).background("#0099cc")
+  styles.addElementStyle("Person").shape(Shape.Person).color("#ffffff").background("#0099cc")
 
   styles.addElementStyle(Tags.DATABASE.toString()).shape(Shape.Cylinder)
 
