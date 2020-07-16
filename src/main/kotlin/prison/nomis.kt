@@ -29,12 +29,6 @@ class NOMIS private constructor() {
         Tags.DATABASE.addTo(this)
       }
 
-      system.addContainer("NOMIS Web Application",
-          "Web Application fronting the NOMIS DB - used by Digital Prison team applications and services",
-          "Weblogic App Sever").apply {
-        uses(db, "connects to", "JDBC")
-      }
-
       prisonApi = system.addContainer("Prison API",
           "API over the NOMIS DB used by Digital Prison team applications and services", "Java")
           .apply {
@@ -42,6 +36,12 @@ class NOMIS private constructor() {
             setUrl("https://github.com/ministryofjustice/prison-api")
             uses(db, "connects to", "JDBC")
           }
+
+      system.addContainer("DPS Web Application",
+        "DPS - used by Digital Prison team applications and services",
+        "HTTPS").apply {
+        uses(prisonApi, "connects to", "RestHTML")
+      }
 
       val elasticSearchStore = system.addContainer("ElasticSearch store",
           "Data store for NOMIS content", "ElasticSearch")
@@ -52,30 +52,15 @@ class NOMIS private constructor() {
           }
 
       system.addContainer("PrisonerSearch", "API over the NOMIS prisoner data held in Elasticsearch",
-          "Java").apply {
+          "Kotlin").apply {
         uses(elasticSearchStore, "Queries prisoner data from NOMIS Elasticsearch Index")
+        setUrl("https://github.com/ministryofjustice/prisoner-offender-search")
         CloudPlatform.kubernetes.add(this)
       }
 
-      system.addContainer("Custody API (Deprecated)",
-          "(Deprecated) Offender API.  The service provides REST access to the Nomis Oracle DB offender information. Deprecated - please use Elite2 API instead.",
-          null).apply {
-        setUrl("https://github.com/ministryofjustice/custody-api")
-        Tags.DEPRECATED.addTo(this)
-        uses(db, "connects to", "JDBC")
-      }
-
-      system.addContainer("NOMIS API (Deprecated)",
-          "(Deprecated) REST API for NOMIS which connects to Oracle DB. Deprecated - please use " + prisonApi.getName() + " instead.",
-          null).apply {
-        setUrl("https://github.com/ministryofjustice/nomis-api")
-        Tags.DEPRECATED.addTo(this)
-        uses(db, "connects to", "JDBC")
-      }
-
-      system.addContainer("Offender Events",
-          "Publishes Events about offender change to Pub / Sub Topics.", "Java").apply {
-        setUrl("https://github.com/ministryofjustice/offender-events")
+      system.addContainer("Prison Offender Events",
+          "Publishes Events about prisoner changes to Pub / Sub Topics.", "Kotlin").apply {
+        setUrl("https://github.com/ministryofjustice/prison-offender-events")
         uses(db, "connects to", "JDBC")
         CloudPlatform.sqs.add(this)
         CloudPlatform.sns.add(this)
