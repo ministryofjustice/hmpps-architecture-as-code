@@ -1,8 +1,8 @@
 package uk.gov.justice.hmpps.architecture.prison
 
+import com.structurizr.model.Container
 import com.structurizr.model.Location
 import com.structurizr.model.Model
-import com.structurizr.model.Container
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ViewSet
 
@@ -15,7 +15,7 @@ class NOMIS private constructor() {
   companion object: HMPPSSoftwareSystem {
     lateinit var system: SoftwareSystem
     lateinit var db: Container
-    lateinit var elite2api: Container
+    lateinit var prisonApi: Container
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem("NOMIS", """
@@ -32,14 +32,15 @@ class NOMIS private constructor() {
       system.addContainer("NOMIS Web Application",
           "Web Application fronting the NOMIS DB - used by Digital Prison team applications and services",
           "Weblogic App Sever").apply {
-        uses(db, "JDBC")
+        uses(db, "connects to", "JDBC")
       }
 
-      elite2api = system.addContainer("Elite2 API",
+      prisonApi = system.addContainer("Prison API",
           "API over the NOMIS DB used by Digital Prison team applications and services", "Java")
           .apply {
-            setUrl("https://github.com/ministryofjustice/elite2-api")
-            uses(db, "JDBC")
+            addProperty("previous-name", "Elite2 API")
+            setUrl("https://github.com/ministryofjustice/prison-api")
+            uses(db, "connects to", "JDBC")
           }
 
       val elasticSearchStore = system.addContainer("ElasticSearch store",
@@ -61,21 +62,21 @@ class NOMIS private constructor() {
           null).apply {
         setUrl("https://github.com/ministryofjustice/custody-api")
         Tags.DEPRECATED.addTo(this)
-        uses(db, "JDBC")
+        uses(db, "connects to", "JDBC")
       }
 
       system.addContainer("NOMIS API (Deprecated)",
-          "(Deprecated) REST API for NOMIS which connects to Oracle DB. Deprecated - please use " + elite2api.getName() + " instead.",
+          "(Deprecated) REST API for NOMIS which connects to Oracle DB. Deprecated - please use " + prisonApi.getName() + " instead.",
           null).apply {
         setUrl("https://github.com/ministryofjustice/nomis-api")
         Tags.DEPRECATED.addTo(this)
-        uses(db, "JDBC")
+        uses(db, "connects to", "JDBC")
       }
 
       system.addContainer("Offender Events",
           "Publishes Events about offender change to Pub / Sub Topics.", "Java").apply {
         setUrl("https://github.com/ministryofjustice/offender-events")
-        uses(db, "JDBC")
+        uses(db, "connects to", "JDBC")
         CloudPlatform.sqs.add(this)
         CloudPlatform.sns.add(this)
         CloudPlatform.kubernetes.add(this)

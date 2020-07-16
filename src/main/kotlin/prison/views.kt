@@ -16,7 +16,7 @@ fun prisonViews(model: Model, views: ViewSet) {
       "The container diagram for the Pathfinder System.").apply {
     addDefaultElements()
     add(model.getSoftwareSystemWithName("NOMIS")?.getContainerWithName("NOMIS database"))
-    add(model.getSoftwareSystemWithName("NOMIS")?.getContainerWithName("Elite2 API"))
+    add(model.getSoftwareSystemWithName("NOMIS")?.getContainerWithName("Prison API"))
     add(model.getSoftwareSystemWithName("NOMIS")?.getContainerWithName("ElasticSearch store"))
     add(model.getSoftwareSystemWithName("NOMIS")?.getContainerWithName("PrisonerSearch"))
     add(model.getSoftwareSystemWithName("nDelius")?.getContainerWithName("nDelius database"))
