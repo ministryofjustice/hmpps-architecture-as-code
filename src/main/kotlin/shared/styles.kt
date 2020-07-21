@@ -6,15 +6,15 @@ import com.structurizr.view.Styles
 import uk.gov.justice.hmpps.architecture.shared.Tags
 
 fun styles(styles: Styles) {
-  styles.addElementStyle("Software System").color("#ffffff").background("#006699")
-  styles.addElementStyle("Person").shape(Shape.Person).color("#ffffff").background("#0099cc")
+  styles.addElementStyle("Software System").background("#aabbdd")
+  styles.addElementStyle("Person").shape(Shape.Person).background("#aabbdd")
 
   styles.addElementStyle(Tags.DATABASE.toString()).shape(Shape.Cylinder)
 
-  styles.addElementStyle(Tags.PRISON_SERVICE.toString()).color("#000000").background("#ffdf2d")
+  styles.addElementStyle(Tags.PRISON_SERVICE.toString()).background("#ffdf2d")
 
   styles.addElementStyle(Tags.WEB_BROWSER.toString()).shape(Shape.WebBrowser)
 
-  styles.addElementStyle(Tags.PROVIDER.toString()).color("#000000").background("#ccff99")
+  styles.addElementStyle(Tags.PROVIDER.toString()).background("#ccff99")
   styles.addElementStyle(Tags.DEPRECATED.toString()).background("#999999")
 }
