@@ -12,10 +12,9 @@ fun probationWorkspace(): Workspace {
 
   CloudPlatform.defineDeploymentNodes(workspace.model)
 
-  val systems = listOf(EPF)
+  val systems = listOf(EPF, Delius)
   systems.forEach { it.defineModelEntities(workspace.model) }
 
-  Delius(workspace.model)
   probationModel(workspace.model)
   probationViews(workspace.model, workspace.views)
   styles(workspace.views.configuration.styles)

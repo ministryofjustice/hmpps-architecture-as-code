@@ -1,9 +1,9 @@
 package uk.gov.justice.hmpps.architecture.prison
 
-import com.structurizr.model.Enterprise
 import com.structurizr.Workspace
-
+import com.structurizr.model.Enterprise
 import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
+import uk.gov.justice.hmpps.architecture.probation.Delius
 import uk.gov.justice.hmpps.architecture.shared.CloudPlatform
 import uk.gov.justice.hmpps.architecture.shared.styles
 
@@ -18,7 +18,8 @@ fun prisonWorkspace(): Workspace {
   val systems = listOf<HMPPSSoftwareSystem>(
     NOMIS,
     OffenderManagementInCustody,
-    PrisonerContentHub
+    PrisonerContentHub,
+    Delius
   )
 
   // We start by defining the deployment nodes. Containers are often associated with deployment nodes
