@@ -28,5 +28,7 @@ fun probationViews(model: Model, views: ViewSet) {
       .filterIsInstance<SoftwareSystem>()
       .filterNot { ProblemArea.GETTING_THE_RIGHT_REHABILITATION.isOn(it) }
     otherSystems.forEach { remove(it) }
+
+    enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 500, 500)
   }
 }
