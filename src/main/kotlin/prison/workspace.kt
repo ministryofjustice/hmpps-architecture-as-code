@@ -19,7 +19,9 @@ fun prisonWorkspace(): Workspace {
   val systems = listOf<HMPPSSoftwareSystem>(
     NOMIS,
     OffenderManagementInCustody,
-    PrisonerContentHub,
+    PrisonerContentHub
+  )
+  val probationSystems = listOf(
     Delius,
     ProbationPractitioners
   )
@@ -33,11 +35,17 @@ fun prisonWorkspace(): Workspace {
   systems.forEach {
     it.defineModelEntities(workspace.model)
   }
+  probationSystems.forEach {
+    it.defineModelEntities(workspace.model)
+  }
 
   // TODO: this should be refactored into the approach in this file
   prisonModel(workspace.model)
 
   systems.forEach {
+    it.defineRelationships()
+  }
+  probationSystems.forEach {
     it.defineRelationships()
   }
 
