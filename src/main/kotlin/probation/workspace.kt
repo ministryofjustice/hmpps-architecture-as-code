@@ -16,11 +16,11 @@ fun probationWorkspace(): Workspace {
   modelItems.forEach { it.defineModelEntities(workspace.model) }
 
   probationModel(workspace.model)
-  probationViews(workspace.model, workspace.views)
-  styles(workspace.views.configuration.styles)
-
   modelItems.forEach { it.defineRelationships() }
   modelItems.forEach { it.defineViews(workspace.views) }
+
+  probationViews(workspace.model, workspace.views)
+  styles(workspace.views.configuration.styles)
 
   return workspace
 }
