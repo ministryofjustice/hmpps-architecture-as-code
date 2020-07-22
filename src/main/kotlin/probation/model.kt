@@ -34,7 +34,6 @@ fun probationModel(model: Model) {
 
   val caseNotesToProbation = model.addSoftwareSystem("Case Notes to Probation", "Polls for case notes and pushes them to probation systems")
   val crcSystem = model.addSoftwareSystem("CRC software systems", null).apply { Tags.PROVIDER.addTo(this) }
-  val equip = model.addSoftwareSystem("EQuiP", "Central repository for all step-by-step business processes (in probation?)")
   val ndmis = model.addSoftwareSystem("NDMIS", "National Delius Management Information System,\nresponsible for providing reporting on nDelius data")
   val oasys = model.addSoftwareSystem("OASys", "Offender Assessment System\nAssesses the risks and needs of offenders")
   val prepareCaseForCourt = model.addSoftwareSystem("Prepare a Case for Court", "Service for Probation Officers working in magistrates' courts, providing them with a single location to access the defendant information they need to provide sound and timely sentencing guidance to magistrates")
@@ -55,7 +54,7 @@ fun probationModel(model: Model) {
   courtAdmin.uses(Delius.system, "records CAS decision, referrals in")
   courtAdmin.uses(prepareCaseForCourt, "captures court judgements in")
   crcOffenderManager.uses(Delius.system, "records and reviews assessment decision, sentence plan in")
-  crcOffenderManager.uses(equip, "finds information about a process or software in")
+  crcOffenderManager.uses(EQuiP.system, "finds information about a process or software in")
   crcOffenderManager.uses(oasys, "records offender risk (attendance, contact, etc.) and assessment in")
   crcProgrammeManager.interactsWith(deliusSupport, "opens tickets to update interventions")
   crcSystem.uses(Delius.system, "???")
@@ -75,8 +74,8 @@ fun probationModel(model: Model) {
   npsOffenderManager.uses(Delius.system, "records and reviews assessment decision, sentence plan, pre-sentence report, referrals in")
   npsOffenderManager.uses(EPF.system, "enters court, location, offender needs, assessment score data to receive a shortlist of recommended interventions for Pre-Sentence Report Proposal from")
   npsOffenderManager.uses(EPF.system, "enters location, offender needs, assessment score data to receive recommended interventions for licence condition planning from")
-  npsOffenderManager.uses(equip, "finds information about a process or software in")
-  npsOffenderManager.uses(equip, "finds rate cards in")
+  npsOffenderManager.uses(EQuiP.system, "finds information about a process or software in")
+  npsOffenderManager.uses(EQuiP.system, "finds rate cards in")
   npsOffenderManager.uses(oasys, "records offender risk (attendance, contact, etc.) and assessment in")
   npsOffenderManager.uses(prepareCaseForCourt, "view case defendant details")
   npsOffenderManager.uses(wmt, "finds out their community case load by looking at")
