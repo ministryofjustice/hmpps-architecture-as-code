@@ -13,12 +13,10 @@ fun probationModel(model: Model) {
 
   val contractManager = model.addPerson("Contract Manager for CRCs", null)
   val courtAdmin = model.addPerson("NPS court administrator", null)
-  val crcOffenderManager = model.addPerson("CRC offender manager", "Probation officers in custody, court and the community employed by intervention providers").apply { Tags.PROVIDER.addTo(this) }
   val crcProgrammeManager = model.addPerson("CRC programme manager", "People who provide interventions on behalf of Community Rehabilitation Companies").apply { Tags.PROVIDER.addTo(this) }
   val crcTreatmentManager = model.addPerson("CRC treatment manager", null).apply { Tags.PROVIDER.addTo(this) }
   val deliusSupport = model.addPerson("National Delius Support Team", null)
   val interventionServices = model.addPerson("Intervention Services Team", "They accredit intervention programmes and do business development of the interventions.")
-  val npsOffenderManager = model.addPerson("NPS offender manager", "National Probation Service employed probation officers in custody, court and the community")
   val npsProgrammeManager = model.addPerson("NPS programme manager", null)
   val sentencingPolicy = model.addPerson("Sentencing Policy", "Pseudo-team to capture sentencing policy meeting participants")
 
@@ -53,9 +51,7 @@ fun probationModel(model: Model) {
   contractManager.interactsWith(EPF.projectManager, "sends a signed off version of the CRC's Discretionary Services rate card brochure to")
   courtAdmin.uses(Delius.system, "records CAS decision, referrals in")
   courtAdmin.uses(prepareCaseForCourt, "captures court judgements in")
-  crcOffenderManager.uses(Delius.system, "records and reviews assessment decision, sentence plan in")
-  crcOffenderManager.uses(EQuiP.system, "finds information about a process or software in")
-  crcOffenderManager.uses(oasys, "records offender risk (attendance, contact, etc.) and assessment in")
+  ProbationPractitioners.crc.uses(oasys, "records offender risk (attendance, contact, etc.) and assessment in")
   crcProgrammeManager.interactsWith(deliusSupport, "opens tickets to update interventions")
   crcSystem.uses(Delius.system, "???")
   crcTreatmentManager.uses(IM.system, "creates new interventions in")
@@ -71,14 +67,9 @@ fun probationModel(model: Model) {
   NOMIS.system.uses(Delius.system, "offender data is copied into", "NDH")
   NOMIS.system.uses(oasys, "offender data is coped into", "NDH")
   NOMIS.system.uses(prisonToProbation, "notifies changes")
-  npsOffenderManager.uses(Delius.system, "records and reviews assessment decision, sentence plan, pre-sentence report, referrals in")
-  npsOffenderManager.uses(EPF.system, "enters court, location, offender needs, assessment score data to receive a shortlist of recommended interventions for Pre-Sentence Report Proposal from")
-  npsOffenderManager.uses(EPF.system, "enters location, offender needs, assessment score data to receive recommended interventions for licence condition planning from")
-  npsOffenderManager.uses(EQuiP.system, "finds information about a process or software in")
-  npsOffenderManager.uses(EQuiP.system, "finds rate cards in")
-  npsOffenderManager.uses(oasys, "records offender risk (attendance, contact, etc.) and assessment in")
-  npsOffenderManager.uses(prepareCaseForCourt, "view case defendant details")
-  npsOffenderManager.uses(wmt, "finds out their community case load by looking at")
+  ProbationPractitioners.nps.uses(oasys, "records offender risk (attendance, contact, etc.) and assessment in")
+  ProbationPractitioners.nps.uses(prepareCaseForCourt, "view case defendant details")
+  ProbationPractitioners.nps.uses(wmt, "finds out their community case load by looking at")
   npsProgrammeManager.uses(IM.system, "create new interventions in")
   oasys.uses(Delius.system, "assessment info, risk measures are copied into", "NDH")
   prepareCaseForCourt.uses(Delius.system, "get offender details from")

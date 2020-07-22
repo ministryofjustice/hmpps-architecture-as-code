@@ -17,6 +17,9 @@ class EQuiP private constructor() {
     }
 
     override fun defineRelationships() {
+      ProbationPractitioners.crc.uses(system, "finds information about a process or software in")
+      ProbationPractitioners.nps.uses(system, "finds information about a process or software in")
+      ProbationPractitioners.nps.uses(system, "finds rate cards in")
     }
 
     override fun defineViews(views: ViewSet) {

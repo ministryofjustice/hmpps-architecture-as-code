@@ -5,7 +5,6 @@ import com.structurizr.model.Person
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
-import uk.gov.justice.hmpps.architecture.shared.Tags
 import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
 
 class EPF private constructor() {
@@ -25,6 +24,8 @@ class EPF private constructor() {
     override fun defineRelationships() {
       projectManager.uses(system, "update intervention eligibility for accredited programmes in")
       projectManager.uses(system, "updates interventions table for discretionary services in")
+      ProbationPractitioners.nps.uses(system, "enters court, location, offender needs, assessment score data to receive a shortlist of recommended interventions for Pre-Sentence Report Proposal from")
+      ProbationPractitioners.nps.uses(system, "enters location, offender needs, assessment score data to receive recommended interventions for licence condition planning from")
     }
 
     override fun defineViews(views: ViewSet) {

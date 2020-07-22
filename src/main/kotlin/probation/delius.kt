@@ -47,6 +47,8 @@ class Delius private constructor() {
     }
 
     override fun defineRelationships() {
+      ProbationPractitioners.crc.uses(system, "records and reviews assessment decision, sentence plan in")
+      ProbationPractitioners.nps.uses(system, "records and reviews assessment decision, sentence plan, pre-sentence report, referrals in")
     }
 
     override fun defineViews(views: ViewSet) {
