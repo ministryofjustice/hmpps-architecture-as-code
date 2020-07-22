@@ -10,12 +10,6 @@ fun probationViews(model: Model, views: ViewSet) {
     enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
   }
 
-  val im = model.getSoftwareSystemWithName("IM")!!
-  views.createSystemContextView(im, "interventions-manager-context", null).apply {
-    addDefaultElements()
-    enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
-  }
-
   val ndmis = model.getSoftwareSystemWithName("NDMIS")!!
   views.createSystemContextView(ndmis, "ndmis-context", null).apply {
     addDefaultElements()
