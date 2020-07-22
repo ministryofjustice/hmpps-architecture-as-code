@@ -13,7 +13,9 @@ class EQuiP private constructor() {
       system = model.addSoftwareSystem(
         "EQuiP",
         "Central repository for all step-by-step business processes (in probation?)"
-      )
+      ).apply {
+        ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)
+      }
     }
 
     override fun defineRelationships() {

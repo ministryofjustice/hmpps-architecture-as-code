@@ -16,6 +16,7 @@ class NID private constructor() {
         "(Deprecated) National Intervention Database\nSpreadsheet to store intervention details"
       ).apply {
         Tags.DEPRECATED.addTo(this)
+        ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)
       }
     }
 

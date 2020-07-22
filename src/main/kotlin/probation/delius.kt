@@ -15,7 +15,9 @@ class Delius private constructor() {
       system = model.addSoftwareSystem(
         "nDelius",
         "National Delius\nSupporting the management of offenders and delivering national reporting and performance monitoring data"
-      )
+      ).apply {
+        ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)
+      }
 
       val db = system.addContainer("nDelius database", null, "Oracle").apply {
         Tags.DATABASE.addTo(this)

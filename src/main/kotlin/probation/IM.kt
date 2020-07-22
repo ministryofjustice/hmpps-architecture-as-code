@@ -14,7 +14,9 @@ class IM private constructor() {
       system = model.addSoftwareSystem(
         "IM",
         "Interventions Manager\nHolds records of interventions delivered to services users in the community"
-      )
+      ).apply {
+        ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)
+      }
     }
 
     override fun defineRelationships() {

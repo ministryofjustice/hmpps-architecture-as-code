@@ -16,7 +16,9 @@ class EPF private constructor() {
       system = model.addSoftwareSystem(
         "EPF",
         "Effective Proposal Framework\nPresents sentencing options to NPS staff in court who are providing sentencing advice to sentencers"
-      )
+      ).apply {
+        ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)
+      }
 
       projectManager = model.addPerson("EPF Product Manager", "Product manager for the Effective Proposals Framework tool")
     }
