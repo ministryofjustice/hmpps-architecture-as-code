@@ -11,10 +11,17 @@ fun probationWorkspace(): Workspace {
   workspace.model.enterprise = Enterprise("Probation in HM Prison and Probation Service")
 
   CloudPlatform.defineDeploymentNodes(workspace.model)
+
+  val systems = listOf(EPF)
+  systems.forEach { it.defineModelEntities(workspace.model) }
+
   Delius(workspace.model)
   probationModel(workspace.model)
   probationViews(workspace.model, workspace.views)
   styles(workspace.views.configuration.styles)
+
+  systems.forEach { it.defineRelationships() }
+  systems.forEach { it.defineViews(workspace.views) }
 
   return workspace
 }

@@ -17,7 +17,6 @@ fun probationModel(model: Model) {
   val crcProgrammeManager = model.addPerson("CRC programme manager", "People who provide interventions on behalf of Community Rehabilitation Companies").apply { Tags.PROVIDER.addTo(this) }
   val crcTreatmentManager = model.addPerson("CRC treatment manager", null).apply { Tags.PROVIDER.addTo(this) }
   val deliusSupport = model.addPerson("National Delius Support Team", null)
-  val epfManager = model.addPerson("EPF Product Manager", "Product manager for the Effective Proposals Framework tool")
   val interventionServices = model.addPerson("Intervention Services Team", "They accredit intervention programmes and do business development of the interventions.")
   val npsOffenderManager = model.addPerson("NPS offender manager", "National Probation Service employed probation officers in custody, court and the community")
   val npsProgrammeManager = model.addPerson("NPS programme manager", null)
@@ -36,7 +35,6 @@ fun probationModel(model: Model) {
   val caseNotesToProbation = model.addSoftwareSystem("Case Notes to Probation", "Polls for case notes and pushes them to probation systems")
   val crcSystem = model.addSoftwareSystem("CRC software systems", null).apply { Tags.PROVIDER.addTo(this) }
   val delius = model.getSoftwareSystemWithName("nDelius")!!
-  val epf = model.addSoftwareSystem("EPF", "Effective Proposal Framework\nPresents sentencing options to NPS staff in court who are providing sentencing advice to sentencers")
   val equip = model.addSoftwareSystem("EQuiP", "Central repository for all step-by-step business processes (in probation?)")
   val interventionsManager = model.addSoftwareSystem("IM", "Interventions Manager\nHolds records of interventions delivered to services users in the community")
   val ndmis = model.addSoftwareSystem("NDMIS", "National Delius Management Information System,\nresponsible for providing reporting on nDelius data")
@@ -56,7 +54,7 @@ fun probationModel(model: Model) {
   probationCaseSampler.setUrl("https://dsdmoj.atlassian.net/wiki/spaces/NDSS/pages/1989181486/HMIP+Case+Sampling")
 
   caseNotesToProbation.uses(delius, "pushes case notes to")
-  contractManager.interactsWith(epfManager, "sends a signed off version of the CRC's Discretionary Services rate card brochure to")
+  contractManager.interactsWith(EPF.projectManager, "sends a signed off version of the CRC's Discretionary Services rate card brochure to")
   courtAdmin.uses(delius, "records CAS decision, referrals in")
   courtAdmin.uses(prepareCaseForCourt, "captures court judgements in")
   crcOffenderManager.uses(delius, "records and reviews assessment decision, sentence plan in")
@@ -69,10 +67,8 @@ fun probationModel(model: Model) {
   delius.uses(oasys, "offender details, offence details, sentence info are copied into", "NDH")
   deliusSupport.uses(delius, "administers everything in")
   deliusSupport.uses(delius, "updates interventions in")
-  epfManager.interactsWith(sentencingPolicy, "listens to owners of interventions for changes in policy")
-  epfManager.uses(epf, "update intervention eligibility for accredited programmes in")
-  epfManager.uses(epf, "updates interventions table for discretionary services in")
-  interventionServices.interactsWith(epfManager, "provide programme suitability guide for accredited programme eligibility to")
+  EPF.projectManager.interactsWith(sentencingPolicy, "listens to owners of interventions for changes in policy")
+  interventionServices.interactsWith(EPF.projectManager, "provide programme suitability guide for accredited programme eligibility to")
   interventionServices.uses(delius, "creates new interventions in")
   interventionServices.uses(interventionsManager, "creates new interventions in")
   interventionsManager.uses(delius, "pushes contact information of interest to")
@@ -82,8 +78,8 @@ fun probationModel(model: Model) {
   NOMIS.system.uses(oasys, "offender data is coped into", "NDH")
   NOMIS.system.uses(prisonToProbation, "notifies changes")
   npsOffenderManager.uses(delius, "records and reviews assessment decision, sentence plan, pre-sentence report, referrals in")
-  npsOffenderManager.uses(epf, "enters court, location, offender needs, assessment score data to receive a shortlist of recommended interventions for Pre-Sentence Report Proposal from")
-  npsOffenderManager.uses(epf, "enters location, offender needs, assessment score data to receive recommended interventions for licence condition planning from")
+  npsOffenderManager.uses(EPF.system, "enters court, location, offender needs, assessment score data to receive a shortlist of recommended interventions for Pre-Sentence Report Proposal from")
+  npsOffenderManager.uses(EPF.system, "enters location, offender needs, assessment score data to receive recommended interventions for licence condition planning from")
   npsOffenderManager.uses(equip, "finds information about a process or software in")
   npsOffenderManager.uses(equip, "finds rate cards in")
   npsOffenderManager.uses(oasys, "records offender risk (attendance, contact, etc.) and assessment in")

@@ -11,13 +11,6 @@ fun probationViews(model: Model, views: ViewSet) {
     enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
   }
 
-  val epf = model.getSoftwareSystemWithName("EPF")!!
-  views.createSystemContextView(epf, "epf-context", null).apply {
-    addDefaultElements()
-    addNearestNeighbours(model.getPersonWithName("EPF Product Manager")!!)
-    enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 500, 500)
-  }
-
   val im = model.getSoftwareSystemWithName("IM")!!
   views.createSystemContextView(im, "interventions-manager-context", null).apply {
     addDefaultElements()
