@@ -23,6 +23,7 @@ fun probationViews(model: Model, views: ViewSet) {
       .filterNot { ProblemArea.GETTING_THE_RIGHT_REHABILITATION.isOn(it) }
     otherSystems.forEach { remove(it) }
 
-    enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 500, 500)
+    setEnterpriseBoundaryVisible(false)
+    enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 400, 400)
   }
 }
