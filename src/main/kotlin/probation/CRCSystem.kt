@@ -8,21 +8,30 @@ import uk.gov.justice.hmpps.architecture.shared.Tags
 
 class CRCSystem private constructor() {
   companion object : HMPPSSoftwareSystem {
-    lateinit var system: SoftwareSystem
+    lateinit var integratedSystem: SoftwareSystem
+    lateinit var standaloneSystem: SoftwareSystem
 
     override fun defineModelEntities(model: Model) {
-      system = model.addSoftwareSystem(
-        "CRC software systems",
+      integratedSystem = model.addSoftwareSystem(
+        "Integrated CRC software systems",
         "Various systems used to plan, schedule, manage interventions and bookings"
-      ).apply {
-        Tags.PROVIDER.addTo(this)
-        ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)
+      )
+
+      standaloneSystem = model.addSoftwareSystem(
+        "Standalone CRC software systems",
+        "Various systems used to plan, schedule, manage interventions and bookings"
+      )
+
+      listOf(integratedSystem, standaloneSystem).forEach {
+        Tags.PROVIDER.addTo(it)
+        ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(it)
       }
     }
 
     override fun defineRelationships() {
-      system.uses(Delius.system, "(some systems, not all) synchronise data with", "SPG")
-      ProbationPractitioners.crc.uses(system, "retrieves and stores information related to work done by the CRC in")
+      integratedSystem.uses(Delius.system, "(some systems, not all) synchronise data with", "SPG")
+      ProbationPractitioners.crc.uses(integratedSystem, "retrieves and stores information related to work done by the CRC in")
+      ProbationPractitioners.crc.uses(standaloneSystem, "retrieves and stores information related to work done by the CRC in")
     }
 
     override fun defineViews(views: ViewSet) {
