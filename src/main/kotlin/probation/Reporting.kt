@@ -12,13 +12,13 @@ class Reporting private constructor() {
   companion object : HMPPSSoftwareSystem {
     lateinit var ndmis: SoftwareSystem
 
-    lateinit var dataInnovation: Person
-    lateinit var nart: Person
+    lateinit var dataInnovationTeam: Person
+    lateinit var nationalApplicationReportingTeam: Person
 
-    lateinit var npsPerformance: Person
-    lateinit var prisonPerformance: Person
-    lateinit var communityPerformance: Person
-    lateinit var crcPerformance: Person
+    lateinit var npsPerformanceOfficer: Person
+    lateinit var prisonPerformanceTeam: Person
+    lateinit var communityPerformanceTeam: Person
+    lateinit var crcPerformanceAnalyst: Person
 
     override fun defineModelEntities(model: Model) {
       ndmis = model.addSoftwareSystem(
@@ -28,25 +28,25 @@ class Reporting private constructor() {
         ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)
       }
 
-      communityPerformance = model.addPerson("Community Performance team", "Reporting on HMPPS performance in the community")
-      crcPerformance = model.addPerson("CRC performance analyst").apply { Tags.PROVIDER.addTo(this) }
-      dataInnovation = model.addPerson("Data Innovation, Analysis and Linking team", "Works on linked data from various non-HMPPS government departments")
-      nart = model.addPerson("National Applications Reporting Team", "Responsible for the delivery of reporting to stakeholders")
-      npsPerformance = model.addPerson("NPS performance and quality officer")
-      prisonPerformance = model.addPerson("Prison Performance team", "Reporting on HMPPS performance in prison")
+      communityPerformanceTeam = model.addPerson("Community Performance team", "Reporting on HMPPS performance in the community")
+      crcPerformanceAnalyst = model.addPerson("CRC performance analyst").apply { Tags.PROVIDER.addTo(this) }
+      dataInnovationTeam = model.addPerson("Data Innovation, Analysis and Linking team", "Works on linked data from various non-HMPPS government departments")
+      nationalApplicationReportingTeam = model.addPerson("NART", "National Applications Reporting Team,\nResponsible for the delivery of reporting to stakeholders")
+      npsPerformanceOfficer = model.addPerson("NPS performance and quality officer")
+      prisonPerformanceTeam = model.addPerson("Prison Performance team", "Reporting on HMPPS performance in prison")
 
-      listOf(communityPerformance, prisonPerformance, dataInnovation)
+      listOf(communityPerformanceTeam, prisonPerformanceTeam, dataInnovationTeam)
         .forEach { it.addProperty("org", "DASD") }
     }
 
     override fun defineRelationships() {
       ndmis.uses(Delius.system, "extracts and transforms data from")
-      communityPerformance.uses(Reporting.ndmis, "uses reports in")
-      crcPerformance.uses(Reporting.ndmis, "uses reports in")
-      dataInnovation.uses(Reporting.ndmis, "uses data from")
-      nart.uses(Reporting.ndmis, "creates reports in")
-      npsPerformance.uses(Reporting.ndmis, "uses reports in")
-      prisonPerformance.uses(Reporting.ndmis, "to provide details of offenders released into the community, looks into")
+      communityPerformanceTeam.uses(Reporting.ndmis, "uses reports in")
+      crcPerformanceAnalyst.uses(Reporting.ndmis, "uses reports in")
+      dataInnovationTeam.uses(Reporting.ndmis, "uses data from")
+      nationalApplicationReportingTeam.uses(Reporting.ndmis, "creates reports in")
+      npsPerformanceOfficer.uses(Reporting.ndmis, "uses reports in")
+      prisonPerformanceTeam.uses(Reporting.ndmis, "to provide details of offenders released into the community, looks into")
     }
 
     override fun defineViews(views: ViewSet) {
