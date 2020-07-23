@@ -11,12 +11,6 @@ fun probationViews(model: Model, views: ViewSet) {
     enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
   }
 
-  val ndmis = model.getSoftwareSystemWithName("NDMIS")!!
-  views.createSystemContextView(ndmis, "ndmis-context", null).apply {
-    addDefaultElements()
-    enableAutomaticLayout(AutomaticLayout.RankDirection.LeftRight, 200, 200)
-  }
-
   views.createSystemLandscapeView(
     "getting-the-right-rehabilitation",
     "Landscape view of the 'getting the right rehabilitation' problem area"

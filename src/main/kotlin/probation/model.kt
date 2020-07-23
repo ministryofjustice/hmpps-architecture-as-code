@@ -20,18 +20,9 @@ fun probationModel(model: Model) {
   val npsProgrammeManager = model.addPerson("NPS programme manager", null)
   val sentencingPolicy = model.addPerson("Sentencing Policy", "Pseudo-team to capture sentencing policy meeting participants")
 
-  val communityPerformance = model.addPerson("Community Performance team", "Reporting on HMPPS performance in the community")
-  val crcPerformanceAnalyst = model.addPerson("CRC performance analyst", null).apply { Tags.PROVIDER.addTo(this) }
-  val dataInnovation = model.addPerson("Data Innovation, Analysis and Linking team", "Works on linked data from various non-HMPPS government departments")
   val hmip = model.addPerson("HM Inspectorate of Probation", "Reports to the government on the effectiveness of work with people who offended to reduce reoffending and protect the public")
-  val nart = model.addPerson("National Applications Reporting Team", "Responsible for the delivery of reporting to stakeholders")
-  val npsPerformanceOfficer = model.addPerson("NPS performance and quality officer", null)
-  val prisonPerformance = model.addPerson("Prison Performance team", "Reporting on HMPPS performance in prison")
-
-  listOf(communityPerformance, prisonPerformance, dataInnovation).forEach { it.addProperty("org", "DASD") }
 
   val caseNotesToProbation = model.addSoftwareSystem("Case Notes to Probation", "Polls for case notes and pushes them to probation systems")
-  val ndmis = model.addSoftwareSystem("NDMIS", "National Delius Management Information System,\nresponsible for providing reporting on nDelius data")
   val oasys = model.addSoftwareSystem("OASys", "Offender Assessment System\nAssesses the risks and needs of offenders")
   val prepareCaseForCourt = model.addSoftwareSystem("Prepare a Case for Court", "Service for Probation Officers working in magistrates' courts, providing them with a single location to access the defendant information they need to provide sound and timely sentencing guidance to magistrates")
   val prisonToProbation = model.addSoftwareSystem("Prison to Probation Update", "Listens for events from Prison systems (NOMIS) to update offender sentence information in Probation systems (Delius)")
@@ -60,8 +51,7 @@ fun probationModel(model: Model) {
   interventionServices.interactsWith(EPF.projectManager, "provide programme suitability guide for accredited programme eligibility to")
   interventionServices.uses(Delius.system, "creates new interventions in")
   interventionServices.uses(IM.system, "creates new interventions in")
-  ndmis.uses(Delius.system, "extracts and transforms data from")
-  ndmis.uses(OffenderManagementInCustody.allocationManager, "sends extracts containing service user allocation to", "email")
+  Reporting.ndmis.uses(OffenderManagementInCustody.allocationManager, "sends extracts containing service user allocation to", "email")
   NOMIS.system.uses(Delius.system, "offender data is copied into", "NDH")
   NOMIS.system.uses(oasys, "offender data is coped into", "NDH")
   NOMIS.system.uses(prisonToProbation, "notifies changes")
@@ -74,14 +64,8 @@ fun probationModel(model: Model) {
   prepareCaseForCourt.uses(oasys, "get offender assessment details from")
   prisonToProbation.uses(Delius.system, "update offender sentence information in")
   probationCaseSampler.uses(Delius.system, "gets list of probation cases")
-  wmt.uses(ndmis, "draws offender risk and allocation data from")
+  wmt.uses(Reporting.ndmis, "draws offender risk and allocation data from")
 
-  communityPerformance.uses(ndmis, "uses reports in")
-  crcPerformanceAnalyst.uses(ndmis, "uses reports in")
-  dataInnovation.uses(ndmis, "uses data from")
-  hmip.uses(ndmis, "uses data from")
-  nart.uses(ndmis, "creates reports in")
-  npsPerformanceOfficer.uses(ndmis, "uses reports in")
+  hmip.uses(Reporting.ndmis, "uses data from")
   OffenderManagementInCustody.ldu.uses(Delius.system, "maintains 'shadow' team assignments for service users during prison-to-probation handover in")
-  prisonPerformance.uses(ndmis, "to provide details of offenders released into the community, looks into")
 }

@@ -12,7 +12,7 @@ fun probationWorkspace(): Workspace {
 
   CloudPlatform.defineDeploymentNodes(workspace.model)
 
-  val modelItems = listOf(ProbationPractitioners, EPF, Delius, IM, NID, EQuiP, CRCSystem)
+  val modelItems = listOf(ProbationPractitioners, EPF, Delius, IM, NID, EQuiP, CRCSystem, Reporting)
   modelItems.forEach { it.defineModelEntities(workspace.model) }
 
   probationModel(workspace.model)
