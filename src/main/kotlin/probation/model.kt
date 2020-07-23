@@ -31,7 +31,6 @@ fun probationModel(model: Model) {
   listOf(communityPerformance, prisonPerformance, dataInnovation).forEach { it.addProperty("org", "DASD") }
 
   val caseNotesToProbation = model.addSoftwareSystem("Case Notes to Probation", "Polls for case notes and pushes them to probation systems")
-  val crcSystem = model.addSoftwareSystem("CRC software systems", null).apply { Tags.PROVIDER.addTo(this) }
   val ndmis = model.addSoftwareSystem("NDMIS", "National Delius Management Information System,\nresponsible for providing reporting on nDelius data")
   val oasys = model.addSoftwareSystem("OASys", "Offender Assessment System\nAssesses the risks and needs of offenders")
   val prepareCaseForCourt = model.addSoftwareSystem("Prepare a Case for Court", "Service for Probation Officers working in magistrates' courts, providing them with a single location to access the defendant information they need to provide sound and timely sentencing guidance to magistrates")
@@ -53,7 +52,6 @@ fun probationModel(model: Model) {
   courtAdmin.uses(prepareCaseForCourt, "captures court judgements in")
   ProbationPractitioners.crc.uses(oasys, "records offender risk (attendance, contact, etc.) and assessment in")
   crcProgrammeManager.interactsWith(deliusSupport, "opens tickets to update interventions")
-  crcSystem.uses(Delius.system, "???")
   crcTreatmentManager.uses(IM.system, "creates new interventions in")
   Delius.system.uses(oasys, "offender details, offence details, sentence info are copied into", "NDH")
   deliusSupport.uses(Delius.system, "administers everything in")
