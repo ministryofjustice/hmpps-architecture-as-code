@@ -9,8 +9,6 @@ fun defineStyles(styles: Styles) {
 
   styles.addElementStyle(Tags.DATABASE.toString()).shape(Shape.Cylinder)
 
-  styles.addElementStyle(Tags.PRISON_SERVICE.toString()).background("#ffdf2d")
-
   styles.addElementStyle(Tags.WEB_BROWSER.toString()).shape(Shape.WebBrowser)
 
   styles.addElementStyle(Tags.PROVIDER.toString()).background("#ccff99")

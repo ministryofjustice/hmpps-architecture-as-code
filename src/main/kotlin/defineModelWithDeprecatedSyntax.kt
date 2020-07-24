@@ -39,9 +39,6 @@ fun defineModelWithDeprecatedSyntax(model: Model) {
   val probationCaseSampler = model.addSoftwareSystem("Probation Case Sampler", "API which produces a representative and evenly distributed list of probation cases within a region and date range which form the basis of an on-site inspection")
   val wmt = model.addSoftwareSystem("WMT", "Workload Management Tool,\nhelps offender managers schedule their time based on service user risk")
 
-  NOMIS.system.apply { Tags.PRISON_SERVICE.addTo(this) }
-  OffenderManagementInCustody.system.apply { Tags.PRISON_SERVICE.addTo(this) }
-
   prisonToProbation.setUrl("https://dsdmoj.atlassian.net/wiki/spaces/NOM/pages/1947107651/Prison+to+Probation+Update+-+Delius+DSS+Automatic+updates")
   probationCaseSampler.setUrl("https://dsdmoj.atlassian.net/wiki/spaces/NDSS/pages/1989181486/HMIP+Case+Sampling")
 
