@@ -2,8 +2,7 @@ package uk.gov.justice.hmpps.architecture.probation
 
 import com.structurizr.Workspace
 import com.structurizr.model.Enterprise
-import uk.gov.justice.hmpps.architecture.shared.CloudPlatform
-import uk.gov.justice.hmpps.architecture.shared.styles
+import uk.gov.justice.hmpps.architecture.*
 
 fun probationWorkspace(): Workspace {
   val workspace = Workspace("Probation systems", "Systems related to the probation of offenders")

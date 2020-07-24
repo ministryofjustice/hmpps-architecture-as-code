@@ -2,9 +2,7 @@ package uk.gov.justice.hmpps.architecture.probation
 
 import com.structurizr.model.CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy
 import com.structurizr.model.Model
-import uk.gov.justice.hmpps.architecture.prison.NOMIS
-import uk.gov.justice.hmpps.architecture.prison.OffenderManagementInCustody
-import uk.gov.justice.hmpps.architecture.shared.Tags
+import uk.gov.justice.hmpps.architecture.*
 
 fun probationModel(model: Model) {
   model.setImpliedRelationshipsStrategy(

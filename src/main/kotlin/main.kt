@@ -3,9 +3,9 @@ package uk.gov.justice.hmpps.architecture
 import com.structurizr.Workspace
 import com.structurizr.api.StructurizrClient
 import com.structurizr.util.WorkspaceUtils
-import java.io.File
 import uk.gov.justice.hmpps.architecture.prison.*
 import uk.gov.justice.hmpps.architecture.probation.*
+import java.io.File
 
 object App {
   val EXPORT_LOCATION = File("./exports")

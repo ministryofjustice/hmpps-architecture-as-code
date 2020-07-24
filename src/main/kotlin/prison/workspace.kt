@@ -2,11 +2,8 @@ package uk.gov.justice.hmpps.architecture.prison
 
 import com.structurizr.Workspace
 import com.structurizr.model.Enterprise
+import uk.gov.justice.hmpps.architecture.*
 import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
-import uk.gov.justice.hmpps.architecture.probation.Delius
-import uk.gov.justice.hmpps.architecture.probation.ProbationPractitioners
-import uk.gov.justice.hmpps.architecture.shared.CloudPlatform
-import uk.gov.justice.hmpps.architecture.shared.styles
 
 fun prisonWorkspace(): Workspace {
   val hmpps_prisons = Enterprise("HM Prison & Probation Service")

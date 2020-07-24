@@ -1,29 +1,23 @@
-package uk.gov.justice.hmpps.architecture.prison
+package uk.gov.justice.hmpps.architecture
 
 import com.structurizr.model.Container
 import com.structurizr.model.Location
 import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
-
 import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
 
-import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
-
-import uk.gov.justice.hmpps.architecture.shared.CloudPlatform
-import uk.gov.justice.hmpps.architecture.shared.Tags
-
 class PrisonerContentHub private constructor() {
 
-  companion object: HMPPSSoftwareSystem {
+  companion object : HMPPSSoftwareSystem {
     lateinit var model: Model
     lateinit var system: SoftwareSystem
     lateinit var contentHubFrontend: Container
 
     /**
-      * TODO: add Prisoner internet infrastructure, AD
-      * TODO: add BT PINS
-      **/
+     * TODO: add Prisoner internet infrastructure, AD
+     * TODO: add BT PINS
+     **/
     override fun defineModelEntities(model: Model) {
       this.model = model
 
@@ -31,12 +25,13 @@ class PrisonerContentHub private constructor() {
         "Prisoner Content Hub",
         """
         The Prisoner Content Hub is a platform for prisoners to access data, content and services supporting individual progression and freeing up staff time.
-        """.trimIndent()).apply {
-          setLocation(Location.Internal)
-          val PRISON_PROBATION_PROPERTY_NAME = "business_unit"
-          val PRISON_SERVICE = "prisons"
-          addProperty(PRISON_PROBATION_PROPERTY_NAME, PRISON_SERVICE)
-        }
+        """.trimIndent()
+      ).apply {
+        setLocation(Location.Internal)
+        val PRISON_PROBATION_PROPERTY_NAME = "business_unit"
+        val PRISON_SERVICE = "prisons"
+        addProperty(PRISON_PROBATION_PROPERTY_NAME, PRISON_SERVICE)
+      }
 
       val elasticSearchStore = system.addContainer("ElasticSearch store", "Data store for feedback collection, and indexing for Drupal CMS content", "ElasticSearch").apply {
         Tags.DATABASE.addTo(this)
@@ -72,38 +67,38 @@ class PrisonerContentHub private constructor() {
       }
 
       val kibanaDashboard = system.addContainer("Kibana dashboard", "Feedback reports and analytics dashboard", "Kibana").apply {
-        //setUrl("TODO")
+        // setUrl("TODO")
         uses(elasticSearchStore, "HTTPS Rest API")
         CloudPlatform.elasticsearch.add(this)
       }
 
       /**
-        * Users
-        **/
+       * Users
+       **/
       model.addPerson("Feedback Reporter", "HMPPS Staff collating feedback for protection, product development and analytics").apply {
         uses(kibanaDashboard, "Extracts CSV files of prisoner feedback, views individual feedback responses, and analyses sentiment and statistics of feedback")
         setLocation(Location.Internal)
-      };
+      }
 
       model.addPerson("Prisoner", "A prisoner over 18 years old, held in the public prison estate").apply {
         uses(contentHubFrontend, "Views videos, audio programmes, site updates, and rehabilitative material")
         setLocation(Location.External)
-      };
+      }
 
       model.addPerson("Young Offender", "A person under 18, held in a Young Offender Institute").apply {
         uses(contentHubFrontend, "Views videos, audio programmes, site updates, and rehabilitative material")
         setLocation(Location.External)
-      };
+      }
 
       model.addPerson("Content editor", "HMPPS Digital staff curating content for the entire prison estate and supporting individual prisons").apply {
         uses(drupal, "Authors and curates content for the prison estate")
         setLocation(Location.Internal)
-      };
+      }
 
       model.addPerson("Prison Content editor", "A content author on-site in a prison, authoring content for their prison").apply {
         uses(drupal, "Authors and curates content for their prison")
         setLocation(Location.Internal)
-      };
+      }
     }
 
     override fun defineRelationships() {
@@ -111,7 +106,8 @@ class PrisonerContentHub private constructor() {
     }
 
     override fun defineViews(views: ViewSet) {
-      views.createSystemContextView(system, "prisonerContentHubSystemContext", "The system context diagram for the Prisoner Content Hub"
+      views.createSystemContextView(
+        system, "prisonerContentHubSystemContext", "The system context diagram for the Prisoner Content Hub"
       ).apply {
         addDefaultElements()
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)

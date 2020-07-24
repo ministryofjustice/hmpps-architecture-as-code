@@ -1,13 +1,11 @@
 
-package uk.gov.justice.hmpps.architecture.prison
+package uk.gov.justice.hmpps.architecture
 
 import com.structurizr.model.Container
 import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 
-import uk.gov.justice.hmpps.architecture.shared.Tags
-
-class PATHFINDER(model: Model) {
+class Pathfinder(model: Model) {
   val system: SoftwareSystem
   val webApp: Container
 
@@ -16,36 +14,45 @@ class PATHFINDER(model: Model) {
     val rds = cloudPlatform.getDeploymentNodeWithName("RDS")
     val kubernetes = cloudPlatform.getDeploymentNodeWithName("Kubernetes")
 
-    system = model.addSoftwareSystem("Pathfinder", """
+    system = model.addSoftwareSystem(
+      "Pathfinder",
+      """
     Pathfinder System,
     the case management system for Pathfinder nominals
-    """.trimIndent())
+      """.trimIndent()
+    )
 
-    val db = system.addContainer("Pathfinder Database",
-        "Database to store Pathfinder case management", "RDS Postgres DB").apply {
+    val db = system.addContainer(
+      "Pathfinder Database",
+      "Database to store Pathfinder case management", "RDS Postgres DB"
+    ).apply {
       Tags.DATABASE.addTo(this)
       rds.add(this)
     }
 
-    webApp = system.addContainer("Pathfinder Web Application",
-        "Web application for the case management of Pathfinder nominals", "Node Express app")
-        .apply {
-          Tags.WEB_BROWSER.addTo(this)
-          uses(db, null)
-          uses(model.getSoftwareSystemWithName("NOMIS")!!.getContainerWithName("Prison API")!!, "extract NOMIS offender data")
-          uses(model.getSoftwareSystemWithName("NOMIS")!!.getContainerWithName("PrisonerSearch")!!, "to search for prisoners")
-          uses(model.getSoftwareSystemWithName("nDelius")!!.getContainerWithName("Community API")!!, "extract nDelius offender data")
-          uses(model.getSoftwareSystemWithName("nDelius")!!.getContainerWithName("OffenderSearch")!!, "to search for offenders")
-          kubernetes.add(this)
-        }
+    webApp = system.addContainer(
+      "Pathfinder Web Application",
+      "Web application for the case management of Pathfinder nominals", "Node Express app"
+    )
+      .apply {
+        Tags.WEB_BROWSER.addTo(this)
+        uses(db, null)
+        uses(model.getSoftwareSystemWithName("NOMIS")!!.getContainerWithName("Prison API")!!, "extract NOMIS offender data")
+        uses(model.getSoftwareSystemWithName("NOMIS")!!.getContainerWithName("PrisonerSearch")!!, "to search for prisoners")
+        uses(model.getSoftwareSystemWithName("nDelius")!!.getContainerWithName("Community API")!!, "extract nDelius offender data")
+        uses(model.getSoftwareSystemWithName("nDelius")!!.getContainerWithName("OffenderSearch")!!, "to search for offenders")
+        kubernetes.add(this)
+      }
 
-    system.addContainer("Pathfinder API",
-        "API over the Pathfinder DB used by internal applications", "Kotlin Spring Boot App")
-        .apply {
-          setUrl("https://github.com/ministryofjustice/pathfinder-api")
-          uses(db, "JDBC")
-          kubernetes.add(this)
-        }
+    system.addContainer(
+      "Pathfinder API",
+      "API over the Pathfinder DB used by internal applications", "Kotlin Spring Boot App"
+    )
+      .apply {
+        setUrl("https://github.com/ministryofjustice/pathfinder-api")
+        uses(db, "JDBC")
+        kubernetes.add(this)
+      }
 
     val hmppsAuth: SoftwareSystem = model.getSoftwareSystemWithName("HMPPS Auth")!!
 
@@ -72,6 +79,5 @@ class PATHFINDER(model: Model) {
     val pNationalIntelligenceUnitUser = model.addPerson("National Prison User", "They have access to all Pathfinder nominals")
     pNationalIntelligenceUnitUser.uses(webApp, "Visits pathfinder app to manage the performance of the service", "HTTPS")
     pNationalIntelligenceUnitUser.uses(hmppsAuth, "Login")
-
   }
 }

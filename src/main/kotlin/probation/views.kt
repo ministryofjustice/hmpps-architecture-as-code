@@ -4,6 +4,7 @@ import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
+import uk.gov.justice.hmpps.architecture.*
 
 fun probationViews(model: Model, views: ViewSet) {
   views.createSystemLandscapeView("system-overview", "All systems in HM Probations").apply {

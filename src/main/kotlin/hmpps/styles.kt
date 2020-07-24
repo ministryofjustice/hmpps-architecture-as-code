@@ -1,9 +1,7 @@
-package uk.gov.justice.hmpps.architecture.shared
+package uk.gov.justice.hmpps.architecture
 
 import com.structurizr.view.Shape
 import com.structurizr.view.Styles
-
-import uk.gov.justice.hmpps.architecture.shared.Tags
 
 fun styles(styles: Styles) {
   styles.addElementStyle("Software System").background("#aabbdd")

@@ -1,7 +1,6 @@
-package uk.gov.justice.hmpps.architecture.shared
+package uk.gov.justice.hmpps.architecture
 
 import com.structurizr.model.Element
-import com.structurizr.model.Relationship
 
 enum class Tags() {
   DATABASE, WEB_BROWSER, PROVIDER, DEPRECATED, SOFTWARE_AS_A_SERVICE, PRISON_SERVICE;
