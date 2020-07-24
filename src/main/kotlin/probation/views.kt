@@ -11,38 +11,19 @@ fun probationViews(model: Model, views: ViewSet) {
     enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
   }
 
-  val epf = model.getSoftwareSystemWithName("EPF")!!
-  views.createSystemContextView(epf, "epf-context", null).apply {
-    addDefaultElements()
-    addNearestNeighbours(model.getPersonWithName("EPF Product Manager")!!)
-    enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 500, 500)
-  }
+  views.createSystemLandscapeView(
+    "getting-the-right-rehabilitation",
+    "Landscape view of the 'getting the right rehabilitation' problem area"
+  ).apply {
+    val interventionSystems = model.softwareSystems.filter { ProblemArea.GETTING_THE_RIGHT_REHABILITATION.isOn(it) }
+    interventionSystems.forEach { addNearestNeighbours(it) }
 
-  val im = model.getSoftwareSystemWithName("IM")!!
-  views.createSystemContextView(im, "interventions-manager-context", null).apply {
-    addDefaultElements()
-    enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
-  }
+    val otherSystems = getElements().map { it.element }
+      .filterIsInstance<SoftwareSystem>()
+      .filterNot { ProblemArea.GETTING_THE_RIGHT_REHABILITATION.isOn(it) }
+    otherSystems.forEach { remove(it) }
 
-  addDelius(model.getSoftwareSystemWithName("nDelius")!!, views)
-
-  val ndmis = model.getSoftwareSystemWithName("NDMIS")!!
-  views.createSystemContextView(ndmis, "ndmis-context", null).apply {
-    addDefaultElements()
-    enableAutomaticLayout(AutomaticLayout.RankDirection.LeftRight, 200, 200)
-  }
-}
-
-private fun addDelius(delius: SoftwareSystem, views: ViewSet) {
-  views.createSystemContextView(delius, "delius-data-context", null).apply {
-    addDefaultElements()
-    model.people.forEach(this::remove)
-    enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
-  }
-
-  views.createSystemContextView(delius, "delius-people-context", null).apply {
-    addDefaultElements()
-    model.softwareSystems.filter { it != delius }.forEach(this::remove)
-    enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
+    setEnterpriseBoundaryVisible(false)
+    enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 400, 400)
   }
 }
