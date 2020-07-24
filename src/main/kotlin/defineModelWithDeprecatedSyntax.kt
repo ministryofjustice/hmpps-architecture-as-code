@@ -1,14 +1,26 @@
-package uk.gov.justice.hmpps.architecture.probation
+package uk.gov.justice.hmpps.architecture
 
 import com.structurizr.model.CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy
 import com.structurizr.model.Model
-import uk.gov.justice.hmpps.architecture.*
 
-fun probationModel(model: Model) {
+fun defineModelWithDeprecatedSyntax(model: Model) {
   model.setImpliedRelationshipsStrategy(
     CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy()
   )
 
+  // lifted from prison model
+  val spo = model.addPerson("Senior Prison Offender Manager", "manages service users and offender managers")
+  val pom = model.addPerson("Prison Offender Manager", "responsible for the service users in their prison")
+  pom.interactsWith(spo, "managed by")
+
+  HmmpsAuth(model)
+  NDH(model)
+  Pathfinder(model)
+
+  spo.uses(OffenderManagementInCustody.allocationManager, "look at unallocated service users coming from court in")
+  pom.uses(OffenderManagementInCustody.allocationManager, "look at service users who need handing over to community in")
+
+  // lifted from probation model
   val contractManager = model.addPerson("Contract Manager for CRCs", null)
   val courtAdmin = model.addPerson("NPS court administrator", null)
   val crcProgrammeManager = model.addPerson("CRC programme manager", "People who provide interventions on behalf of Community Rehabilitation Companies").apply { Tags.PROVIDER.addTo(this) }
@@ -27,8 +39,6 @@ fun probationModel(model: Model) {
   val probationCaseSampler = model.addSoftwareSystem("Probation Case Sampler", "API which produces a representative and evenly distributed list of probation cases within a region and date range which form the basis of an on-site inspection")
   val wmt = model.addSoftwareSystem("WMT", "Workload Management Tool,\nhelps offender managers schedule their time based on service user risk")
 
-  NOMIS.defineModelEntities(model)
-  OffenderManagementInCustody.defineModelEntities(model)
   NOMIS.system.apply { Tags.PRISON_SERVICE.addTo(this) }
   OffenderManagementInCustody.system.apply { Tags.PRISON_SERVICE.addTo(this) }
 

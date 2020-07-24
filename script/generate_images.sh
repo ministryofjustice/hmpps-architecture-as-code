@@ -15,8 +15,7 @@ fi
 
 echo
 echo "🚧 Generating Structurizr workspaces..."
-"$root_dir/gradlew" run --args='--prison'
-"$root_dir/gradlew" run --args='--probation'
+"$root_dir/gradlew" run
 
 echo
 echo "🌿 Generating PlantUML..."

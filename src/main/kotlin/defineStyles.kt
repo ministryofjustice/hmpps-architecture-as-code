@@ -3,7 +3,7 @@ package uk.gov.justice.hmpps.architecture
 import com.structurizr.view.Shape
 import com.structurizr.view.Styles
 
-fun styles(styles: Styles) {
+fun defineStyles(styles: Styles) {
   styles.addElementStyle("Software System").background("#aabbdd")
   styles.addElementStyle("Person").shape(Shape.Person).background("#aabbdd")
 
