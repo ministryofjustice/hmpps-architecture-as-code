@@ -16,14 +16,8 @@ jobs:
           java-version: 1.8
       - run: ./gradlew build
 
-      - name: Push to prison workspace
+      - name: Push to workspace
         env:
-          STRUCTURIZR_API_KEY: ${{ secrets.PRISON_STRUCTURIZR_API_KEY }}
-          STRUCTURIZR_API_SECRET: ${{ secrets.PRISON_STRUCTURIZR_API_SECRET }}
-        run: .github/workflows/set_version ./gradlew run --args='--prison --push'
-
-      - name: Push to probation workspace
-        env:
-          STRUCTURIZR_API_KEY: ${{ secrets.PROBATION_STRUCTURIZR_API_KEY }}
-          STRUCTURIZR_API_SECRET: ${{ secrets.PROBATION_STRUCTURIZR_API_SECRET }}
-        run: .github/workflows/set_version ./gradlew run --args='--probation --push'
+          STRUCTURIZR_API_KEY: ${{ secrets.STRUCTURIZR_API_KEY }}
+          STRUCTURIZR_API_SECRET: ${{ secrets.STRUCTURIZR_API_SECRET }}
+        run: .github/workflows/set_version ./gradlew run --args='--push'

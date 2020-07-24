@@ -12,7 +12,5 @@ jobs:
         with:
           java-version: 1.8
       - run: ./gradlew build
-      - name: Test code by creating local workspace files
-        run: |
-          ./gradlew run --args='--probation'
-          ./gradlew run --args='--prison'
+      - name: Test code by creating local workspace file
+        run: ./gradlew run
