@@ -16,10 +16,7 @@ class Pathfinder(model: Model) {
 
     system = model.addSoftwareSystem(
       "Pathfinder",
-      """
-    Pathfinder System,
-    the case management system for Pathfinder nominals
-      """.trimIndent()
+      "Pathfinder System,\nthe case management system for Pathfinder nominals"
     )
 
     val db = system.addContainer(
@@ -33,26 +30,24 @@ class Pathfinder(model: Model) {
     webApp = system.addContainer(
       "Pathfinder Web Application",
       "Web application for the case management of Pathfinder nominals", "Node Express app"
-    )
-      .apply {
-        Tags.WEB_BROWSER.addTo(this)
-        uses(db, null)
-        uses(model.getSoftwareSystemWithName("NOMIS")!!.getContainerWithName("Prison API")!!, "extract NOMIS offender data")
-        uses(model.getSoftwareSystemWithName("NOMIS")!!.getContainerWithName("PrisonerSearch")!!, "to search for prisoners")
-        uses(model.getSoftwareSystemWithName("nDelius")!!.getContainerWithName("Community API")!!, "extract nDelius offender data")
-        uses(model.getSoftwareSystemWithName("nDelius")!!.getContainerWithName("OffenderSearch")!!, "to search for offenders")
-        kubernetes.add(this)
-      }
+    ).apply {
+      Tags.WEB_BROWSER.addTo(this)
+      uses(db, null)
+      uses(model.getSoftwareSystemWithName("NOMIS")!!.getContainerWithName("Prison API")!!, "extract NOMIS offender data")
+      uses(model.getSoftwareSystemWithName("NOMIS")!!.getContainerWithName("PrisonerSearch")!!, "to search for prisoners")
+      uses(model.getSoftwareSystemWithName("nDelius")!!.getContainerWithName("Community API")!!, "extract nDelius offender data")
+      uses(model.getSoftwareSystemWithName("nDelius")!!.getContainerWithName("OffenderSearch")!!, "to search for offenders")
+      kubernetes.add(this)
+    }
 
     system.addContainer(
       "Pathfinder API",
       "API over the Pathfinder DB used by internal applications", "Kotlin Spring Boot App"
-    )
-      .apply {
-        setUrl("https://github.com/ministryofjustice/pathfinder-api")
-        uses(db, "JDBC")
-        kubernetes.add(this)
-      }
+    ).apply {
+      setUrl("https://github.com/ministryofjustice/pathfinder-api")
+      uses(db, "JDBC")
+      kubernetes.add(this)
+    }
 
     val hmppsAuth: SoftwareSystem = model.getSoftwareSystemWithName("HMPPS Auth")!!
 

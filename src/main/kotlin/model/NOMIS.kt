@@ -16,10 +16,7 @@ class NOMIS private constructor() {
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
         "NOMIS",
-        """
-      National Offender Management Information System,
-      the case management system for offender data in use in custody - both public and private prisons
-        """.trimIndent()
+        "National Offender Management Information System,\nthe case management system for offender data in use in custody - both public and private prisons"
       ).apply {
         setLocation(Location.Internal)
       }
@@ -31,12 +28,11 @@ class NOMIS private constructor() {
       prisonApi = system.addContainer(
         "Prison API",
         "API over the NOMIS DB used by Digital Prison team applications and services", "Java"
-      )
-        .apply {
-          addProperty("previous-name", "Elite2 API")
-          setUrl("https://github.com/ministryofjustice/prison-api")
-          uses(db, "connects to", "JDBC")
-        }
+      ).apply {
+        addProperty("previous-name", "Elite2 API")
+        setUrl("https://github.com/ministryofjustice/prison-api")
+        uses(db, "connects to", "JDBC")
+      }
 
       system.addContainer(
         "DPS Web Application",
