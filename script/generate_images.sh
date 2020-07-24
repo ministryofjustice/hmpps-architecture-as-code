@@ -15,16 +15,15 @@ fi
 
 echo
 echo "🚧 Generating Structurizr workspaces..."
-"$root_dir/gradlew" run --args='--prison'
-"$root_dir/gradlew" run --args='--probation'
+"$root_dir/gradlew" run
 
 echo
 echo "🌿 Generating PlantUML..."
 (cd "$exports_dir"; \
- find "$root_dir" -name 'structurizr-*-local.json' \
-   -exec "$ext_dir/structurizr.sh" export -workspace {} -f plantuml \;)
+  find "$root_dir" -name 'structurizr-*-local.json' \
+    -exec "$ext_dir/structurizr.sh" export -workspace {} -f plantuml \;)
 
 echo
 echo "🖼 Generating images..."
 (cd "$exports_dir"; \
- plantuml -SmaxMessageSize=100 -tpng structurizr-*.puml)
+  plantuml -SmaxMessageSize=100 -tpng structurizr-*.puml)

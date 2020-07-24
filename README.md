@@ -16,25 +16,34 @@ This repository defines two workspaces:
 
 ## Running
 
-The project is built with `gradle`. The CLI has two arguments:
+The project is built with `gradle`.
 
-1. **Required** Choose the workspace with `--prison` or `--probation`
-2. By default, the CLI writes the workspace to a JSON file. Enable pushing to the workspace with `--push`.
-
-```
-./gradlew run --args="--prison"
-```
+| Action | Command |
+| --- | --- |
+| Build the project | `./gradlew build` |
+| Create a local Structurworkspace JSON file | `./gradlew run` |
+| Push to the remote Structurizr workspace | `./gradlew run --args='--push'` (please see **"Secrets"** section below) |
 
 ### :rotating_light: Remote-only changes will be lost
 
-The remote workspace's content is _replaced_ with the content in this repository.
-Remote-only changes will be **lost**.
+The remote workspace's content is _replaced_ with the content in this repository. Remote-only changes will be **lost**.
 
-## Secrets
+### Secrets
 
-The API requires a workspace-specific API key and secret:
+The `--push` command can be configured with these environment variables:
+
+| Environment variable | Meaning |
+| --- | --- |
+| `STRUCTURIZR_API_KEY` | **Required** The API key for the Structurizr API. |
+| `STRUCTURIZR_API_SECRET` | **Required** The API secret for the Structurizr API. |
+| `STRUCTURIZR_WORKSPACE_ID` | Overrides the default workspace ID. |
+
+Example:
 ```
-STRUCTURIZR_API_KEY=key STRUCTURIZR_API_SECRET=secret ./gradlew run --args='--probation --push'
+STRUCTURIZR_WORKSPACE_ID=12345 \
+  STRUCTURIZR_API_KEY=key \
+  STRUCTURIZR_API_SECRET=secret \
+  ./gradlew run --args='--push'
 ```
 
 You can view these secrets on the [dashboard](https://structurizr.com/dashboard), after clicking *Show more...* next to

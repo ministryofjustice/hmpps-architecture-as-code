@@ -1,10 +1,9 @@
-package uk.gov.justice.hmpps.architecture.probation
+package uk.gov.justice.hmpps.architecture
 
 import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
-import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
 
 class IM private constructor() {
   companion object : HMPPSSoftwareSystem {

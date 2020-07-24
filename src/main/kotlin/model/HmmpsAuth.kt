@@ -1,4 +1,4 @@
-package uk.gov.justice.hmpps.architecture.prison
+package uk.gov.justice.hmpps.architecture
 
 import com.structurizr.model.Location
 import com.structurizr.model.Model

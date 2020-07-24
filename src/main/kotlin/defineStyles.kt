@@ -1,17 +1,13 @@
-package uk.gov.justice.hmpps.architecture.shared
+package uk.gov.justice.hmpps.architecture
 
 import com.structurizr.view.Shape
 import com.structurizr.view.Styles
 
-import uk.gov.justice.hmpps.architecture.shared.Tags
-
-fun styles(styles: Styles) {
+fun defineStyles(styles: Styles) {
   styles.addElementStyle("Software System").background("#aabbdd")
   styles.addElementStyle("Person").shape(Shape.Person).background("#aabbdd")
 
   styles.addElementStyle(Tags.DATABASE.toString()).shape(Shape.Cylinder)
-
-  styles.addElementStyle(Tags.PRISON_SERVICE.toString()).background("#ffdf2d")
 
   styles.addElementStyle(Tags.WEB_BROWSER.toString()).shape(Shape.WebBrowser)
 

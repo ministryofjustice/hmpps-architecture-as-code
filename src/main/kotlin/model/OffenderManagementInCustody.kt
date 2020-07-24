@@ -1,4 +1,4 @@
-package uk.gov.justice.hmpps.architecture.prison
+package uk.gov.justice.hmpps.architecture
 
 import com.structurizr.model.Container
 import com.structurizr.model.Location
@@ -6,7 +6,6 @@ import com.structurizr.model.Model
 import com.structurizr.model.Person
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ViewSet
-import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
 
 class OffenderManagementInCustody private constructor() {
   companion object : HMPPSSoftwareSystem {

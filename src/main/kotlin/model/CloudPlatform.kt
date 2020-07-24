@@ -1,12 +1,9 @@
-package uk.gov.justice.hmpps.architecture.shared
+package uk.gov.justice.hmpps.architecture
 
 import com.structurizr.model.DeploymentNode
 import com.structurizr.model.Model
-import com.structurizr.view.ViewSet
 
 class CloudPlatform private constructor() {
-  
-
   companion object {
     lateinit var rds: DeploymentNode
     lateinit var s3: DeploymentNode
