@@ -13,6 +13,7 @@ class PrisonerContentHub private constructor() {
     lateinit var model: Model
     lateinit var system: SoftwareSystem
     lateinit var contentHubFrontend: Container
+    lateinit var frontendProxy: Container
 
     /**
      * TODO: add Prisoner internet infrastructure, AD
@@ -66,6 +67,11 @@ class PrisonerContentHub private constructor() {
         CloudPlatform.kubernetes.add(this)
       }
 
+      frontendProxy = system.addContainer("Nginx ingress", "Proxy for frontend and media on external domains not accessible to prison users", "Nginx").apply {
+        uses(contentHubFrontend, "Proxies requests to")
+        CloudPlatform.kubernetes.add(this)
+      }
+
       val kibanaDashboard = system.addContainer("Kibana dashboard", "Feedback reports and analytics dashboard", "Kibana").apply {
         // setUrl("TODO")
         uses(elasticSearchStore, "HTTPS Rest API")
@@ -81,12 +87,12 @@ class PrisonerContentHub private constructor() {
       }
 
       model.addPerson("Prisoner", "A prisoner over 18 years old, held in the public prison estate").apply {
-        uses(contentHubFrontend, "Views videos, audio programmes, site updates, and rehabilitative material")
+        uses(frontendProxy, "Views videos, audio programmes, site updates, and rehabilitative material")
         setLocation(Location.External)
       }
 
       model.addPerson("Young Offender", "A person under 18, held in a Young Offender Institute").apply {
-        uses(contentHubFrontend, "Views videos, audio programmes, site updates, and rehabilitative material")
+        uses(frontendProxy, "Views videos, audio programmes, site updates, and rehabilitative material")
         setLocation(Location.External)
       }
 
