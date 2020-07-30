@@ -109,6 +109,7 @@ class PrisonerContentHub private constructor() {
 
     override fun defineRelationships() {
       contentHubFrontend.uses(NOMIS.prisonApi, "lookup visits, canteen, etc.")
+      frontendProxy.uses(NationalPrisonRadio.system, "proxy OGG livestream audio")
     }
 
     override fun defineViews(views: ViewSet) {

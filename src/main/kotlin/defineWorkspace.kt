@@ -17,6 +17,7 @@ fun defineWorkspace(): Workspace {
     EPF, 
     EQuiP, 
     IM, 
+    NationalPrisonRadio,
     NID, 
     NOMIS, 
     OffenderManagementInCustody, 
