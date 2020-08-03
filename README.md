@@ -23,7 +23,7 @@ The project is built with `gradle`.
 | --- | --- |
 | Build the project | `./gradlew build` |
 | Create a local Structurizr workspace JSON file | `./gradlew run` |
-| Push to the remote Structurizr workspace | `./gradlew run --args='--push'` (please see **"Secrets"** section below) |
+| Push to the remote Structurizr workspace | `./gradlew run --args='--push'`<br/>(please see **"Secrets"** section below) |
 
 ### :rotating_light: Remote-only changes will be lost
 
