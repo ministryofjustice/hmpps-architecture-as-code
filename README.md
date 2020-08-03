@@ -7,12 +7,13 @@ Modelling architecture in HM Prisons and Probations Service (HMPPS) with the [C4
 
 ## Workspaces
 
-This repository defines two workspaces:
+This repository defines a Structurizr workspace for the HM Prison and Probation Service.
 
-- [Prison][workspace-prison], for systems and people related to prisons
-- [Probation][workspace-probation], for systems and people related to probation
+For the model and diagrams, please visit https://structurizr.com/share/56937.
 
-:warning: There is no workspace linking in the Structurizr library yet (as of 16/June/2020); so there is some duplication.
+[![Overview](https://static.structurizr.com/workspace/56937/diagrams/system-overview.png)](https://structurizr.com/share/56937/diagrams#system-overview)
+
+![Overview key](https://static.structurizr.com/workspace/56937/diagrams/system-overview-key.png)
 
 ## Running
 
@@ -21,7 +22,7 @@ The project is built with `gradle`.
 | Action | Command |
 | --- | --- |
 | Build the project | `./gradlew build` |
-| Create a local Structurworkspace JSON file | `./gradlew run` |
+| Create a local Structurizr workspace JSON file | `./gradlew run` |
 | Push to the remote Structurizr workspace | `./gradlew run --args='--push'` (please see **"Secrets"** section below) |
 
 ### :rotating_light: Remote-only changes will be lost
