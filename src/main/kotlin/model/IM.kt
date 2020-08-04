@@ -12,17 +12,17 @@ class IM private constructor() {
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
         "IM",
-        "Interventions Manager\nHolds records of interventions delivered to services users in the community"
+        "(Interventions Manager) Schedules appointments and records service user progress on accredited programmes"
       ).apply {
         ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)
       }
     }
 
     override fun defineRelationships() {
-      Delius.system.uses(system, "pushes active sentence requirements or licence conditions which are of interest to IM to", "IAPS")
-      InterventionTeams.interventionServicesTeam.uses(system, "create new interventions in")
-      InterventionTeams.npsProgrammeManager.uses(system, "create new interventions in")
-      InterventionTeams.crcTreatmentManager.uses(system, "create new interventions in")
+      Delius.system.uses(system, "pushes active sentence requirements or licence conditions to", "IAPS")
+      InterventionTeams.interventionServicesTeam.uses(system, "creates new accredited programmes in")
+      InterventionTeams.npsProgrammeManager.uses(system, "schedules accredited programme appointments and tracks service user attendance in")
+      InterventionTeams.crcTreatmentManager.uses(system, "schedules accredited programme appointments and tracks service user attendance in")
     }
 
     override fun defineViews(views: ViewSet) {
