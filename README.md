@@ -15,6 +15,20 @@ For the model and diagrams, please visit https://structurizr.com/share/56937.
 
 ![Overview key](https://static.structurizr.com/workspace/56937/diagrams/system-overview-key.png)
 
+## Linking from other repositories
+
+To link to a **live** version of a diagram, insert the following code into your repository's readme:
+
+(Replace `nomiscontainer` with the diagram key in the code)
+
+```markdown
+[Container diagram source](https://github.com/ministryofjustice/hmpps-architecture-as-code/search?q=nomiscontainer)
+
+![Container diagram](https://static.structurizr.com/workspace/56937/diagrams/nomiscontainer.png)
+
+![Container diagram legend](https://static.structurizr.com/workspace/56937/diagrams/nomiscontainer-key.png)
+```
+
 ## Running
 
 The project is built with `gradle`.
@@ -23,7 +37,7 @@ The project is built with `gradle`.
 | --- | --- |
 | Build the project | `./gradlew build` |
 | Create a local Structurizr workspace JSON file | `./gradlew run` |
-| Push to the remote Structurizr workspace | `./gradlew run --args='--push'` (please see **"Secrets"** section below) |
+| Push to the remote Structurizr workspace | `./gradlew run --args='--push'`<br/>(please see **"Secrets"** section below) |
 
 ### :rotating_light: Remote-only changes will be lost
 
