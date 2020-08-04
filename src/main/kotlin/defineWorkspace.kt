@@ -12,17 +12,18 @@ fun defineWorkspace(): Workspace {
   CloudPlatform.defineDeploymentNodes(workspace.model)
 
   val modelItems = listOf(
-    CRCSystem, 
-    Delius, 
-    EPF, 
-    EQuiP, 
-    IM, 
+    CRCSystem,
+    Delius,
+    EPF,
+    EQuiP,
+    IM,
+    InterventionTeams,
     NationalPrisonRadio,
-    NID, 
-    NOMIS, 
-    OffenderManagementInCustody, 
+    NID,
+    NOMIS,
+    OffenderManagementInCustody,
     PrisonerContentHub,
-    ProbationPractitioners, 
+    ProbationPractitioners,
     Reporting
   )
   modelItems.forEach { it.defineModelEntities(workspace.model) }

@@ -24,10 +24,7 @@ fun defineModelWithDeprecatedSyntax(model: Model) {
   val contractManager = model.addPerson("Contract Manager for CRCs", null)
   val courtAdmin = model.addPerson("NPS court administrator", null)
   val crcProgrammeManager = model.addPerson("CRC programme manager", "People who provide interventions on behalf of Community Rehabilitation Companies").apply { Tags.PROVIDER.addTo(this) }
-  val crcTreatmentManager = model.addPerson("CRC treatment manager", null).apply { Tags.PROVIDER.addTo(this) }
   val deliusSupport = model.addPerson("National Delius Support Team", null)
-  val interventionServices = model.addPerson("Intervention Services Team", "They accredit intervention programmes and do business development of the interventions.")
-  val npsProgrammeManager = model.addPerson("NPS programme manager", null)
   val sentencingPolicy = model.addPerson("Sentencing Policy", "Pseudo-team to capture sentencing policy meeting participants")
 
   val hmip = model.addPerson("HM Inspectorate of Probation", "Reports to the government on the effectiveness of work with people who offended to reduce reoffending and protect the public")
@@ -48,14 +45,10 @@ fun defineModelWithDeprecatedSyntax(model: Model) {
   courtAdmin.uses(prepareCaseForCourt, "captures court judgements in")
   ProbationPractitioners.crc.uses(oasys, "records offender risk (attendance, contact, etc.) and assessment in")
   crcProgrammeManager.interactsWith(deliusSupport, "opens tickets to update interventions")
-  crcTreatmentManager.uses(IM.system, "creates new interventions in")
   Delius.system.uses(oasys, "offender details, offence details, sentence info are copied into", "NDH")
   deliusSupport.uses(Delius.system, "administers everything in")
   deliusSupport.uses(Delius.system, "updates interventions in")
   EPF.projectManager.interactsWith(sentencingPolicy, "listens to owners of interventions for changes in policy")
-  interventionServices.interactsWith(EPF.projectManager, "provide programme suitability guide for accredited programme eligibility to")
-  interventionServices.uses(Delius.system, "creates new interventions in")
-  interventionServices.uses(IM.system, "creates new interventions in")
   Reporting.ndmis.uses(OffenderManagementInCustody.allocationManager, "sends extracts containing service user allocation to", "email")
   NOMIS.system.uses(Delius.system, "offender data is copied into", "NDH")
   NOMIS.system.uses(oasys, "offender data is coped into", "NDH")
@@ -63,7 +56,6 @@ fun defineModelWithDeprecatedSyntax(model: Model) {
   ProbationPractitioners.nps.uses(oasys, "records offender risk (attendance, contact, etc.) and assessment in")
   ProbationPractitioners.nps.uses(prepareCaseForCourt, "view case defendant details")
   ProbationPractitioners.nps.uses(wmt, "finds out their community case load by looking at")
-  npsProgrammeManager.uses(IM.system, "create new interventions in")
   oasys.uses(Delius.system, "assessment info, risk measures are copied into", "NDH")
   prepareCaseForCourt.uses(Delius.system, "get offender details from")
   prepareCaseForCourt.uses(oasys, "get offender assessment details from")

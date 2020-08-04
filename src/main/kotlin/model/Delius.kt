@@ -47,8 +47,10 @@ class Delius private constructor() {
     }
 
     override fun defineRelationships() {
+      IM.system.uses(system, "pushes contact information of interest to", "IAPS")
       ProbationPractitioners.crc.uses(system, "records and reviews assessment decision, sentence plan in")
       ProbationPractitioners.nps.uses(system, "records and reviews assessment decision, sentence plan, pre-sentence report, referrals in")
+      InterventionTeams.interventionServicesTeam.uses(system, "creates new interventions in")
     }
 
     override fun defineViews(views: ViewSet) {
