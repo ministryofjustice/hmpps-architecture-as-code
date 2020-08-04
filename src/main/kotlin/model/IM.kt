@@ -19,8 +19,10 @@ class IM private constructor() {
     }
 
     override fun defineRelationships() {
-      system.uses(Delius.system, "pushes contact information of interest to", "IAPS")
       Delius.system.uses(system, "pushes active sentence requirements or licence conditions which are of interest to IM to", "IAPS")
+      InterventionTeams.interventionServicesTeam.uses(system, "create new interventions in")
+      InterventionTeams.npsProgrammeManager.uses(system, "create new interventions in")
+      InterventionTeams.crcTreatmentManager.uses(system, "create new interventions in")
     }
 
     override fun defineViews(views: ViewSet) {
