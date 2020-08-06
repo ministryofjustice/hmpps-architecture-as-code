@@ -1,6 +1,7 @@
 package uk.gov.justice.hmpps.architecture
 
 import com.structurizr.Workspace
+import com.structurizr.model.CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy
 import com.structurizr.model.Enterprise
 
 fun defineWorkspace(): Workspace {
@@ -8,6 +9,10 @@ fun defineWorkspace(): Workspace {
   val workspace = Workspace(enterprise.name, "Systems related to the custody and probation of offenders")
   workspace.id = 56937
   workspace.model.enterprise = enterprise
+
+  workspace.model.setImpliedRelationshipsStrategy(
+    CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy()
+  )
 
   CloudPlatform.defineDeploymentNodes(workspace.model)
 

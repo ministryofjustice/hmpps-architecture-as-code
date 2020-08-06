@@ -1,13 +1,8 @@
 package uk.gov.justice.hmpps.architecture
 
-import com.structurizr.model.CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy
 import com.structurizr.model.Model
 
 fun defineModelWithDeprecatedSyntax(model: Model) {
-  model.setImpliedRelationshipsStrategy(
-    CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy()
-  )
-
   // lifted from prison model
   val spo = model.addPerson("Senior Prison Offender Manager", "manages service users and offender managers")
   val pom = model.addPerson("Prison Offender Manager", "responsible for the service users in their prison")
