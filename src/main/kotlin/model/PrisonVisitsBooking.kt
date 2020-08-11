@@ -32,6 +32,7 @@ class PrisonVisitsBooking private constructor() {
       val zendesk = system.addContainer("Customer service", "Handles feedback tickets raised by staff and members of the public", "Zendesk").apply {
         Tags.WEB_BROWSER.addTo(this)
         Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
+        Tags.PROVIDER.addTo(this)
       }
 
       val sidekiq = system.addContainer("Sidekiq", "Listens to queued events and processes them", "Sidekiq").apply {
