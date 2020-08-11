@@ -51,6 +51,7 @@ class PrisonVisitsBooking private constructor() {
 
     override fun defineRelationships() {
       backend.uses(MoJSignOn.app, "authenticates with", "HTTP")
+      backend.uses(NOMIS.prisonApi, "retrieves prison visiting slots and prisoner visiting-related data from", "HTTP")
     }
 
     override fun defineViews(views: ViewSet) {
