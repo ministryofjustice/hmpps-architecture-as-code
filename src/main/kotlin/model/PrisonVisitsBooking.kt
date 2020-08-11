@@ -29,6 +29,11 @@ class PrisonVisitsBooking private constructor() {
         CloudPlatform.kubernetes.add(this)
       }
 
+      val zendesk = system.addContainer("Customer service", "Handles feedback tickets raised by staff and members of the public", "Zendesk").apply {
+        Tags.WEB_BROWSER.addTo(this)
+        Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
+      }
+
       val sidekiq = system.addContainer("Sidekiq", "Listens to queued events and processes them", "Sidekiq").apply {
         CloudPlatform.kubernetes.add(this)
       }
@@ -46,6 +51,7 @@ class PrisonVisitsBooking private constructor() {
       frontend.uses(backend, "books and retrieves bookings from", "HTTP")
       backend.uses(queue, "queues feedback jobs to")
       sidekiq.uses(queue, "processes queued jobs from")
+      sidekiq.uses(zendesk, "raises feedback as tickets in")
       backend.uses(db, "connects to")
     }
 
