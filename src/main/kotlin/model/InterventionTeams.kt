@@ -7,7 +7,7 @@ import com.structurizr.view.ViewSet
 class InterventionTeams private constructor() {
   companion object : HMPPSSoftwareSystem {
     lateinit var interventionServicesTeam: Person
-    lateinit var npsProgrammeManager: Person
+    lateinit var npsTreatmentManager: Person
     lateinit var crcTreatmentManager: Person
 
     override fun defineModelEntities(model: Model) {
@@ -15,7 +15,7 @@ class InterventionTeams private constructor() {
         "Intervention Services Team",
         "They accredit intervention programmes and do business development of the interventions"
       )
-      npsProgrammeManager = model.addPerson("NPS programme manager")
+      npsTreatmentManager = model.addPerson("NPS treatment manager")
       crcTreatmentManager = model.addPerson("CRC treatment manager")
         .apply { Tags.PROVIDER.addTo(this) }
     }
