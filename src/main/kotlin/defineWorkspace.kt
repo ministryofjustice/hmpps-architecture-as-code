@@ -14,6 +14,7 @@ fun defineWorkspace(): Workspace {
     CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy()
   )
 
+  AWS.defineDeploymentNodes(workspace.model)
   CloudPlatform.defineDeploymentNodes(workspace.model)
   Heroku.defineDeploymentNodes(workspace.model)
 

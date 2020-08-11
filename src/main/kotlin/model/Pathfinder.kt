@@ -10,10 +10,6 @@ class Pathfinder(model: Model) {
   val webApp: Container
 
   init {
-    val cloudPlatform = model.getDeploymentNodeWithName("Cloud Platform")
-    val rds = cloudPlatform.getDeploymentNodeWithName("RDS")
-    val kubernetes = cloudPlatform.getDeploymentNodeWithName("Kubernetes")
-
     system = model.addSoftwareSystem(
       "Pathfinder",
       "Pathfinder System,\nthe case management system for Pathfinder nominals"
@@ -24,7 +20,7 @@ class Pathfinder(model: Model) {
       "Database to store Pathfinder case management", "RDS Postgres DB"
     ).apply {
       Tags.DATABASE.addTo(this)
-      rds.add(this)
+      CloudPlatform.rds.add(this)
     }
 
     webApp = system.addContainer(
@@ -37,7 +33,7 @@ class Pathfinder(model: Model) {
       uses(NOMIS.offenderSearch, "to search for prisoners")
       uses(Delius.communityApi, "extract nDelius offender data")
       uses(Delius.offenderSearch, "to search for offenders")
-      kubernetes.add(this)
+      CloudPlatform.kubernetes.add(this)
     }
 
     system.addContainer(
@@ -46,7 +42,7 @@ class Pathfinder(model: Model) {
     ).apply {
       setUrl("https://github.com/ministryofjustice/pathfinder-api")
       uses(db, "JDBC")
-      kubernetes.add(this)
+      CloudPlatform.kubernetes.add(this)
     }
 
     val pPrisonPreventLead = model.addPerson("Prison Prevent Lead", "They case manage Pathfinder Nominals in custody")
