@@ -67,8 +67,7 @@ class PrisonerContentHub private constructor() {
         CloudPlatform.kubernetes.add(this)
       }
 
-      frontendProxy = system.addContainer("Nginx ingress", "Proxy for frontend and media on external domains not accessible to prison users", "Nginx").apply {
-        uses(contentHubFrontend, "Proxies requests to")
+      frontendProxy = system.addContainer("Nginx ingress", "Proxy for media on external domains not accessible to prison users", "Nginx").apply {
         CloudPlatform.kubernetes.add(this)
       }
 
@@ -87,12 +86,14 @@ class PrisonerContentHub private constructor() {
       }
 
       model.addPerson("Prisoner", "A prisoner over 18 years old, held in the public prison estate").apply {
-        uses(frontendProxy, "Views videos, audio programmes, site updates, and rehabilitative material")
+        uses(contentHubFrontend, "Views videos, audio programmes, site updates, and rehabilitative material")
+        uses(frontendProxy, "Listens to National Prison Radio live stream")
         setLocation(Location.External)
       }
 
       model.addPerson("Young Offender", "A person under 18, held in a Young Offender Institute").apply {
-        uses(frontendProxy, "Views videos, audio programmes, site updates, and rehabilitative material")
+        uses(contentHubFrontend, "Views videos, audio programmes, site updates, and rehabilitative material")
+        uses(frontendProxy, "Listens to National Prison Radio live stream")
         setLocation(Location.External)
       }
 
