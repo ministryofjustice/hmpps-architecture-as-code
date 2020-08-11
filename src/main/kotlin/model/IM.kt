@@ -13,14 +13,14 @@ class IM private constructor() {
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
-        "IM",
-        "(Interventions Manager) Schedules appointments and records service user progress on accredited programmes"
+        "Interventions Manager",
+        "(IM) Used to schedule accredited programmes and record service users' progress on them"
       ).apply {
         ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)
       }
 
       i2nTeam = model.addPerson(
-        "i2n",
+        "i2n (formerly Northgate)",
         "Provides and maintains the Intervention Manager service"
       ).apply {
         addProperty("previous-name", "Northgate")
@@ -30,8 +30,8 @@ class IM private constructor() {
 
     override fun defineRelationships() {
       Delius.system.uses(system, "pushes active sentence requirements or licence conditions to", "IAPS")
-      InterventionTeams.npsProgrammeManager.uses(system, "schedules accredited programme appointments and tracks service user attendance in")
-      InterventionTeams.crcTreatmentManager.uses(system, "schedules accredited programme appointments and tracks service user attendance in")
+      InterventionTeams.npsTreatmentManager.uses(system, "schedules accredited programme appointments, tracks service user attendance and evaluate service user progress in")
+      InterventionTeams.crcTreatmentManager.uses(system, "schedules accredited programme appointments, tracks service user attendance and evaluate service user progress in")
 
       Delius.supportTeam.interactsWith(i2nTeam, "notify an accredited programme is updated", "email")
       i2nTeam.uses(system, "creates new accredited programmes in")
