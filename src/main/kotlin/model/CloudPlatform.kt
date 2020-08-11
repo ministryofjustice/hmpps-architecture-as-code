@@ -9,6 +9,7 @@ class CloudPlatform private constructor() {
     lateinit var s3: DeploymentNode
     lateinit var sns: DeploymentNode
     lateinit var sqs: DeploymentNode
+    lateinit var elasticache: DeploymentNode
     lateinit var elasticsearch: DeploymentNode
     lateinit var kubernetes: DeploymentNode
 
@@ -18,6 +19,7 @@ class CloudPlatform private constructor() {
       s3 = cloudPlatform.addDeploymentNode("S3", "AWS Simple Storage Service", "AWS")
       sns = cloudPlatform.addDeploymentNode("SNS", "AWS Simple Notification Service", "AWS")
       sqs = cloudPlatform.addDeploymentNode("SQS", "AWS Simple Queue Service", "AWS")
+      elasticache = cloudPlatform.addDeploymentNode("ElastiCache", "Managed in-memory data store and cache service", "AWS")
       elasticsearch = cloudPlatform.addDeploymentNode("ElasticSearch", "AWS ElasticSearch Service", "AWS")
       kubernetes = cloudPlatform.addDeploymentNode("Kubernetes", "The Cloud Platform Kubernetes cluster", "Kubernetes")
     }

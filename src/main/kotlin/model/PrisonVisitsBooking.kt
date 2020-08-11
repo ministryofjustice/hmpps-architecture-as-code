@@ -29,12 +29,23 @@ class PrisonVisitsBooking private constructor() {
         CloudPlatform.kubernetes.add(this)
       }
 
+      val sidekiq = system.addContainer("Sidekiq", "Listens to queued events and processes them", "Sidekiq").apply {
+        CloudPlatform.kubernetes.add(this)
+      }
+
+      val queue = system.addContainer("Queue", "Key-value store used for scheduling jobs via Sidekiq", "Redis").apply {
+        Tags.DATABASE.addTo(this)
+        CloudPlatform.elasticache.add(this)
+      }
+
       val db = system.addContainer("Database", "Bookings database", "PostgreSQL").apply {
         Tags.DATABASE.addTo(this)
         CloudPlatform.rds.add(this)
       }
 
       frontend.uses(backend, "books and retrieves bookings from", "HTTP")
+      backend.uses(queue, "queues feedback jobs to")
+      sidekiq.uses(queue, "processes queued jobs from")
       backend.uses(db, "connects to")
     }
 
