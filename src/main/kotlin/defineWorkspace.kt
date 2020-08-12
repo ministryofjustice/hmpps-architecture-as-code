@@ -18,6 +18,7 @@ fun defineWorkspace(): Workspace {
   Heroku.defineDeploymentNodes(workspace.model)
 
   val modelItems = listOf(
+    CourtUsers,
     CRCSystem,
     Delius,
     EPF,
@@ -31,6 +32,7 @@ fun defineWorkspace(): Workspace {
     NOMIS,
     OASys,
     OffenderManagementInCustody,
+    PrepareCaseForCourt,
     PrisonerContentHub,
     PrisonVisitsBooking,
     ProbationPractitioners,

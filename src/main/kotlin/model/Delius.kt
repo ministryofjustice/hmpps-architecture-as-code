@@ -59,6 +59,7 @@ class Delius private constructor() {
       IM.system.uses(system, "pushes service user contact information to", "IAPS")
       ProbationPractitioners.crc.uses(system, "records and reviews assessment decision, sentence plan in")
       ProbationPractitioners.nps.uses(system, "records and reviews assessment decision, sentence plan, pre-sentence report, referrals in")
+      CourtUsers.courtAdministrator.uses(system, "records CAS decision, referrals in")
 
       OASys.system.uses(system, "assessment info, risk measures are copied into", "NDH")
       NOMIS.system.uses(system, "offender data is copied into", "NDH")
