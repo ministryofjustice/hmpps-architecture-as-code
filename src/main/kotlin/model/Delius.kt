@@ -1,5 +1,6 @@
 package uk.gov.justice.hmpps.architecture
 
+import com.structurizr.model.Container
 import com.structurizr.model.Model
 import com.structurizr.model.Person
 import com.structurizr.model.SoftwareSystem
@@ -9,6 +10,7 @@ import com.structurizr.view.ViewSet
 class Delius private constructor() {
   companion object : HMPPSSoftwareSystem {
     lateinit var system: SoftwareSystem
+    lateinit var communityApi: Container
     lateinit var supportTeam: Person
 
     override fun defineModelEntities(model: Model) {
@@ -37,7 +39,7 @@ class Delius private constructor() {
         Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
       }
 
-      system.addContainer(
+      communityApi = system.addContainer(
         "Community API",
         "API over the nDelius DB used by HMPPS Digital team applications and services", "Java"
       ).apply {
