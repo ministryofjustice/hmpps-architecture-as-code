@@ -60,6 +60,9 @@ class Delius private constructor() {
       ProbationPractitioners.crc.uses(system, "records and reviews assessment decision, sentence plan in")
       ProbationPractitioners.nps.uses(system, "records and reviews assessment decision, sentence plan, pre-sentence report, referrals in")
 
+      OASys.system.uses(system, "assessment info, risk measures are copied into", "NDH")
+      NOMIS.system.uses(system, "offender data is copied into", "NDH")
+
       InterventionTeams.interventionServicesTeam.interactsWith(supportTeam, "raises task to create or update an accredited programme with")
       InterventionTeams.crcProgrammeManager.interactsWith(supportTeam, "raises task to update interventions with")
       supportTeam.uses(system, "updates interventions in")

@@ -29,6 +29,7 @@ fun defineWorkspace(): Workspace {
     NationalPrisonRadio,
     NID,
     NOMIS,
+    OASys,
     OffenderManagementInCustody,
     PrisonerContentHub,
     PrisonVisitsBooking,
