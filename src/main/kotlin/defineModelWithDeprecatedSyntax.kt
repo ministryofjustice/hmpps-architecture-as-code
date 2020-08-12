@@ -21,11 +21,9 @@ fun defineModelWithDeprecatedSyntax(model: Model) {
 
   val caseNotesToProbation = model.addSoftwareSystem("Case Notes to Probation", "Polls for case notes and pushes them to probation systems")
   val prisonToProbation = model.addSoftwareSystem("Prison to Probation Update", "Listens for events from Prison systems (NOMIS) to update offender sentence information in Probation systems (Delius)")
-  val probationCaseSampler = model.addSoftwareSystem("Probation Case Sampler", "API which produces a representative and evenly distributed list of probation cases within a region and date range which form the basis of an on-site inspection")
   val wmt = model.addSoftwareSystem("WMT", "Workload Management Tool,\nhelps offender managers schedule their time based on service user risk")
 
   prisonToProbation.setUrl("https://dsdmoj.atlassian.net/wiki/spaces/NOM/pages/1947107651/Prison+to+Probation+Update+-+Delius+DSS+Automatic+updates")
-  probationCaseSampler.setUrl("https://dsdmoj.atlassian.net/wiki/spaces/NDSS/pages/1989181486/HMIP+Case+Sampling")
 
   caseNotesToProbation.uses(Delius.system, "pushes case notes to")
   EPF.projectManager.interactsWith(sentencingPolicy, "listens to owners of interventions for changes in policy")
@@ -33,7 +31,6 @@ fun defineModelWithDeprecatedSyntax(model: Model) {
   NOMIS.system.uses(prisonToProbation, "notifies changes")
   ProbationPractitioners.nps.uses(wmt, "finds out their community case load by looking at")
   prisonToProbation.uses(Delius.system, "update offender sentence information in")
-  probationCaseSampler.uses(Delius.system, "gets list of probation cases")
   wmt.uses(Reporting.ndmis, "draws offender risk and allocation data from")
 
   hmip.uses(Reporting.ndmis, "uses data from")

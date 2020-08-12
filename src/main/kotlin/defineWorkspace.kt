@@ -35,6 +35,7 @@ fun defineWorkspace(): Workspace {
     PrepareCaseForCourt,
     PrisonerContentHub,
     PrisonVisitsBooking,
+    ProbationCaseSampler,
     ProbationPractitioners,
     Reporting
   )
