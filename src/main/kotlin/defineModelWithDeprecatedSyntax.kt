@@ -21,7 +21,6 @@ fun defineModelWithDeprecatedSyntax(model: Model) {
 
   val caseNotesToProbation = model.addSoftwareSystem("Case Notes to Probation", "Polls for case notes and pushes them to probation systems")
   val prisonToProbation = model.addSoftwareSystem("Prison to Probation Update", "Listens for events from Prison systems (NOMIS) to update offender sentence information in Probation systems (Delius)")
-  val wmt = model.addSoftwareSystem("WMT", "Workload Management Tool,\nhelps offender managers schedule their time based on service user risk")
 
   prisonToProbation.setUrl("https://dsdmoj.atlassian.net/wiki/spaces/NOM/pages/1947107651/Prison+to+Probation+Update+-+Delius+DSS+Automatic+updates")
 
@@ -29,9 +28,7 @@ fun defineModelWithDeprecatedSyntax(model: Model) {
   EPF.projectManager.interactsWith(sentencingPolicy, "listens to owners of interventions for changes in policy")
   Reporting.ndmis.uses(OffenderManagementInCustody.allocationManager, "sends extracts containing service user allocation to", "email")
   NOMIS.system.uses(prisonToProbation, "notifies changes")
-  ProbationPractitioners.nps.uses(wmt, "finds out their community case load by looking at")
   prisonToProbation.uses(Delius.system, "update offender sentence information in")
-  wmt.uses(Reporting.ndmis, "draws offender risk and allocation data from")
 
   hmip.uses(Reporting.ndmis, "uses data from")
   OffenderManagementInCustody.ldu.uses(Delius.system, "maintains 'shadow' team assignments for service users during prison-to-probation handover in")
