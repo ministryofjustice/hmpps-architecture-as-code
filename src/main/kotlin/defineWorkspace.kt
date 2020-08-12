@@ -15,6 +15,7 @@ fun defineWorkspace(): Workspace {
   )
 
   CloudPlatform.defineDeploymentNodes(workspace.model)
+  Heroku.defineDeploymentNodes(workspace.model)
 
   val modelItems = listOf(
     CRCSystem,
@@ -23,11 +24,13 @@ fun defineWorkspace(): Workspace {
     EQuiP,
     IM,
     InterventionTeams,
+    MoJSignOn,
     NationalPrisonRadio,
     NID,
     NOMIS,
     OffenderManagementInCustody,
     PrisonerContentHub,
+    PrisonVisitsBooking,
     ProbationPractitioners,
     Reporting
   )
