@@ -34,6 +34,7 @@ fun defineWorkspace(): Workspace {
     OffenderManagementInCustody,
     PrepareCaseForCourt,
     PrisonerContentHub,
+    PrisonToProbationUpdate,
     PrisonVisitsBooking,
     ProbationCaseSampler,
     ProbationPractitioners,
