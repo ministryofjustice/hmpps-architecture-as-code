@@ -18,9 +18,6 @@ fun defineModelWithDeprecatedSyntax(model: Model) {
 
   val hmip = model.addPerson("HM Inspectorate of Probation", "Reports to the government on the effectiveness of work with people who offended to reduce reoffending and protect the public")
 
-  val caseNotesToProbation = model.addSoftwareSystem("Case Notes to Probation", "Polls for case notes and pushes them to probation systems")
-
-  caseNotesToProbation.uses(Delius.system, "pushes case notes to")
   EPF.projectManager.interactsWith(sentencingPolicy, "listens to owners of interventions for changes in policy")
   Reporting.ndmis.uses(OffenderManagementInCustody.allocationManager, "sends extracts containing service user allocation to", "email")
 

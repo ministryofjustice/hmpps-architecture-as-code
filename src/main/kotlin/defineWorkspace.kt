@@ -18,6 +18,7 @@ fun defineWorkspace(): Workspace {
   Heroku.defineDeploymentNodes(workspace.model)
 
   val modelItems = listOf(
+    CaseNotesToProbation,
     CourtUsers,
     CRCSystem,
     Delius,
