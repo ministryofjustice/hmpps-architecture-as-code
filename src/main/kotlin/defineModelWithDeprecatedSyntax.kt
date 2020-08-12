@@ -16,9 +16,7 @@ fun defineModelWithDeprecatedSyntax(model: Model) {
   pom.uses(OffenderManagementInCustody.allocationManager, "look at service users who need handing over to community in")
 
   // lifted from probation model
-  val contractManager = model.addPerson("Contract Manager for CRCs", null)
   val courtAdmin = model.addPerson("NPS court administrator", null)
-  val crcProgrammeManager = model.addPerson("CRC programme manager", "People who provide interventions on behalf of Community Rehabilitation Companies").apply { Tags.PROVIDER.addTo(this) }
   val sentencingPolicy = model.addPerson("Sentencing Policy", "Pseudo-team to capture sentencing policy meeting participants")
 
   val hmip = model.addPerson("HM Inspectorate of Probation", "Reports to the government on the effectiveness of work with people who offended to reduce reoffending and protect the public")
@@ -34,11 +32,9 @@ fun defineModelWithDeprecatedSyntax(model: Model) {
   probationCaseSampler.setUrl("https://dsdmoj.atlassian.net/wiki/spaces/NDSS/pages/1989181486/HMIP+Case+Sampling")
 
   caseNotesToProbation.uses(Delius.system, "pushes case notes to")
-  contractManager.interactsWith(EPF.projectManager, "sends a signed off version of the CRC's Discretionary Services rate card brochure to")
   courtAdmin.uses(Delius.system, "records CAS decision, referrals in")
   courtAdmin.uses(prepareCaseForCourt, "captures court judgements in")
   ProbationPractitioners.crc.uses(oasys, "records offender risk (attendance, contact, etc.) and assessment in")
-  crcProgrammeManager.interactsWith(Delius.supportTeam, "opens tickets to update interventions")
   Delius.system.uses(oasys, "offender details, offence details, sentence info are copied into", "NDH")
   EPF.projectManager.interactsWith(sentencingPolicy, "listens to owners of interventions for changes in policy")
   Reporting.ndmis.uses(OffenderManagementInCustody.allocationManager, "sends extracts containing service user allocation to", "email")
