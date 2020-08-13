@@ -4,19 +4,20 @@ import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ViewSet
 
-class NDH private constructor() {
+class WMT private constructor() {
   companion object : HMPPSSoftwareSystem {
     lateinit var system: SoftwareSystem
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
-        "NOMIS Data Hub",
-        "(NDH) Responsible for pulling/pushing data between HMPPS case management systems"
+        "Workload Management Tool",
+        "(WMT) Helps probation practitioners schedule their time based on service user risk"
       )
     }
 
     override fun defineRelationships() {
-      system.uses(NOMIS.db, "to search for offenders")
+      ProbationPractitioners.nps.uses(system, "finds out their community case load by looking at")
+      system.uses(Reporting.ndmis, "draws offender risk and allocation data from")
     }
 
     override fun defineViews(views: ViewSet) {

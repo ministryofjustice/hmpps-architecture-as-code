@@ -74,6 +74,7 @@ class NOMIS private constructor() {
     }
 
     override fun defineRelationships() {
+      system.uses(PrisonToProbationUpdate.system, "notifies changes")
     }
 
     override fun defineViews(views: ViewSet) {
