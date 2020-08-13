@@ -28,7 +28,7 @@ class PrepareCaseForCourt private constructor() {
         "PostgreSQL"
       ).apply {
         Tags.DATABASE.addTo(this)
-        Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
+        CloudPlatform.rds.add(this)
       }
 
       val messagesDb = system.addContainer(
@@ -37,7 +37,7 @@ class PrepareCaseForCourt private constructor() {
         "PostgreSQL"
       ).apply {
         Tags.DATABASE.addTo(this)
-        Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
+        CloudPlatform.rds.add(this)
       }
 
       courtCaseService = system.addContainer(
@@ -46,6 +46,7 @@ class PrepareCaseForCourt private constructor() {
         "Java + Spring Boot"
       ).apply {
         uses(casesDb, "connects to", "JDBC")
+        setUrl("https://github.com/ministryofjustice/court-case-service")
       }
 
       courtCaseMatcher = system.addContainer(
@@ -54,6 +55,7 @@ class PrepareCaseForCourt private constructor() {
         "Java + Spring Boot"
       ).apply {
         uses(courtCaseService, "Creates or updates cases in")
+        setUrl("https://github.com/ministryofjustice/court-case-matcher")
       }
 
       prepareCaseUI = system.addContainer(
@@ -62,6 +64,7 @@ class PrepareCaseForCourt private constructor() {
         "Node + Express"
       ).apply {
         uses(courtCaseService, "View case defendant details and capture court judgements using ")
+        setUrl("https://github.com/ministryofjustice/prepare-a-case")
       }
 
       val crimePortalMirrorGateway = system.addContainer(
@@ -71,6 +74,7 @@ class PrepareCaseForCourt private constructor() {
       ).apply {
         uses(messagesDb, "connects to", "JDBC")
         uses(courtCaseMatcher, "Sends court lists to")
+        setUrl("https://github.com/ministryofjustice/crime-portal-mirror-gateway")
       }
 
       // TODO refactor out HMCTS Crime Portal into dedicated SoftwareSystem
@@ -92,8 +96,8 @@ class PrepareCaseForCourt private constructor() {
       // TODO Model OASys & link to Offender Assessment API
       courtCaseService.uses(OASys.system, "get offender assessment details from")
 
-      CourtUsers.courtAdministrator.uses(system, "prepares cases for sentencing")
-      ProbationPractitioners.nps.uses(system, "views case defendant details")
+      CourtUsers.courtAdministrator.uses(prepareCaseUI, "prepares cases for sentencing")
+      ProbationPractitioners.nps.uses(prepareCaseUI, "views case defendant details")
     }
 
     override fun defineViews(views: ViewSet) {
