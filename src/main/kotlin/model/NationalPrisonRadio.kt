@@ -1,6 +1,5 @@
 package uk.gov.justice.hmpps.architecture
 
-import com.structurizr.model.Location
 import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ViewSet
@@ -15,7 +14,6 @@ class NationalPrisonRadio private constructor() {
         "The national radio station for prisoners. Made by prisoners, for prisoners"
       ).apply {
         Tags.PROVIDER.addTo(this)
-        setLocation(Location.External)
       }
     }
 

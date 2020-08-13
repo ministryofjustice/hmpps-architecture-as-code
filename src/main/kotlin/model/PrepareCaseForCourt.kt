@@ -15,12 +15,12 @@ class PrepareCaseForCourt private constructor() {
     lateinit var courtCaseMatcher: Container
 
     override fun defineModelEntities(model: Model) {
-
-      system = model.addSoftwareSystem("Prepare a Case for Court", "Digital Service for Probation Officers working in magistrates' courts, " +
-        "providing them with a single location to access the defendant information they need to provide sound and timely sentencing guidance to magistrates")
-        .apply {
-          setLocation(Location.Internal)
-        }
+      system = model.addSoftwareSystem(
+        "Prepare a Case for Court",
+        "Digital Service for Probation Officers working in magistrates' courts, " +
+          "providing them with a single location to access the defendant information " +
+          "they need to provide sound and timely sentencing guidance to magistrates"
+      )
 
       val casesDb = system.addContainer(
         "Cases Database",

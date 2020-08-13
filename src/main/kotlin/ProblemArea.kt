@@ -2,10 +2,10 @@ package uk.gov.justice.hmpps.architecture
 
 import com.structurizr.model.Element
 
-enum class ProblemArea() {
+enum class ProblemArea : addTo {
   GETTING_THE_RIGHT_REHABILITATION;
 
-  fun addTo(element: Element) {
+  override fun addTo(element: Element) {
     element.addProperty("problem-area", this.toString())
   }
 
