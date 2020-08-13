@@ -28,6 +28,7 @@ class EPF private constructor() {
       ProbationPractitioners.nps.uses(system, "enters court, location, offender needs, assessment score data to receive a shortlist of recommended interventions for Pre-Sentence Report Proposal from")
       ProbationPractitioners.nps.uses(system, "enters location, offender needs, assessment score data to receive recommended interventions for licence condition planning from")
       InterventionTeams.interventionServicesTeam.interactsWith(projectManager, "provide programme suitability guide for accredited programme eligibility to")
+      InterventionTeams.contractManagerForCRC.interactsWith(projectManager, "sends a signed off version of the CRC's Discretionary Services rate card brochure to")
     }
 
     override fun defineViews(views: ViewSet) {

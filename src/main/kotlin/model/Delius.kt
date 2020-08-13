@@ -61,6 +61,7 @@ class Delius private constructor() {
       ProbationPractitioners.nps.uses(system, "records and reviews assessment decision, sentence plan, pre-sentence report, referrals in")
 
       InterventionTeams.interventionServicesTeam.interactsWith(supportTeam, "raises task to create or update an accredited programme with")
+      InterventionTeams.crcProgrammeManager.interactsWith(supportTeam, "raises task to update interventions with")
       supportTeam.uses(system, "updates interventions in")
     }
 
