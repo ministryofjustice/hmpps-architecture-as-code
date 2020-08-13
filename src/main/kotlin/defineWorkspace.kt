@@ -30,6 +30,7 @@ fun defineWorkspace(): Workspace {
     NID,
     NOMIS,
     OffenderManagementInCustody,
+    PrepareCaseForCourt,
     PrisonerContentHub,
     PrisonVisitsBooking,
     ProbationPractitioners,

@@ -11,6 +11,7 @@ class Delius private constructor() {
   companion object : HMPPSSoftwareSystem {
     lateinit var system: SoftwareSystem
     lateinit var communityApi: Container
+    lateinit var offenderSearch: Container
     lateinit var supportTeam: Person
 
     override fun defineModelEntities(model: Model) {
@@ -47,7 +48,7 @@ class Delius private constructor() {
         uses(db, "connects to", "JDBC")
       }
 
-      system.addContainer(
+      offenderSearch = system.addContainer(
         "OffenderSearch",
         "API over the nDelius offender data held in Elasticsearch", "Java"
       ).apply {
