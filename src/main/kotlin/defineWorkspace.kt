@@ -22,6 +22,7 @@ fun defineWorkspace(): Workspace {
     Delius,
     EPF,
     EQuiP,
+    HMPPSAuth,
     IM,
     InterventionTeams,
     MoJSignOn,
