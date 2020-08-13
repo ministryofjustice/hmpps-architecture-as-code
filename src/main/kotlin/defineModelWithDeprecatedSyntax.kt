@@ -8,7 +8,6 @@ fun defineModelWithDeprecatedSyntax(model: Model) {
   val pom = model.addPerson("Prison Offender Manager", "responsible for the service users in their prison")
   pom.interactsWith(spo, "managed by")
 
-  NDH(model)
   Pathfinder(model)
 
   spo.uses(OffenderManagementInCustody.allocationManager, "look at unallocated service users coming from court in")

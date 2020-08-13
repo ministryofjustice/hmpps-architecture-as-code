@@ -28,6 +28,7 @@ fun defineWorkspace(): Workspace {
     InterventionTeams,
     MoJSignOn,
     NationalPrisonRadio,
+    NDH,
     NID,
     NOMIS,
     OASys,
