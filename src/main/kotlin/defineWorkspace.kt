@@ -40,6 +40,7 @@ fun defineWorkspace(): Workspace {
     PrisonVisitsBooking,
     ProbationCaseSampler,
     ProbationPractitioners,
+    ProbationTeamsService,
     Reporting
   )
   modelItems.forEach { it.defineModelEntities(workspace.model) }
