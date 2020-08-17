@@ -31,6 +31,7 @@ class ProbationTeamsService private constructor() {
     }
 
     override fun defineRelationships() {
+      api.uses(HMPPSAuth.app, "validates API tokens via", "JWK")
     }
 
     override fun defineViews(views: ViewSet) {
