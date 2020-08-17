@@ -27,6 +27,7 @@ fun defineWorkspace(): Workspace {
     HMPPSAuth,
     IM,
     InterventionTeams,
+    Licences,
     MoJSignOn,
     NationalPrisonRadio,
     NDH,

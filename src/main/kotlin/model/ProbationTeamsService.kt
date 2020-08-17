@@ -1,6 +1,7 @@
 
 package uk.gov.justice.hmpps.architecture
 
+import com.structurizr.model.Container
 import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.AutomaticLayout
@@ -9,6 +10,7 @@ import com.structurizr.view.ViewSet
 class ProbationTeamsService private constructor() {
   companion object : HMPPSSoftwareSystem {
     lateinit var system: SoftwareSystem
+    lateinit var api: Container
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
@@ -16,7 +18,7 @@ class ProbationTeamsService private constructor() {
         "Exposes probation areas and Local Delivery Unit 'functional' mailboxes as an API"
       )
 
-      val api = system.addContainer("API", "API", "Kotlin + Spring Boot").apply {
+      api = system.addContainer("API", "API", "Kotlin + Spring Boot").apply {
         APIDocs("https://probation-teams-preprod.prison.service.justice.gov.uk/swagger-ui.html").addTo(this)
         setUrl("https://github.com/ministryofjustice/probation-teams")
       }
