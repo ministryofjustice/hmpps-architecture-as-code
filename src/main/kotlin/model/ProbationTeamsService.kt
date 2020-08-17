@@ -17,6 +17,7 @@ class ProbationTeamsService private constructor() {
       )
 
       val api = system.addContainer("API", "API", "Kotlin + Spring Boot").apply {
+        APIDocs("https://probation-teams-preprod.prison.service.justice.gov.uk/swagger-ui.html").addTo(this)
         setUrl("https://github.com/ministryofjustice/probation-teams")
       }
 
