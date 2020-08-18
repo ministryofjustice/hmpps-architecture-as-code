@@ -49,9 +49,12 @@ class Delius private constructor() {
       }
 
       offenderSearch = system.addContainer(
-        "OffenderSearch",
-        "API over the nDelius offender data held in Elasticsearch", "Java"
+        "Probation Offender Search",
+        "API over the nDelius offender data held in Elasticsearch",
+        "Java"
       ).apply {
+        APIDocs("https://probation-offender-search.hmpps.service.justice.gov.uk/swagger-ui.html").addTo(this)
+        setUrl("https://github.com/ministryofjustice/probation-offender-search")
         uses(elasticSearchStore, "Queries offender data from nDelius Elasticsearch Index")
       }
     }
