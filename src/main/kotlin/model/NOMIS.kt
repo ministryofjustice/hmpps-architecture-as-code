@@ -74,6 +74,7 @@ class NOMIS private constructor() {
     }
 
     override fun defineRelationships() {
+      system.uses(Delius.system, "offender data is copied into", "NDH")
       system.uses(PrisonToProbationUpdate.system, "notifies changes")
     }
 
