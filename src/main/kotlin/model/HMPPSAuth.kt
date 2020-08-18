@@ -9,7 +9,7 @@ import com.structurizr.view.ViewSet
 class HMPPSAuth private constructor() {
   companion object : HMPPSSoftwareSystem {
     lateinit var system: SoftwareSystem
-    protected lateinit var app: Container
+    lateinit var app: Container
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem("HMPPS Auth", "Allows users to login into digital services").apply {
@@ -21,6 +21,7 @@ class HMPPSAuth private constructor() {
         "OAuth2 server integrating with NOMIS database, nDelius (via community api) and an auth database for storing external users",
         "Spring Boot + Java"
       ).apply {
+        APIDocs("https://sign-in-preprod.hmpps.service.justice.gov.uk/auth/swagger-ui.html").addTo(this)
         setUrl("https://github.com/ministryofjustice/hmpps-auth")
       }
 

@@ -27,6 +27,7 @@ fun defineWorkspace(): Workspace {
     HMPPSAuth,
     IM,
     InterventionTeams,
+    Licences,
     MoJSignOn,
     NationalPrisonRadio,
     NDH,
@@ -40,6 +41,7 @@ fun defineWorkspace(): Workspace {
     PrisonVisitsBooking,
     ProbationCaseSampler,
     ProbationPractitioners,
+    ProbationTeamsService,
     Reporting
   )
   modelItems.forEach { it.defineModelEntities(workspace.model) }
