@@ -92,9 +92,7 @@ class PrepareCaseForCourt private constructor() {
 
       courtCaseService.uses(Delius.communityApi, "Gets offender details from")
       courtCaseMatcher.uses(Delius.offenderSearch, "Matches defendants to known offenders")
-
-      // TODO Model OASys & link to Offender Assessment API
-      courtCaseService.uses(OASys.system, "get offender assessment details from")
+      courtCaseService.uses(OASys.assessmentsApi, "get offender assessment details from")
 
       CourtUsers.courtAdministrator.uses(prepareCaseUI, "prepares cases for sentencing")
       ProbationPractitioners.nps.uses(prepareCaseUI, "views case defendant details")
