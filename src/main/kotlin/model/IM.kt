@@ -29,12 +29,13 @@ class IM private constructor() {
     }
 
     override fun defineRelationships() {
-      Delius.system.uses(system, "pushes active sentence requirements or licence conditions to", "IAPS")
+      system.uses(Delius.system, "pushes service user contact information to", "IAPS")
+
       InterventionTeams.npsTreatmentManager.uses(system, "schedules accredited programme appointments, tracks service user attendance and evaluate service user progress in")
       InterventionTeams.crcTreatmentManager.uses(system, "schedules accredited programme appointments, tracks service user attendance and evaluate service user progress in")
+      i2nTeam.uses(system, "creates new accredited programmes in")
 
       Delius.supportTeam.interactsWith(i2nTeam, "notify an accredited programme is updated", "email")
-      i2nTeam.uses(system, "creates new accredited programmes in")
     }
 
     override fun defineViews(views: ViewSet) {
