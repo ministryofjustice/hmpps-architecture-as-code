@@ -31,6 +31,7 @@ class NOMIS private constructor() {
         "API over the NOMIS DB used by Digital Prison team applications and services", "Java"
       ).apply {
         addProperty("previous-name", "Elite2 API")
+        APIDocs("https://api.prison.service.justice.gov.uk/swagger-ui.html").addTo(this)
         setUrl("https://github.com/ministryofjustice/prison-api")
         uses(db, "connects to", "JDBC")
       }
