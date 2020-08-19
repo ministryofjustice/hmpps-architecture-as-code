@@ -11,6 +11,7 @@ class NOMIS private constructor() {
   companion object : HMPPSSoftwareSystem {
     lateinit var system: SoftwareSystem
     lateinit var db: Container
+    lateinit var offenderSearch: Container
     lateinit var prisonApi: Container
 
     override fun defineModelEntities(model: Model) {
@@ -45,14 +46,13 @@ class NOMIS private constructor() {
       val elasticSearchStore = system.addContainer(
         "ElasticSearch store",
         "Data store for NOMIS content", "ElasticSearch"
-      )
-        .apply {
-          Tags.DATABASE.addTo(this)
-          Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
-          CloudPlatform.elasticsearch.add(this)
-        }
+      ).apply {
+        Tags.DATABASE.addTo(this)
+        Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
+        CloudPlatform.elasticsearch.add(this)
+      }
 
-      system.addContainer(
+      offenderSearch = system.addContainer(
         "PrisonerSearch", "API over the NOMIS prisoner data held in Elasticsearch",
         "Kotlin"
       ).apply {

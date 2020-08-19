@@ -35,12 +35,12 @@ fun defineViews(model: Model, views: ViewSet) {
     add(NOMIS.db)
     add(NOMIS.prisonApi)
     add(NOMIS.system.getContainerWithName("ElasticSearch store"))
-    add(NOMIS.system.getContainerWithName("PrisonerSearch"))
+    add(NOMIS.offenderSearch)
     add(Delius.system.getContainerWithName("nDelius database"))
-    add(Delius.system.getContainerWithName("Community API"))
+    add(Delius.communityApi)
     add(Delius.system.getContainerWithName("ElasticSearch store"))
-    add(Delius.system.getContainerWithName("OffenderSearch"))
-    add(model.getSoftwareSystemWithName("HMPPS Auth")!!)
+    add(Delius.offenderSearch)
+    add(HMPPSAuth.system)
     enableAutomaticLayout()
     externalSoftwareSystemBoundariesVisible = true
   }
@@ -51,7 +51,7 @@ fun defineViews(model: Model, views: ViewSet) {
     addDefaultElements()
     add(NOMIS.system)
     add(Delius.system)
-    add(model.getSoftwareSystemWithName("HMPPS Auth")!!)
+    add(HMPPSAuth.system)
     enableAutomaticLayout()
     isEnterpriseBoundaryVisible = false
   }
