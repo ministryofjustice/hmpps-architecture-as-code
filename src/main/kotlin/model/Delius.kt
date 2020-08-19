@@ -44,6 +44,7 @@ class Delius private constructor() {
         "Community API",
         "API over the nDelius DB used by HMPPS Digital team applications and services", "Java"
       ).apply {
+        APIDocs("https://community-api.test.delius.probation.hmpps.dsd.io/swagger-ui.html").addTo(this)
         setUrl("https://github.com/ministryofjustice/community-api")
         uses(db, "connects to", "JDBC")
       }

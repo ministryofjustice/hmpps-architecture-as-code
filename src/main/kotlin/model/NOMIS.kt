@@ -31,6 +31,7 @@ class NOMIS private constructor() {
         "API over the NOMIS DB used by Digital Prison team applications and services", "Java"
       ).apply {
         addProperty("previous-name", "Elite2 API")
+        APIDocs("https://api.prison.service.justice.gov.uk/swagger-ui.html").addTo(this)
         setUrl("https://github.com/ministryofjustice/prison-api")
         uses(db, "connects to", "JDBC")
       }
@@ -56,6 +57,7 @@ class NOMIS private constructor() {
         "PrisonerSearch", "API over the NOMIS prisoner data held in Elasticsearch",
         "Kotlin"
       ).apply {
+        APIDocs("https://prisoner-offender-search.prison.service.justice.gov.uk/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config").addTo(this)
         uses(elasticSearchStore, "Queries prisoner data from NOMIS Elasticsearch Index")
         setUrl("https://github.com/ministryofjustice/prisoner-offender-search")
         CloudPlatform.kubernetes.add(this)
