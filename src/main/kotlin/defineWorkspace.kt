@@ -53,5 +53,7 @@ fun defineWorkspace(): Workspace {
   defineViews(workspace.model, workspace.views)
   defineStyles(workspace.views.configuration.styles)
 
+  defineDocumentation(workspace)
+
   return workspace
 }

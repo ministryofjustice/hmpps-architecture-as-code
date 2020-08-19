@@ -2,3 +2,6 @@
 structurizr-*.json
 structurizr-*.puml
 structurizr-*.png
+
+# generated documentation
+docs/
