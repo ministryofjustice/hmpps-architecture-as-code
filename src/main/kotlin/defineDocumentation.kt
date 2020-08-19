@@ -27,8 +27,8 @@ private fun writeAPIs(w: PrintWriter, model: Model) {
     .sortedBy { it.name.toLowerCase() }
     .flatMap { it.containers }
     .filter { it.properties.get("api-docs-url") != null }
-  w.println("| Software System | API name | Links |")
-  w.println("| --- | --- | --- |")
+  w.println("| Software System | API name | Purpose | Links |")
+  w.println("| --- | --- | --- | --- |")
   apis.forEach { writeAPI(w, it) }
 }
 
@@ -38,6 +38,9 @@ private fun writeAPI(w: PrintWriter, apiContainer: Container) {
 
   w.print("| ")
   w.print(apiContainer.name)
+
+  w.print("| ")
+  w.print(apiContainer.description)
 
   w.print("| ")
   val githubLink = apiContainer.url
