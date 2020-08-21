@@ -14,6 +14,7 @@ Modelling architecture in HM Prisons and Probations Service (HMPPS) with the [C4
   - [Explore the container (application) interactions](https://structurizr.com/share/56937/explore/graph?containers=true&view=)
   - [Explore how people use systems](https://structurizr.com/share/56937/explore/graph?people=true&softwareSystems=true&view=)
 - Views defined in the model are published to the [Diagrams](https://structurizr.com/share/56937/diagrams) page
+  - For example, [overview of systems](https://structurizr.com/share/56937/images/system-overview.png) with [legend](https://structurizr.com/share/56937/images/system-overview-key.png)
   - Published diagram images can be embedded in Confluence or GitHub readmes
   - The diagrams will automatically update when they're next changed
 - Views defined in the model can be generated locally (see below)
