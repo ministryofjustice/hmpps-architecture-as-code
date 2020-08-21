@@ -22,6 +22,10 @@ class Delius private constructor() {
         ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)
       }
 
+      val deliusAWSAccount = AWS.london.addDeploymentNode("Delius account")
+      val ec2 = deliusAWSAccount.addDeploymentNode("EC2", "AWS Elastic Compute Cloud", "AWS")
+      val elasticSearchDeployment = deliusAWSAccount.addDeploymentNode("ElasticSearch", "AWS ElasticSearch Service", "AWS")
+
       supportTeam = model.addPerson(
         "NDST",
         "(National Delius Support Team) Team supporting changes to data in National Delius"
@@ -29,7 +33,7 @@ class Delius private constructor() {
 
       val db = system.addContainer("nDelius database", null, "Oracle").apply {
         Tags.DATABASE.addTo(this)
-        Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
+        ec2.add(this)
       }
 
       val elasticSearchStore = system.addContainer(
@@ -37,7 +41,7 @@ class Delius private constructor() {
         "Data store for Delius content", "ElasticSearch"
       ).apply {
         Tags.DATABASE.addTo(this)
-        Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
+        elasticSearchDeployment.add(this)
       }
 
       communityApi = system.addContainer(
@@ -47,6 +51,7 @@ class Delius private constructor() {
         APIDocs("https://community-api.test.delius.probation.hmpps.dsd.io/swagger-ui.html").addTo(this)
         setUrl("https://github.com/ministryofjustice/community-api")
         uses(db, "connects to", "JDBC")
+        ec2.add(this)
       }
 
       offenderSearch = system.addContainer(
@@ -57,6 +62,7 @@ class Delius private constructor() {
         APIDocs("https://probation-offender-search.hmpps.service.justice.gov.uk/swagger-ui.html").addTo(this)
         setUrl("https://github.com/ministryofjustice/probation-offender-search")
         uses(elasticSearchStore, "Queries offender data from nDelius Elasticsearch Index")
+        ec2.add(this)
       }
     }
 

@@ -13,8 +13,8 @@ class CloudPlatform private constructor() {
     lateinit var elasticsearch: DeploymentNode
     lateinit var kubernetes: DeploymentNode
 
-    fun defineDeploymentNodes(model: Model) {
-      var cloudPlatform = model.addDeploymentNode("Cloud Platform", "AWS shared hosting platform", "AWS")
+    fun defineDeploymentNodes(@Suppress("UNUSED_PARAMETER") model: Model) {
+      var cloudPlatform = AWS.london.addDeploymentNode("Cloud Platform account", "AWS shared hosting platform", "AWS")
       rds = cloudPlatform.addDeploymentNode("RDS", "AWS Relational Database Service database-as-a-service", "AWS")
       s3 = cloudPlatform.addDeploymentNode("S3", "AWS Simple Storage Service", "AWS")
       sns = cloudPlatform.addDeploymentNode("SNS", "AWS Simple Notification Service", "AWS")
