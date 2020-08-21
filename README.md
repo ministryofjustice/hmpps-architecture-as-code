@@ -7,6 +7,7 @@ Modelling architecture in HM Prisons and Probations Service (HMPPS) with the [C4
 
 ## Key outputs
 
+- Holistic representation of all software systems and [containers][c4-abstractions] (applications or data stores) within HMPPS Digital
 - Applications annotated with API documentation links are published to the [Published APIs](https://structurizr.com/workspace/56937/documentation#%2F:Published%20APIs) page
 - Interactive graph of model elements and their relationships:
   - [Explore the system interactions](https://structurizr.com/share/56937/explore/graph?softwareSystems=true&view=)
@@ -88,6 +89,5 @@ This command will locally generate all defined workspace diagrams without using 
 
 
 [c4]: https://c4model.com/
+[c4-abstractions]: https://c4model.com/#Abstractions
 [structurizr]: https://structurizr.com/
-[workspace-prison]: https://structurizr.com/share/55246
-[workspace-probation]: https://structurizr.com/share/54669
