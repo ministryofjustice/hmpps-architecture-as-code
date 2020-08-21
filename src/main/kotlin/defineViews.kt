@@ -8,6 +8,10 @@ import com.structurizr.view.ViewSet
 fun defineViews(model: Model, views: ViewSet) {
   views.createSystemLandscapeView("system-overview", "All systems").apply {
     addAllSoftwareSystems()
+
+    val noisySignOnSystems = listOf(HMPPSAuth.system, MoJSignOn.system)
+    noisySignOnSystems.forEach(::remove)
+
     enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
   }
 
