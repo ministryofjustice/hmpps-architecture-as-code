@@ -1,9 +1,23 @@
-# hmpps-architecture-as-code
-
 ![Publish](https://github.com/ministryofjustice/hmpps-architecture-as-code/workflows/Publish/badge.svg)
 ![Build and validate](https://github.com/ministryofjustice/hmpps-architecture-as-code/workflows/Build%20and%20validate/badge.svg)
 
+# hmpps-architecture-as-code
+
 Modelling architecture in HM Prisons and Probations Service (HMPPS) with the [C4 model][c4] and [Structurizr][structurizr].
+
+## Key outputs
+
+- Holistic representation of all software systems and [containers][c4-abstractions] (applications or data stores) within HMPPS Digital
+- Applications annotated with API documentation links are published to the [Published APIs](https://structurizr.com/workspace/56937/documentation#%2F:Published%20APIs) page
+- Interactive graph of model elements and their relationships:
+  - [Explore the system interactions](https://structurizr.com/share/56937/explore/graph?softwareSystems=true&view=)
+  - [Explore the container (application) interactions](https://structurizr.com/share/56937/explore/graph?containers=true&view=)
+  - [Explore how people use systems](https://structurizr.com/share/56937/explore/graph?people=true&softwareSystems=true&view=)
+- Views defined in the model are published to the [Diagrams](https://structurizr.com/share/56937/diagrams) page
+  - For example, [overview of systems](https://structurizr.com/share/56937/images/system-overview.png) with [legend](https://structurizr.com/share/56937/images/system-overview-key.png)
+  - Published diagram images can be embedded in Confluence or GitHub readmes
+  - The diagrams will automatically update when they're next changed
+- Views defined in the model can be generated locally (see below)
 
 ## Workspaces
 
@@ -76,6 +90,5 @@ This command will locally generate all defined workspace diagrams without using 
 
 
 [c4]: https://c4model.com/
+[c4-abstractions]: https://c4model.com/#Abstractions
 [structurizr]: https://structurizr.com/
-[workspace-prison]: https://structurizr.com/share/55246
-[workspace-probation]: https://structurizr.com/share/54669
