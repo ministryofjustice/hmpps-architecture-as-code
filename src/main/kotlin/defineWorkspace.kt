@@ -7,7 +7,7 @@ import com.structurizr.model.Location
 import com.structurizr.model.Model
 import com.structurizr.view.ViewSet
 
-private val ModelItems = listOf(
+private val MODEL_ITEMS = listOf(
   CaseNotesToProbation,
   CourtUsers,
   CRCSystem,
@@ -45,7 +45,7 @@ private fun defineModelItems(model: Model) {
   CloudPlatform.defineDeploymentNodes(model)
   Heroku.defineDeploymentNodes(model)
 
-  ModelItems.forEach { it.defineModelEntities(model) }
+  MODEL_ITEMS.forEach { it.defineModelEntities(model) }
   defineModelWithDeprecatedSyntax(model)
 }
 
@@ -57,11 +57,11 @@ private fun changeUndefinedLocationsToInternal(model: Model) {
 }
 
 private fun defineRelationships() {
-  ModelItems.forEach { it.defineRelationships() }
+  MODEL_ITEMS.forEach { it.defineRelationships() }
 }
 
 private fun defineViews(model: Model, views: ViewSet) {
-  ModelItems.forEach { it.defineViews(views) }
+  MODEL_ITEMS.forEach { it.defineViews(views) }
   defineGlobalViews(model, views)
 }
 
