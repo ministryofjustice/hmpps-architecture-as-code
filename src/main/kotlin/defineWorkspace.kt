@@ -3,6 +3,59 @@ package uk.gov.justice.hmpps.architecture
 import com.structurizr.Workspace
 import com.structurizr.model.CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy
 import com.structurizr.model.Enterprise
+import com.structurizr.model.Model
+import com.structurizr.view.ViewSet
+
+private val ModelItems = listOf(
+  CaseNotesToProbation,
+  CourtUsers,
+  CRCSystem,
+  Delius,
+  EPF,
+  EQuiP,
+  HMPPSAuth,
+  IM,
+  InterventionTeams,
+  Licences,
+  MoJSignOn,
+  NationalPrisonRadio,
+  NDH,
+  NID,
+  NOMIS,
+  OASys,
+  OffenderManagementInCustody,
+  PrepareCaseForCourt,
+  PrisonerContentHub,
+  PrisonToProbationUpdate,
+  PrisonVisitsBooking,
+  ProbationCaseSampler,
+  ProbationPractitioners,
+  ProbationTeamsService,
+  Reporting,
+  WMT
+)
+
+private fun defineModelItems(model: Model) {
+  model.setImpliedRelationshipsStrategy(
+    CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy()
+  )
+
+  AWS.defineDeploymentNodes(model)
+  CloudPlatform.defineDeploymentNodes(model)
+  Heroku.defineDeploymentNodes(model)
+
+  ModelItems.forEach { it.defineModelEntities(model) }
+  defineModelWithDeprecatedSyntax(model)
+}
+
+private fun defineRelationships() {
+  ModelItems.forEach { it.defineRelationships() }
+}
+
+private fun defineViews(model: Model, views: ViewSet) {
+  ModelItems.forEach { it.defineViews(views) }
+  defineGlobalViews(model, views)
+}
 
 fun defineWorkspace(): Workspace {
   val enterprise = Enterprise("HM Prison and Probation Service")
@@ -10,51 +63,10 @@ fun defineWorkspace(): Workspace {
   workspace.id = 56937
   workspace.model.enterprise = enterprise
 
-  workspace.model.setImpliedRelationshipsStrategy(
-    CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy()
-  )
-
-  AWS.defineDeploymentNodes(workspace.model)
-  CloudPlatform.defineDeploymentNodes(workspace.model)
-  Heroku.defineDeploymentNodes(workspace.model)
-
-  val modelItems = listOf(
-    CaseNotesToProbation,
-    CourtUsers,
-    CRCSystem,
-    Delius,
-    EPF,
-    EQuiP,
-    HMPPSAuth,
-    IM,
-    InterventionTeams,
-    Licences,
-    MoJSignOn,
-    NationalPrisonRadio,
-    NDH,
-    NID,
-    NOMIS,
-    OASys,
-    OffenderManagementInCustody,
-    PrepareCaseForCourt,
-    PrisonerContentHub,
-    PrisonToProbationUpdate,
-    PrisonVisitsBooking,
-    ProbationCaseSampler,
-    ProbationPractitioners,
-    ProbationTeamsService,
-    Reporting,
-    WMT
-  )
-  modelItems.forEach { it.defineModelEntities(workspace.model) }
-
-  defineModelWithDeprecatedSyntax(workspace.model)
-  modelItems.forEach { it.defineRelationships() }
-  modelItems.forEach { it.defineViews(workspace.views) }
-
+  defineModelItems(workspace.model)
+  defineRelationships()
   defineViews(workspace.model, workspace.views)
   defineStyles(workspace.views.configuration.styles)
-
   defineDocumentation(workspace)
 
   return workspace

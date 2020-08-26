@@ -5,7 +5,7 @@ import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
 
-fun defineViews(model: Model, views: ViewSet) {
+fun defineGlobalViews(model: Model, views: ViewSet) {
   views.createSystemLandscapeView("system-overview", "All systems").apply {
     addAllSoftwareSystems()
 
