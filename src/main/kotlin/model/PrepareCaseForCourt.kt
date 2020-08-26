@@ -81,7 +81,7 @@ class PrepareCaseForCourt private constructor() {
       model.addSoftwareSystem("HMCTS Crime Portal", "Case Management for HMCTS holding data relating to court cases")
         .apply {
           setLocation(Location.External)
-          Tags.PROVIDER.addTo(this)
+          OutsideHMPPS.addTo(this)
           uses(crimePortalMirrorGateway, "Sends court lists to")
         }
     }
