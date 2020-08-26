@@ -3,6 +3,7 @@ package uk.gov.justice.hmpps.architecture
 import com.structurizr.Workspace
 import com.structurizr.model.CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy
 import com.structurizr.model.Enterprise
+import com.structurizr.model.Location
 import com.structurizr.model.Model
 import com.structurizr.view.ViewSet
 
@@ -48,6 +49,13 @@ private fun defineModelItems(model: Model) {
   defineModelWithDeprecatedSyntax(model)
 }
 
+private fun changeUndefinedLocationsToInternal(model: Model) {
+  model.softwareSystems
+    .filter { it.location == Location.Unspecified }.forEach { it.setLocation(Location.Internal) }
+  model.people
+    .filter { it.location == Location.Unspecified }.forEach { it.setLocation(Location.Internal) }
+}
+
 private fun defineRelationships() {
   ModelItems.forEach { it.defineRelationships() }
 }
@@ -64,6 +72,8 @@ fun defineWorkspace(): Workspace {
   workspace.model.enterprise = enterprise
 
   defineModelItems(workspace.model)
+  changeUndefinedLocationsToInternal(workspace.model)
+
   defineRelationships()
   defineViews(workspace.model, workspace.views)
   defineStyles(workspace.views.configuration.styles)
