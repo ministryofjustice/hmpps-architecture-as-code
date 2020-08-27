@@ -8,7 +8,7 @@ Modelling architecture in HM Prisons and Probations Service (HMPPS) with the [C4
 ## Key outputs
 
 - Holistic representation of all software systems and [containers][c4-abstractions] (applications or data stores) within HMPPS Digital
-- Applications annotated with API documentation links are published to the [Published APIs](https://structurizr.com/workspace/56937/documentation#%2F:Published%20APIs) page
+- Applications annotated with API documentation links are published to the [Published APIs](https://structurizr.com/share/56937/documentation#%2F:Published%20APIs) page
 - Interactive graph of model elements and their relationships:
   - [Explore the system interactions](https://structurizr.com/share/56937/explore/graph?softwareSystems=true&view=)
   - [Explore the container (application) interactions](https://structurizr.com/share/56937/explore/graph?containers=true&view=)
