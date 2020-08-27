@@ -1,7 +1,6 @@
 package uk.gov.justice.hmpps.architecture
 
 import com.structurizr.model.Container
-import com.structurizr.model.Location
 import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ViewSet
@@ -12,9 +11,7 @@ class HMPPSAuth private constructor() {
     lateinit var app: Container
 
     override fun defineModelEntities(model: Model) {
-      system = model.addSoftwareSystem("HMPPS Auth", "Allows users to login into digital services").apply {
-        setLocation(Location.Internal)
-      }
+      system = model.addSoftwareSystem("HMPPS Auth", "Allows users to login into digital services")
 
       app = system.addContainer(
         "API",

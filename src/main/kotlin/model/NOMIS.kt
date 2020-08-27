@@ -1,7 +1,6 @@
 package uk.gov.justice.hmpps.architecture
 
 import com.structurizr.model.Container
-import com.structurizr.model.Location
 import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ViewSet
@@ -18,9 +17,7 @@ class NOMIS private constructor() {
       system = model.addSoftwareSystem(
         "NOMIS",
         "National Offender Management Information System,\nthe case management system for offender data in use in custody - both public and private prisons"
-      ).apply {
-        setLocation(Location.Internal)
-      }
+      )
 
       db = system.addContainer("NOMIS database", null, "Oracle").apply {
         Tags.DATABASE.addTo(this)

@@ -5,7 +5,7 @@ import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
 
-fun defineViews(model: Model, views: ViewSet) {
+fun defineGlobalViews(model: Model, views: ViewSet) {
   views.createSystemLandscapeView("system-overview", "All systems").apply {
     addAllSoftwareSystems()
 
@@ -28,7 +28,6 @@ fun defineViews(model: Model, views: ViewSet) {
       .filterNot { ProblemArea.GETTING_THE_RIGHT_REHABILITATION.isOn(it) }
     otherSystems.forEach { remove(it) }
 
-    setEnterpriseBoundaryVisible(false)
     enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 400, 400)
   }
 
@@ -50,14 +49,15 @@ fun defineViews(model: Model, views: ViewSet) {
   }
 
   views.createSystemContextView(
-    pathfinder, "PathfinderSystemContext", "The system context diagram for the Pathfinder System."
+    pathfinder,
+    "PathfinderSystemContext",
+    "The system context diagram for the Pathfinder System."
   ).apply {
     addDefaultElements()
     add(NOMIS.system)
     add(Delius.system)
     add(HMPPSAuth.system)
     enableAutomaticLayout()
-    isEnterpriseBoundaryVisible = false
   }
 
   views.createDeploymentView(pathfinder, "PathfinderProductionDeployment", "The Production deployment scenario for the Pathfinder service").apply {
