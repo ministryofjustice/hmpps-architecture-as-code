@@ -3,6 +3,7 @@ package uk.gov.justice.hmpps.architecture
 import com.structurizr.model.Model
 import com.structurizr.model.Person
 import com.structurizr.view.ViewSet
+import uk.gov.justice.hmpps.architecture.annotations.Tags
 
 class InterventionTeams private constructor() {
   companion object : HMPPSSoftwareSystem {

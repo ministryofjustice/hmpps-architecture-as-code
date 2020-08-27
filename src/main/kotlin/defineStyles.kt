@@ -2,6 +2,7 @@ package uk.gov.justice.hmpps.architecture
 
 import com.structurizr.view.Shape
 import com.structurizr.view.Styles
+import uk.gov.justice.hmpps.architecture.annotations.Tags
 
 fun defineStyles(styles: Styles) {
   styles.addElementStyle("Software System").background("#aabbdd")

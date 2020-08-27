@@ -5,6 +5,8 @@ import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
+import uk.gov.justice.hmpps.architecture.annotations.OutsideHMPPS
+import uk.gov.justice.hmpps.architecture.annotations.Tags
 
 class PrisonerContentHub private constructor() {
 
