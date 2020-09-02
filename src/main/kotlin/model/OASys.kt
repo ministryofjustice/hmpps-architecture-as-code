@@ -17,9 +17,9 @@ class OASys private constructor() {
 
       val oracleApp = system.addContainer("Case Management System", "Assesses the risks and needs of offenders", "Oracle APEX")
 
-      assessmentsApi = system.addContainer("Assessments API", "REST access to the OASYS Oracle DB offender assessment information", "Java + Spring Boot").apply {
-        setUrl("https://github.com/ministryofjustice/offender-assessments-api")
-        APIDocs("http://assessments-api-dev.ngm7p4zgik.eu-west-2.elasticbeanstalk.com/swagger-ui.html").addTo(this)
+      assessmentsApi = system.addContainer("Offender Assessments API", "REST access to the OASYS Oracle DB offender assessment information", "Kotlin + Spring Boot").apply {
+        setUrl("https://github.com/ministryofjustice/offender-assessments-api-kotlin")
+        APIDocs("https://offender-dev.aks-dev-1.studio-hosting.service.justice.gov.uk/swagger-ui.html").addTo(this)
       }
 
       val db = system.addContainer("Assessments Database", null, "Oracle")
