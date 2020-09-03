@@ -18,7 +18,7 @@ class NOMIS private constructor() {
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
         "NOMIS",
-        "National Offender Management Information System,\nthe case management system for offender data in use in custody - both public and private prisons"
+        "(National Offender Management Information System) The case management system for offender data in use in custody - both public and private prisons"
       )
 
       db = system.addContainer("NOMIS database", null, "Oracle").apply {

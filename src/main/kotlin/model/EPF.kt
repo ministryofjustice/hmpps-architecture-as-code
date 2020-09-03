@@ -15,7 +15,7 @@ class EPF private constructor() {
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
         "EPF",
-        "Effective Proposal Framework\nPresents sentencing options to NPS staff in court who are providing sentencing advice to sentencers"
+        "(Effective Proposal Framework) Presents sentencing options to NPS staff in court who are providing sentencing advice to sentencers"
       ).apply {
         ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)
       }
