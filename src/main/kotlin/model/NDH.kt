@@ -63,7 +63,7 @@ class NDH private constructor() {
     }
 
     fun defineDirectRelationships() {
-      system.uses(NOMIS.custodyApi, "periodically polls the NOMIS Events table to look for changes to offender data via")
+      system.uses(NOMIS.system, "periodically polls the NOMIS Events table to look for changes to offender data via", "Oracle XTAG queue")
       system.uses(OASys.system, "sends changed offender data collected from NOMIS via", "SOAP/XML")
 
       OASys.system.uses(initialSearch, "used during assessment process to identify if there are existing records in Delius for an offender via")
