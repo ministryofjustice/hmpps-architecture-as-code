@@ -4,6 +4,7 @@ import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
+import uk.gov.justice.hmpps.architecture.annotations.ProblemArea
 
 fun defineGlobalViews(model: Model, views: ViewSet) {
   views.createSystemLandscapeView("system-overview", "All systems").apply {

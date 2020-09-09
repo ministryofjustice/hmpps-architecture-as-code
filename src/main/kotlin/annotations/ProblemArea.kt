@@ -1,4 +1,4 @@
-package uk.gov.justice.hmpps.architecture
+package uk.gov.justice.hmpps.architecture.annotations
 
 import com.structurizr.model.Element
 
