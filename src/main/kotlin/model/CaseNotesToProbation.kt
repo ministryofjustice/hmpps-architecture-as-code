@@ -7,7 +7,6 @@ import com.structurizr.view.ViewSet
 class CaseNotesToProbation private constructor() {
   companion object : HMPPSSoftwareSystem {
     lateinit var system: SoftwareSystem
-    lateinit var ndh: SoftwareSystem
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
