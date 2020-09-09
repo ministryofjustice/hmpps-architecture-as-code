@@ -12,7 +12,7 @@ class OASys private constructor() {
     lateinit var assessmentsApi: Container
 
     override fun defineModelEntities(model: Model) {
-      system = model.addSoftwareSystem("Offender Assessment System", "(OASys) Assesses the risks and needs of offenders").apply {
+      system = model.addSoftwareSystem("OASys", "(Offender Assessment System) Assesses the risks and needs of offenders").apply {
         setUrl("https://dsdmoj.atlassian.net/wiki/spaces/~474366104/pages/2046820357/OASys+Overview")
       }
 
