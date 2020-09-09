@@ -45,6 +45,24 @@ class NDH private constructor() {
     }
 
     override fun defineRelationships() {
+      defineImpliedRelationships()
+      defineDirectRelationships()
+    }
+
+    override fun defineViews(views: ViewSet) {
+    }
+
+    fun defineImpliedRelationships() {
+      // these are the flows what NDH enables
+      // it's very useful to see these relationships between NOMIS, OASys and Delius
+      // without having to track it through a 'hub'
+      NOMIS.system.uses(OASys.system, "offender details are copied into", "NDH")
+      OASys.system.uses(NOMIS.system, "offender details are looked up from", "NDH")
+      OASys.system.uses(Delius.system, "offender risk assessment and specific risk data are copied into", "NDH")
+      OASys.system.uses(Delius.system, "offender details are looked up from", "NDH")
+    }
+
+    fun defineDirectRelationships() {
       system.uses(NOMIS.custodyApi, "periodically polls the NOMIS Events table to look for changes to offender data via")
       system.uses(OASys.system, "sends changed offender data collected from NOMIS via", "SOAP/XML")
 
@@ -60,9 +78,6 @@ class NDH private constructor() {
 
       OASys.system.uses(offenderRiskUpdates, "used during certain points in the assessment process to receive specific risk data from")
       offenderRiskUpdates.uses(Delius.system, "sends specific risk data to", "SOAP/XML/ActiveMQ")
-    }
-
-    override fun defineViews(views: ViewSet) {
     }
   }
 }
