@@ -30,7 +30,6 @@ class OASys private constructor() {
     }
 
     override fun defineRelationships() {
-      system.uses(Delius.system, "assessment info, risk measures are copied into", "NDH")
       ProbationPractitioners.nps.uses(system, "records offender risk (attendance, contact, etc.) and assessment in")
       ProbationPractitioners.crc.uses(system, "records offender risk (attendance, contact, etc.) and assessment in")
     }

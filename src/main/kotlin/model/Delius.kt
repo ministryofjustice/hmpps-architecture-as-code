@@ -75,7 +75,6 @@ class Delius private constructor() {
       CourtUsers.courtAdministrator.uses(system, "records CAS decision, referrals in")
 
       system.uses(IM.system, "pushes active sentence requirements or licence conditions to", "IAPS")
-      system.uses(OASys.system, "offender details, offence details, sentence info are copied into", "NDH")
 
       InterventionTeams.interventionServicesTeam.interactsWith(supportTeam, "raises task to create or update an accredited programme with")
       InterventionTeams.crcProgrammeManager.interactsWith(supportTeam, "raises task to update interventions with")

@@ -13,6 +13,7 @@ class NOMIS private constructor() {
     lateinit var system: SoftwareSystem
     lateinit var db: Container
     lateinit var offenderSearch: Container
+    lateinit var custodyApi: Container
     lateinit var prisonApi: Container
 
     override fun defineModelEntities(model: Model) {
@@ -23,6 +24,16 @@ class NOMIS private constructor() {
 
       db = system.addContainer("NOMIS database", null, "Oracle").apply {
         Tags.DATABASE.addTo(this)
+      }
+
+      custodyApi = system.addContainer(
+        "Custody API (Deprecated)",
+        "Provided REST access to the Nomis Oracle DB offender information - deprecated; use prison-api instead",
+        "Java"
+      ).apply {
+        setUrl("https://github.com/ministryofjustice/custody-api")
+        Tags.DEPRECATED.addTo(this)
+        uses(db, "connects to", "JDBC")
       }
 
       prisonApi = system.addContainer(
@@ -75,7 +86,6 @@ class NOMIS private constructor() {
     }
 
     override fun defineRelationships() {
-      system.uses(Delius.system, "offender data is copied into", "NDH")
       system.uses(PrisonToProbationUpdate.system, "notifies changes")
     }
 

@@ -11,7 +11,9 @@ fun defineGlobalViews(model: Model, views: ViewSet) {
     addAllSoftwareSystems()
 
     val noisySignOnSystems = listOf(HMPPSAuth.system, MoJSignOn.system)
+    val noisyHubSystems = listOf(NDH.system)
     noisySignOnSystems.forEach(::remove)
+    noisyHubSystems.forEach(::remove)
 
     enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
   }
