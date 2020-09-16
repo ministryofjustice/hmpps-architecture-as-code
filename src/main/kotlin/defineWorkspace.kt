@@ -27,6 +27,7 @@ private val MODEL_ITEMS = listOf(
   OffenderManagementInCustody,
   PrepareCaseForCourt,
   PrisonerContentHub,
+  PrisonerNetwork,
   PrisonToProbationUpdate,
   PrisonVisitsBooking,
   ProbationCaseSampler,
