@@ -7,13 +7,13 @@ import com.structurizr.view.ViewSet
 import uk.gov.justice.hmpps.architecture.annotations.APIDocs
 import uk.gov.justice.hmpps.architecture.annotations.Tags
 
-class PrisonerNetwork private constructor() {
+class DigitalPrisonsNetwork private constructor() {
   companion object : HMPPSSoftwareSystem {
     lateinit var system: SoftwareSystem
     lateinit var auth: Container
 
     override fun defineModelEntities(model: Model) {
-      system = model.addSoftwareSystem("Prisoner Network", "Provides in-cell devices and access to digital services to prisoners")
+      system = model.addSoftwareSystem("Digital Prisons Network", "Provides in-cell devices and access to digital services to prisoners")
 
       auth = system.addContainer(
         "Azure AD",
