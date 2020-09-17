@@ -31,6 +31,14 @@ class OffenderManagementInCustody private constructor() {
     }
 
     override fun defineViews(views: ViewSet) {
+      views.createContainerView(system, "omic-container", null).apply {
+        addDefaultElements()
+        add(Delius.system)
+        add(NOMIS.prisonApi)
+
+        setExternalSoftwareSystemBoundariesVisible(true)
+        enableAutomaticLayout()
+      }
     }
   }
 }
