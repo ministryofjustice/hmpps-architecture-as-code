@@ -22,5 +22,4 @@ fun defineModelWithDeprecatedSyntax(model: Model) {
   Reporting.ndmis.uses(OffenderManagementInCustody.allocationManager, "sends extracts containing service user allocation to", "email")
 
   hmip.uses(Reporting.ndmis, "uses data from")
-  OffenderManagementInCustody.ldu.uses(Delius.system, "maintains 'shadow' team assignments for service users during prison-to-probation handover in")
 }

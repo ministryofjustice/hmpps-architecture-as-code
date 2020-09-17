@@ -27,6 +27,7 @@ class OffenderManagementInCustody private constructor() {
 
     override fun defineRelationships() {
       ldu.uses(allocationManager, "gets notification about ??? from", "gov.uk notify")
+      ldu.uses(Delius.system, "maintains 'shadow' team assignments for service users during prison-to-probation handover in")
       allocationManager.uses(NOMIS.prisonApi, "polls service users currently in the logged in user's prison from")
     }
 
