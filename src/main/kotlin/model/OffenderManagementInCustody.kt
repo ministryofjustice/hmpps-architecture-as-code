@@ -18,7 +18,7 @@ class OffenderManagementInCustody private constructor() {
         "A service for handling the handover of service users from prison to probation"
       )
 
-      ldu = model.addPerson("Local Divisional Unit")
+      ldu = model.addPerson("Local Delivery Unit")
 
       allocationManager = system.addContainer("Offender Management Allocation Manager", "A service for allocating Prisoners to Prisoner Offender Managers (POMs)", "Ruby on Rails").apply {
         setUrl("https://github.com/ministryofjustice/offender-management-allocation-manager")
@@ -26,7 +26,7 @@ class OffenderManagementInCustody private constructor() {
     }
 
     override fun defineRelationships() {
-      ldu.uses(allocationManager, "gets notification about ??? from", "gov.uk notify")
+      ldu.uses(allocationManager, "notified about community allocation requests from", "gov.uk notify")
       ldu.uses(Delius.system, "maintains 'shadow' team assignments for service users during prison-to-probation handover in")
       allocationManager.uses(NOMIS.prisonApi, "polls service users currently in the logged in user's prison from")
     }
