@@ -4,6 +4,7 @@ import com.structurizr.model.Container
 import com.structurizr.model.Model
 import com.structurizr.model.Person
 import com.structurizr.model.SoftwareSystem
+import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
 
 class OffenderManagementInCustody private constructor() {
@@ -41,7 +42,7 @@ class OffenderManagementInCustody private constructor() {
         add(NOMIS.prisonApi)
 
         setExternalSoftwareSystemBoundariesVisible(true)
-        enableAutomaticLayout()
+        enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
       }
     }
   }
