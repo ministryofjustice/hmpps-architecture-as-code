@@ -29,7 +29,9 @@ class OffenderManagementInCustody private constructor() {
 
     override fun defineRelationships() {
       ldu.uses(Delius.system, "maintains 'shadow' team assignments for service users during prison-to-probation handover in")
-      allocationManager.uses(NOMIS.prisonApi, "polls service users currently in the logged in user's prison from")
+      allocationManager.uses(NOMIS.prisonApi, "pulls service users currently in the logged in user's prison from")
+      allocationManager.uses(NOMIS.offenderSearch, "pulls the 'recall' status of service users from")
+      allocationManager.uses(HMPPSAuth.system, "authenticates users via")
     }
 
     override fun defineViews(views: ViewSet) {
