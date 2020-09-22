@@ -40,6 +40,8 @@ class OffenderManagementInCustody private constructor() {
         addDefaultElements()
         add(Delius.system)
         add(NOMIS.prisonApi)
+        add(NOMIS.db)
+        HMPPSAuth.system.getEfferentRelationshipsWith(Delius.system).forEach(::remove)
 
         setExternalSoftwareSystemBoundariesVisible(true)
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
