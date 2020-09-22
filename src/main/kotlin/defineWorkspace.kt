@@ -12,6 +12,7 @@ private val MODEL_ITEMS = listOf(
   CourtUsers,
   CRCSystem,
   Delius,
+  DigitalPrisonsNetwork,
   EPF,
   EQuiP,
   HMPPSAuth,
