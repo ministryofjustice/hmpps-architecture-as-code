@@ -19,7 +19,11 @@ class OffenderManagementInCustody private constructor() {
         "A service for handling the handover of service users from prison to probation"
       )
 
-      ldu = model.addPerson("Local Delivery Unit")
+      ldu = model.addPerson(
+        "Local Delivery Unit",
+        "An operational unit comprising an office or offices, " +
+          "generally coterminous with police basic command units and local authority structures"
+      )
 
       allocationManager = system.addContainer("Offender Management Allocation Manager", "A service for allocating Prisoners to Prisoner Offender Managers (POMs)", "Ruby on Rails").apply {
         setUrl("https://github.com/ministryofjustice/offender-management-allocation-manager")
