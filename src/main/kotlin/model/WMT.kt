@@ -10,7 +10,7 @@ class WMT private constructor() {
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
-        "Workload Management Tool",
+        "Workload Measurement Tool",
         "(WMT) Helps probation practitioners schedule their time based on service user risk"
       )
     }
