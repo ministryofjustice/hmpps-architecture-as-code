@@ -10,7 +10,7 @@ fun defineModelWithDeprecatedSyntax(model: Model) {
 
   Pathfinder(model)
 
-  spo.uses(OffenderManagementInCustody.allocationManager, "look at unallocated service users coming from court in")
+  spo.uses(OffenderManagementInCustody.allocationManager, "overview staff allocations in")
   pom.uses(OffenderManagementInCustody.allocationManager, "look at service users who need handing over to community in")
 
   // lifted from probation model
@@ -22,5 +22,4 @@ fun defineModelWithDeprecatedSyntax(model: Model) {
   Reporting.ndmis.uses(OffenderManagementInCustody.allocationManager, "sends extracts containing service user allocation to", "email")
 
   hmip.uses(Reporting.ndmis, "uses data from")
-  OffenderManagementInCustody.ldu.uses(Delius.system, "maintains 'shadow' team assignments for service users during prison-to-probation handover in")
 }
