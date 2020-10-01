@@ -2,6 +2,7 @@ package uk.gov.justice.hmpps.architecture
 
 import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
+import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
 import uk.gov.justice.hmpps.architecture.annotations.ProblemArea
 
@@ -26,6 +27,10 @@ class EQuiP private constructor() {
     }
 
     override fun defineViews(views: ViewSet) {
+      views.createSystemContextView(system, "equip-context", null).apply {
+        addDefaultElements()
+        enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 500, 500)
+      }
     }
   }
 }
