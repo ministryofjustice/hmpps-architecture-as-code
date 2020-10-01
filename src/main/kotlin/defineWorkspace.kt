@@ -26,6 +26,7 @@ private val MODEL_ITEMS = listOf(
   NOMIS,
   OASys,
   OffenderManagementInCustody,
+  PolicyTeams,
   PrepareCaseForCourt,
   PrisonerContentHub,
   PrisonToProbationUpdate,

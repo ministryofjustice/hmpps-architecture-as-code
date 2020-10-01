@@ -26,6 +26,7 @@ class EPF private constructor() {
     override fun defineRelationships() {
       projectManager.uses(system, "update intervention eligibility for accredited programmes in")
       projectManager.uses(system, "updates interventions table for discretionary services in")
+      projectManager.interactsWith(PolicyTeams.sentencingPolicy, "listens to owners of interventions for changes in policy")
       ProbationPractitioners.nps.uses(system, "enters court, location, offender needs, assessment score data to receive a shortlist of recommended interventions for Pre-Sentence Report Proposal from")
       ProbationPractitioners.nps.uses(system, "enters location, offender needs, assessment score data to receive recommended interventions for licence condition planning from")
       InterventionTeams.interventionServicesTeam.interactsWith(projectManager, "provide programme suitability guide for accredited programme eligibility to")
