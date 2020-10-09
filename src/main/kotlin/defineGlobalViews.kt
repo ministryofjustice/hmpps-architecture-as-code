@@ -10,7 +10,7 @@ fun defineGlobalViews(model: Model, views: ViewSet) {
   views.createSystemLandscapeView("system-overview", "All systems").apply {
     addAllSoftwareSystems()
 
-    val noisySignOnSystems = listOf(HMPPSAuth.system, MoJSignOn.system)
+    val noisySignOnSystems = listOf(HMPPSAuth.system, MoJSignOn.system, AzureADTenantJusticeUK.system)
     val noisyHubSystems = listOf(NDH.system)
     noisySignOnSystems.forEach(::remove)
     noisyHubSystems.forEach(::remove)

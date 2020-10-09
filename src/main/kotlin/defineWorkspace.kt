@@ -8,6 +8,7 @@ import com.structurizr.model.Model
 import com.structurizr.view.ViewSet
 
 private val MODEL_ITEMS = listOf(
+  AzureADTenantJusticeUK,
   CaseNotesToProbation,
   CourtUsers,
   CRCSystem,
@@ -45,6 +46,7 @@ private fun defineModelItems(model: Model) {
   AWS.defineDeploymentNodes(model)
   CloudPlatform.defineDeploymentNodes(model)
   Heroku.defineDeploymentNodes(model)
+  Azure.defineDeploymentNodes(model)
 
   MODEL_ITEMS.forEach { it.defineModelEntities(model) }
   defineModelWithDeprecatedSyntax(model)
