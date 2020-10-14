@@ -38,9 +38,14 @@ class HMPPSAuth private constructor() {
     override fun defineRelationships() {
       app.uses(NOMIS.db, "authenticates via")
       app.uses(Delius.communityApi, "authenticates via")
+      app.uses(AzureADTenantJusticeUK.directory, "authenticates via")
     }
 
     override fun defineViews(views: ViewSet) {
+      views.createSystemContextView(system, "hmpps-auth-context", null).apply {
+        addDefaultElements()
+        enableAutomaticLayout()
+      }
     }
   }
 }
