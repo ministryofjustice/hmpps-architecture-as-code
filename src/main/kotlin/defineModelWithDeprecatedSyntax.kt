@@ -14,11 +14,8 @@ fun defineModelWithDeprecatedSyntax(model: Model) {
   pom.uses(OffenderManagementInCustody.allocationManager, "look at service users who need handing over to community in")
 
   // lifted from probation model
-  val sentencingPolicy = model.addPerson("Sentencing Policy", "Pseudo-team to capture sentencing policy meeting participants")
-
   val hmip = model.addPerson("HM Inspectorate of Probation", "Reports to the government on the effectiveness of work with people who offended to reduce reoffending and protect the public")
 
-  EPF.projectManager.interactsWith(sentencingPolicy, "listens to owners of interventions for changes in policy")
   Reporting.ndmis.uses(OffenderManagementInCustody.allocationManager, "sends extracts containing service user allocation to", "email")
 
   hmip.uses(Reporting.ndmis, "uses data from")
