@@ -11,6 +11,7 @@ enum class Tags : addTo {
       OutsideHMPPS.addTo(element)
     }
   },
+  PLANNED,
   DEPRECATED,
   SOFTWARE_AS_A_SERVICE;
 
