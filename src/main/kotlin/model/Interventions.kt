@@ -58,6 +58,10 @@ class Interventions private constructor() {
 
       deliver.uses(OASys.assessmentsApi, "retrieves service user risks and needs via", "REST/HTTP")
       deliver.uses(Delius.offenderSearch, "retrieves service user information via", "REST/HTTP")
+
+      InterventionTeams.dynamicFrameworkProvider.uses(publishUI, "maintains directory of dynamic framework interventions and services in")
+      InterventionTeams.dynamicFrameworkProvider.uses(deliverUI, "tracks delivery of dynamic framework interventions and services in")
+      ProbationPractitioners.nps.uses(deliverUI, "refers and monitors progress of their service users' interventions and services")
     }
 
     override fun defineViews(views: ViewSet) {
