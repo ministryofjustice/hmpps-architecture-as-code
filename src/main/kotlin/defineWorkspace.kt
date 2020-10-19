@@ -18,6 +18,7 @@ private val MODEL_ITEMS = listOf(
   EQuiP,
   HMPPSAuth,
   IM,
+  Interventions,
   InterventionTeams,
   Licences,
   MoJSignOn,
