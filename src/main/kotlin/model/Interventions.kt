@@ -56,8 +56,9 @@ class Interventions private constructor() {
       publish.uses(HMPPSAuth.app, "authenticates, authorises users and requests access tokens from", "OAuth2/JWT")
       deliver.uses(HMPPSAuth.app, "authenticates, authorises users and requests access tokens from", "OAuth2/JWT")
 
-      deliver.uses(OASys.assessmentsApi, "retrieves service user risks and needs via", "REST/HTTP")
-      deliver.uses(Delius.offenderSearch, "retrieves service user information via", "REST/HTTP")
+      deliver.uses(Delius.communityApi, "retrieves current service user appointments from", "REST/HTTP")
+      deliver.uses(OASys.assessmentsApi, "retrieves service user risks and needs from", "REST/HTTP")
+      deliver.uses(Delius.offenderSearch, "searches service user by identity and gets identification details from", "REST/HTTP")
 
       InterventionTeams.dynamicFrameworkProvider.uses(publishUI, "maintains directory of dynamic framework interventions and services in")
       InterventionTeams.dynamicFrameworkProvider.uses(deliverUI, "tracks delivery of dynamic framework interventions and services in")
@@ -74,6 +75,12 @@ class Interventions private constructor() {
       views.createContainerView(system, "interventions-container", "Container overview of the digital intervention services").apply {
         addDefaultElements()
         system.containers.forEach(::addNearestNeighbours)
+
+        // relationships between the dependencies are not important for this view
+        // would be nice to have `removeRelationshipsNotConnectedTo(system.containers)`
+        // or the ability to set a default for relationships between imported neighbour elements
+        HMPPSAuth.app.getEfferentRelationshipsWith(Delius.communityApi).forEach(::remove)
+
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
       }
     }
