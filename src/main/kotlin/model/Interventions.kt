@@ -53,13 +53,26 @@ class Interventions private constructor() {
     }
 
     override fun defineRelationships() {
+      defineAuthentication()
+      defineSharing()
+      defineUsers()
+    }
+
+    fun defineAuthentication() {
       publish.uses(HMPPSAuth.app, "authenticates, authorises users and requests access tokens from", "OAuth2/JWT")
       deliver.uses(HMPPSAuth.app, "authenticates, authorises users and requests access tokens from", "OAuth2/JWT")
+    }
+
+    fun defineSharing() {
+      publish.uses(Delius.communityApi, "retrieves list of dynamic framework providers and probation regions from", "REST/HTTP")
+      publish.uses(OASys.assessmentsApi, "retrieves list of needs from", "REST/HTTP")
 
       deliver.uses(Delius.communityApi, "retrieves current service user appointments from", "REST/HTTP")
-      deliver.uses(OASys.assessmentsApi, "retrieves service user risks and needs from", "REST/HTTP")
-      deliver.uses(Delius.offenderSearch, "searches service user by identity and gets identification details from", "REST/HTTP")
+      deliver.uses(OASys.assessmentsApi, "retrieves service user current risks and needs from", "REST/HTTP")
+      deliver.uses(Delius.offenderSearch, "searches service user by identity and gets basic identification details from", "REST/HTTP")
+    }
 
+    fun defineUsers() {
       InterventionTeams.dynamicFrameworkProvider.uses(publishUI, "maintains directory of dynamic framework interventions and services in")
       InterventionTeams.dynamicFrameworkProvider.uses(deliverUI, "tracks delivery of dynamic framework interventions and services in")
       ProbationPractitioners.nps.uses(deliverUI, "refers and monitors progress of their service users' interventions and services")
