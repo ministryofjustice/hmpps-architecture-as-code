@@ -1,7 +1,7 @@
 package uk.gov.justice.hmpps.architecture
 
 import com.structurizr.Workspace
-import com.structurizr.model.CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy
+import com.structurizr.model.CreateImpliedRelationshipsUnlessSameRelationshipExistsStrategy
 import com.structurizr.model.Enterprise
 import com.structurizr.model.Location
 import com.structurizr.model.Model
@@ -42,7 +42,7 @@ private val MODEL_ITEMS = listOf(
 
 private fun defineModelItems(model: Model) {
   model.setImpliedRelationshipsStrategy(
-    CreateImpliedRelationshipsUnlessAnyRelationshipExistsStrategy()
+    CreateImpliedRelationshipsUnlessSameRelationshipExistsStrategy()
   )
 
   AWS.defineDeploymentNodes(model)
