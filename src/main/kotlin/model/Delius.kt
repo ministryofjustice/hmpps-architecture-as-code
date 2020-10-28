@@ -15,6 +15,7 @@ class Delius private constructor() {
     lateinit var system: SoftwareSystem
     lateinit var communityApi: Container
     lateinit var offenderSearch: Container
+    lateinit var offenderSearchIndexer: Container
     lateinit var supportTeam: Person
 
     override fun defineModelEntities(model: Model) {
@@ -51,20 +52,32 @@ class Delius private constructor() {
         "Community API",
         "API over the nDelius DB used by HMPPS Digital team applications and services", "Java"
       ).apply {
-        APIDocs("https://community-api-public.test.delius.probation.hmpps.dsd.io/swagger-ui.html").addTo(this)
+        APIDocs("https://community-api-public.test.delius.probation.hmpps.dsd.io/swagger-ui/index.html").addTo(this)
         setUrl("https://github.com/ministryofjustice/community-api")
         uses(db, "connects to", "JDBC")
+        ec2.add(this)
+      }
+
+      offenderSearchIndexer = system.addContainer(
+        "Probation Offender Search Indexer",
+        "Service to update nDelius offender data held in Elasticsearch",
+        "Kotlin"
+      ).apply {
+        APIDocs("https://probation-search-indexer.hmpps.service.justice.gov.uk/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config").addTo(this)
+        setUrl("https://github.com/ministryofjustice/probation-offender-search-indexer")
+        uses(elasticSearchStore, "Indexes offender data from nDelius to the Elasticsearch Index")
         ec2.add(this)
       }
 
       offenderSearch = system.addContainer(
         "Probation Offender Search",
         "API over the nDelius offender data held in Elasticsearch",
-        "Java"
+        "Kotlin"
       ).apply {
-        APIDocs("https://probation-offender-search.hmpps.service.justice.gov.uk/swagger-ui.html").addTo(this)
+        APIDocs("https://probation-offender-search.hmpps.service.justice.gov.uk/swagger-ui/index.html").addTo(this)
         setUrl("https://github.com/ministryofjustice/probation-offender-search")
         uses(elasticSearchStore, "Queries offender data from nDelius Elasticsearch Index")
+        uses(offenderSearchIndexer, "To synchronise date from nDelius to Elasticsearch")
         ec2.add(this)
       }
     }
