@@ -91,7 +91,7 @@ class Interventions private constructor() {
 
     fun defineSharing() {
       service.uses(Delius.communityApi, "retrieves list of dynamic framework providers and probation regions from", "REST/HTTP")
-      service.uses(Delius.communityApi, "retrieves current service user appointments from", "REST/HTTP")
+      service.uses(Delius.communityApi, "retrieves current service user appointments and sentence details from", "REST/HTTP")
       service.uses(Delius.offenderSearch, "searches service user by identity and gets basic identification details from", "REST/HTTP")
       service.uses(OASys.assessmentsApi, "retrieves service user current risks and needs from", "REST/HTTP")
 
