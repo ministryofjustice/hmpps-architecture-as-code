@@ -12,10 +12,9 @@ import uk.gov.justice.hmpps.architecture.annotations.Tags
 class Interventions private constructor() {
   companion object : HMPPSSoftwareSystem {
     lateinit var system: SoftwareSystem
-    lateinit var publishUI: Container
-    lateinit var publish: Container
-    lateinit var deliverUI: Container
-    lateinit var deliver: Container
+    lateinit var ui: Container
+    lateinit var service: Container
+    lateinit var database: Container
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
@@ -26,27 +25,29 @@ class Interventions private constructor() {
         Tags.PLANNED.addTo(this)
       }
 
-      publish = system.addContainer(
-        "Publish an intervention service",
+      service = system.addContainer(
+        "Intervention service",
+        "Tracks the lifecycle of dynamic framework interventions and services, including publishing, finding, referring, delivering and monitoring",
+        "Java or Kotlin"
+      )
+
+      ui = system.addContainer(
+        "Intervention UI",
         "Responsible for curating published interventions and services",
-        "Java or Kotlin"
-      )
-
-      deliver = system.addContainer(
-        "Deliver an intervention service",
-        "Responsible for tracking referrals, appointments and the delivery for interventions and services",
-        "Java or Kotlin"
-      )
-
-      publishUI = system.addContainer("Publish an intervention UI", "Responsible for curating published interventions and services", "node").apply {
-        uses(publish, "adds, quality checks and revokes interventions with")
+        "node"
+      ).apply {
+        uses(service, "implements intervention processes via")
         Tags.WEB_BROWSER.addTo(this)
       }
 
-      deliverUI = system.addContainer("Find, book, record, monitor an intervention UI", "Responsible for intervention delivery", "node").apply {
-        uses(publish, "finds interventions with")
-        uses(deliver, "books, schedules, delivers and monitors interventions with")
-        Tags.WEB_BROWSER.addTo(this)
+      database = system.addContainer(
+        "Intervention database",
+        "Authoritative source for dynamic framework interventions, service categories, complexity levels; " +
+          "Potential source for dynamic framework providers",
+        "likely PostgreSQL"
+      ).apply {
+        service.uses(this, "connects to", "JDBC")
+        Tags.DATABASE.addTo(this)
       }
 
       system.containers.forEach { Tags.PLANNED.addTo(it) }
@@ -59,23 +60,19 @@ class Interventions private constructor() {
     }
 
     fun defineAuthentication() {
-      publish.uses(HMPPSAuth.app, "authenticates, authorises users and requests access tokens from", "OAuth2/JWT")
-      deliver.uses(HMPPSAuth.app, "authenticates, authorises users and requests access tokens from", "OAuth2/JWT")
+      service.uses(HMPPSAuth.app, "authenticates, authorises users and requests access tokens from", "OAuth2/JWT")
     }
 
     fun defineSharing() {
-      publish.uses(Delius.communityApi, "retrieves list of dynamic framework providers and probation regions from", "REST/HTTP")
-      publish.uses(OASys.assessmentsApi, "retrieves list of needs from", "REST/HTTP")
-
-      deliver.uses(Delius.communityApi, "retrieves current service user appointments from", "REST/HTTP")
-      deliver.uses(OASys.assessmentsApi, "retrieves service user current risks and needs from", "REST/HTTP")
-      deliver.uses(Delius.offenderSearch, "searches service user by identity and gets basic identification details from", "REST/HTTP")
+      service.uses(Delius.communityApi, "retrieves list of dynamic framework providers and probation regions from", "REST/HTTP")
+      service.uses(Delius.communityApi, "retrieves current service user appointments from", "REST/HTTP")
+      service.uses(Delius.offenderSearch, "searches service user by identity and gets basic identification details from", "REST/HTTP")
+      service.uses(OASys.assessmentsApi, "retrieves service user current risks and needs from", "REST/HTTP")
     }
 
     fun defineUsers() {
-      InterventionTeams.dynamicFrameworkProvider.uses(publishUI, "maintains directory of dynamic framework interventions and services in")
-      InterventionTeams.dynamicFrameworkProvider.uses(deliverUI, "tracks delivery of dynamic framework interventions and services in")
-      ProbationPractitioners.nps.uses(deliverUI, "refers and monitors progress of their service users' interventions and services")
+      InterventionTeams.dynamicFrameworkProvider.uses(ui, "maintains directory and delivery of dynamic framework interventions and services in")
+      ProbationPractitioners.nps.uses(ui, "refers and monitors progress of their service users' interventions and services in")
     }
 
     override fun defineViews(views: ViewSet) {
