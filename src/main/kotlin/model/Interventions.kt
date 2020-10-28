@@ -37,7 +37,7 @@ class Interventions private constructor() {
 
       ui = system.addContainer(
         "Intervention UI",
-        "Responsible for curating published interventions and services",
+        "Responsible for curating and delivering published interventions and services",
         "Node + Express"
       ).apply {
         uses(service, "implements intervention processes via")
