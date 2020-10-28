@@ -15,6 +15,8 @@ class Interventions private constructor() {
     lateinit var ui: Container
     lateinit var service: Container
     lateinit var database: Container
+    lateinit var queue: Container
+    lateinit var listener: Container
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
@@ -50,6 +52,26 @@ class Interventions private constructor() {
         Tags.DATABASE.addTo(this)
       }
 
+      queue = system.addContainer(
+        "Intervention queue(s)",
+        "Queue(s) for notifications about intervention domain events, please see link for details",
+        "Amazon Simple Queue Service (SQS)"
+      ).apply {
+        setUrl("https://dsdmoj.atlassian.net/wiki/spaces/IC/pages/2461827117/Architecture+overview+-+Interventions")
+        service.uses(this, "publishes domain events to", "SNS")
+        Tags.QUEUE.addTo(this)
+        CloudPlatform.sqs.add(this)
+      }
+
+      listener = system.addContainer(
+        "Intervention-probation translator",
+        "Maintains contacts, appointments and registrations based on dynamic framework intervention domain events",
+        "undefined"
+      ).apply {
+        uses(queue, "consumes dynamic framework intervention domain events from")
+        CloudPlatform.kubernetes.add(this)
+      }
+
       system.containers.forEach { Tags.PLANNED.addTo(it) }
     }
 
@@ -68,6 +90,9 @@ class Interventions private constructor() {
       service.uses(Delius.communityApi, "retrieves current service user appointments from", "REST/HTTP")
       service.uses(Delius.offenderSearch, "searches service user by identity and gets basic identification details from", "REST/HTTP")
       service.uses(OASys.assessmentsApi, "retrieves service user current risks and needs from", "REST/HTTP")
+
+      listener.uses(Delius.communityApi, "maintains contacts, appointments, registrations with", "REST/HTTP")!!
+        .apply { addTags(Tags.PLANNED.toString()) }
     }
 
     fun defineUsers() {

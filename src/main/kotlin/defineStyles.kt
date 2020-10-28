@@ -10,6 +10,7 @@ fun defineStyles(styles: Styles) {
   styles.addElementStyle("Person").shape(Shape.Person).background("#aabbdd")
 
   styles.addElementStyle(Tags.DATABASE.toString()).shape(Shape.Cylinder)
+  styles.addElementStyle(Tags.QUEUE.toString()).shape(Shape.Pipe)
   styles.addElementStyle(Tags.WEB_BROWSER.toString()).shape(Shape.WebBrowser)
   styles.addElementStyle(Tags.PLANNED.toString()).border(Border.Dotted).opacity(50)
 
