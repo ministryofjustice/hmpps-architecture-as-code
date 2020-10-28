@@ -108,7 +108,7 @@ class Interventions private constructor() {
       views.createSystemContextView(system, "interventions-context", "Context overview of the digital intervention services").apply {
         addDefaultElements()
         removeRelationshipsNotConnectedToElement(system)
-        enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
+        enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 500, 500)
       }
 
       views.createDeploymentView(system, "interventions-deployment", "Deployment overview of the digital intervention services").apply {
@@ -125,7 +125,8 @@ class Interventions private constructor() {
         // or the ability to set a default for relationships between imported neighbour elements
         HMPPSAuth.app.getEfferentRelationshipsWith(Delius.communityApi).forEach(::remove)
 
-        enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
+        setExternalSoftwareSystemBoundariesVisible(true)
+        enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 250, 150)
       }
     }
   }
