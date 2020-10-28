@@ -31,15 +31,18 @@ class Interventions private constructor() {
         "Intervention service",
         "Tracks the lifecycle of dynamic framework interventions and services, including publishing, finding, referring, delivering and monitoring",
         "Java or Kotlin"
-      )
+      ).apply {
+        CloudPlatform.kubernetes.add(this)
+      }
 
       ui = system.addContainer(
         "Intervention UI",
         "Responsible for curating published interventions and services",
-        "node"
+        "Node + Express"
       ).apply {
         uses(service, "implements intervention processes via")
         Tags.WEB_BROWSER.addTo(this)
+        CloudPlatform.kubernetes.add(this)
       }
 
       database = system.addContainer(
@@ -50,6 +53,7 @@ class Interventions private constructor() {
       ).apply {
         service.uses(this, "connects to", "JDBC")
         Tags.DATABASE.addTo(this)
+        CloudPlatform.rds.add(this)
       }
 
       queue = system.addContainer(
@@ -104,6 +108,11 @@ class Interventions private constructor() {
       views.createSystemContextView(system, "interventions-context", "Context overview of the digital intervention services").apply {
         addDefaultElements()
         removeRelationshipsNotConnectedToElement(system)
+        enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
+      }
+
+      views.createDeploymentView(system, "interventions-deployment", "Deployment overview of the digital intervention services").apply {
+        addDefaultElements()
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
       }
 
