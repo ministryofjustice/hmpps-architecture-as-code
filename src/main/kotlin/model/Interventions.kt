@@ -16,7 +16,8 @@ class Interventions private constructor() {
     lateinit var service: Container
     lateinit var database: Container
     lateinit var queue: Container
-    lateinit var listener: Container
+    lateinit var translator: Container
+    lateinit var collector: Container
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
@@ -67,12 +68,22 @@ class Interventions private constructor() {
         CloudPlatform.sqs.add(this)
       }
 
-      listener = system.addContainer(
+      translator = system.addContainer(
         "Intervention-probation translator",
         "Maintains contacts, appointments and registrations based on dynamic framework intervention domain events",
         "undefined"
       ).apply {
         uses(queue, "consumes dynamic framework intervention domain events from")
+        CloudPlatform.kubernetes.add(this)
+      }
+
+      collector = system.addContainer(
+        "Intervention data collector",
+        "Collects domain events and intervention data for hand-off to the Analytical Platform",
+        "undefined"
+      ).apply {
+        uses(queue, "consumes dynamic framework intervention domain events from")
+        uses(database, "reads snapshots of the intervention data from")
         CloudPlatform.kubernetes.add(this)
       }
 
@@ -95,8 +106,8 @@ class Interventions private constructor() {
       service.uses(Delius.offenderSearch, "searches service user by identity and gets basic identification details from", "REST/HTTP")
       service.uses(OASys.assessmentsApi, "retrieves service user current risks and needs from", "REST/HTTP")
 
-      listener.uses(Delius.communityApi, "maintains contacts, appointments, registrations with", "REST/HTTP")!!
-        .apply { addTags(Tags.PLANNED.toString()) }
+      translator.uses(Delius.communityApi, "maintains contacts, appointments, registrations with", "REST/HTTP")
+      collector.uses(AnalyticalPlatform.landingBucket, "pushes intervention data daily to")
     }
 
     fun defineUsers() {

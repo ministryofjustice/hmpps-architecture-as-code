@@ -8,6 +8,7 @@ import com.structurizr.model.Model
 import com.structurizr.view.ViewSet
 
 private val MODEL_ITEMS = listOf(
+  AnalyticalPlatform,
   AzureADTenantJusticeUK,
   CaseNotesToProbation,
   CourtUsers,
