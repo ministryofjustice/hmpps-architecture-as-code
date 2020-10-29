@@ -113,6 +113,9 @@ class Interventions private constructor() {
     fun defineUsers() {
       InterventionTeams.dynamicFrameworkProvider.uses(ui, "maintains directory and delivery of dynamic framework interventions and services in")
       ProbationPractitioners.nps.uses(ui, "refers and monitors progress of their service users' interventions and services in")
+
+      service.delivers(InterventionTeams.dynamicFrameworkProvider, "emails new referrals", "gov.uk notify")
+      service.delivers(ProbationPractitioners.nps, "emails attendance and safeguarding issues", "gov.uk notify")
     }
 
     override fun defineViews(views: ViewSet) {
