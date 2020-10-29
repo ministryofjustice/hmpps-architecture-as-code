@@ -86,6 +86,12 @@ class Interventions private constructor() {
         CloudPlatform.kubernetes.add(this)
       }
 
+      val unknownReporting = model.addSoftwareSystem(
+        "Unknown Reporting Pipeline",
+        "It is currently undefined where we push data for reporting purposes (we want to avoid using live systems)"
+      )
+      collector.uses(unknownReporting, "pushes intervention data daily to")
+
       system.containers.forEach { Tags.PLANNED.addTo(it) }
     }
 

@@ -13,7 +13,7 @@ class AnalyticalPlatform private constructor() {
       val platform = model.addSoftwareSystem("Analytical Platform")
       landingBucket = platform.addContainer(
         "Analytical Platform landing bucket",
-        "Storage area where data ingestion for reporting, analytics, data science starts",
+        "Storage area where data ingestion for analytics and data science starts",
         "S3"
       ).apply {
         Tags.DATABASE.addTo(this)
