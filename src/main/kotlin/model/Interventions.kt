@@ -102,7 +102,11 @@ class Interventions private constructor() {
     }
 
     fun defineAuthentication() {
-      service.uses(HMPPSAuth.app, "authenticates, authorises users and requests access tokens from", "OAuth2/JWT")
+      InterventionTeams.dynamicFrameworkProvider.uses(HMPPSAuth.app, "log in via", "HTTPS/web")
+      ProbationPractitioners.nps.uses(HMPPSAuth.app, "log in via", "HTTPS/web")
+
+      ui.uses(HMPPSAuth.app, "requests access tokens from", "OAuth2/JWT")
+      service.uses(HMPPSAuth.app, "authorises users and requests access tokens from", "OAuth2/JWT")
     }
 
     fun defineSharing() {
