@@ -10,8 +10,11 @@ class InterventionTeams private constructor() {
     lateinit var interventionServicesTeam: Person
     lateinit var npsTreatmentManager: Person
     lateinit var contractManagerForCRC: Person
+
     lateinit var crcTreatmentManager: Person
     lateinit var crcProgrammeManager: Person
+
+    lateinit var dynamicFrameworkProvider: Person
 
     override fun defineModelEntities(model: Model) {
       interventionServicesTeam = model.addPerson(
@@ -28,6 +31,14 @@ class InterventionTeams private constructor() {
         "CRC programme manager",
         "People who provide interventions on behalf of Community Rehabilitation Companies"
       ).apply { Tags.PROVIDER.addTo(this) }
+
+      dynamicFrameworkProvider = model.addPerson(
+        "Dynamic Framework service provider",
+        "Contracted providers delivering rehabilitation and resettlement interventions for service users"
+      ).apply {
+        Tags.PROVIDER.addTo(this)
+        Tags.PLANNED.addTo(this)
+      }
 
       crcProgrammeManager.interactsWith(contractManagerForCRC, "sends rate card brochure to")
     }

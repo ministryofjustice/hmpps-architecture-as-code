@@ -4,6 +4,7 @@ import com.structurizr.model.Element
 
 enum class Tags : addTo {
   DATABASE,
+  QUEUE,
   WEB_BROWSER,
   PROVIDER {
     override fun addTo(element: Element) {
@@ -11,6 +12,7 @@ enum class Tags : addTo {
       OutsideHMPPS.addTo(element)
     }
   },
+  PLANNED,
   DEPRECATED,
   SOFTWARE_AS_A_SERVICE;
 

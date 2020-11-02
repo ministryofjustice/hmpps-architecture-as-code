@@ -16,10 +16,11 @@ class HMPPSAuth private constructor() {
       system = model.addSoftwareSystem("HMPPS Auth", "Allows users to login into digital services")
 
       app = system.addContainer(
-        "API",
-        "OAuth2 server integrating with NOMIS database, nDelius (via community api) and an auth database for storing external users",
+        "HMPPS Auth",
+        "UI and OAuth2 server integrating with NOMIS database, nDelius (via community api) and an auth database for storing external users",
         "Spring Boot + Java"
       ).apply {
+        Tags.WEB_BROWSER.addTo(this)
         APIDocs("https://sign-in-preprod.hmpps.service.justice.gov.uk/auth/swagger-ui.html").addTo(this)
         setUrl("https://github.com/ministryofjustice/hmpps-auth")
       }
