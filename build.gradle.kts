@@ -15,4 +15,5 @@ dependencies {
     implementation(kotlin("stdlib"))
     implementation("com.structurizr:structurizr-client:1.4.5")
     implementation("com.structurizr:structurizr-core:1.4.5")
+    implementation("com.structurizr:structurizr-adr-tools:1.3.6")
 }

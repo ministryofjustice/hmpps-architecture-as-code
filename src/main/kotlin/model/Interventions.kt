@@ -1,5 +1,6 @@
 package uk.gov.justice.hmpps.architecture
 
+import com.structurizr.documentation.AdrToolsImporter
 import com.structurizr.model.Container
 import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
@@ -9,7 +10,7 @@ import uk.gov.justice.hmpps.architecture.annotations.ProblemArea
 import uk.gov.justice.hmpps.architecture.annotations.Tags
 
 class Interventions private constructor() {
-  companion object : HMPPSSoftwareSystem {
+  companion object : HMPPSSoftwareSystem, DefinesDecisions {
     lateinit var system: SoftwareSystem
     lateinit var ui: Container
     lateinit var service: Container
@@ -151,6 +152,10 @@ class Interventions private constructor() {
         setExternalSoftwareSystemBoundariesVisible(true)
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 250, 150)
       }
+    }
+
+    override fun defineDecisions(workspace: com.structurizr.Workspace) {
+      AdrToolsImporter(workspace, App.DECISIONS_LOCATION.resolve("interventions")).importArchitectureDecisionRecords(system)
     }
   }
 }

@@ -6,6 +6,7 @@ import com.structurizr.util.WorkspaceUtils
 import java.io.File
 
 object App {
+  val DECISIONS_LOCATION = File("./decisions")
   val EXPORT_LOCATION = File("./exports")
 
   @JvmStatic
