@@ -1,4 +1,4 @@
-# 1. Split user interface and service by default
+# 1. Split user and service interfaces by default
 
 Date: 2020-11-02
 
@@ -8,11 +8,28 @@ Proposed
 
 ## Context
 
-The [current HMPPS Digital tech radar][radar] elects Java, Kotlin and node.js as languages in _adopt_. It also
-mentions Ruby (for London); however, the current direction is to reduce regional differences as it is difficult
-to hire developers who are comfortable and happy working with multiple languages.
+### Need for sustainable services
 
-In short, HMPPS Digital is heading towards using Java, Kotlin and node.js as their primary choices.
+The Ministry of Justice 2022 Digital Strategy defines "Building sustainable services" as a priority.
+
+As the domain model of HM Prisons and Probation Service (HMPPS) is big, we aim to build sustainable services
+around [bounded contexts][bounded-context], making it necessary to integrate with other contexts.
+
+### Business logic drift
+
+Historically, many systems built in HMPPS did not expose an API for the business logic and/or were managed by third
+parties, leading to difficult integration: we see business APIs beneficial to have from the start.
+
+We have also seen services with a frontend/backend split where frontend clients accumulated business logic as the
+backend service fell back to provide a CRUD entity service over the database; this is not sustainable.
+
+### Languages in "adopt"
+
+HMPPS Digital is heading towards using Java/Kotlin and node.js as their primary language choices.
+
+The [current HMPPS Digital tech radar][radar] elects the mentioned languages in _adopt_. It also mentions Ruby (for London);
+however, the current direction is to reduce regional differences as it is difficult to hire developers who are comfortable
+and happy working with multiple languages.
 
 The department's talent pool reflects this split; there are:
 
@@ -20,31 +37,29 @@ The department's talent pool reflects this split; there are:
 - many Java/Kotlin focussed backend specialists,
 - and a few full-stack developers.
 
-### Team
-
-The current interventions team is mostly on a timed contract with a managed service provider.
-When their contract runs out, we need to be able to backfill developers.
-
-Consequently, we need to choose a technology stack that most other developers in HMPPS already know.
-
 ## Decision
 
-To reflect the available talent pool in our department, we will **split the interventions service into a UI
-and a service component**.
+We will **create standalone service interfaces (business APIs) by default**.
+
+We will **split the user interface** from the API's component to enforce the use of the business API by default.
+
+We realise this is an optimisation.
 
 ## Consequences
 
 **Benefits**
 
+- The APIs we create can be used by other teams if they wish to hook into our business processes.
+- There are reusable best practices already available from DPS for separate API components.
 - The pool of talent who can join our team from HMPPS is larger.
-- There are reusable best practices already available from DPS.
 
 **Challenges**
 
-- Contracts between the UI component and the service component will take a while to stabilise, creating churn in the beginning.
+- Contracts between the UI and the service components will take a while to stabilise, creating churn in the beginning.
 - Expectations between the parts have to be clear to avoid blocking others or taking up time. [Consumer-driven contract testing][cdct] can mitigate.
 
-In short, we gain _maintainability_ benefits by trading off initial speed.
+In short, we gain _sustainability_ benefits by trading off governance around the API contracts.
 
 [radar]: https://ministryofjustice.github.io/hmpps-digital-tech-radar/docs/index.html
 [cdct]: https://www.thoughtworks.com/radar/techniques/consumer-driven-contract-testing
+[bounded-context]: https://martinfowler.com/bliki/BoundedContext.html
