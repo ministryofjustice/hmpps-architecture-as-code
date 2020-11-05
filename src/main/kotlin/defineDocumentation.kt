@@ -93,6 +93,8 @@ private fun readAPIDocsURLFromRepoReadmeBadge(app: Container): String? {
     println("[defineDocumentation] ignoring: $e")
   } catch (e: IOException) {
     println("[defineDocumentation] ignoring: $e")
+  } catch (e: java.util.NoSuchElementException) {
+    println("[defineDocumentation] ignoring: $e")
   }
 
   val m = BADGE_URL_PATTERN.find(readmeContents)
