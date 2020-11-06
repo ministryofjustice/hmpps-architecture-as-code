@@ -40,22 +40,23 @@ The above qualities point towards a decentralised way of integration and notifyi
 
 **We will use _domain_ events to decouple** from other production services.
 
+Our domain event payloads will contain:
+
+- transport-specific concerns, e.g. request and tracking IDs, publishing timestamps, etc.
+- domain context, e.g. URL on how to find out more, intervention ID, service user ID, etc.
+- core domain data, which is required to make sense of the event
+
+The payloads will **not** contain further data by default. **Consumers can request further details via the business API**.
+
+We do not intend to build event sourcing. We will **not** build event logs by default.
+
+**Examples**
+
 For example, our events may be:
 
 - intervention completed
 - service user appointment booked
 - (many others)
-
-----
-
-### Unsure about this one, help please 🙇‍♂️
-
-Some consumers may need to build a local (materialised) view of events that happened in the past, even if
-they join the landscape later.
-
-For this use case, **we will also create an event log**, internal to our service.
-
-----
 
 ## Consequences
 
@@ -63,15 +64,18 @@ We will build our intervention services to emit known significant domain events 
 
 **Benefits**
 
-- The decoupling allows developing almost all user stories without waiting for integrations.
+- The decoupling allows us developing almost all user stories without waiting on endpoints to be finished.
 - New and old systems can join as consumers any time.
-- Consumers can test their integration with us without running our service.
+- We contribute to an event _vocabulary_ for probation, enabling systems with similar responsibilities to
+  start publishing the same events.
+- Same events from different systems enables us to start using the strangler fig pattern
+  by moving the source of those events elsewhere.
 
 **Challenges**
 
 - This architecture is asynchronous and distributed:
   - Request tracking and error handling needs to be built-in to understand what happens in production.
-  - It is harder to setup a certain state for pre-production testing as we have to know what events have to happen.
+  - It is harder to set up a certain state for pre-production testing as we have to know what events have to happen.
 - Lack of atomic transactions:
   - We must not use events that need to be rolled back as a result of a consumer failing to process them.
 - Creation, maintenance, and governance of the event contracts is difficult:
