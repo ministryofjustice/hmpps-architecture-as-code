@@ -18,6 +18,15 @@ In the current probation programme landscape, we expect
 - many changes to existing systems,
 - different times when integration happens as teams will have separate priorities.
 
+Specifically, we will have other teams to
+
+- assess risks and needs,
+- manage a sentence,
+- manage a supervision in the community,
+- manage my progress.
+
+All of these teams would have interest in actions carried out in interventions.
+
 ### Nature of probation
 
 Additionally, probation
