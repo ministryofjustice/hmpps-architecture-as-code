@@ -4,8 +4,6 @@ import com.structurizr.model.Container
 import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ViewSet
-import uk.gov.justice.hmpps.architecture.annotations.APIDocs
-import uk.gov.justice.hmpps.architecture.annotations.Tags
 
 class DigitalPrisonsNetwork private constructor() {
   companion object : HMPPSSoftwareSystem {
