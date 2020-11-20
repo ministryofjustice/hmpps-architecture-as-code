@@ -4,7 +4,7 @@ import com.structurizr.model.Element
 
 enum class Tags : addTo {
   DATABASE,
-  QUEUE,
+  TOPIC,
   WEB_BROWSER,
   PROVIDER {
     override fun addTo(element: Element) {

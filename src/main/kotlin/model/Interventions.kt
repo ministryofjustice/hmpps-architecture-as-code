@@ -64,7 +64,7 @@ class Interventions private constructor() {
       ).apply {
         setUrl("https://dsdmoj.atlassian.net/wiki/spaces/IC/pages/2461827117/Architecture+overview+-+Interventions")
         service.uses(this, "publishes domain events to", "SNS")
-        Tags.QUEUE.addTo(this)
+        Tags.TOPIC.addTo(this)
         CloudPlatform.sqs.add(this)
       }
 

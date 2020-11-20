@@ -63,7 +63,7 @@ class Delius private constructor() {
         "Topic receiving notifications on core offender changes",
         "SNS topic"
       ).apply {
-        Tags.QUEUE.addTo(this)
+        Tags.TOPIC.addTo(this)
       }
 
       system.addContainer(
