@@ -59,6 +59,11 @@ logical Git commits, each of which make a single change, with an accompanying
 commit message which explains the change and addresses any questions that we
 think a reviewer might have about the change.
 
+We should also consider how merge commits can impact the reviewability of our
+pull requests. Merge commits stop the pull request from being a simple linear
+sequence of commits. Also, the diff of a merge commit, as presented by GitHub,
+can often be hard to understand.
+
 ### The Git repository is probably immortal
 
 There are other places where some of the codebase’s influences might be recorded
@@ -73,6 +78,9 @@ around for the lifetime of the project.
 When we open a pull request, we will make sure that we present our work with a
 Git commit history that tells a clear story of the work that we’ve done and why
 we’ve done it that way.
+
+Our pull requests will have a linear history, meaning that they will not contain
+any merge commits.
 
 The pull request message will be a summary of the work that we’ve done, but
 any important information that it contains will also be in the commit messages.
