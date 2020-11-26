@@ -47,7 +47,7 @@ lives behind the change.
 
 ### Reviewing work
 
-When we develop software in team, we spend quite a lot of time reviewing other
+When we develop software in a team, we spend quite a lot of time reviewing other
 developers’ code. Sometimes, multiple developers will review a single pull
 request. We want to make sure that reviewing a pull request is not a
 time-consuming process.
