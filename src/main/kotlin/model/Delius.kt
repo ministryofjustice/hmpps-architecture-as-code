@@ -58,6 +58,26 @@ class Delius private constructor() {
         ec2.add(this)
       }
 
+      val topic = system.addContainer(
+        "probation-offender-events topic",
+        "Topic receiving notifications on core offender changes",
+        "SNS topic"
+      ).apply {
+        Tags.TOPIC.addTo(this)
+      }
+
+      system.addContainer(
+        "Probation offender events",
+        "Generate events for the offender changes in probation",
+        "Kotlin"
+      ).apply {
+        APIDocs("https://probation-offender-events-dev.hmpps.service.justice.gov.uk/swagger-ui.html").addTo(this)
+        setUrl("https://github.com/ministryofjustice/probation-offender-events")
+        uses(communityApi, "reads offender delta updates from")
+        uses(topic, "notifies", "SNS")
+        ec2.add(this)
+      }
+
       offenderSearchIndexer = system.addContainer(
         "Probation Offender Search Indexer",
         "Service to update nDelius offender data held in Elasticsearch",
