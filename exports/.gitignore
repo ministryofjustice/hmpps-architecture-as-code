@@ -5,3 +5,6 @@ structurizr-*.png
 
 # generated documentation
 docs/
+
+# cloned repositories
+clones/

@@ -71,11 +71,6 @@ private fun defineViews(model: Model, views: ViewSet) {
   defineGlobalViews(model, views)
 }
 
-private fun defineDecisionsAndDocumentation(workspace: Workspace) {
-  MODEL_ITEMS.filterIsInstance<DefinesDecisions>().forEach { it.defineDecisions(workspace) }
-  defineDocumentation(workspace)
-}
-
 fun defineWorkspace(): Workspace {
   val enterprise = Enterprise("HM Prison and Probation Service")
   val workspace = Workspace(enterprise.name, "Systems related to the custody and probation of offenders")
@@ -88,7 +83,8 @@ fun defineWorkspace(): Workspace {
   defineRelationships()
   defineViews(workspace.model, workspace.views)
   defineStyles(workspace.views.configuration.styles)
-  defineDecisionsAndDocumentation(workspace)
+  defineDocumentation(workspace)
+  pullADRs(workspace)
 
   return workspace
 }

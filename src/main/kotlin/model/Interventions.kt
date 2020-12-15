@@ -1,16 +1,16 @@
 package uk.gov.justice.hmpps.architecture
 
-import com.structurizr.documentation.AdrToolsImporter
 import com.structurizr.model.Container
 import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
+import uk.gov.justice.hmpps.architecture.annotations.ADRSource
 import uk.gov.justice.hmpps.architecture.annotations.ProblemArea
 import uk.gov.justice.hmpps.architecture.annotations.Tags
 
 class Interventions private constructor() {
-  companion object : HMPPSSoftwareSystem, DefinesDecisions {
+  companion object : HMPPSSoftwareSystem {
     lateinit var system: SoftwareSystem
     lateinit var ui: Container
     lateinit var service: Container
@@ -24,6 +24,7 @@ class Interventions private constructor() {
         "Getting the right rehabilitation",
         "Supports maintaning interventions and services and finding, booking, delivering and monitoring interventions (currently only Dynamic Framework)"
       ).apply {
+        ADRSource("https://github.com/ministryofjustice/hmpps-interventions-docs").addTo(this)
         ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)
         Tags.PLANNED.addTo(this)
       }
@@ -152,10 +153,6 @@ class Interventions private constructor() {
         setExternalSoftwareSystemBoundariesVisible(true)
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 250, 150)
       }
-    }
-
-    override fun defineDecisions(workspace: com.structurizr.Workspace) {
-      AdrToolsImporter(workspace, App.DECISIONS_LOCATION.resolve("interventions")).importArchitectureDecisionRecords(system)
     }
   }
 }
