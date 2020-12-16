@@ -25,7 +25,6 @@ class Interventions private constructor() {
         "Supports maintaning interventions and services and finding, booking, delivering and monitoring interventions (currently only Dynamic Framework)"
       ).apply {
         ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)
-        Tags.PLANNED.addTo(this)
       }
 
       service = system.addContainer(
@@ -33,6 +32,7 @@ class Interventions private constructor() {
         "Tracks the lifecycle of dynamic framework interventions and services, including publishing, finding, referring, delivering and monitoring",
         "Java or Kotlin"
       ).apply {
+        setUrl("https://github.com/ministryofjustice/hmpps-interventions-service")
         CloudPlatform.kubernetes.add(this)
       }
 
@@ -41,6 +41,7 @@ class Interventions private constructor() {
         "Responsible for curating and delivering published interventions and services",
         "Node + Express"
       ).apply {
+        setUrl("https://github.com/ministryofjustice/hmpps-interventions-ui")
         uses(service, "implements intervention processes via")
         Tags.WEB_BROWSER.addTo(this)
         CloudPlatform.kubernetes.add(this)
@@ -50,7 +51,7 @@ class Interventions private constructor() {
         "Intervention database",
         "Authoritative source for dynamic framework interventions, service categories, complexity levels; " +
           "Potential source for dynamic framework providers",
-        "likely PostgreSQL"
+        "PostgreSQL"
       ).apply {
         service.uses(this, "connects to", "JDBC")
         Tags.DATABASE.addTo(this)
@@ -66,6 +67,7 @@ class Interventions private constructor() {
         service.uses(this, "publishes domain events to", "SNS")
         Tags.TOPIC.addTo(this)
         CloudPlatform.sqs.add(this)
+        Tags.PLANNED.addTo(this)
       }
 
       translator = system.addContainer(
@@ -75,6 +77,7 @@ class Interventions private constructor() {
       ).apply {
         uses(queue, "consumes dynamic framework intervention domain events from")
         CloudPlatform.kubernetes.add(this)
+        Tags.PLANNED.addTo(this)
       }
 
       collector = system.addContainer(
@@ -85,15 +88,16 @@ class Interventions private constructor() {
         uses(queue, "consumes dynamic framework intervention domain events from")
         uses(database, "reads snapshots of the intervention data from")
         CloudPlatform.kubernetes.add(this)
+        Tags.PLANNED.addTo(this)
       }
 
       val unknownReporting = model.addSoftwareSystem(
         "Unknown Reporting Pipeline",
         "It is currently undefined where we push data for reporting purposes (we want to avoid using live systems)"
-      )
+      ).apply {
+        Tags.PLANNED.addTo(this)
+      }
       collector.uses(unknownReporting, "pushes intervention data daily to")
-
-      system.containers.forEach { Tags.PLANNED.addTo(it) }
     }
 
     override fun defineRelationships() {
