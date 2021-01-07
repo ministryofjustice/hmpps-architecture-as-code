@@ -5,7 +5,6 @@ import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
-import uk.gov.justice.hmpps.architecture.annotations.APIDocs
 import uk.gov.justice.hmpps.architecture.annotations.Tags
 
 class ProbationTeamsService private constructor() {
@@ -20,8 +19,7 @@ class ProbationTeamsService private constructor() {
       )
 
       api = system.addContainer("API", "API", "Kotlin + Spring Boot").apply {
-        APIDocs("https://probation-teams-dev.prison.service.justice.gov.uk/swagger-ui/index.html").addTo(this)
-        setUrl("https://github.com/ministryofjustice/probation-teams")
+        url = "https://github.com/ministryofjustice/probation-teams"
       }
 
       val db = system.addContainer("Database", "Storage for probation areas and Local Delivery Unit 'functional' mailboxes", "PostgreSQL").apply {
