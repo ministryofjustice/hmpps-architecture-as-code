@@ -83,7 +83,8 @@ private fun readAPIDocsURLFromRepoReadmeBadge(app: Container): String? {
   try {
     println()
     val repoDir = cloneRepository(app.url, app)
-    readmeContents = repoDir.resolve("README.md").readText()
+    val readme = repoDir.listFiles { _, name -> name.equals("README.md", true) }?.first()
+    readmeContents = readme?.readText().orEmpty()
   } catch (e: GitAPIException) {
     println("[defineDocumentation] ignoring: $e")
   } catch (e: IOException) {
