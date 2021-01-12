@@ -56,25 +56,29 @@ private fun writeAPI(w: PrintWriter, apiContainer: Container) {
 
 @Suppress("DEPRECATION")
 private fun containersWithAPIDocs(model: Model): List<Container> {
-  val containers = model.softwareSystems
+  return model.softwareSystems
     .sortedBy { it.name.toLowerCase() }
     .flatMap { it.containers }
+    .map { pullApiDocs(it) }
+    .filter { APIDocs.getFrom(it) != null }
+}
 
-  containers
-    .filter { it.url.orEmpty().contains("github.com/ministryofjustice") }
-    .forEach {
-      val oldUrl = APIDocs.getFrom(it)
-      val url = readAPIDocsURLFromRepoReadmeBadge(it)
+@Suppress("DEPRECATION")
+private fun pullApiDocs(container: Container): Container {
+  if (!container.url.orEmpty().contains("github.com/ministryofjustice")) {
+    return container
+  }
 
-      if (url != null) {
-        if (oldUrl != null) {
-          println("[defineDocumentation] overriding API docs URL\n - from ${oldUrl}\n - to   $url")
-        }
-        APIDocs(url).addTo(it)
-      }
+  val oldUrl = APIDocs.getFrom(container)
+  val url = readAPIDocsURLFromRepoReadmeBadge(container)
+
+  if (url != null) {
+    if (oldUrl != null) {
+      println("[defineDocumentation] overriding API docs URL\n - from ${oldUrl}\n - to   $url")
     }
-
-  return containers.filter { APIDocs.getFrom(it) != null }
+    APIDocs(url).addTo(container)
+  }
+  return container
 }
 
 val BADGE_URL_PATTERN = Regex("""\[!\[API docs]\(.*\)]\((.*)\)""")
