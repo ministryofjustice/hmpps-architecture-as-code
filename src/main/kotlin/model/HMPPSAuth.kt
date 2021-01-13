@@ -4,7 +4,6 @@ import com.structurizr.model.Container
 import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ViewSet
-import uk.gov.justice.hmpps.architecture.annotations.APIDocs
 import uk.gov.justice.hmpps.architecture.annotations.Tags
 
 class HMPPSAuth private constructor() {
@@ -21,8 +20,7 @@ class HMPPSAuth private constructor() {
         "Spring Boot + Java"
       ).apply {
         Tags.WEB_BROWSER.addTo(this)
-        APIDocs("https://sign-in-preprod.hmpps.service.justice.gov.uk/auth/swagger-ui.html").addTo(this)
-        setUrl("https://github.com/ministryofjustice/hmpps-auth")
+        url = "https://github.com/ministryofjustice/hmpps-auth"
       }
 
       val database = system.addContainer(

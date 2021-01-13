@@ -6,7 +6,6 @@ import com.structurizr.model.Person
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
-import uk.gov.justice.hmpps.architecture.annotations.APIDocs
 import uk.gov.justice.hmpps.architecture.annotations.ProblemArea
 import uk.gov.justice.hmpps.architecture.annotations.Tags
 
@@ -52,8 +51,7 @@ class Delius private constructor() {
         "Community API",
         "API over the nDelius DB used by HMPPS Digital team applications and services", "Java"
       ).apply {
-        APIDocs("https://community-api-public.test.delius.probation.hmpps.dsd.io/swagger-ui/index.html").addTo(this)
-        setUrl("https://github.com/ministryofjustice/community-api")
+        url = "https://github.com/ministryofjustice/community-api"
         uses(db, "connects to", "JDBC")
         ec2.add(this)
       }
@@ -71,8 +69,7 @@ class Delius private constructor() {
         "Generate events for the offender changes in probation",
         "Kotlin"
       ).apply {
-        APIDocs("https://probation-offender-events-dev.hmpps.service.justice.gov.uk/swagger-ui.html").addTo(this)
-        setUrl("https://github.com/ministryofjustice/probation-offender-events")
+        url = "https://github.com/ministryofjustice/probation-offender-events"
         uses(communityApi, "reads offender delta updates from")
         uses(topic, "notifies", "SNS")
         ec2.add(this)
@@ -83,8 +80,7 @@ class Delius private constructor() {
         "Service to update nDelius offender data held in Elasticsearch",
         "Kotlin"
       ).apply {
-        APIDocs("https://probation-search-indexer.hmpps.service.justice.gov.uk/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config").addTo(this)
-        setUrl("https://github.com/ministryofjustice/probation-offender-search-indexer")
+        url = "https://github.com/ministryofjustice/probation-offender-search-indexer"
         uses(elasticSearchStore, "Indexes offender data from nDelius to the Elasticsearch Index")
         ec2.add(this)
       }
@@ -94,8 +90,7 @@ class Delius private constructor() {
         "API over the nDelius offender data held in Elasticsearch",
         "Kotlin"
       ).apply {
-        APIDocs("https://probation-offender-search.hmpps.service.justice.gov.uk/swagger-ui/index.html").addTo(this)
-        setUrl("https://github.com/ministryofjustice/probation-offender-search")
+        url = "https://github.com/ministryofjustice/probation-offender-search"
         uses(elasticSearchStore, "Queries offender data from nDelius Elasticsearch Index")
         uses(offenderSearchIndexer, "To synchronise date from nDelius to Elasticsearch")
         ec2.add(this)
