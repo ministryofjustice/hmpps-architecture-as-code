@@ -56,6 +56,8 @@ class AssessRisksAndNeeds private constructor() {
 
       assessmentService.uses(Delius.communityApi, "Gets offender and past-offence details from")
       assessmentService.uses(PrepareCaseForCourt.courtCaseService, "Gets offender and offence details from")
+      assessmentService.uses(OASys.assessmentsApi, "get offender past assessment details from")
+      assessmentService.uses(OASys.system, "pushes offender assessment details into")
 
       ProbationPractitioners.nps.uses(riskAssessmentUi, "records offender risks and needs")
     }
@@ -67,7 +69,7 @@ class AssessRisksAndNeeds private constructor() {
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
       }
 
-      views.createContainerView(system, "assess-risks-and-needs-containers", null).apply {
+      views.createContainerView(system, "assess-risks-and-needs-container", null).apply {
         addDefaultElements()
         addAllContainersAndInfluencers()
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
