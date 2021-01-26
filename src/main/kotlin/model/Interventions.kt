@@ -15,7 +15,7 @@ class Interventions private constructor() {
     lateinit var ui: Container
     lateinit var service: Container
     lateinit var database: Container
-    lateinit var queue: Container
+    lateinit var eventsTopic: Container
     lateinit var translator: Container
     lateinit var collector: Container
 
@@ -59,16 +59,14 @@ class Interventions private constructor() {
         CloudPlatform.rds.add(this)
       }
 
-      queue = system.addContainer(
-        "Intervention queue(s)",
-        "Queue(s) for notifications about intervention domain events, please see link for details",
-        "Amazon Simple Queue Service (SQS)"
+      eventsTopic = system.addContainer(
+        "intervention-events topic",
+        "Topic for holding intervention domain events",
+        "Amazon Simple Notifications Service (SNS)"
       ).apply {
-        setUrl("https://dsdmoj.atlassian.net/wiki/spaces/IC/pages/2461827117/Architecture+overview+-+Interventions")
         service.uses(this, "publishes domain events to", "SNS")
         Tags.TOPIC.addTo(this)
-        CloudPlatform.sqs.add(this)
-        Tags.PLANNED.addTo(this)
+        CloudPlatform.sns.add(this)
       }
 
       translator = system.addContainer(
@@ -76,7 +74,7 @@ class Interventions private constructor() {
         "Maintains contacts, appointments and registrations based on dynamic framework intervention domain events",
         "undefined"
       ).apply {
-        uses(queue, "consumes dynamic framework intervention domain events from")
+        uses(eventsTopic, "subscribes to all intervention domain events from", "via SQS")
         CloudPlatform.kubernetes.add(this)
         Tags.PLANNED.addTo(this)
       }
@@ -86,7 +84,7 @@ class Interventions private constructor() {
         "Collects domain events and intervention data for hand-off to the Analytical Platform",
         "undefined"
       ).apply {
-        uses(queue, "consumes dynamic framework intervention domain events from")
+        uses(eventsTopic, "subscribes to all intervention domain events from", "via SQS")
         uses(database, "reads snapshots of the intervention data from")
         CloudPlatform.kubernetes.add(this)
         Tags.PLANNED.addTo(this)
