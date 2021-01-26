@@ -91,14 +91,6 @@ class Interventions private constructor() {
         CloudPlatform.kubernetes.add(this)
         Tags.PLANNED.addTo(this)
       }
-
-      val unknownReporting = model.addSoftwareSystem(
-        "Unknown Reporting Pipeline",
-        "It is currently undefined where we push data for reporting purposes (we want to avoid using live systems)"
-      ).apply {
-        Tags.PLANNED.addTo(this)
-      }
-      collector.uses(unknownReporting, "pushes intervention data daily to")
     }
 
     override fun defineRelationships() {
@@ -123,6 +115,7 @@ class Interventions private constructor() {
 
       translator.uses(Delius.communityApi, "maintains contacts, appointments, registrations with", "REST/HTTP")
       collector.uses(AnalyticalPlatform.landingBucket, "pushes intervention data daily to")
+      collector.uses(Reporting.ndmisLanding, "pushes intervention data daily to")
     }
 
     fun defineUsers() {
