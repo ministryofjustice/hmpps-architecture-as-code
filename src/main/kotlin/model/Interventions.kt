@@ -31,7 +31,7 @@ class Interventions private constructor() {
       service = system.addContainer(
         "Intervention service",
         "Tracks the lifecycle of dynamic framework interventions and services, including publishing, finding, referring, delivering and monitoring",
-        "Java or Kotlin"
+        "Kotlin + Spring Boot"
       ).apply {
         setUrl("https://github.com/ministryofjustice/hmpps-interventions-service")
         CloudPlatform.kubernetes.add(this)
