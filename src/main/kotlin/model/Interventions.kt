@@ -21,8 +21,8 @@ class Interventions private constructor() {
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
-        "Getting the right rehabilitation",
-        "Supports maintaning interventions and services and finding, booking, delivering and monitoring interventions (currently only Dynamic Framework)"
+        "Find, arrange and monitor an intervention",
+        "Find, arrange and monitor an intervention for service users (offenders)"
       ).apply {
         ADRSource("https://github.com/ministryofjustice/hmpps-interventions-docs").addTo(this)
         ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)
