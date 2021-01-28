@@ -1,5 +1,6 @@
 package uk.gov.justice.hmpps.architecture
 
+import com.structurizr.model.Container
 import com.structurizr.model.Model
 import com.structurizr.model.Person
 import com.structurizr.model.SoftwareSystem
@@ -11,6 +12,7 @@ import uk.gov.justice.hmpps.architecture.annotations.Tags
 class Reporting private constructor() {
   companion object : HMPPSSoftwareSystem {
     lateinit var ndmis: SoftwareSystem
+    lateinit var ndmisLanding: Container
 
     lateinit var dataInnovationTeam: Person
     lateinit var nationalApplicationReportingTeam: Person
@@ -26,6 +28,15 @@ class Reporting private constructor() {
         "National Delius Management Information System,\nprovides reporting on nDelius data"
       ).apply {
         ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)
+      }
+
+      ndmisLanding = ndmis.addContainer(
+        "Probation data landing area",
+        "Storage area where data ingestion for business reporting starts for new probation services",
+        "undefined"
+      ).apply {
+        Tags.DATABASE.addTo(this)
+        Tags.PLANNED.addTo(this)
       }
 
       communityPerformanceTeam = model.addPerson("Community Performance team", "Reporting on HMPPS performance in the community")

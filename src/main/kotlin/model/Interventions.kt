@@ -15,14 +15,14 @@ class Interventions private constructor() {
     lateinit var ui: Container
     lateinit var service: Container
     lateinit var database: Container
-    lateinit var queue: Container
+    lateinit var eventsTopic: Container
     lateinit var translator: Container
     lateinit var collector: Container
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
-        "Getting the right rehabilitation",
-        "Supports maintaning interventions and services and finding, booking, delivering and monitoring interventions (currently only Dynamic Framework)"
+        "Find, arrange and monitor an intervention",
+        "Find, arrange and monitor an intervention for service users (offenders)"
       ).apply {
         ADRSource("https://github.com/ministryofjustice/hmpps-interventions-docs").addTo(this)
         ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)
@@ -31,7 +31,7 @@ class Interventions private constructor() {
       service = system.addContainer(
         "Intervention service",
         "Tracks the lifecycle of dynamic framework interventions and services, including publishing, finding, referring, delivering and monitoring",
-        "Java or Kotlin"
+        "Kotlin + Spring Boot"
       ).apply {
         setUrl("https://github.com/ministryofjustice/hmpps-interventions-service")
         CloudPlatform.kubernetes.add(this)
@@ -59,16 +59,14 @@ class Interventions private constructor() {
         CloudPlatform.rds.add(this)
       }
 
-      queue = system.addContainer(
-        "Intervention queue(s)",
-        "Queue(s) for notifications about intervention domain events, please see link for details",
-        "Amazon Simple Queue Service (SQS)"
+      eventsTopic = system.addContainer(
+        "intervention-events topic",
+        "Topic for holding intervention domain events",
+        "Amazon Simple Notifications Service (SNS)"
       ).apply {
-        setUrl("https://dsdmoj.atlassian.net/wiki/spaces/IC/pages/2461827117/Architecture+overview+-+Interventions")
         service.uses(this, "publishes domain events to", "SNS")
         Tags.TOPIC.addTo(this)
-        CloudPlatform.sqs.add(this)
-        Tags.PLANNED.addTo(this)
+        CloudPlatform.sns.add(this)
       }
 
       translator = system.addContainer(
@@ -76,7 +74,7 @@ class Interventions private constructor() {
         "Maintains contacts, appointments and registrations based on dynamic framework intervention domain events",
         "undefined"
       ).apply {
-        uses(queue, "consumes dynamic framework intervention domain events from")
+        uses(eventsTopic, "subscribes to all intervention domain events from", "via SQS")
         CloudPlatform.kubernetes.add(this)
         Tags.PLANNED.addTo(this)
       }
@@ -86,19 +84,11 @@ class Interventions private constructor() {
         "Collects domain events and intervention data for hand-off to the Analytical Platform",
         "undefined"
       ).apply {
-        uses(queue, "consumes dynamic framework intervention domain events from")
+        uses(eventsTopic, "subscribes to all intervention domain events from", "via SQS")
         uses(database, "reads snapshots of the intervention data from")
         CloudPlatform.kubernetes.add(this)
         Tags.PLANNED.addTo(this)
       }
-
-      val unknownReporting = model.addSoftwareSystem(
-        "Unknown Reporting Pipeline",
-        "It is currently undefined where we push data for reporting purposes (we want to avoid using live systems)"
-      ).apply {
-        Tags.PLANNED.addTo(this)
-      }
-      collector.uses(unknownReporting, "pushes intervention data daily to")
     }
 
     override fun defineRelationships() {
@@ -116,13 +106,12 @@ class Interventions private constructor() {
     }
 
     fun defineSharing() {
-      service.uses(Delius.communityApi, "retrieves list of dynamic framework providers and probation regions from", "REST/HTTP")
-      service.uses(Delius.communityApi, "retrieves current service user appointments and sentence details from", "REST/HTTP")
-      service.uses(Delius.offenderSearch, "searches service user by identity and gets basic identification details from", "REST/HTTP")
-      service.uses(OASys.assessmentsApi, "retrieves service user current risks and needs from", "REST/HTTP")
+      ui.uses(Delius.communityApi, "retrieves current service user profile, appointments and sentence details from", "REST/HTTP")
+      ui.uses(OASys.assessmentsApi, "retrieves service user current risks and needs from", "REST/HTTP")
 
       translator.uses(Delius.communityApi, "maintains contacts, appointments, registrations with", "REST/HTTP")
       collector.uses(AnalyticalPlatform.landingBucket, "pushes intervention data daily to")
+      collector.uses(Reporting.ndmisLanding, "pushes intervention data daily to")
     }
 
     fun defineUsers() {
