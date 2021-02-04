@@ -67,7 +67,7 @@ class PrisonerContentHub private constructor() {
         CloudPlatform.kubernetes.add(this)
       }
 
-      frontendProxy = system.addContainer("Nginx ingress", "Proxy for media on external domains not accessible to prison users", "Nginx").apply {
+      frontendProxy = system.addContainer("ICEcast streamer", "Proxy for media on external domains not accessible to prison users", "ICEcast").apply {
         CloudPlatform.kubernetes.add(this)
       }
 
