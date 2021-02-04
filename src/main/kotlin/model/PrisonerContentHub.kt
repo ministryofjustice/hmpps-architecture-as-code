@@ -84,15 +84,10 @@ class PrisonerContentHub private constructor() {
         uses(kibanaDashboard, "Extracts CSV files of prisoner feedback, views individual feedback responses, and analyses sentiment and statistics of feedback")
       }
 
-      model.addPerson("Prisoner", "A prisoner over 18 years old, held in the public prison estate").apply {
+      model.addPerson("Prisoner / Young Offender", "A person held in the public prison estate or a Young Offender Institute").apply {
         uses(contentHubFrontend, "Views videos, audio programmes, site updates, and rehabilitative material")
         uses(frontendProxy, "Listens to National Prison Radio live stream")
-        OutsideHMPPS.addTo(this)
-      }
-
-      model.addPerson("Young Offender", "A person under 18, held in a Young Offender Institute").apply {
-        uses(contentHubFrontend, "Views videos, audio programmes, site updates, and rehabilitative material")
-        uses(frontendProxy, "Listens to National Prison Radio live stream")
+        uses(s3ContentStore, "Streams audio, video and uploaded media")
         OutsideHMPPS.addTo(this)
       }
 
