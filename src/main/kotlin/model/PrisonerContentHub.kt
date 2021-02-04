@@ -87,6 +87,7 @@ class PrisonerContentHub private constructor() {
       model.addPerson("Prisoner / Young Offender", "A person held in the public prison estate or a Young Offender Institute").apply {
         uses(contentHubFrontend, "Views videos, audio programmes, site updates, and rehabilitative material")
         uses(frontendProxy, "Listens to National Prison Radio live stream")
+        uses(s3ContentStore, "Streams audio, video and uploaded media")
         OutsideHMPPS.addTo(this)
       }
 
