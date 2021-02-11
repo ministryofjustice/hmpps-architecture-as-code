@@ -21,8 +21,8 @@ class Interventions private constructor() {
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
-        "Find, arrange and monitor an intervention",
-        "Find, arrange and monitor an intervention for service users (offenders)"
+        "Refer and monitor an intervention",
+        "Refer and monitor an intervention for service users (offenders)"
       ).apply {
         ADRSource("https://github.com/ministryofjustice/hmpps-interventions-docs").addTo(this)
         ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)
