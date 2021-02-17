@@ -18,6 +18,7 @@ class Interventions private constructor() {
     lateinit var eventsTopic: Container
     lateinit var translator: Container
     lateinit var collector: Container
+    lateinit var reportingBucket: Container
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
@@ -81,13 +82,23 @@ class Interventions private constructor() {
 
       collector = system.addContainer(
         "Intervention data collector",
-        "Collects domain events and intervention data for hand-off to the Analytical Platform",
+        "Collects daily snapshots of domain events and intervention data for hand-off to the Analytical Platform",
         "undefined"
       ).apply {
         uses(eventsTopic, "subscribes to all intervention domain events from", "via SQS")
         uses(database, "reads snapshots of the intervention data from")
         CloudPlatform.kubernetes.add(this)
         Tags.PLANNED.addTo(this)
+      }
+
+      reportingBucket = system.addContainer(
+        "Interventions reporting hand-off storage",
+        "Collects daily snapshots of domain events and intervention data for hand-off to NDMIS (reporting)",
+        "S3 bucket"
+      ).apply {
+        Tags.DATABASE.addTo(this)
+        Tags.PLANNED.addTo(this)
+        CloudPlatform.s3.add(this)
       }
     }
 
@@ -111,7 +122,6 @@ class Interventions private constructor() {
 
       translator.uses(Delius.communityApi, "maintains contacts, appointments, registrations with", "REST/HTTP")
       collector.uses(AnalyticalPlatform.landingBucket, "pushes intervention data daily to")
-      collector.uses(Reporting.ndmisLanding, "pushes intervention data daily to")
     }
 
     fun defineUsers() {

@@ -12,6 +12,7 @@ import uk.gov.justice.hmpps.architecture.annotations.Tags
 class Delius private constructor() {
   companion object : HMPPSSoftwareSystem {
     lateinit var system: SoftwareSystem
+    lateinit var database: Container
     lateinit var communityApi: Container
     lateinit var offenderSearch: Container
     lateinit var offenderSearchIndexer: Container
@@ -34,7 +35,7 @@ class Delius private constructor() {
         "(National Delius Support Team) Team supporting changes to data in National Delius"
       )
 
-      val db = system.addContainer("nDelius database", null, "Oracle").apply {
+      database = system.addContainer("nDelius database", null, "Oracle").apply {
         Tags.DATABASE.addTo(this)
         ec2.add(this)
       }
@@ -52,7 +53,7 @@ class Delius private constructor() {
         "API over the nDelius DB used by HMPPS Digital team applications and services", "Java"
       ).apply {
         url = "https://github.com/ministryofjustice/community-api"
-        uses(db, "connects to", "JDBC")
+        uses(database, "connects to", "JDBC")
         ec2.add(this)
       }
 

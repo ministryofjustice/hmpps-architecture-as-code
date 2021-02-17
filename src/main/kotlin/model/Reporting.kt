@@ -12,7 +12,7 @@ import uk.gov.justice.hmpps.architecture.annotations.Tags
 class Reporting private constructor() {
   companion object : HMPPSSoftwareSystem {
     lateinit var ndmis: SoftwareSystem
-    lateinit var ndmisLanding: Container
+    lateinit var newInterventionsETL: Container
 
     lateinit var dataInnovationTeam: Person
     lateinit var nationalApplicationReportingTeam: Person
@@ -30,13 +30,21 @@ class Reporting private constructor() {
         ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)
       }
 
-      ndmisLanding = ndmis.addContainer(
-        "Probation data landing area",
-        "Storage area where data ingestion for business reporting starts for new probation services",
-        "undefined"
+      val database = ndmis.addContainer(
+        "Probation reporting database",
+        "Contains probation data transformed for reporting needs",
+        "Oracle"
       ).apply {
         Tags.DATABASE.addTo(this)
+      }
+
+      newInterventionsETL = ndmis.addContainer(
+        "Interventions ETL job",
+        "Storage area where data ingestion for business reporting starts for new probation services",
+        "SAP Business Objects Data Services (BODS)"
+      ).apply {
         Tags.PLANNED.addTo(this)
+        uses(database, "stores copied and transformed data in")
       }
 
       communityPerformanceTeam = model.addPerson("Community Performance team", "Reporting on HMPPS performance in the community")
@@ -51,7 +59,8 @@ class Reporting private constructor() {
     }
 
     override fun defineRelationships() {
-      ndmis.uses(Delius.system, "extracts and transforms data from")
+      ndmis.uses(Delius.database, "extracts and transforms data from", "Change Data Capture")
+      newInterventionsETL.uses(Interventions.reportingBucket, "extracts and transforms data from")
       communityPerformanceTeam.uses(Reporting.ndmis, "uses reports in")
       crcPerformanceAnalyst.uses(Reporting.ndmis, "uses reports in")
       dataInnovationTeam.uses(Reporting.ndmis, "uses data from")
