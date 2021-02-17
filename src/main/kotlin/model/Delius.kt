@@ -19,16 +19,17 @@ class Delius private constructor() {
     lateinit var supportTeam: Person
 
     override fun defineModelEntities(model: Model) {
+
+      val deliusAWSAccount = AWS.london.addDeploymentNode("Delius account")
+      val ec2 = deliusAWSAccount.addDeploymentNode("EC2", "AWS Elastic Compute Cloud", "AWS")
+      val ecs = deliusAWSAccount.addDeploymentNode("ECS", "AWS Elastic Container Service", "AWS")
+
       system = model.addSoftwareSystem(
         "nDelius",
         "National Delius\nSupporting the management of offenders and delivering national reporting and performance monitoring data"
       ).apply {
         ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)
       }
-
-      val deliusAWSAccount = AWS.london.addDeploymentNode("Delius account")
-      val ec2 = deliusAWSAccount.addDeploymentNode("EC2", "AWS Elastic Compute Cloud", "AWS")
-      val elasticSearchDeployment = deliusAWSAccount.addDeploymentNode("ElasticSearch", "AWS ElasticSearch Service", "AWS")
 
       supportTeam = model.addPerson(
         "NDST",
@@ -40,12 +41,31 @@ class Delius private constructor() {
         ec2.add(this)
       }
 
+      system.addContainer(
+        "nDelius application",
+        "Application logic for Delius", "Java"
+      ).apply {
+        url = "https://github.com/ministryofjustice/delius"
+        uses(database, "connects to", "JDBC")
+        ec2.add(this)
+      }
+
       val elasticSearchStore = system.addContainer(
         "ElasticSearch store",
         "Data store for Delius content", "ElasticSearch"
       ).apply {
         Tags.DATABASE.addTo(this)
-        elasticSearchDeployment.add(this)
+        CloudPlatform.elasticsearch.add(this)
+      }
+
+      val deliusApi = system.addContainer(
+        "Delius API",
+        "API over the nDelius DB used by HMPPS Digital team applications and services", "Kotlin"
+      ).apply {
+        url = "https://github.com/ministryofjustice/delius-api"
+        uses(database, "connects to", "JDBC")
+        uses(HMPPSAuth.system, "Authenticates using")
+        ecs.add(this)
       }
 
       communityApi = system.addContainer(
@@ -54,7 +74,9 @@ class Delius private constructor() {
       ).apply {
         url = "https://github.com/ministryofjustice/community-api"
         uses(database, "connects to", "JDBC")
-        ec2.add(this)
+        uses(deliusApi, "Writes data to nDelius using")
+        uses(HMPPSAuth.system, "Authenticates using")
+        ecs.add(this)
       }
 
       val topic = system.addContainer(
@@ -66,14 +88,14 @@ class Delius private constructor() {
       }
 
       system.addContainer(
-        "Probation offender events",
+        "Probation Offender Events",
         "Generate events for the offender changes in probation",
         "Kotlin"
       ).apply {
         url = "https://github.com/ministryofjustice/probation-offender-events"
         uses(communityApi, "reads offender delta updates from")
         uses(topic, "notifies", "SNS")
-        ec2.add(this)
+        CloudPlatform.kubernetes.add(this)
       }
 
       offenderSearchIndexer = system.addContainer(
@@ -85,7 +107,7 @@ class Delius private constructor() {
         uses(elasticSearchStore, "Indexes offender data from nDelius to the Elasticsearch Index")
         uses(topic, "to know when to update a record, listens to offender changed events from", "SQS")
         uses(communityApi, "following received events, retrieves latest offender records from")
-        ec2.add(this)
+        CloudPlatform.kubernetes.add(this)
       }
 
       offenderSearch = system.addContainer(
@@ -96,7 +118,7 @@ class Delius private constructor() {
         url = "https://github.com/ministryofjustice/probation-offender-search"
         uses(elasticSearchStore, "Queries offender data from nDelius Elasticsearch Index")
         uses(offenderSearchIndexer, "To synchronise date from nDelius to Elasticsearch")
-        ec2.add(this)
+        CloudPlatform.kubernetes.add(this)
       }
     }
 
@@ -123,6 +145,20 @@ class Delius private constructor() {
         addDefaultElements()
         model.softwareSystems.filter { it != system }.forEach(this::remove)
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
+      }
+
+      views.createContainerView(system, "delius-container", null).apply {
+        addDefaultElements()
+        enableAutomaticLayout()
+      }
+
+      views.createDeploymentView(
+        system,
+        "delius-container-production-deployment",
+        "The Production deployment scenario for Delius"
+      ).apply {
+        addDefaultElements()
+        enableAutomaticLayout()
       }
     }
   }

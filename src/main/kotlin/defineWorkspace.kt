@@ -8,6 +8,10 @@ import com.structurizr.model.Model
 import com.structurizr.view.ViewSet
 import uk.gov.justice.hmpps.architecture.model.AssessRisksAndNeeds
 
+private val DEPENDENCY_MODEL_ITEMS = listOf(
+  HMPPSAuth,
+)
+
 private val MODEL_ITEMS = listOf(
   AnalyticalPlatform,
   AssessRisksAndNeeds,
@@ -19,7 +23,6 @@ private val MODEL_ITEMS = listOf(
   DigitalPrisonsNetwork,
   EPF,
   EQuiP,
-  HMPPSAuth,
   IM,
   Interventions,
   InterventionTeams,
@@ -53,7 +56,7 @@ private fun defineModelItems(model: Model) {
   Heroku.defineDeploymentNodes(model)
   Azure.defineDeploymentNodes(model)
 
-  MODEL_ITEMS.forEach { it.defineModelEntities(model) }
+  (DEPENDENCY_MODEL_ITEMS + MODEL_ITEMS).forEach { it.defineModelEntities(model) }
   defineModelWithDeprecatedSyntax(model)
 }
 
