@@ -82,6 +82,8 @@ class Delius private constructor() {
       ).apply {
         url = "https://github.com/ministryofjustice/probation-offender-search-indexer"
         uses(elasticSearchStore, "Indexes offender data from nDelius to the Elasticsearch Index")
+        uses(topic, "to know when to update a record, listens to offender changed events from", "SQS")
+        uses(communityApi, "following received events, retrieves latest offender records from")
         ec2.add(this)
       }
 
