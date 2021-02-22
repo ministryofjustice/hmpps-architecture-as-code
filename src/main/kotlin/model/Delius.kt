@@ -17,6 +17,7 @@ class Delius private constructor() {
     lateinit var offenderSearch: Container
     lateinit var offenderSearchIndexer: Container
     lateinit var supportTeam: Person
+    lateinit var deliusApi: Container
 
     override fun defineModelEntities(model: Model) {
 
@@ -58,13 +59,12 @@ class Delius private constructor() {
         CloudPlatform.elasticsearch.add(this)
       }
 
-      val deliusApi = system.addContainer(
+      deliusApi = system.addContainer(
         "Delius API",
         "API over the nDelius DB used by HMPPS Digital team applications and services", "Kotlin"
       ).apply {
         url = "https://github.com/ministryofjustice/delius-api"
         uses(database, "connects to", "JDBC")
-        uses(HMPPSAuth.system, "Authenticates using")
         ecs.add(this)
       }
 
@@ -75,7 +75,6 @@ class Delius private constructor() {
         url = "https://github.com/ministryofjustice/community-api"
         uses(database, "connects to", "JDBC")
         uses(deliusApi, "Writes data to nDelius using")
-        uses(HMPPSAuth.system, "Authenticates using")
         ecs.add(this)
       }
 
@@ -132,6 +131,9 @@ class Delius private constructor() {
       InterventionTeams.interventionServicesTeam.interactsWith(supportTeam, "raises task to create or update an accredited programme with")
       InterventionTeams.crcProgrammeManager.interactsWith(supportTeam, "raises task to update interventions with")
       supportTeam.uses(system, "updates interventions in")
+
+      communityApi.uses(HMPPSAuth.app, "Authenticates using")
+      deliusApi.uses(HMPPSAuth.app, "Authenticates using")
     }
 
     override fun defineViews(views: ViewSet) {
