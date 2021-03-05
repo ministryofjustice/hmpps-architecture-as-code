@@ -30,7 +30,7 @@ private val MODEL_ITEMS = listOf(
   NID,
   NOMIS,
   OASys,
-  OffenderManagementInCustody,
+  ManagePOMCases,
   PolicyTeams,
   PrepareCaseForCourt,
   PrisonerContentHub,
