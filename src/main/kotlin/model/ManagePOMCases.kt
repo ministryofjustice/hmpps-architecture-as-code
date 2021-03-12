@@ -62,7 +62,6 @@ class ManagePOMCases private constructor() {
         "API exposing data mastered by the MPC Service",
         "Ruby On Rails"
       ).apply {
-        setUrl("https://moic.service.justice.gov.uk/api-docs/index.html")
       }
 
       redis = system.addContainer(
