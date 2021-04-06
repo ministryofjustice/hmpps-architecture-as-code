@@ -41,8 +41,8 @@ class ManagePOMCases private constructor() {
       allocationManager = system.addContainer(
         "Offender Management Allocation Manager",
         "Main Manage POM Cases (MPC) application component which holds the UI and primary business logic. " +
-          "Exposes an API but not all mastered data is currently available from it. Contact the project team " +
-          "if further mastered fields are required from the API.",
+          "Not all mastered data is currently available from the API. Contact the project team " +
+          "if further fields are required.",
         "Ruby on Rails"
       ).apply {
         setUrl("https://github.com/ministryofjustice/offender-management-allocation-manager")
