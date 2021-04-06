@@ -14,7 +14,6 @@ class ManagePOMCases private constructor() {
     lateinit var allocationManager: Container
     lateinit var redis: Container
     lateinit var activeJob: Container
-    lateinit var managePOMCasesAPI: Container
     lateinit var db: Container
 
     override fun defineModelEntities(model: Model) {
@@ -41,7 +40,9 @@ class ManagePOMCases private constructor() {
 
       allocationManager = system.addContainer(
         "Offender Management Allocation Manager",
-        "Main application code - holds the UI and primary business logic",
+        "Main Manage POM Cases (MPC) application component which holds the UI and primary business logic. " +
+          "Exposes an API but not all mastered data is currently available from it. Contact the project team " +
+          "if further mastered fields are required from the API.",
         "Ruby on Rails"
       ).apply {
         setUrl("https://github.com/ministryofjustice/offender-management-allocation-manager")
@@ -55,13 +56,6 @@ class ManagePOMCases private constructor() {
       ).apply {
           Tags.DATABASE.addTo(this)
           CloudPlatform.rds.add(this)
-      }
-
-      managePOMCasesAPI = system.addContainer(
-        "manage POM Cases API",
-        "API exposing data mastered by the MPC Service",
-        "Ruby On Rails"
-      ).apply {
       }
 
       redis = system.addContainer(
