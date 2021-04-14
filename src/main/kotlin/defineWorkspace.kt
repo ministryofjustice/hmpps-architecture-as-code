@@ -32,6 +32,7 @@ private val MODEL_ITEMS = listOf(
   OASys,
   ManagePOMCases,
   PolicyTeams,
+  PrisonerMoney,
   PrepareCaseForCourt,
   PrisonerContentHub,
   PrisonToProbationUpdate,
