@@ -1,6 +1,8 @@
 name: Publish
 
 on:
+  schedule:
+    - cron: "0 3 * * *"
   push:
     branches:
       - main
