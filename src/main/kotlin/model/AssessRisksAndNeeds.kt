@@ -13,7 +13,6 @@ class AssessRisksAndNeeds private constructor() {
     lateinit var system: SoftwareSystem
     lateinit var riskAssessmentUi: Container
     lateinit var assessmentService: Container
-    lateinit var offenderUpdatesService: Container
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
@@ -32,14 +31,6 @@ class AssessRisksAndNeeds private constructor() {
         CloudPlatform.rds.add(this)
       }
 
-      offenderUpdatesService = system.addContainer(
-        "Offender Updates Service",
-        "Write API layer for OASys",
-        "Kotlin + Spring Boot"
-      ).apply {
-        setUrl("https://github.com/ministryofjustice/offender-assessments-updates")
-      }
-
       assessmentService = system.addContainer(
         "Assessment Service",
         "Assess Risks and Needs business logic, providing REST API consumed by Risk Assessment UI web application",
@@ -54,22 +45,19 @@ class AssessRisksAndNeeds private constructor() {
         "Web application, presenting risk assessment questionnaires",
         "Node + Express"
       ).apply {
+        uses(assessmentService, "Display assessment questions and save answers using ")
         setUrl("https://github.com/ministryofjustice/hmpps-risk-assessment-ui")
       }
     }
 
     override fun defineRelationships() {
-      listOf(riskAssessmentUi, assessmentService, offenderUpdatesService)
+      listOf(riskAssessmentUi, assessmentService)
         .forEach { it.uses(HMPPSAuth.system, "authenticates via") }
-
-      riskAssessmentUi.uses(assessmentService, "Display assessment questions and save answers using ")
 
       assessmentService.uses(Delius.communityApi, "Gets offender and past-offence details from")
       assessmentService.uses(PrepareCaseForCourt.courtCaseService, "Gets offender and offence details from")
       assessmentService.uses(OASys.assessmentsApi, "get offender past assessment details from")
-      assessmentService.uses(offenderUpdatesService, "pushes offender assessment details into")
-
-      offenderUpdatesService.uses(OASys.system, "writes offender assessment details into")
+      assessmentService.uses(OASys.assessmentsUpdateApi,"pushes offender assessment details into")
 
       ProbationPractitioners.nps.uses(riskAssessmentUi, "records offender risks and needs")
     }

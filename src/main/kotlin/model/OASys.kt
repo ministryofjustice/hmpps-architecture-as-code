@@ -13,6 +13,7 @@ class OASys private constructor() {
     lateinit var system: SoftwareSystem
     lateinit var assessmentsApi: Container
     lateinit var assessmentsEvents: Container
+    lateinit var assessmentsUpdateApi: Container
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem("OASys", "(Offender Assessment System) Assesses the risks and needs of offenders").apply {
@@ -35,6 +36,15 @@ class OASys private constructor() {
       assessmentsEvents = system.addContainer("Offender Assessment Events", "Pushes assessment events to SQS", "Kotlin + Spring Boot").apply {
         uses(db, "connects to", "JDBC")
         setUrl("https://github.com/ministryofjustice/offender-assessments-events")
+      }
+
+      assessmentsUpdateApi = system.addContainer(
+        "Offender Updates Service",
+        "Write API layer for OASys",
+        "Kotlin + Spring Boot"
+      ).apply {
+        uses(db, "connects to", "JDBC")
+        setUrl("https://github.com/ministryofjustice/offender-assessments-updates")
       }
     }
 
