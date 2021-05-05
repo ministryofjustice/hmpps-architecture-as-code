@@ -6,7 +6,6 @@ import com.structurizr.model.Enterprise
 import com.structurizr.model.Location
 import com.structurizr.model.Model
 import com.structurizr.view.ViewSet
-import uk.gov.justice.hmpps.architecture.model.AssessRisksAndNeeds
 
 private val MODEL_ITEMS = listOf(
   AnalyticalPlatform,
