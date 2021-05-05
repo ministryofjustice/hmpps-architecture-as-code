@@ -6,7 +6,6 @@ import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
 import uk.gov.justice.hmpps.architecture.annotations.APIDocs
-import uk.gov.justice.hmpps.architecture.model.AssessRisksAndNeeds
 
 class OASys private constructor() {
   companion object : HMPPSSoftwareSystem {
