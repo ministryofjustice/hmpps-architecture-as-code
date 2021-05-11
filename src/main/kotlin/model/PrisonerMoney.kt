@@ -10,7 +10,6 @@ import com.structurizr.view.ViewSet
 import uk.gov.justice.hmpps.architecture.annotations.OutsideHMPPS
 import uk.gov.justice.hmpps.architecture.annotations.Tags
 
-
 class PrisonerMoney private constructor() {
   companion object : HMPPSSoftwareSystem {
     lateinit var system: SoftwareSystem
@@ -133,7 +132,7 @@ class PrisonerMoney private constructor() {
       }
     }
     override fun defineRelationships() {
-      sendMoneyPublicUser.uses(sendMoneyService, "Visits send money public site to transfer money from their debit card to the Canteen account of someone in prison" , "HTTPS")
+      sendMoneyPublicUser.uses(sendMoneyService, "Visits send money public site to transfer money from their debit card to the Canteen account of someone in prison", "HTTPS")
       fiuUser.uses(nomsOpsService, "Views uncaptured payments flagged as suspicious and either approves it or cancels it", "HTTPS")
       intelligenceUser.uses(nomsOpsService, "View credits relating to a prisoner in one or more prisons", "HTTPS")
       businessHubUser.uses(cashbookService, "Credit money into a prisoners account or send money out of that account as a disbursement", "HTTPS")

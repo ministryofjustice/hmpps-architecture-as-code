@@ -1,6 +1,9 @@
 package uk.gov.justice.hmpps.architecture
 
-import com.structurizr.model.*
+import com.structurizr.model.Container
+import com.structurizr.model.Model
+import com.structurizr.model.Person
+import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
 import uk.gov.justice.hmpps.architecture.annotations.Tags
@@ -54,8 +57,8 @@ class ManagePOMCases private constructor() {
         "Database holding data mastered by MPC",
         "AWS RDS PostgreSQL"
       ).apply {
-          Tags.DATABASE.addTo(this)
-          CloudPlatform.rds.add(this)
+        Tags.DATABASE.addTo(this)
+        CloudPlatform.rds.add(this)
       }
 
       redis = system.addContainer(
@@ -74,7 +77,6 @@ class ManagePOMCases private constructor() {
       ).apply {
         CloudPlatform.kubernetes.add(this)
       }
-
     }
 
     override fun defineRelationships() {
@@ -82,34 +84,48 @@ class ManagePOMCases private constructor() {
       pom.uses(system, "uses")
       homd.uses(system, "allocates POMs to offenders")
       homd.interactsWith(pom, "manages")
-      
-      allocationManager.uses(Delius.communityApi,
+
+      allocationManager.uses(
+        Delius.communityApi,
         "retrieves information on the prisoner's Community team, sends offender POM allocations",
-        "REST")
+        "REST"
+      )
 
-      allocationManager.uses(NOMIS.prisonApi,
+      allocationManager.uses(
+        NOMIS.prisonApi,
         "retrieves prisoner information for prisons assigned to the logged in user",
-        "REST")
+        "REST"
+      )
 
-      allocationManager.uses(Delius.offenderSearch,
+      allocationManager.uses(
+        Delius.offenderSearch,
         "retrieves TIER & Mappa details for prisoners",
-        "REST")
+        "REST"
+      )
 
-      allocationManager.uses(NOMIS.offenderSearch,
+      allocationManager.uses(
+        NOMIS.offenderSearch,
         "retrieves the 'recall' status of offenders",
-        "REST")
+        "REST"
+      )
 
       allocationManager.uses(HMPPSAuth.system, "authenticates users via")
 
-      allocationManager.uses(db,
+      allocationManager.uses(
+        db,
         "stores mastered information",
-        "JDBC")
+        "JDBC"
+      )
 
-      allocationManager.uses(redis,
-        "places jobs on the queue")
+      allocationManager.uses(
+        redis,
+        "places jobs on the queue"
+      )
 
-      activeJob.uses(redis,
-        "consumes and processes the queue")
+      activeJob.uses(
+        redis,
+        "consumes and processes the queue"
+      )
 
       activeJob.delivers(
         ldu,

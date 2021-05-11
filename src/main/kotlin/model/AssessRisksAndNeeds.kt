@@ -16,8 +16,8 @@ class AssessRisksAndNeeds private constructor() {
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
         "Assess Risks And Needs",
-        "Digital Service for ongoing offender risk and needs assessments, "
-          + "gathering offender risks and needs information, " +
+        "Digital Service for ongoing offender risk and needs assessments, " +
+          "gathering offender risks and needs information, " +
           "calculating risk scores, showing changes over time"
       )
 
@@ -62,8 +62,10 @@ class AssessRisksAndNeeds private constructor() {
     }
 
     override fun defineViews(views: ViewSet) {
-      views.createSystemContextView(system,
-      "assess-risks-and-needs-context", null).apply {
+      views.createSystemContextView(
+        system,
+        "assess-risks-and-needs-context", null
+      ).apply {
         addDefaultElements()
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
       }

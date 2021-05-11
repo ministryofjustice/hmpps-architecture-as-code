@@ -53,8 +53,10 @@ class OASys private constructor() {
     }
 
     override fun defineViews(views: ViewSet) {
-      views.createSystemContextView(system,
-        "OASYS-context", null).apply {
+      views.createSystemContextView(
+        system,
+        "OASYS-context", null
+      ).apply {
         addDefaultElements()
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
       }

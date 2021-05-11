@@ -17,9 +17,9 @@ class PrisonerContentHub private constructor() {
     lateinit var frontendProxy: Container
 
     /**
-      * TODO: add Prisoner internet infrastructure, AD
-      * TODO: add BT PINS
-      **/
+     * TODO: add Prisoner internet infrastructure, AD
+     * TODO: add BT PINS
+     **/
     override fun defineModelEntities(model: Model) {
       this.model = model
 
@@ -78,8 +78,8 @@ class PrisonerContentHub private constructor() {
       }
 
       /**
-        * Users
-        **/
+       * Users
+       **/
       model.addPerson("Feedback Reporter", "HMPPS Staff collating feedback for protection, product development and analytics").apply {
         uses(kibanaDashboard, "Extracts CSV files of prisoner feedback, views individual feedback responses, and analyses sentiment and statistics of feedback")
       }
