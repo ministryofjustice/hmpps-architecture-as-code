@@ -98,7 +98,6 @@ class Interventions private constructor() {
 
       service.uses(HMPPSDomainEvents.topic, "publishes intervention domain events to", "SNS")
       translator.uses(HMPPSDomainEvents.topic, "subscribes to all intervention domain events from", "via SQS")
-      collector.uses(HMPPSDomainEvents.topic, "subscribes to all intervention domain events from", "via SQS")
 
       translator.uses(Delius.communityApi, "maintains contacts, appointments, registrations with", "REST/HTTP")
       collector.uses(Reporting.landingBucket, "pushes intervention data and custom reports daily to")
