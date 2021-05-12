@@ -13,6 +13,7 @@ class Reporting private constructor() {
   companion object : HMPPSSoftwareSystem {
     lateinit var ndmis: SoftwareSystem
     lateinit var newInterventionsETL: Container
+    lateinit var landingBucket: Container
 
     lateinit var dataInnovationTeam: Person
     lateinit var nationalApplicationReportingTeam: Person
@@ -38,12 +39,22 @@ class Reporting private constructor() {
         Tags.DATABASE.addTo(this)
       }
 
+      landingBucket = ndmis.addContainer(
+        "NDMIS ETL reporting landing bucket",
+        "Collects daily snapshots of data from new services for hand-off to NDMIS (reporting)",
+        "S3 bucket"
+      ).apply {
+        Tags.DATABASE.addTo(this)
+        CloudPlatform.s3.add(this)
+      }
+
       newInterventionsETL = ndmis.addContainer(
         "Interventions ETL job",
         "Storage area where data ingestion for business reporting starts for new probation services",
         "SAP Business Objects Data Services (BODS)"
       ).apply {
         Tags.PLANNED.addTo(this)
+        uses(landingBucket, "extracts and transforms data from")
         uses(database, "stores copied and transformed data in")
       }
 
@@ -60,7 +71,6 @@ class Reporting private constructor() {
 
     override fun defineRelationships() {
       ndmis.uses(Delius.database, "extracts and transforms data from", "Change Data Capture")
-      newInterventionsETL.uses(Interventions.reportingBucket, "extracts and transforms data from")
       communityPerformanceTeam.uses(Reporting.ndmis, "uses reports in")
       crcPerformanceAnalyst.uses(Reporting.ndmis, "uses reports in")
       dataInnovationTeam.uses(Reporting.ndmis, "uses data from")
