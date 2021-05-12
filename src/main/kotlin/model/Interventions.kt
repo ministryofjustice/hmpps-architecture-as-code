@@ -15,7 +15,6 @@ class Interventions private constructor() {
     lateinit var ui: Container
     lateinit var service: Container
     lateinit var database: Container
-    lateinit var eventsTopic: Container
     lateinit var translator: Container
     lateinit var collector: Container
     lateinit var reportingBucket: Container
@@ -60,22 +59,11 @@ class Interventions private constructor() {
         CloudPlatform.rds.add(this)
       }
 
-      eventsTopic = system.addContainer(
-        "intervention-events topic",
-        "Topic for holding intervention domain events",
-        "Amazon Simple Notifications Service (SNS)"
-      ).apply {
-        service.uses(this, "publishes domain events to", "SNS")
-        Tags.TOPIC.addTo(this)
-        CloudPlatform.sns.add(this)
-      }
-
       translator = system.addContainer(
         "Intervention-probation translator",
         "Maintains contacts, appointments and registrations based on dynamic framework intervention domain events",
         "undefined"
       ).apply {
-        uses(eventsTopic, "subscribes to all intervention domain events from", "via SQS")
         CloudPlatform.kubernetes.add(this)
         Tags.PLANNED.addTo(this)
       }
@@ -85,7 +73,6 @@ class Interventions private constructor() {
         "Collects daily snapshots of domain events and intervention data for hand-off to the Analytical Platform",
         "undefined"
       ).apply {
-        uses(eventsTopic, "subscribes to all intervention domain events from", "via SQS")
         uses(database, "reads snapshots of the intervention data from")
         CloudPlatform.kubernetes.add(this)
         Tags.PLANNED.addTo(this)
@@ -108,7 +95,7 @@ class Interventions private constructor() {
       defineUsers()
     }
 
-    fun defineAuthentication() {
+    private fun defineAuthentication() {
       InterventionTeams.dynamicFrameworkProvider.uses(HMPPSAuth.app, "log in via", "HTTPS/web")
       ProbationPractitioners.nps.uses(HMPPSAuth.app, "log in via", "HTTPS/web")
 
@@ -116,15 +103,19 @@ class Interventions private constructor() {
       service.uses(HMPPSAuth.app, "authorises users and requests access tokens from", "OAuth2/JWT")
     }
 
-    fun defineSharing() {
+    private fun defineSharing() {
       ui.uses(Delius.communityApi, "retrieves current service user profile, appointments and sentence details from", "REST/HTTP")
       ui.uses(OASys.assessmentsApi, "retrieves service user current risks and needs from", "REST/HTTP")
+
+      service.uses(HMPPSDomainEvents.topic, "publishes intervention domain events to", "SNS")
+      translator.uses(HMPPSDomainEvents.topic, "subscribes to all intervention domain events from", "via SQS")
+      collector.uses(HMPPSDomainEvents.topic, "subscribes to all intervention domain events from", "via SQS")
 
       translator.uses(Delius.communityApi, "maintains contacts, appointments, registrations with", "REST/HTTP")
       collector.uses(AnalyticalPlatform.landingBucket, "pushes intervention data daily to")
     }
 
-    fun defineUsers() {
+    private fun defineUsers() {
       InterventionTeams.dynamicFrameworkProvider.uses(ui, "maintains directory and delivery of dynamic framework interventions and services in")
       ProbationPractitioners.nps.uses(ui, "refers and monitors progress of their service users' interventions and services in")
 
