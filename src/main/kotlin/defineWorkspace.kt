@@ -19,6 +19,7 @@ private val MODEL_ITEMS = listOf(
   EPF,
   EQuiP,
   HMPPSAuth,
+  HMPPSDomainEvents,
   IM,
   Interventions,
   InterventionTeams,
