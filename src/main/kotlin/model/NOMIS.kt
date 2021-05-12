@@ -4,7 +4,6 @@ import com.structurizr.model.Container
 import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ViewSet
-import uk.gov.justice.hmpps.architecture.annotations.APIDocs
 import uk.gov.justice.hmpps.architecture.annotations.Tags
 
 class NOMIS private constructor() {
@@ -66,7 +65,6 @@ class NOMIS private constructor() {
         "PrisonerSearch", "API over the NOMIS prisoner data held in Elasticsearch",
         "Kotlin"
       ).apply {
-        APIDocs("https://prisoner-offender-search.prison.service.justice.gov.uk/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config").addTo(this)
         uses(elasticSearchStore, "Queries prisoner data from NOMIS Elasticsearch Index")
         setUrl("https://github.com/ministryofjustice/prisoner-offender-search")
         CloudPlatform.kubernetes.add(this)
