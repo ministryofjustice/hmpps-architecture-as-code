@@ -69,10 +69,11 @@ class Interventions private constructor() {
 
       collector = system.addContainer(
         "Intervention data collector",
-        "Collects daily snapshots of domain events and intervention data for hand-off to the Analytical Platform",
-        "undefined"
+        "Collects daily snapshots of intervention data for hand-off to S3 landing buckets for reporting or analytics",
+        "data-engineering-data-extractor"
       ).apply {
         uses(database, "reads snapshots of the intervention data from")
+        Tags.REUSABLE_COMPONENT.addTo(this)
         CloudPlatform.kubernetes.add(this)
         Tags.PLANNED.addTo(this)
       }
