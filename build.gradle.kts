@@ -1,5 +1,5 @@
 plugins {
-  kotlin("jvm") version "1.4.20"
+  kotlin("jvm") version "1.5.0"
   application
 }
 
@@ -13,8 +13,8 @@ repositories {
 
 dependencies {
   implementation(kotlin("stdlib"))
-  implementation("com.structurizr:structurizr-client:1.4.5")
-  implementation("com.structurizr:structurizr-core:1.4.5")
-  implementation("com.structurizr:structurizr-adr-tools:1.3.6")
-  implementation("org.eclipse.jgit:org.eclipse.jgit:5.10.0.202012080955-r")
+  implementation("com.structurizr:structurizr-client:1.9.3")
+  implementation("com.structurizr:structurizr-core:1.9.3")
+  implementation("com.structurizr:structurizr-adr-tools:1.3.7")
+  implementation("org.eclipse.jgit:org.eclipse.jgit:5.11.0.202103091610-r")
 }
