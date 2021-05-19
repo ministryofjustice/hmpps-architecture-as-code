@@ -25,7 +25,7 @@ class Reporting private constructor() {
     override fun defineModelEntities(model: Model) {
       ndmis = model.addSoftwareSystem(
         "NDMIS",
-        "National Delius Management Information System,\nprovides reporting on nDelius data"
+        "(National Delius Management Information System) Provides reporting on nDelius data"
       ).apply {
         ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)
       }
@@ -50,7 +50,7 @@ class Reporting private constructor() {
       communityPerformanceTeam = model.addPerson("Community Performance team", "Reporting on HMPPS performance in the community")
       crcPerformanceAnalyst = model.addPerson("CRC performance analyst").apply { Tags.PROVIDER.addTo(this) }
       dataInnovationTeam = model.addPerson("Data Innovation, Analysis and Linking team", "Works on linked data from various non-HMPPS government departments")
-      nationalApplicationReportingTeam = model.addPerson("NART", "National Applications Reporting Team,\nResponsible for the delivery of reporting to stakeholders")
+      nationalApplicationReportingTeam = model.addPerson("NART", "(National Applications Reporting Team) Responsible for the delivery of reporting to stakeholders")
       npsPerformanceOfficer = model.addPerson("NPS performance and quality officer")
       prisonPerformanceTeam = model.addPerson("Prison Performance team", "Reporting on HMPPS performance in prison")
 

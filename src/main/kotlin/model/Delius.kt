@@ -27,7 +27,7 @@ class Delius private constructor() {
 
       system = model.addSoftwareSystem(
         "nDelius",
-        "National Delius\nSupporting the management of offenders and delivering national reporting and performance monitoring data"
+        "(National Delius) Supporting the management of offenders and delivering national reporting and performance monitoring data"
       ).apply {
         ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)
       }

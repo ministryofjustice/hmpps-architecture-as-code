@@ -12,7 +12,7 @@ class Pathfinder(model: Model) {
   init {
     system = model.addSoftwareSystem(
       "Pathfinder",
-      "Pathfinder System,\nthe case management system for Pathfinder nominals"
+      "The case management system for Pathfinder nominals"
     )
 
     val db = system.addContainer(

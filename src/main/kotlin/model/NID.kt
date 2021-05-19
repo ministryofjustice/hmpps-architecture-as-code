@@ -13,7 +13,7 @@ class NID private constructor() {
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
         "NID",
-        "(Deprecated) National Intervention Database\nSpreadsheet to store intervention details"
+        "(Deprecated) (National Intervention Database) Spreadsheet to store intervention details"
       ).apply {
         Tags.DEPRECATED.addTo(this)
         ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)

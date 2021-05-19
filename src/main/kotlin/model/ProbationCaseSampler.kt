@@ -11,10 +11,8 @@ class ProbationCaseSampler private constructor() {
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
         "Probation Case Sampler",
-        """
-        API which produces a representative and evenly distributed list of probation cases
-        within a region and date range which form the basis of an on-site inspection
-        """.trimIndent()
+        "API which produces a representative and evenly distributed list of probation cases " +
+          "within a region and date range which form the basis of an on-site inspection"
       ).apply {
         setUrl("https://dsdmoj.atlassian.net/wiki/spaces/NDSS/pages/1989181486/HMIP+Case+Sampling")
       }

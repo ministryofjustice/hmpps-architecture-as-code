@@ -2,15 +2,15 @@
 root_dir="$(git rev-parse --show-toplevel)"
 ext_dir="$root_dir/ext"
 exports_dir="$root_dir/exports"
-cli_version="1.2.0"
-cli_zip="$ext_dir/cli.zip"
+cli_version="1.10.1"
+cli_zip="$ext_dir/cli-${cli_version}.zip"
 
 mkdir -p "$ext_dir"
 if [ ! -f "$cli_zip" ]; then
   echo
   echo "🔧 Downloading Structurizr CLI..."
   wget "https://github.com/structurizr/cli/releases/download/v$cli_version/structurizr-cli-$cli_version.zip" -O"$cli_zip"
-  unzip -d"$ext_dir" "$cli_zip"
+  unzip -o -d"$ext_dir" "$cli_zip"
 fi
 
 echo
