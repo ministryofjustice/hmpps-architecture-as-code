@@ -12,6 +12,7 @@ private val MODEL_ITEMS = listOf(
   AssessRisksAndNeeds,
   AzureADTenantJusticeUK,
   CaseNotesToProbation,
+  ComplexityOfNeed,
   CourtUsers,
   CRCSystem,
   Delius,
