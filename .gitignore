@@ -6,3 +6,7 @@ build
 
 # external dependencies
 ext/
+
+# Ignoring IDE files
+.idea/
+
