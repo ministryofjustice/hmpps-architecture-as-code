@@ -38,6 +38,7 @@ class HMPPSAuth private constructor() {
       app.uses(NOMIS.db, "authenticates via")
       app.uses(Delius.communityApi, "authenticates via")
       app.uses(AzureADTenantJusticeUK.directory, "authenticates via")
+      app.uses(TokenVerificationApi.api, "stores tokens in")
     }
 
     override fun defineViews(views: ViewSet) {

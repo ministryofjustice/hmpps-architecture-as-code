@@ -11,9 +11,11 @@ private val MODEL_ITEMS = listOf(
   AnalyticalPlatform,
   AssessRisksAndNeeds,
   AzureADTenantJusticeUK,
+  BookVideoLink,
   CaseNotesToProbation,
   ComplexityOfNeed,
   CourtUsers,
+  CourtRegister,
   CRCSystem,
   Delius,
   DigitalPrisonsNetwork,
@@ -42,6 +44,9 @@ private val MODEL_ITEMS = listOf(
   ProbationPractitioners,
   ProbationTeamsService,
   Reporting,
+  TokenVerificationApi,
+  UserPreferenceApi,
+  WhereaboutsApi,
   WMT
 )
 
