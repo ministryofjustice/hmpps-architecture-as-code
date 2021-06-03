@@ -12,7 +12,7 @@ class ProbationPractitioners private constructor() {
 
     override fun defineModelEntities(model: Model) {
       nps = model.addPerson(
-        "NPS offender manager",
+        "NPS probation practitioner",
         "National Probation Service employed probation officers in custody, court and the community"
       )
       crc = model.addPerson(
