@@ -15,7 +15,6 @@ class Interventions private constructor() {
     lateinit var ui: Container
     lateinit var service: Container
     lateinit var database: Container
-    lateinit var translator: Container
     lateinit var collector: Container
 
     override fun defineModelEntities(model: Model) {
@@ -58,15 +57,6 @@ class Interventions private constructor() {
         CloudPlatform.rds.add(this)
       }
 
-      translator = system.addContainer(
-        "Intervention-probation translator",
-        "Maintains contacts, appointments and registrations based on dynamic framework intervention domain events",
-        "undefined"
-      ).apply {
-        CloudPlatform.kubernetes.add(this)
-        Tags.PLANNED.addTo(this)
-      }
-
       collector = system.addContainer(
         "Intervention data collector",
         "Collects daily snapshots of intervention data for hand-off to S3 landing buckets for reporting or analytics",
@@ -75,7 +65,6 @@ class Interventions private constructor() {
         uses(database, "reads snapshots of the intervention data from")
         Tags.REUSABLE_COMPONENT.addTo(this)
         CloudPlatform.kubernetes.add(this)
-        Tags.PLANNED.addTo(this)
       }
     }
 
@@ -98,9 +87,9 @@ class Interventions private constructor() {
       ui.uses(OASys.assessmentsApi, "retrieves service user current risks and needs from", "REST/HTTP")
 
       service.uses(HMPPSDomainEvents.topic, "publishes intervention domain events to", "SNS")
-      translator.uses(HMPPSDomainEvents.topic, "subscribes to all intervention domain events from", "via SQS")
+      service.uses(Delius.communityApi, "books and reschedules appointments with", "REST/HTTP")
+      service.uses(Delius.communityApi, "creates activities (NSI), notifications of progress, records appointment outcomes with", "Spring Application Events+REST/HTTP")
 
-      translator.uses(Delius.communityApi, "maintains contacts, appointments, registrations with", "REST/HTTP")
       collector.uses(Reporting.landingBucket, "pushes intervention data and custom reports daily to")
       collector.uses(AnalyticalPlatform.landingBucket, "pushes intervention data daily to")
     }
