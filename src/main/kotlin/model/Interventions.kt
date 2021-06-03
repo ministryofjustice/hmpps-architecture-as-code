@@ -84,7 +84,7 @@ class Interventions private constructor() {
 
     private fun defineSharing() {
       ui.uses(Delius.communityApi, "retrieves current service user profile, appointments and sentence details from", "REST/HTTP")
-      ui.uses(OASys.assessmentsApi, "retrieves service user current risks and needs from", "REST/HTTP")
+      ui.uses(OASys.arn, "retrieves service user current risks from, stores supplementary risk information in", "REST/HTTP")
 
       service.uses(HMPPSDomainEvents.topic, "publishes intervention domain events to", "SNS")
       service.uses(Delius.communityApi, "books and reschedules appointments with", "REST/HTTP")
