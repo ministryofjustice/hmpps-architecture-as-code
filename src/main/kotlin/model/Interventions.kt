@@ -86,7 +86,7 @@ class Interventions private constructor() {
     }
 
     private fun defineAuthentication() {
-      InterventionTeams.dynamicFrameworkProvider.uses(HMPPSAuth.app, "log in via", "HTTPS/web")
+      InterventionTeams.crsProvider.uses(HMPPSAuth.app, "log in via", "HTTPS/web")
       ProbationPractitioners.nps.uses(HMPPSAuth.app, "log in via", "HTTPS/web")
 
       ui.uses(HMPPSAuth.app, "requests access tokens from", "OAuth2/JWT")
@@ -106,10 +106,10 @@ class Interventions private constructor() {
     }
 
     private fun defineUsers() {
-      InterventionTeams.dynamicFrameworkProvider.uses(ui, "maintains directory and delivery of dynamic framework interventions and services in")
+      InterventionTeams.crsProvider.uses(ui, "maintains directory and delivery of dynamic framework interventions and services in")
       ProbationPractitioners.nps.uses(ui, "refers and monitors progress of their service users' interventions and services in")
 
-      service.delivers(InterventionTeams.dynamicFrameworkProvider, "emails new referrals", "gov.uk notify")
+      service.delivers(InterventionTeams.crsProvider, "emails new referrals", "gov.uk notify")
       service.delivers(ProbationPractitioners.nps, "emails attendance and safeguarding issues", "gov.uk notify")
     }
 
