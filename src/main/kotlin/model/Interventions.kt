@@ -15,9 +15,7 @@ class Interventions private constructor() {
     lateinit var ui: Container
     lateinit var service: Container
     lateinit var database: Container
-    lateinit var translator: Container
     lateinit var collector: Container
-    lateinit var reportingBucket: Container
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
@@ -59,33 +57,14 @@ class Interventions private constructor() {
         CloudPlatform.rds.add(this)
       }
 
-      translator = system.addContainer(
-        "Intervention-probation translator",
-        "Maintains contacts, appointments and registrations based on dynamic framework intervention domain events",
-        "undefined"
-      ).apply {
-        CloudPlatform.kubernetes.add(this)
-        Tags.PLANNED.addTo(this)
-      }
-
       collector = system.addContainer(
         "Intervention data collector",
-        "Collects daily snapshots of domain events and intervention data for hand-off to the Analytical Platform",
-        "undefined"
+        "Collects daily snapshots of intervention data for hand-off to S3 landing buckets for reporting or analytics",
+        "data-engineering-data-extractor"
       ).apply {
         uses(database, "reads snapshots of the intervention data from")
+        Tags.REUSABLE_COMPONENT.addTo(this)
         CloudPlatform.kubernetes.add(this)
-        Tags.PLANNED.addTo(this)
-      }
-
-      reportingBucket = system.addContainer(
-        "Interventions reporting hand-off storage",
-        "Collects daily snapshots of domain events and intervention data for hand-off to NDMIS (reporting)",
-        "S3 bucket"
-      ).apply {
-        Tags.DATABASE.addTo(this)
-        Tags.PLANNED.addTo(this)
-        CloudPlatform.s3.add(this)
       }
     }
 
@@ -96,7 +75,7 @@ class Interventions private constructor() {
     }
 
     private fun defineAuthentication() {
-      InterventionTeams.dynamicFrameworkProvider.uses(HMPPSAuth.app, "log in via", "HTTPS/web")
+      InterventionTeams.crsProvider.uses(HMPPSAuth.app, "log in via", "HTTPS/web")
       ProbationPractitioners.nps.uses(HMPPSAuth.app, "log in via", "HTTPS/web")
 
       ui.uses(HMPPSAuth.app, "requests access tokens from", "OAuth2/JWT")
@@ -105,21 +84,21 @@ class Interventions private constructor() {
 
     private fun defineSharing() {
       ui.uses(Delius.communityApi, "retrieves current service user profile, appointments and sentence details from", "REST/HTTP")
-      ui.uses(OASys.assessmentsApi, "retrieves service user current risks and needs from", "REST/HTTP")
+      ui.uses(OASys.arn, "retrieves service user current risks from, stores supplementary risk information in", "REST/HTTP")
 
       service.uses(HMPPSDomainEvents.topic, "publishes intervention domain events to", "SNS")
-      translator.uses(HMPPSDomainEvents.topic, "subscribes to all intervention domain events from", "via SQS")
-      collector.uses(HMPPSDomainEvents.topic, "subscribes to all intervention domain events from", "via SQS")
+      service.uses(Delius.communityApi, "books and reschedules appointments with", "REST/HTTP")
+      service.uses(Delius.communityApi, "creates activities (NSI), notifications of progress, records appointment outcomes with", "Spring Application Events+REST/HTTP")
 
-      translator.uses(Delius.communityApi, "maintains contacts, appointments, registrations with", "REST/HTTP")
+      collector.uses(Reporting.landingBucket, "pushes intervention data and custom reports daily to")
       collector.uses(AnalyticalPlatform.landingBucket, "pushes intervention data daily to")
     }
 
     private fun defineUsers() {
-      InterventionTeams.dynamicFrameworkProvider.uses(ui, "maintains directory and delivery of dynamic framework interventions and services in")
+      InterventionTeams.crsProvider.uses(ui, "maintains directory and delivery of dynamic framework interventions and services in")
       ProbationPractitioners.nps.uses(ui, "refers and monitors progress of their service users' interventions and services in")
 
-      service.delivers(InterventionTeams.dynamicFrameworkProvider, "emails new referrals", "gov.uk notify")
+      service.delivers(InterventionTeams.crsProvider, "emails new referrals", "gov.uk notify")
       service.delivers(ProbationPractitioners.nps, "emails attendance and safeguarding issues", "gov.uk notify")
     }
 

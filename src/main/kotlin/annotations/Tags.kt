@@ -6,6 +6,7 @@ enum class Tags : addTo {
   DATABASE,
   TOPIC,
   WEB_BROWSER,
+  REUSABLE_COMPONENT,
   PROVIDER {
     override fun addTo(element: Element) {
       super.addTo(element)

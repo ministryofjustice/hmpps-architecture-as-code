@@ -10,6 +10,7 @@ import uk.gov.justice.hmpps.architecture.annotations.APIDocs
 class OASys private constructor() {
   companion object : HMPPSSoftwareSystem {
     lateinit var system: SoftwareSystem
+    lateinit var arn: Container
     lateinit var assessmentsApi: Container
     lateinit var assessmentsEvents: Container
     lateinit var assessmentsUpdateApi: Container
@@ -19,21 +20,26 @@ class OASys private constructor() {
         setUrl("https://dsdmoj.atlassian.net/wiki/spaces/~474366104/pages/2046820357/OASys+Overview")
       }
 
-      val db = system.addContainer("Assessments Database", null, "Oracle")
-
-      val oracleApp = system.addContainer("Case Management System", "Assesses the risks and needs of offenders", "Oracle APEX").apply {
-        uses(db, "connects to")
-        uses(NDH.system, "reads offender details from")
+      val oasysDB = system.addContainer("Assessments Database", null, "Oracle")
+      val arnDB = system.addContainer("New risk and needs database", null, "PostgreSQL").apply {
+        CloudPlatform.rds.add(this)
       }
 
       assessmentsApi = system.addContainer("Offender Assessments API", "REST access to the OASYS Oracle DB offender assessment information", "Kotlin + Spring Boot").apply {
-        uses(db, "connects to", "JDBC")
+        uses(oasysDB, "connects to", "JDBC")
         setUrl("https://github.com/ministryofjustice/offender-assessments-api-kotlin")
         APIDocs("https://offender-dev.aks-dev-1.studio-hosting.service.justice.gov.uk/swagger-ui.html").addTo(this)
       }
 
+      arn = system.addContainer("Risk and needs API", "", "Kotlin + Spring Boot").apply {
+        url = "https://github.com/ministryofjustice/hmpps-assessments-api"
+        APIDocs("https://assess-risks-and-needs-dev.hmpps.service.justice.gov.uk/swagger-ui.html").addTo(this)
+        CloudPlatform.kubernetes.add(this)
+        uses(arnDB, "connects to", "JDBC")
+      }
+
       assessmentsEvents = system.addContainer("Offender Assessment Events", "Pushes assessment events to SQS", "Kotlin + Spring Boot").apply {
-        uses(db, "connects to", "JDBC")
+        uses(oasysDB, "connects to", "JDBC")
         setUrl("https://github.com/ministryofjustice/offender-assessments-events")
       }
 
@@ -42,7 +48,7 @@ class OASys private constructor() {
         "Write API layer for OASys",
         "Kotlin + Spring Boot"
       ).apply {
-        uses(db, "connects to", "JDBC")
+        uses(oasysDB, "connects to", "JDBC")
         setUrl("https://github.com/ministryofjustice/offender-assessments-updates")
       }
     }
