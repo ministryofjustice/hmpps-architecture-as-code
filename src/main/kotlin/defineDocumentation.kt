@@ -137,9 +137,13 @@ private fun readCircleOrbVersion(repo: File): String {
   return listOfNotNull(circleOrb, dpsOrb).joinToString("<br>")
 }
 
+const val GRADLE_PATTERN = """id\("uk.gov.justice.hmpps.gradle-spring-boot"\) version "([^"]*)""""
 private fun readGradlePluginVersion(repo: File): String {
-  val buildFile = repo.resolve("build.gradle.kts").takeIf { it.exists() }?.readText().orEmpty()
+  val buildFileKt = repo.resolve("build.gradle.kts").takeIf { it.exists() }?.readText().orEmpty()
+  val buildFile = repo.resolve("build.gradle").takeIf { it.exists() }?.readText().orEmpty()
 
-  val m = Regex("""id\("uk.gov.justice.hmpps.gradle-spring-boot"\) version "([^"]*)"""").find(buildFile)
-  return m?.groups?.get(1)?.value.orEmpty()
+  return listOfNotNull(
+    Regex(GRADLE_PATTERN).find(buildFileKt)?.groups?.get(1)?.value,
+    Regex(GRADLE_PATTERN).find(buildFile)?.groups?.get(1)?.value,
+  ).joinToString("<br>")
 }
