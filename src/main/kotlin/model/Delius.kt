@@ -63,7 +63,7 @@ class Delius private constructor() {
         "Delius API",
         "API over the nDelius DB used by HMPPS Digital team applications and services", "Kotlin"
       ).apply {
-        url = "https://github.com/ministryofjustice/delius-api"
+        url = "https://github.com/ministryofjustice/hmpps-delius-api"
         uses(database, "connects to", "JDBC")
         ecs.add(this)
       }
