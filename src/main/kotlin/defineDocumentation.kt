@@ -3,8 +3,6 @@ package uk.gov.justice.hmpps.architecture
 import com.structurizr.Workspace
 import com.structurizr.documentation.AutomaticDocumentationTemplate
 import com.structurizr.model.Container
-import com.structurizr.model.Model
-import org.eclipse.jgit.api.errors.GitAPIException
 import uk.gov.justice.hmpps.architecture.annotations.APIDocs
 import java.io.File
 import java.io.IOException
@@ -14,24 +12,62 @@ fun defineDocumentation(workspace: Workspace) {
   val docsRoot = File(App.EXPORT_LOCATION, "docs/")
   docsRoot.mkdirs()
 
-  val w = File(docsRoot, "apidocs.md").printWriter()
-  writeAPIs(w, workspace.model)
-  w.close()
+  val containersWithGitRepos = containersWithGit(workspace.model)
+
+  File(docsRoot, "apidocs.md").printWriter().let {
+    writeAPIs(it, containersWithGitRepos)
+    it.close()
+  }
+
+  File(docsRoot, "dependencies.md").printWriter().let {
+    writeDependencies(it, containersWithGitRepos)
+    it.close()
+  }
 
   val template = AutomaticDocumentationTemplate(workspace)
   template.addSections(docsRoot)
 }
 
-private fun writeAPIs(w: PrintWriter, model: Model) {
+private fun writeAPIs(w: PrintWriter, containersWithGit: List<Container>) {
   w.println("## Published APIs")
   w.println("")
 
   w.println("| Software System | API name | Purpose | Links |")
   w.println("| --- | --- | --- | --- |")
 
-  containersWithAPIDocs(model)
+  containersWithAPIDocs(containersWithGit)
     .also { println("[defineDocumentation] Found ${it.size} APIs with documentation URLs") }
     .forEach { writeAPI(w, it) }
+}
+
+private fun writeDependencies(w: PrintWriter, containersWithGit: List<Container>) {
+  w.println("## Dependencies")
+  w.println("")
+
+  w.println("| Software System | Application | CircleCI orb versions | gradle-spring-boot version |")
+  w.println("| --- | --- | --- | --- |")
+
+  containersWithGit
+    .also { println("[defineDocumentation] Found ${it.size} applications with github repos") }
+    .forEach { writeDependency(w, it) }
+}
+
+fun writeDependency(w: PrintWriter, app: Container) {
+  val r = cloneRepository(app) ?: return
+
+  w.print("| ")
+  w.print(app.softwareSystem.name)
+
+  w.print("| ")
+  w.print("[${app.name}](${app.url})")
+
+  w.print("| ")
+  w.print(readCircleOrbVersion(r))
+
+  w.print("| ")
+  w.print(readGradlePluginVersion(r))
+
+  w.println("|")
 }
 
 @Suppress("DEPRECATION")
@@ -55,20 +91,14 @@ private fun writeAPI(w: PrintWriter, apiContainer: Container) {
 }
 
 @Suppress("DEPRECATION")
-private fun containersWithAPIDocs(model: Model): List<Container> {
-  return model.softwareSystems
-    .sortedBy { it.name.toLowerCase() }
-    .flatMap { it.containers }
+private fun containersWithAPIDocs(containersWithGit: List<Container>): List<Container> {
+  return containersWithGit
     .map { pullApiDocs(it) }
     .filter { APIDocs.getFrom(it) != null }
 }
 
 @Suppress("DEPRECATION")
 private fun pullApiDocs(container: Container): Container {
-  if (!container.url.orEmpty().contains("github.com/ministryofjustice")) {
-    return container
-  }
-
   val oldUrl = APIDocs.getFrom(container)
   val url = readAPIDocsURLFromRepoReadmeBadge(container)
 
@@ -86,11 +116,9 @@ private fun readAPIDocsURLFromRepoReadmeBadge(app: Container): String? {
   var readmeContents = ""
   try {
     println()
-    val repoDir = cloneRepository(app.url, app)
-    val readme = repoDir.listFiles { _, name -> name.equals("README.md", true) }?.first()
+    val repoDir = cloneRepository(app)
+    val readme = repoDir?.listFiles { _, name -> name.equals("README.md", true) }?.first()
     readmeContents = readme?.readText().orEmpty()
-  } catch (e: GitAPIException) {
-    println("[defineDocumentation] ignoring: $e")
   } catch (e: IOException) {
     println("[defineDocumentation] ignoring: $e")
   } catch (e: java.util.NoSuchElementException) {
@@ -99,4 +127,19 @@ private fun readAPIDocsURLFromRepoReadmeBadge(app: Container): String? {
 
   val m = BADGE_URL_PATTERN.find(readmeContents)
   return m?.groups?.get(1)?.value
+}
+
+private fun readCircleOrbVersion(repo: File): String {
+  val circleConfig = repo.resolve(".circleci").resolve("config.yml").takeIf { it.exists() }?.readText().orEmpty()
+
+  val circleOrb = Regex("ministryofjustice/(hmpps@[\\d.]*)").find(circleConfig)?.groups?.get(1)?.value
+  val dpsOrb = Regex("ministryofjustice/(dps@[\\d.]*)").find(circleConfig)?.groups?.get(1)?.value
+  return listOfNotNull(circleOrb, dpsOrb).joinToString("<br>")
+}
+
+private fun readGradlePluginVersion(repo: File): String {
+  val buildFile = repo.resolve("build.gradle.kts").takeIf { it.exists() }?.readText().orEmpty()
+
+  val m = Regex("""id\("uk.gov.justice.hmpps.gradle-spring-boot"\) version "([^"]*)"""").find(buildFile)
+  return m?.groups?.get(1)?.value.orEmpty()
 }
