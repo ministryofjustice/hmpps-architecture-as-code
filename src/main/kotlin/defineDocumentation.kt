@@ -44,6 +44,10 @@ private fun writeDependencies(w: PrintWriter, containersWithGit: List<Container>
   w.println("## Dependencies")
   w.println("")
 
+  w.println("- Latest [CircleCI orb](https://circleci.com/developer/orbs/orb/ministryofjustice/hmpps)")
+  w.println("- Latest [gradle-spring-boot](https://plugins.gradle.org/plugin/uk.gov.justice.hmpps.gradle-spring-boot)")
+  w.println("")
+
   w.println("| Software System | Application | CircleCI orb versions | gradle-spring-boot version |")
   w.println("| --- | --- | --- | --- |")
 
