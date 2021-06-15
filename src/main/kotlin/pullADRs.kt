@@ -9,7 +9,7 @@ fun pullADRs(workspace: Workspace) {
     .filter { ADRSource.getFrom(it) != null }
     .forEach {
       val cloneDir = cloneRepository(ADRSource.getFrom(it)!!, it)
-      val decisions = AdrToolsImporter(workspace, cloneDir.resolve("doc/adr"))
+      val decisions = AdrToolsImporter(workspace, cloneDir?.resolve("doc/adr"))
         .importArchitectureDecisionRecords(it)
 
       println("[pullADRs] Imported ${decisions.size} decisions for '${it.name}'")
