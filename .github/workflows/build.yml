@@ -27,3 +27,13 @@ jobs:
           curl -sSLO https://github.com/pinterest/ktlint/releases/download/0.41.0/ktlint
           chmod a+x ktlint
       - run: ./ktlint --editorconfig=.editorconfig "src/**/*.kt"
+  test-image-generation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+      - uses: ts-graphviz/setup-graphviz@v1
+      - run: script/generate_images.sh

@@ -80,7 +80,7 @@ the desired workspace.
 
 ## Generating images locally
 
-Requires `plantuml` and `wget` to be installed (e.g. with `brew install plantuml wget`)
+Requires `graphviz` and `wget` to be installed (e.g. with `brew install graphviz wget`)
 
 ```
 script/generate_images.sh
