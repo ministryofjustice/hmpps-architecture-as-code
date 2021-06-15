@@ -11,6 +11,7 @@ fun defineStyles(styles: Styles) {
 
   styles.addElementStyle(Tags.DATABASE.toString()).shape(Shape.Cylinder)
   styles.addElementStyle(Tags.TOPIC.toString()).shape(Shape.Pipe)
+  styles.addElementStyle(Tags.QUEUE.toString()).shape(Shape.Pipe)
   styles.addElementStyle(Tags.WEB_BROWSER.toString()).shape(Shape.WebBrowser)
   styles.addElementStyle(Tags.REUSABLE_COMPONENT.toString()).shape(Shape.Hexagon)
   styles.addElementStyle(Tags.PLANNED.toString()).border(Border.Dotted).opacity(50)
