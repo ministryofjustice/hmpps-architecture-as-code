@@ -9,7 +9,7 @@ import com.structurizr.view.ViewSet
 import uk.gov.justice.hmpps.architecture.annotations.OutsideHMPPS
 import uk.gov.justice.hmpps.architecture.annotations.Tags
 
-class PrepareCaseForCourt private constructor() {
+class PrepareCaseForSentence private constructor() {
   companion object : HMPPSSoftwareSystem {
     lateinit var system: SoftwareSystem
     lateinit var prepareCaseUI: Container
@@ -18,7 +18,7 @@ class PrepareCaseForCourt private constructor() {
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
-        "Prepare a Case for Court",
+        "Prepare a Case for Sentence",
         "Digital Service for Probation Officers working in magistrates' courts, " +
           "providing them with a single location to access the defendant information " +
           "they need to provide sound and timely sentencing guidance to magistrates"
@@ -33,13 +33,22 @@ class PrepareCaseForCourt private constructor() {
         CloudPlatform.rds.add(this)
       }
 
-      val messagesDb = system.addContainer(
-        "Messages Database",
-        "Holds CPMG messages data and meta-data",
-        "PostgreSQL"
+      val messagesBucket = system.addContainer(
+        "Message Store",
+        "Holds CPG messages data and meta-data",
+        "S3"
       ).apply {
         Tags.DATABASE.addTo(this)
-        CloudPlatform.rds.add(this)
+        CloudPlatform.s3.add(this)
+      }
+
+      val crimePortalGatewayQueue = system.addContainer(
+        "crime-portal-gateway-queue",
+        "Carries court list messages",
+        "SQS"
+      ).apply {
+        Tags.QUEUE.addTo(this)
+        CloudPlatform.sqs.add(this)
       }
 
       courtCaseService = system.addContainer(
@@ -57,6 +66,7 @@ class PrepareCaseForCourt private constructor() {
         "Java + Spring Boot"
       ).apply {
         uses(courtCaseService, "Creates or updates cases in")
+        uses(crimePortalGatewayQueue, "Consumes court list messages from")
         setUrl("https://github.com/ministryofjustice/court-case-matcher")
       }
 
@@ -69,14 +79,14 @@ class PrepareCaseForCourt private constructor() {
         setUrl("https://github.com/ministryofjustice/prepare-a-case")
       }
 
-      val crimePortalMirrorGateway = system.addContainer(
-        "Crime Portal Mirror Gateway",
-        "OAP web service which receives court lists and publishes onto a JMS message queue",
-        "JBoss Wildfly"
+      val crimePortalGateway = system.addContainer(
+        "Crime Portal Gateway",
+        "SOAP web service which receives court lists from HMCTS and publishes onto an SQS message queue",
+        "Kotlin + Spring Boot"
       ).apply {
-        uses(messagesDb, "connects to", "JDBC")
-        uses(courtCaseMatcher, "Sends court lists to")
-        setUrl("https://github.com/ministryofjustice/crime-portal-mirror-gateway")
+        uses(crimePortalGatewayQueue, "Produces court list messages to")
+        uses(messagesBucket, "stores messages in")
+        setUrl("https://github.com/ministryofjustice/crime-portal-gateway")
       }
 
       // TODO refactor out HMCTS Crime Portal into dedicated SoftwareSystem
@@ -84,17 +94,20 @@ class PrepareCaseForCourt private constructor() {
         .apply {
           setLocation(Location.External)
           OutsideHMPPS.addTo(this)
-          uses(crimePortalMirrorGateway, "Sends court lists to")
+          uses(crimePortalGateway, "Sends court lists to")
         }
     }
 
     override fun defineRelationships() {
-      listOf(prepareCaseUI, courtCaseService, courtCaseMatcher)
-        .forEach { it.uses(HMPPSAuth.system, "authenticates via") }
+      prepareCaseUI.uses(HMPPSAuth.system, "authenticates via")
+      listOf(courtCaseService, courtCaseMatcher)
+        .forEach { it.uses(HMPPSAuth.system, "validates API tokens via") }
 
       courtCaseService.uses(Delius.communityApi, "Gets offender details from")
       courtCaseMatcher.uses(Delius.offenderSearch, "Matches defendants to known offenders")
       courtCaseService.uses(OASys.assessmentsApi, "get offender assessment details from")
+
+      prepareCaseUI.uses(UserPreferenceApi.api, "Stores user's preferred courts in", "HTTPS Rest API")
 
       CourtUsers.courtAdministrator.uses(prepareCaseUI, "prepares cases for sentencing")
       ProbationPractitioners.nps.uses(prepareCaseUI, "views case defendant details")

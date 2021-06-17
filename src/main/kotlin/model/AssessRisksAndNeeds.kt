@@ -54,7 +54,7 @@ class AssessRisksAndNeeds private constructor() {
         .forEach { it.uses(HMPPSAuth.system, "authenticates via") }
 
       assessmentService.uses(Delius.communityApi, "Gets offender and past-offence details from")
-      assessmentService.uses(PrepareCaseForCourt.courtCaseService, "Gets offender and offence details from")
+      assessmentService.uses(PrepareCaseForSentence.courtCaseService, "Gets offender and offence details from")
       assessmentService.uses(OASys.assessmentsApi, "get offender past assessment details from")
       assessmentService.uses(OASys.assessmentsUpdateApi, "pushes offender assessment details into")
 

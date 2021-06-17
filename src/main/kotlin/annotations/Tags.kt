@@ -5,6 +5,7 @@ import com.structurizr.model.Element
 enum class Tags : addTo {
   DATABASE,
   TOPIC,
+  QUEUE,
   WEB_BROWSER,
   REUSABLE_COMPONENT,
   PROVIDER {

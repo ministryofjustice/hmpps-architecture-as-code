@@ -13,7 +13,7 @@ class UserPreferenceApi private constructor() {
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
-        "User preference api",
+        "User Preference API",
         "Stores preference information associated with a HMPPs Auth User"
       )
 
