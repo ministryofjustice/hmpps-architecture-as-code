@@ -1,17 +1,15 @@
 package uk.gov.justice.hmpps.architecture
 
 import com.structurizr.model.Container
-import com.structurizr.model.DeploymentNode
 import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ViewSet
 import uk.gov.justice.hmpps.architecture.annotations.OutsideHMPPS
-import uk.gov.justice.hmpps.architecture.annotations.Tags
 
 class Curious private constructor() {
   companion object : HMPPSSoftwareSystem {
     lateinit var system: SoftwareSystem
-    lateinit var DPS : SoftwareSystem
+    lateinit var DPS: SoftwareSystem
     lateinit var curiousApi: Container
 
     override fun defineModelEntities(model: Model) {
@@ -35,7 +33,6 @@ class Curious private constructor() {
       ).apply {
         uses(curiousApi, "connects to", "RestHTML")
       }
-
     }
     override fun defineRelationships() {
     }
