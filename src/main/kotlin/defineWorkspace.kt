@@ -14,6 +14,7 @@ private val MODEL_ITEMS = listOf(
   CaseNotesToProbation,
   CourtUsers,
   CRCSystem,
+  Curious,
   Delius,
   DigitalPrisonsNetwork,
   EPF,
