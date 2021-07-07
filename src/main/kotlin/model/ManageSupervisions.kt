@@ -31,6 +31,8 @@ class ManageSupervisions private constructor() {
     }
 
     override fun defineRelationships() {
+      ProbationPractitioners.nps.uses(manageSupervisionsUi, "manages supervisions with")
+
       manageSupervisionsUi.uses(HMPPSAuth.system, "authenticates via")
       manageSupervisionsUi.uses(Delius.communityApi, "Gets SU and past-offence details from")
     }
