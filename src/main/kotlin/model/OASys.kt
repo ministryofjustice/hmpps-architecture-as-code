@@ -20,23 +20,14 @@ class OASys private constructor() {
         setUrl("https://dsdmoj.atlassian.net/wiki/spaces/~474366104/pages/2046820357/OASys+Overview")
       }
 
-      val oasysDB = system.addContainer("Assessments Database", null, "Oracle")
-      val arnDB = system.addContainer("New risk and needs database", null, "PostgreSQL").apply {
-        CloudPlatform.rds.add(this)
-      }
+      val oasysDB = system.addContainer("OASys Assessments Database", null, "Oracle")
 
       assessmentsApi = system.addContainer("Offender Assessments API", "REST access to the OASYS Oracle DB offender assessment information", "Kotlin + Spring Boot").apply {
         uses(oasysDB, "connects to", "JDBC")
         setUrl("https://github.com/ministryofjustice/offender-assessments-api-kotlin")
-        APIDocs("https://offender-dev.aks-dev-1.studio-hosting.service.justice.gov.uk/swagger-ui.html").addTo(this)
+        APIDocs("https://offender-dev.aks-dev-1.studio-hosting.service.justice.gov.uk/swagger-ui/").addTo(this)
       }
 
-      arn = system.addContainer("Risk and needs API", "", "Kotlin + Spring Boot").apply {
-        url = "https://github.com/ministryofjustice/hmpps-assessments-api"
-        APIDocs("https://assess-risks-and-needs-dev.hmpps.service.justice.gov.uk/swagger-ui.html").addTo(this)
-        CloudPlatform.kubernetes.add(this)
-        uses(arnDB, "connects to", "JDBC")
-      }
 
       assessmentsEvents = system.addContainer("Offender Assessment Events", "Pushes assessment events to SQS", "Kotlin + Spring Boot").apply {
         uses(oasysDB, "connects to", "JDBC")
@@ -69,7 +60,6 @@ class OASys private constructor() {
 
       views.createContainerView(system, "OASYS-container", null).apply {
         addDefaultElements()
-        addAllContainersAndInfluencers()
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
       }
     }
