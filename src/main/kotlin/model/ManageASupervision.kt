@@ -27,6 +27,7 @@ class ManageASupervision private constructor() {
         "Typescript, Node, NestJS, Express"
       ).apply {
         setUrl("https://github.com/ministryofjustice/hmpps-manage-supervisions")
+        CloudPlatform.kubernetes.add(this)
       }
     }
 
@@ -47,6 +48,11 @@ class ManageASupervision private constructor() {
       views.createContainerView(system, "manage-a-supervision-container", null).apply {
         addDefaultElements()
         addAllContainersAndInfluencers()
+        enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
+      }
+
+      views.createDeploymentView(system, "manage-a-supervision-deployment", "The Production deployment scenario for the Manage A Supervision service").apply {
+        addDefaultElements()
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
       }
     }
