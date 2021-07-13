@@ -28,7 +28,6 @@ class OASys private constructor() {
         APIDocs("https://offender-dev.aks-dev-1.studio-hosting.service.justice.gov.uk/swagger-ui/").addTo(this)
       }
 
-
       assessmentsEvents = system.addContainer("Offender Assessment Events", "Pushes assessment events to SQS", "Kotlin + Spring Boot").apply {
         uses(oasysDB, "connects to", "JDBC")
         setUrl("https://github.com/ministryofjustice/offender-assessments-events")

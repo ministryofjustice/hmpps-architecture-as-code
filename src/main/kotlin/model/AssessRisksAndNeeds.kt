@@ -83,7 +83,6 @@ class AssessRisksAndNeeds private constructor() {
       }
     }
 
-
     override fun defineRelationships() {
       listOf(riskAssessmentUi, assessmentService, riskNeedsService)
         .forEach { it.uses(HMPPSAuth.system, "authenticates via") }
