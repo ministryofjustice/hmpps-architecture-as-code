@@ -6,6 +6,7 @@ import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
 import uk.gov.justice.hmpps.architecture.*
+import uk.gov.justice.hmpps.architecture.annotations.ProblemArea
 import uk.gov.justice.hmpps.architecture.annotations.Tags
 
 class ManageASupervision private constructor() {
@@ -19,7 +20,9 @@ class ManageASupervision private constructor() {
         "Digital Service for A, "
           + "B, " +
           "and C"
-      )
+      ).apply {
+        ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)
+      }
 
       manageASupervisionUi = system.addContainer(
         "Manage A Supervision UI",
