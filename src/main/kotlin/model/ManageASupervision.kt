@@ -39,6 +39,7 @@ class ManageASupervision private constructor() {
 
       manageASupervisionUi.uses(HMPPSAuth.system, "authenticates via")
       manageASupervisionUi.uses(Delius.communityApi, "Gets SU and past-offence details from")
+      manageASupervisionUi.uses(AssessRisksAndNeeds.system, "Fetches risk and criminogenic need data from")
     }
 
     override fun defineViews(views: ViewSet) {
