@@ -2,19 +2,26 @@ package uk.gov.justice.hmpps.architecture
 
 import com.structurizr.model.Container
 import com.structurizr.model.Model
+import com.structurizr.model.Person
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
 import uk.gov.justice.hmpps.architecture.*
 import uk.gov.justice.hmpps.architecture.annotations.ProblemArea
+import uk.gov.justice.hmpps.architecture.annotations.OutsideHMPPS
 import uk.gov.justice.hmpps.architecture.annotations.Tags
 
 class ManageASupervision private constructor() {
   companion object : HMPPSSoftwareSystem {
     lateinit var system: SoftwareSystem
+    lateinit var serviceUser: Person
     lateinit var manageASupervisionUi: Container
 
     override fun defineModelEntities(model: Model) {
+      serviceUser = model.addPerson("Service User", "A person").apply {
+        OutsideHMPPS.addTo(this)
+      }
+
       system = model.addSoftwareSystem(
         "Manage A Supervision",
         "Digital Service for A, "
@@ -36,6 +43,7 @@ class ManageASupervision private constructor() {
 
     override fun defineRelationships() {
       ProbationPractitioners.nps.uses(manageASupervisionUi, "manages supervisions with")
+      serviceUser.interactsWith(ProbationPractitioners.nps, "Meets with")
 
       manageASupervisionUi.uses(HMPPSAuth.system, "authenticates via")
       manageASupervisionUi.uses(Delius.communityApi, "Gets SU and past-offence details from")
