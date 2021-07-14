@@ -6,10 +6,8 @@ import com.structurizr.model.Person
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
-import uk.gov.justice.hmpps.architecture.*
-import uk.gov.justice.hmpps.architecture.annotations.ProblemArea
 import uk.gov.justice.hmpps.architecture.annotations.OutsideHMPPS
-import uk.gov.justice.hmpps.architecture.annotations.Tags
+import uk.gov.justice.hmpps.architecture.annotations.ProblemArea
 
 class ManageASupervision private constructor() {
   companion object : HMPPSSoftwareSystem {
@@ -24,8 +22,8 @@ class ManageASupervision private constructor() {
 
       system = model.addSoftwareSystem(
         "Manage A Supervision",
-        "Digital Service for A, "
-          + "B, " +
+        "Digital Service for A, " +
+          "B, " +
           "and C"
       ).apply {
         ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)
@@ -48,12 +46,13 @@ class ManageASupervision private constructor() {
       manageASupervisionUi.uses(HMPPSAuth.system, "authenticates via")
       manageASupervisionUi.uses(Delius.communityApi, "Gets SU and past-offence details from")
       manageASupervisionUi.uses(AssessRisksAndNeeds.riskNeedsService, "Fetches risk and criminogenic need data from")
-
     }
 
     override fun defineViews(views: ViewSet) {
-      views.createSystemContextView(system,
-      "manage-a-supervision-context", null).apply {
+      views.createSystemContextView(
+        system,
+        "manage-a-supervision-context", null
+      ).apply {
         addDefaultElements()
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
       }
