@@ -55,9 +55,10 @@ class BookVideoLink private constructor() {
       bookVideoLinkService.uses(TokenVerificationApi.api, "validates API tokens via", "HTTPS Rest API")
       bookVideoLinkService.uses(UserPreferenceApi.api, "Stores user's preferred courts in", "HTTPS Rest API")
 
-      bookVideoLinkService.delivers(courtStaff, "emails booking/amendment/cancellation confirmations", "gov.uk notify")
-      bookVideoLinkService.delivers(vccStaff, "emails requests/booking/amendment/cancellation notifications", "gov.uk notify")
-      bookVideoLinkService.delivers(omuStaff, "emails booking/amendment/cancellation notifications", "gov.uk notify")
+      bookVideoLinkService.uses(Notify.system, "delivers notifications via")
+      Notify.system.delivers(courtStaff, "emails booking/amendment/cancellation confirmations", "email")
+      Notify.system.delivers(vccStaff, "emails requests/booking/amendment/cancellation notifications", "email")
+      Notify.system.delivers(omuStaff, "emails booking/amendment/cancellation notifications", "email")
     }
 
     override fun defineViews(views: ViewSet) {

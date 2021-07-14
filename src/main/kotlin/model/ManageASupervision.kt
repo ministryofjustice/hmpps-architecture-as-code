@@ -46,8 +46,8 @@ class ManageASupervision private constructor() {
       manageASupervisionUi.uses(HMPPSAuth.system, "authenticates via")
       manageASupervisionUi.uses(Delius.communityApi, "Gets SU and past-offence details from")
       manageASupervisionUi.uses(AssessRisksAndNeeds.riskNeedsService, "Fetches risk and criminogenic need data from")
-      manageASupervisionUi.uses(Notify.system, "delivers notifications via")
 
+      manageASupervisionUi.uses(Notify.system, "delivers notifications via")
       Notify.system.delivers(ProbationPractitioners.nps, "sends booked appointment details to", "email")
       Notify.system.delivers(serviceUser, "sends appointment reminders to", "email and SMS")
     }

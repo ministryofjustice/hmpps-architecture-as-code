@@ -127,10 +127,12 @@ class ManagePOMCases private constructor() {
         "consumes and processes the queue"
       )
 
-      activeJob.delivers(
+      activeJob.uses(Notify.system, "delivers notifications via")
+
+      Notify.system.delivers(
         ldu,
         "notifies community allocation requests to",
-        "gov.uk notify"
+        "email"
       )
     }
 
