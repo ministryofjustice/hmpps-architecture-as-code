@@ -22,16 +22,16 @@ class ManageASupervision private constructor() {
 
       system = model.addSoftwareSystem(
         "Manage A Supervision",
-        "Digital Service for A, " +
-          "B, " +
-          "and C"
+        "Digital service to support probation practitioners in managing " +
+          "probation supervisions, including viewing service user history " +
+          "and booking appointments."
       ).apply {
         ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)
       }
 
       manageASupervisionUi = system.addContainer(
         "Manage A Supervision UI",
-        "Web application, displaying service user history and handling appointment booking",
+        "Microlith web application, displaying service user history and handling appointment booking",
         "Typescript, Node, NestJS, Express"
       ).apply {
         setUrl("https://github.com/ministryofjustice/hmpps-manage-supervisions")
