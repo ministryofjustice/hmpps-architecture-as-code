@@ -18,7 +18,7 @@ class Curious private constructor() {
         "(Contract management system for prison education providers"
       ).apply {
         OutsideHMPPS.addTo(this)
-        Azure.root.add(this)
+        Azure.sequation.add(this)
       }
       curiousApi = system.addContainer(
         "Curious API",

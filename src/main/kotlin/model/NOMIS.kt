@@ -50,6 +50,7 @@ class NOMIS private constructor() {
         "HTTPS"
       ).apply {
         uses(prisonApi, "connects to", "RestHTML")
+        uses(Curious.system, "Consumes")
       }
 
       val elasticSearchStore = system.addContainer(
