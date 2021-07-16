@@ -47,8 +47,9 @@ class ManageASupervision private constructor() {
       manageASupervisionUi.uses(Delius.communityApi, "Gets SU and past-offence details from")
       manageASupervisionUi.uses(AssessRisksAndNeeds.riskNeedsService, "Fetches risk and criminogenic need data from")
 
-      manageASupervisionUi.delivers(ProbationPractitioners.nps, "sends booked appointment details to", "email via gov.uk notify")
-      manageASupervisionUi.delivers(serviceUser, "sends appointment reminders to", "email and SMS via gov.uk notify")
+      manageASupervisionUi.uses(Notify.system, "delivers notifications via")
+      Notify.system.delivers(ProbationPractitioners.nps, "sends booked appointment details to", "email")
+      Notify.system.delivers(serviceUser, "sends appointment reminders to", "email and SMS")
     }
 
     override fun defineViews(views: ViewSet) {
@@ -57,6 +58,7 @@ class ManageASupervision private constructor() {
         "manage-a-supervision-context", null
       ).apply {
         addDefaultElements()
+        add(serviceUser)
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
       }
 

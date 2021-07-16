@@ -33,6 +33,7 @@ private val MODEL_ITEMS = listOf(
   NDH,
   NID,
   NOMIS,
+  Notify,
   OASys,
   ManagePOMCases,
   ManageASupervision,
