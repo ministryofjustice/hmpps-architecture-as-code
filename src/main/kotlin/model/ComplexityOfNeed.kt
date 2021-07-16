@@ -102,7 +102,7 @@ class ComplexityOfNeed private constructor() {
         "complexity-of-need-deployment",
         "Deployment overview of the Complexity of Need microservice"
       ).apply {
-        addDefaultElements()
+        add(AWS.london)
         removeRelationshipsNotConnectedToElement(microservice)
         enableAutomaticLayout()
       }

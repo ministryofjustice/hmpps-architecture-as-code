@@ -141,7 +141,7 @@ class PrisonerContentHub private constructor() {
       }
 
       views.createDeploymentView(system, "prisonerContentHubContainerProductionDeployment", "The Production deployment scenario for the Prisoner Content Hub").apply {
-        addDefaultElements()
+        add(AWS.london)
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
       }
     }
