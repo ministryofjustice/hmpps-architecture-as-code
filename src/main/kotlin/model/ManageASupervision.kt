@@ -58,6 +58,7 @@ class ManageASupervision private constructor() {
         "manage-a-supervision-context", null
       ).apply {
         addDefaultElements()
+        add(serviceUser)
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
       }
 
