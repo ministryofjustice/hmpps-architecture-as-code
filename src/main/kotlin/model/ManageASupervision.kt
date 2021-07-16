@@ -64,7 +64,7 @@ class ManageASupervision private constructor() {
       }
 
       views.createDeploymentView(system, "manage-a-supervision-deployment", "The Production deployment scenario for the Manage A Supervision service").apply {
-        addDefaultElements()
+        add(AWS.london)
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
       }
     }
