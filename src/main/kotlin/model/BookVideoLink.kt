@@ -92,6 +92,7 @@ class BookVideoLink private constructor() {
 
       views.createDeploymentView(system, "bookVideoLinkContainerProductionDeployment", "The Production deployment scenario for the Book Video Link service").apply {
         addDefaultElements()
+        add(AWS.london)
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
       }
     }

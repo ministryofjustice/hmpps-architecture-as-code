@@ -107,7 +107,7 @@ class AssessRisksAndNeeds private constructor() {
       }
 
       views.createDeploymentView(system, "assess-risks-and-needs-deployment", "Deployment overview of the assess risks and needs services").apply {
-        addDefaultElements()
+        add(AWS.london)
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
       }
 

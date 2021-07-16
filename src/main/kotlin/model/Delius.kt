@@ -159,7 +159,7 @@ class Delius private constructor() {
         "delius-container-production-deployment",
         "The Production deployment scenario for Delius"
       ).apply {
-        addDefaultElements()
+        add(AWS.london)
         enableAutomaticLayout()
       }
     }
