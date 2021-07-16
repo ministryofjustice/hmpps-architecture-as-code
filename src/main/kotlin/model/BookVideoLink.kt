@@ -80,7 +80,7 @@ class BookVideoLink private constructor() {
         add(vccStaff)
         add(omuStaff)
         add(courtStaff)
-
+        add(Notify.system)
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
       }
 
