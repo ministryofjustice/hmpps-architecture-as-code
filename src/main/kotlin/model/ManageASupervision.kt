@@ -70,6 +70,27 @@ class ManageASupervision private constructor() {
         add(AWS.london)
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
       }
+
+      views.createDynamicView(system, "manage-a-supervision-dynamic", "Data flow for Manage a Supervision").apply {
+        // Login
+        add(ProbationPractitioners.nps, "Submits login credentials to", HMPPSAuth.system)
+        add(HMPPSAuth.system, "Provides authentication token to", ProbationPractitioners.nps)
+        add(ProbationPractitioners.nps, "Authenticates future actions with token", manageASupervisionUi)
+        // Display profile
+        add(ProbationPractitioners.nps, "Selects a service user", manageASupervisionUi)
+        add(manageASupervisionUi, "fetches service user personal details", Delius.communityApi)
+        add(manageASupervisionUi, "fetches service user contact history", Delius.communityApi)
+        add(manageASupervisionUi, "fetches service user risk scores/flags", AssessRisksAndNeeds.riskNeedsService)
+        add(manageASupervisionUi, "displays service user profile to", ProbationPractitioners.nps)
+        // Booking appointments
+        add(ProbationPractitioners.nps, "Enters appointment details", manageASupervisionUi)
+        add(manageASupervisionUi, "creates individual appointment records (contacts) with", Delius.communityApi)
+        add(manageASupervisionUi, "sends notification to", ProbationPractitioners.nps)
+        add(manageASupervisionUi, "sends notification to", serviceUser)
+        // Recording outcomes
+        add(ProbationPractitioners.nps, "Records appointment outcome", manageASupervisionUi)
+        add(manageASupervisionUi, "updates contact in NDelius via", Delius.communityApi)
+      }
     }
   }
 }
