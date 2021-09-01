@@ -39,7 +39,7 @@ class PrisonerContentHub private constructor() {
         Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
         CloudPlatform.elasticsearch.add(this)
       }
-      
+
       val googleDataStudio = system.addContainer("Google Data Studio", "Reporting tool for Google Analytics and Feedback data", "Google Data Studio").apply {
         Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
       }
@@ -65,8 +65,6 @@ class PrisonerContentHub private constructor() {
       val googleAnalytics = system.addContainer("Google Analytics", "Tracking page views and user journeys", "Google Analytics").apply {
         Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
       }
-
-
 
       val drupal = system.addContainer("Prisoner Content Hub CMS", "Content Management System for HMPPS Digital and prison staff to curate content for prisoners", "Drupal").apply {
         setUrl("https://github.com/ministryofjustice/prisoner-content-hub-backend")
