@@ -40,6 +40,16 @@ class PrisonerContentHub private constructor() {
         CloudPlatform.elasticsearch.add(this)
       }
 
+      val googleDataStudio = system.addContainer("Google Data Studio", "Reporting tool for Google Analytics and Feedback data", "Google Data Studio").apply {
+        Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
+      }
+
+      val feedbackUploaderJob = system.addContainer("Feedback uploader job", "Runs cron to collate daily feedback data", "TypeScript").apply {
+        uses(elasticSearchStore, "Extracts feedback data")
+        uses(googleDataStudio, "Uploads feedback")
+        CloudPlatform.kubernetes.add(this)
+      }
+
       val drupalDatabase = system.addContainer("Drupal database", "Prisoner Content Hub CMS data and Drupal metadata", "MariaDB").apply {
         Tags.DATABASE.addTo(this)
         Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
@@ -50,6 +60,10 @@ class PrisonerContentHub private constructor() {
         Tags.DATABASE.addTo(this)
         Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
         CloudPlatform.s3.add(this)
+      }
+
+      val googleAnalytics = system.addContainer("Google Analytics", "Tracking page views and user journeys", "Google Analytics").apply {
+        Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
       }
 
       val drupal = system.addContainer("Prisoner Content Hub CMS", "Content Management System for HMPPS Digital and prison staff to curate content for prisoners", "Drupal").apply {
@@ -64,6 +78,7 @@ class PrisonerContentHub private constructor() {
         setUrl("https://github.com/ministryofjustice/prisoner-content-hub-frontend")
         uses(drupal, "HTTPS Rest API")
         uses(elasticSearchStore, "HTTPS REST API")
+        uses(googleAnalytics, "pushes page events")
         CloudPlatform.kubernetes.add(this)
       }
 
@@ -80,8 +95,13 @@ class PrisonerContentHub private constructor() {
       /**
        * Users
        **/
-      model.addPerson("Feedback Reporter", "HMPPS Staff collating feedback for protection, product development and analytics").apply {
-        uses(kibanaDashboard, "Extracts CSV files of prisoner feedback, views individual feedback responses, and analyses sentiment and statistics of feedback")
+      model.addPerson("Content Hub Product Team", "Collates feedback for product development and analytics").apply {
+        uses(googleDataStudio, "Views feedback entries")
+        uses(googleAnalytics, "Views content hub frontend usage statistics")
+      }
+
+      model.addPerson("HMPPS local content manager", "Collates feedback for content and operational purposes").apply {
+        uses(googleDataStudio, "Views report in Google Data Studio of prisoner feedback, views individual feedback responses, and analyses sentiment and statistics of feedback")
       }
 
       model.addPerson("Prisoner / Young Offender", "A person held in the public prison estate or a Young Offender Institute").apply {
