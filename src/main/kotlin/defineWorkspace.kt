@@ -46,6 +46,7 @@ private val MODEL_ITEMS = listOf(
   ProbationPractitioners,
   ProbationTeamsService,
   Reporting,
+  TierService,
   TokenVerificationApi,
   UserPreferenceApi,
   WhereaboutsApi,
