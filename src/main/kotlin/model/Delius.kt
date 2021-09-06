@@ -18,6 +18,7 @@ class Delius private constructor() {
     lateinit var offenderSearchIndexer: Container
     lateinit var supportTeam: Person
     lateinit var deliusApi: Container
+    lateinit var probationOffenderEvents: Container
 
     override fun defineModelEntities(model: Model) {
 
@@ -78,7 +79,7 @@ class Delius private constructor() {
         ecs.add(this)
       }
 
-      val topic = system.addContainer(
+      probationOffenderEvents = system.addContainer(
         "probation-offender-events topic",
         "Topic receiving notifications on core offender changes",
         "SNS topic"
@@ -93,7 +94,7 @@ class Delius private constructor() {
       ).apply {
         url = "https://github.com/ministryofjustice/probation-offender-events"
         uses(communityApi, "reads offender delta updates from")
-        uses(topic, "notifies", "SNS")
+        uses(probationOffenderEvents, "notifies", "SNS")
         CloudPlatform.kubernetes.add(this)
       }
 
@@ -104,7 +105,7 @@ class Delius private constructor() {
       ).apply {
         url = "https://github.com/ministryofjustice/probation-offender-search-indexer"
         uses(elasticSearchStore, "Indexes offender data from nDelius to the Elasticsearch Index")
-        uses(topic, "to know when to update a record, listens to offender changed events from", "SQS")
+        uses(probationOffenderEvents, "to know when to update a record, listens to offender changed events from", "SQS")
         uses(communityApi, "following received events, retrieves latest offender records from")
         CloudPlatform.kubernetes.add(this)
       }
