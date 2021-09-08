@@ -64,7 +64,7 @@ fun defineGlobalViews(model: Model, views: ViewSet) {
   }
 
   views.createDeploymentView(pathfinder, "PathfinderProductionDeployment", "The Production deployment scenario for the Pathfinder service").apply {
-    addDefaultElements()
+    add(AWS.london)
     enableAutomaticLayout()
   }
 }

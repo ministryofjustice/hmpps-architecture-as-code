@@ -151,7 +151,7 @@ class ManagePOMCases private constructor() {
         "manage-POM-cases-deployment",
         "Deployment overview of the Manage POM Cases service"
       ).apply {
-        addDefaultElements()
+        add(AWS.london)
         removeRelationshipsNotConnectedToElement(system)
         enableAutomaticLayout()
       }

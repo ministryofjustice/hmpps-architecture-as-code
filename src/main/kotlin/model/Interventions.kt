@@ -110,7 +110,7 @@ class Interventions private constructor() {
       }
 
       views.createDeploymentView(system, "interventions-deployment", "Deployment overview of the digital intervention services").apply {
-        addDefaultElements()
+        add(AWS.london)
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
       }
 
