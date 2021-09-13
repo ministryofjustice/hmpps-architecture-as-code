@@ -6,6 +6,7 @@ import com.structurizr.model.Enterprise
 import com.structurizr.model.Location
 import com.structurizr.model.Model
 import com.structurizr.view.ViewSet
+import model.ManageRecalls
 
 private val MODEL_ITEMS = listOf(
   AnalyticalPlatform,
@@ -50,7 +51,8 @@ private val MODEL_ITEMS = listOf(
   TokenVerificationApi,
   UserPreferenceApi,
   WhereaboutsApi,
-  WMT
+  WMT,
+  ManageRecalls
 )
 
 private fun defineModelItems(model: Model) {
