@@ -57,7 +57,6 @@ class PrisonStaffHub private constructor() {
       restrictedPatientsUi.uses(HMPPSAuth.system, "HTTPS Rest API")
       restrictedPatientsUi.uses(TokenVerificationApi.api, "validates API tokens via", "HTTPS Rest API")
       restrictedPatientsUi.uses(RestrictedPatientsApi.api, "HTTPS Rest API")
-
     }
 
     override fun defineViews(views: ViewSet) {
