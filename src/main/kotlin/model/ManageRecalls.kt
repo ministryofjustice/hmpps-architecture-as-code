@@ -11,6 +11,7 @@ import uk.gov.justice.hmpps.architecture.HMPPSAuth
 import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
 import uk.gov.justice.hmpps.architecture.NOMIS
 import uk.gov.justice.hmpps.architecture.annotations.Tags
+import uk.gov.justice.hmpps.architecture.model.PrisonRegister
 
 class ManageRecalls private constructor() {
   companion object : HMPPSSoftwareSystem {
@@ -19,7 +20,6 @@ class ManageRecalls private constructor() {
     lateinit var manageRecallsUiContainer: Container
     lateinit var manageRecallsApiContainer: Container
     lateinit var dbContainer: Container
-    lateinit var prisonsRegisterContainer: Container
 
     override fun defineModelEntities(model: Model) {
 
@@ -37,22 +37,12 @@ class ManageRecalls private constructor() {
         CloudPlatform.rds.add(this)
       }
 
-      prisonsRegisterContainer = system.addContainer(
-        "Prisons Register",
-        "Provides a list of prisons",
-        "Kotlin Spring Boot App"
-      ).apply {
-        CloudPlatform.kubernetes.add(this)
-      }
-
       manageRecallsApiContainer = system.addContainer(
         "Manage Recalls API",
         "REST API for the case management of recalls",
         "Kotlin Spring Boot App"
       ).apply {
         setUrl("https://github.com/ministryofjustice/manage-recalls-api")
-        uses(dbContainer, "queries", "JDBC")
-        uses(prisonsRegisterContainer, "validates prisons", "HTTPS")
         CloudPlatform.kubernetes.add(this)
         CloudPlatform.s3.add(this)
         CloudPlatform.elasticache.add(this)
@@ -65,19 +55,21 @@ class ManageRecalls private constructor() {
       ).apply {
         setUrl("https://github.com/ministryofjustice/manage-recalls-ui")
         Tags.WEB_BROWSER.addTo(this)
-        uses(NOMIS.offenderSearch, "searches for prisoners")
-        uses(manageRecallsApiContainer, "operates on", "HTTPS")
-        uses(prisonsRegisterContainer, "gets prisons", "HTTPS")
         CloudPlatform.kubernetes.add(this)
         CloudPlatform.elasticache.add(this)
       }
 
       ppcsCaseWorker = model.addPerson("PPCS caseworker", "They case manage recalls")
-      ppcsCaseWorker.uses(manageRecallsUiContainer, "visits", "HTTPS")
-      ppcsCaseWorker.uses(HMPPSAuth.system, "Login")
     }
 
     override fun defineRelationships() {
+      ppcsCaseWorker.uses(manageRecallsUiContainer, "visits", "HTTPS")
+      ppcsCaseWorker.uses(HMPPSAuth.system, "logs in")
+      manageRecallsApiContainer.uses(dbContainer, "queries", "JDBC")
+      manageRecallsApiContainer.uses(PrisonRegister.api, "validates prisons", "HTTPS")
+      manageRecallsUiContainer.uses(PrisonRegister.api, "gets prisons", "HTTPS")
+      manageRecallsUiContainer.uses(NOMIS.offenderSearch, "searches for prisoners")
+      manageRecallsUiContainer.uses(manageRecallsApiContainer, "operates on", "HTTPS")
     }
 
     override fun defineViews(views: ViewSet) {

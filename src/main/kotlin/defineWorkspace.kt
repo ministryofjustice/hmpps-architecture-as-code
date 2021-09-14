@@ -7,6 +7,7 @@ import com.structurizr.model.Location
 import com.structurizr.model.Model
 import com.structurizr.view.ViewSet
 import model.ManageRecalls
+import uk.gov.justice.hmpps.architecture.model.PrisonRegister
 
 private val MODEL_ITEMS = listOf(
   AnalyticalPlatform,
@@ -52,7 +53,8 @@ private val MODEL_ITEMS = listOf(
   UserPreferenceApi,
   WhereaboutsApi,
   WMT,
-  ManageRecalls
+  ManageRecalls,
+  PrisonRegister
 )
 
 private fun defineModelItems(model: Model) {
