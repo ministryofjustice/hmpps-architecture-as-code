@@ -23,7 +23,7 @@ class PrisonRegister private constructor() {
         url = "https://github.com/ministryofjustice/prison-register"
       }
 
-      val db = system.addContainer("Database", "Storage for court information", "PostgreSQL").apply {
+      val db = system.addContainer("Database", "Storage for prison information", "PostgreSQL").apply {
         Tags.DATABASE.addTo(this)
       }
 
