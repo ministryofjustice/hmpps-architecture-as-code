@@ -6,10 +6,7 @@ import com.structurizr.model.Person
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
-import uk.gov.justice.hmpps.architecture.CloudPlatform
-import uk.gov.justice.hmpps.architecture.HMPPSAuth
-import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
-import uk.gov.justice.hmpps.architecture.NOMIS
+import uk.gov.justice.hmpps.architecture.*
 import uk.gov.justice.hmpps.architecture.annotations.Tags
 import uk.gov.justice.hmpps.architecture.model.PrisonRegister
 
@@ -63,6 +60,8 @@ class ManageRecalls private constructor() {
     }
 
     override fun defineRelationships() {
+      listOf(manageRecallsApiContainer, manageRecallsUiContainer)
+        .forEach { it.uses(HMPPSAuth.system, "authenticates via") }
       ppcsCaseWorker.uses(manageRecallsUiContainer, "visits", "HTTPS")
       ppcsCaseWorker.uses(HMPPSAuth.system, "logs in")
       manageRecallsApiContainer.uses(dbContainer, "queries", "JDBC")
