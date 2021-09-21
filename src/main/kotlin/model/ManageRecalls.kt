@@ -63,6 +63,8 @@ class ManageRecalls private constructor() {
     }
 
     override fun defineRelationships() {
+      listOf(manageRecallsApiContainer, manageRecallsUiContainer)
+        .forEach { it.uses(HMPPSAuth.system, "authenticates via") }
       ppcsCaseWorker.uses(manageRecallsUiContainer, "visits", "HTTPS")
       ppcsCaseWorker.uses(HMPPSAuth.system, "logs in")
       manageRecallsApiContainer.uses(dbContainer, "queries", "JDBC")
