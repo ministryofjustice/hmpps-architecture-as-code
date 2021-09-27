@@ -8,7 +8,7 @@ application {
 }
 
 repositories {
-  jcenter()
+  mavenCentral()
 }
 
 dependencies {
@@ -16,5 +16,14 @@ dependencies {
   implementation("com.structurizr:structurizr-client:1.9.3")
   implementation("com.structurizr:structurizr-core:1.9.3")
   implementation("com.structurizr:structurizr-adr-tools:1.3.7")
+  implementation("com.structurizr:structurizr-export:1.0.1")
   implementation("org.eclipse.jgit:org.eclipse.jgit:5.11.0.202103091610-r")
+
+  testImplementation("org.assertj:assertj-core:3.19.0")
+  testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.2")
+  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.5.2")
+}
+
+val test by tasks.getting(Test::class) {
+  useJUnitPlatform()
 }

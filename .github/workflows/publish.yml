@@ -22,4 +22,4 @@ jobs:
         env:
           STRUCTURIZR_API_KEY: ${{ secrets.STRUCTURIZR_API_KEY }}
           STRUCTURIZR_API_SECRET: ${{ secrets.STRUCTURIZR_API_SECRET }}
-        run: .github/workflows/set_version ./gradlew run --args='--push'
+        run: .github/workflows/set_version ./gradlew run --args='--push --backstage'
