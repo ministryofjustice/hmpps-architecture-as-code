@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - main
+      - jb/DT-2597-backstage-export
 
 jobs:
   publish:
@@ -22,4 +23,19 @@ jobs:
         env:
           STRUCTURIZR_API_KEY: ${{ secrets.STRUCTURIZR_API_KEY }}
           STRUCTURIZR_API_SECRET: ${{ secrets.STRUCTURIZR_API_SECRET }}
-        run: .github/workflows/set_version ./gradlew run --args='--push --backstage'
+        run: |
+          .github/workflows/set_version ./gradlew run --args='--backstage'
+          ls -l exports
+      - uses: actions/checkout@v2
+        with:
+          ref: backstage-export
+          path: backstage
+      - name: Publish backstage catalog
+        run: |
+          cp ./exports/backstage-*.yaml backstage/exports/
+          cd backstage
+          git config --global user.name "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
+          git config --global user.email "<${{ github.actor }}@users.noreply.github.com>"
+          git add exports/backstage-*.yaml
+          git commit -m "backstage catalog export at $(date)" --allow-empty
+          git push
