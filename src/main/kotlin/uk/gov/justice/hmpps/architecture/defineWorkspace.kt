@@ -6,11 +6,11 @@ import com.structurizr.model.Enterprise
 import com.structurizr.model.Location
 import com.structurizr.model.Model
 import com.structurizr.view.ViewSet
-import uk.gov.justice.hmpps.architecture.model.KeyworkerApi
-import uk.gov.justice.hmpps.architecture.model.ManageRecalls
-import uk.gov.justice.hmpps.architecture.model.PrisonRegister
-import uk.gov.justice.hmpps.architecture.model.PrisonStaffHub
-import uk.gov.justice.hmpps.architecture.model.RestrictedPatientsApi
+import uk.gov.justice.hmpps.architecture.model.AWS
+import uk.gov.justice.hmpps.architecture.model.AnalyticalPlatform
+import uk.gov.justice.hmpps.architecture.model.AssessRisksAndNeeds
+import uk.gov.justice.hmpps.architecture.model.Azure
+import uk.gov.justice.hmpps.architecture.model.AzureADTenantJusticeUK
 import uk.gov.justice.hmpps.architecture.model.BookVideoLink
 import uk.gov.justice.hmpps.architecture.model.CRCSystem
 import uk.gov.justice.hmpps.architecture.model.CaseNotesToProbation
@@ -29,9 +29,11 @@ import uk.gov.justice.hmpps.architecture.model.Heroku
 import uk.gov.justice.hmpps.architecture.model.IM
 import uk.gov.justice.hmpps.architecture.model.InterventionTeams
 import uk.gov.justice.hmpps.architecture.model.Interventions
+import uk.gov.justice.hmpps.architecture.model.KeyworkerApi
 import uk.gov.justice.hmpps.architecture.model.Licences
 import uk.gov.justice.hmpps.architecture.model.ManageASupervision
 import uk.gov.justice.hmpps.architecture.model.ManagePOMCases
+import uk.gov.justice.hmpps.architecture.model.ManageRecalls
 import uk.gov.justice.hmpps.architecture.model.MoJSignOn
 import uk.gov.justice.hmpps.architecture.model.NDH
 import uk.gov.justice.hmpps.architecture.model.NID
@@ -40,6 +42,8 @@ import uk.gov.justice.hmpps.architecture.model.NationalPrisonRadio
 import uk.gov.justice.hmpps.architecture.model.OASys
 import uk.gov.justice.hmpps.architecture.model.PolicyTeams
 import uk.gov.justice.hmpps.architecture.model.PrepareCaseForSentence
+import uk.gov.justice.hmpps.architecture.model.PrisonRegister
+import uk.gov.justice.hmpps.architecture.model.PrisonStaffHub
 import uk.gov.justice.hmpps.architecture.model.PrisonToProbationUpdate
 import uk.gov.justice.hmpps.architecture.model.PrisonVisitsBooking
 import uk.gov.justice.hmpps.architecture.model.PrisonerContentHub
@@ -48,16 +52,12 @@ import uk.gov.justice.hmpps.architecture.model.ProbationCaseSampler
 import uk.gov.justice.hmpps.architecture.model.ProbationPractitioners
 import uk.gov.justice.hmpps.architecture.model.ProbationTeamsService
 import uk.gov.justice.hmpps.architecture.model.Reporting
+import uk.gov.justice.hmpps.architecture.model.RestrictedPatientsApi
 import uk.gov.justice.hmpps.architecture.model.TierService
 import uk.gov.justice.hmpps.architecture.model.TokenVerificationApi
 import uk.gov.justice.hmpps.architecture.model.UserPreferenceApi
 import uk.gov.justice.hmpps.architecture.model.WMT
 import uk.gov.justice.hmpps.architecture.model.WhereaboutsApi
-import uk.gov.justice.hmpps.architecture.model.AWS
-import uk.gov.justice.hmpps.architecture.model.AnalyticalPlatform
-import uk.gov.justice.hmpps.architecture.model.AssessRisksAndNeeds
-import uk.gov.justice.hmpps.architecture.model.Azure
-import uk.gov.justice.hmpps.architecture.model.AzureADTenantJusticeUK
 
 private val MODEL_ITEMS = listOf(
   AnalyticalPlatform,

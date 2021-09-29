@@ -6,9 +6,9 @@ import com.structurizr.model.Person
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
+import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
 import uk.gov.justice.hmpps.architecture.annotations.ProblemArea
 import uk.gov.justice.hmpps.architecture.annotations.Tags
-import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
 
 class Reporting private constructor() {
   companion object : HMPPSSoftwareSystem {

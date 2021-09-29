@@ -81,16 +81,18 @@ class BackstageExporter : AbstractExporter() {
 
     val relationships = container.relationships.map { it.destination }.filterIsInstance<Container>()
 
-    when { relationships.isNotEmpty() -> {
-      indent()
-      writeLine("dependsOn:")
-      relationships.forEach {
+    when {
+      relationships.isNotEmpty() -> {
         indent()
-        writeLine("- Component:${it.backstageId()}")
+        writeLine("dependsOn:")
+        relationships.forEach {
+          indent()
+          writeLine("- Component:${it.backstageId()}")
+          outdent()
+        }
         outdent()
       }
-      outdent()
-    }}
+    }
   }
 
   fun export(workspace: Workspace): String {

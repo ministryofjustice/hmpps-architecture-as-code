@@ -4,14 +4,14 @@ import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
+import uk.gov.justice.hmpps.architecture.annotations.ProblemArea
+import uk.gov.justice.hmpps.architecture.model.AWS
+import uk.gov.justice.hmpps.architecture.model.AzureADTenantJusticeUK
 import uk.gov.justice.hmpps.architecture.model.Delius
 import uk.gov.justice.hmpps.architecture.model.HMPPSAuth
 import uk.gov.justice.hmpps.architecture.model.MoJSignOn
 import uk.gov.justice.hmpps.architecture.model.NDH
 import uk.gov.justice.hmpps.architecture.model.NOMIS
-import uk.gov.justice.hmpps.architecture.annotations.ProblemArea
-import uk.gov.justice.hmpps.architecture.model.AWS
-import uk.gov.justice.hmpps.architecture.model.AzureADTenantJusticeUK
 
 fun defineGlobalViews(model: Model, views: ViewSet) {
   views.createSystemLandscapeView("system-overview", "All systems").apply {

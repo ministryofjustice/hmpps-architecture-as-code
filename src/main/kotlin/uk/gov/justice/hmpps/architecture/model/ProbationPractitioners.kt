@@ -3,8 +3,8 @@ package uk.gov.justice.hmpps.architecture.model
 import com.structurizr.model.Model
 import com.structurizr.model.Person
 import com.structurizr.view.ViewSet
-import uk.gov.justice.hmpps.architecture.annotations.Tags
 import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
+import uk.gov.justice.hmpps.architecture.annotations.Tags
 
 class ProbationPractitioners private constructor() {
   companion object : HMPPSSoftwareSystem {
