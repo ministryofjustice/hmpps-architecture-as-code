@@ -9,6 +9,41 @@ import uk.gov.justice.hmpps.architecture.annotations.Tags
 
 class BackstageExporter : AbstractExporter() {
 
+  fun export(workspace: Workspace): String {
+    val writer = IndentingWriter()
+    workspace.model.softwareSystems.forEach { writer.writeSystem(it) }
+    return writer.toString()
+  }
+
+  private fun IndentingWriter.writeSystem(softwareSystem: SoftwareSystem) {
+    writeSystemHeader()
+    writeMetadata(softwareSystem)
+    writeSpec(softwareSystem)
+
+    softwareSystem.containers.forEach { writeComponent(it) }
+  }
+
+  private fun IndentingWriter.writeComponent(container: Container) {
+    writeComponentHeader()
+    writeMetadata(container)
+    writeSpec(container)
+
+    val relationships = container.relationships.map { it.destination }.filterIsInstance<Container>()
+
+    when {
+      relationships.isNotEmpty() -> {
+        indent()
+        writeLine("dependsOn:")
+        relationships.forEach {
+          indent()
+          writeLine("- Component:${it.backstageId()}")
+          outdent()
+        }
+        outdent()
+      }
+    }
+  }
+
   private fun IndentingWriter.writeSystemHeader() {
     writeLine("---")
     writeLine("apiVersion: backstage.io/v1alpha1")
@@ -66,50 +101,15 @@ class BackstageExporter : AbstractExporter() {
     outdent()
   }
 
-  private fun IndentingWriter.writeSystem(softwareSystem: SoftwareSystem) {
-    writeSystemHeader()
-    writeMetadata(softwareSystem)
-    writeSpec(softwareSystem)
-
-    softwareSystem.containers.forEach { writeComponent(it) }
+  private fun SoftwareSystem.backstageId(): String {
+    return backstageId(this.name)
   }
 
-  private fun IndentingWriter.writeComponent(container: Container) {
-    writeComponentHeader()
-    writeMetadata(container)
-    writeSpec(container)
-
-    val relationships = container.relationships.map { it.destination }.filterIsInstance<Container>()
-
-    when {
-      relationships.isNotEmpty() -> {
-        indent()
-        writeLine("dependsOn:")
-        relationships.forEach {
-          indent()
-          writeLine("- Component:${it.backstageId()}")
-          outdent()
-        }
-        outdent()
-      }
-    }
+  private fun Container.backstageId(): String {
+    return backstageId("s" + this.softwareSystem.id + "_" + this.name)
   }
 
-  fun export(workspace: Workspace): String {
-    val writer = IndentingWriter()
-    workspace.model.softwareSystems.forEach { writer.writeSystem(it) }
-    return writer.toString()
+  private fun backstageId(name: String): String {
+    return name.lowercase().replace(Regex("""[^a-z0-9]+"""), "-")
   }
-}
-
-private fun SoftwareSystem.backstageId(): String {
-  return backstageId(this.name)
-}
-
-private fun Container.backstageId(): String {
-  return backstageId("s" + this.softwareSystem.id + "_" + this.name)
-}
-
-private fun backstageId(name: String): String {
-  return name.lowercase().replace(Regex("""[^a-z0-9]+"""), "-")
 }

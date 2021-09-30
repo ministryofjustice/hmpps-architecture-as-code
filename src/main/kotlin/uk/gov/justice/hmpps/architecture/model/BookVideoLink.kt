@@ -20,7 +20,7 @@ class BookVideoLink private constructor() {
     lateinit var courtStaff: Person
 
     override fun defineModelEntities(model: Model) {
-      Companion.model = model
+      this.model = model
 
       system = model.addSoftwareSystem(
         "Book Video Link",

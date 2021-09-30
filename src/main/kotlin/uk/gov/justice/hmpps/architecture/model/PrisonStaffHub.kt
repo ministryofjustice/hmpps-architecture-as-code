@@ -16,7 +16,7 @@ class PrisonStaffHub private constructor() {
     lateinit var restrictedPatientsUi: Container
 
     override fun defineModelEntities(model: Model) {
-      Companion.model = model
+      this.model = model
 
       system = model.addSoftwareSystem(
         "Prison Staff Hub",

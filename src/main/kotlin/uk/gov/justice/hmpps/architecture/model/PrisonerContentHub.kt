@@ -22,7 +22,7 @@ class PrisonerContentHub private constructor() {
      * TODO: add BT PINS
      **/
     override fun defineModelEntities(model: Model) {
-      Companion.model = model
+      this.model = model
 
       system = model.addSoftwareSystem(
         "Prisoner Content Hub",
