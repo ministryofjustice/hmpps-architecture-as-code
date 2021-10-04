@@ -1,6 +1,7 @@
 package uk.gov.justice.hmpps.architecture
 
 import com.structurizr.Workspace
+import com.structurizr.graphviz.GraphvizAutomaticLayout
 import com.structurizr.model.CreateImpliedRelationshipsUnlessSameRelationshipExistsStrategy
 import com.structurizr.model.Enterprise
 import com.structurizr.model.Location
@@ -58,6 +59,7 @@ import uk.gov.justice.hmpps.architecture.model.TokenVerificationApi
 import uk.gov.justice.hmpps.architecture.model.UserPreferenceApi
 import uk.gov.justice.hmpps.architecture.model.WMT
 import uk.gov.justice.hmpps.architecture.model.WhereaboutsApi
+import java.io.File
 
 private val MODEL_ITEMS = listOf(
   AnalyticalPlatform,
@@ -154,6 +156,9 @@ fun defineWorkspace(): Workspace {
   defineStyles(workspace.views.configuration.styles)
   defineDocumentation(workspace)
   pullADRs(workspace)
+
+  val graphviz = GraphvizAutomaticLayout(File("./exports"))
+  graphviz.apply(workspace)
 
   return workspace
 }
