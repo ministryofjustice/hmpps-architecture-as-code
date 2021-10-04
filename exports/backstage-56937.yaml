@@ -2,6 +2,9 @@
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: analytical-platform
+  title: "Analytical Platform"
+  description: ""
 spec:
   owner: hmpps-undefined
 ---
@@ -19,6 +22,9 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: assess-risks-and-needs
+  title: "Assess Risks And Needs"
+  description: "Digital Service for ongoing offender risk and needs assessments, gathering offender risks and needs information, calculating risk scores, showing changes over time"
 spec:
   owner: hmpps-undefined
 ---
@@ -104,6 +110,9 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: azure-ad-justiceuk-tenant
+  title: "Azure AD JusticeUK Tenant"
+  description: "Azure AD tenant synced with uses from the on-prem Atos AD domain (DOM1)"
 spec:
   owner: hmpps-undefined
 ---
@@ -121,6 +130,9 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: book-video-link
+  title: "Book Video Link"
+  description: "The Book video link service allows court users to book video conferencing rooms inside a prison to allow Prisoners to attend court sessions."
 spec:
   owner: hmpps-undefined
 ---
@@ -144,12 +156,18 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: case-notes-to-probation
+  title: "Case Notes to Probation"
+  description: "Polls for case notes and pushes them to probation systems"
 spec:
   owner: hmpps-undefined
 ---
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: complexity-of-need-microservice
+  title: "Complexity of Need Microservice"
+  description: "A microservice for Complexity of Need Levels"
 spec:
   owner: hmpps-undefined
 ---
@@ -205,6 +223,9 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: court-register
+  title: "Court register"
+  description: "Provides and creates appointment information about prisoners"
 spec:
   owner: hmpps-undefined
 ---
@@ -236,18 +257,27 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: integrated-crc-software-systems
+  title: "Integrated CRC software systems"
+  description: "Various systems used to plan, schedule, manage interventions and bookings"
 spec:
   owner: hmpps-undefined
 ---
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: standalone-crc-software-systems
+  title: "Standalone CRC software systems"
+  description: "Various systems used to plan, schedule, manage interventions and bookings"
 spec:
   owner: hmpps-undefined
 ---
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: curious
+  title: "Curious"
+  description: "(Contract management system for prison education providers"
 spec:
   owner: hmpps-undefined
 ---
@@ -265,12 +295,18 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: dps-used-by-digital-prison-team-applications-and-services
+  title: "DPS - used by Digital Prison team applications and services"
+  description: "HTTPS"
 spec:
   owner: hmpps-undefined
 ---
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: ndelius
+  title: "nDelius"
+  description: "(National Delius) Supporting the management of offenders and delivering national reporting and performance monitoring data"
 spec:
   owner: hmpps-undefined
 ---
@@ -395,6 +431,9 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: digital-prisons-network
+  title: "Digital Prisons Network"
+  description: "Provides in-cell devices and access to digital services to prisoners"
 spec:
   owner: hmpps-undefined
 ---
@@ -412,18 +451,27 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: epf
+  title: "EPF"
+  description: "(Effective Proposal Framework) Presents sentencing options to NPS staff in court who are providing sentencing advice to sentencers"
 spec:
   owner: hmpps-undefined
 ---
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: equip
+  title: "EQuiP"
+  description: "Central repository for all step-by-step business processes and policy documents in probation"
 spec:
   owner: hmpps-undefined
 ---
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: hmpps-auth
+  title: "HMPPS Auth"
+  description: "Allows users to login into digital services"
 spec:
   owner: hmpps-undefined
 ---
@@ -458,18 +506,27 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: hmpps-domain-events
+  title: "hmpps-domain-events"
+  description: "Domain-wide Event Topic implemented with AWS Simple Notification Service"
 spec:
   owner: hmpps-undefined
 ---
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: interventions-manager
+  title: "Interventions Manager"
+  description: "(IM) Used to schedule accredited programmes and record service users' progress on them"
 spec:
   owner: hmpps-undefined
 ---
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: refer-and-monitor-an-intervention
+  title: "Refer and monitor an intervention"
+  description: "Refer and monitor an intervention for service users (offenders)"
 spec:
   owner: hmpps-undefined
 ---
@@ -534,6 +591,9 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: keyworker-api
+  title: "Keyworker API"
+  description: "Provides and creates information about keyworkers of prisoners"
 spec:
   owner: hmpps-undefined
 ---
@@ -567,12 +627,18 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: licences
+  title: "Licences"
+  description: "This system is a stub. Please help us expand it."
 spec:
   owner: hmpps-undefined
 ---
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: moj-signon
+  title: "MoJ SignOn"
+  description: "Allows users to login into digital services"
 spec:
   owner: hmpps-undefined
 ---
@@ -603,12 +669,18 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: national-prison-radio
+  title: "National Prison Radio"
+  description: "The national radio station for prisoners. Made by prisoners, for prisoners"
 spec:
   owner: hmpps-undefined
 ---
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: ndh
+  title: "NDH"
+  description: "(NOMIS Data Hub) Responsible for pulling/pushing data between HMPPS case management systems"
 spec:
   owner: hmpps-undefined
 ---
@@ -659,12 +731,18 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: nid
+  title: "NID"
+  description: "(Deprecated) (National Intervention Database) Spreadsheet to store intervention details"
 spec:
   owner: hmpps-undefined
 ---
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: nomis
+  title: "NOMIS"
+  description: "(National Offender Management Information System) The case management system for offender data in use in custody - both public and private prisons"
 spec:
   owner: hmpps-undefined
 ---
@@ -758,6 +836,9 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: oasys
+  title: "OASys"
+  description: "(Offender Assessment System) Assesses the risks and needs of offenders"
 spec:
   owner: hmpps-undefined
 ---
@@ -814,6 +895,9 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: manage-pom-cases
+  title: "Manage POM Cases"
+  description: "A service for handling the handover of offenders from prison to probation"
 spec:
   owner: hmpps-undefined
 ---
@@ -873,6 +957,9 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: manage-a-supervision
+  title: "Manage A Supervision"
+  description: "Digital service to support probation practitioners in managing probation supervisions, including viewing service user history and booking appointments."
 spec:
   owner: hmpps-undefined
 ---
@@ -893,6 +980,9 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: prisoner-money
+  title: "Prisoner Money"
+  description: "Prisoner Money"
 spec:
   owner: hmpps-undefined
 ---
@@ -991,24 +1081,36 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: natwest
+  title: "Natwest"
+  description: "FTP server within natwest into which they place bank transaction records in propriatory bankline format"
 spec:
   owner: hmpps-undefined
 ---
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: worldpay
+  title: "worldpay"
+  description: "WorldPay payment service"
 spec:
   owner: hmpps-undefined
 ---
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: gov-pay
+  title: "Gov.Pay"
+  description: "Centralized goverment payment portal"
 spec:
   owner: hmpps-undefined
 ---
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: prepare-a-case-for-sentence
+  title: "Prepare a Case for Sentence"
+  description: "Digital Service for Probation Officers working in magistrates' courts, providing them with a single location to access the defendant information they need to provide sound and timely sentencing guidance to magistrates"
 spec:
   owner: hmpps-undefined
 ---
@@ -1106,12 +1208,18 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: hmcts-crime-portal
+  title: "HMCTS Crime Portal"
+  description: "Case Management for HMCTS holding data relating to court cases"
 spec:
   owner: hmpps-undefined
 ---
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: prisoner-content-hub
+  title: "Prisoner Content Hub"
+  description: "The Prisoner Content Hub is a platform for prisoners to access data, content and services supporting individual progression and freeing up staff time."
 spec:
   owner: hmpps-undefined
 ---
@@ -1243,6 +1351,9 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: prison-staff-hub
+  title: "Prison Staff Hub"
+  description: "Gives Prison Staff access to the data and operation they need on a day-to-day basis. Contains a subset of the functionality in C-NOMIS."
 spec:
   owner: hmpps-undefined
 ---
@@ -1299,12 +1410,18 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: prison-to-probation-update
+  title: "Prison to Probation Update"
+  description: "Listens for events from Prison systems (NOMIS) to update offender sentence information in Probation systems (Delius)"
 spec:
   owner: hmpps-undefined
 ---
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: prison-visits-booking
+  title: "Prison Visits Booking"
+  description: "A service for booking a social visit to a prisoner in England or Wales"
 spec:
   owner: hmpps-undefined
 ---
@@ -1387,12 +1504,18 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: probation-case-sampler
+  title: "Probation Case Sampler"
+  description: "API which produces a representative and evenly distributed list of probation cases within a region and date range which form the basis of an on-site inspection"
 spec:
   owner: hmpps-undefined
 ---
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: probation-team-contact-and-reference-service
+  title: "Probation team contact and reference service"
+  description: "Exposes probation areas and Local Delivery Unit 'functional' mailboxes as an API"
 spec:
   owner: hmpps-undefined
 ---
@@ -1424,6 +1547,9 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: ndmis
+  title: "NDMIS"
+  description: "(National Delius Management Information System) Provides reporting on nDelius data"
 spec:
   owner: hmpps-undefined
 ---
@@ -1466,6 +1592,9 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: restricted-patients-api
+  title: "Restricted Patients API"
+  description: "Provides and creates information about restricted patiente"
 spec:
   owner: hmpps-undefined
 ---
@@ -1499,6 +1628,9 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: tier-service
+  title: "Tier Service"
+  description: "Calculates and stores unified tier scores, representing the risk and needs of people under supervision"
 spec:
   owner: hmpps-undefined
 ---
@@ -1556,6 +1688,9 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: token-verification-api
+  title: "Token verification API"
+  description: "Verifies API tokens issues by HMPPs Auth to ensure they haven't expired or been revoked"
 spec:
   owner: hmpps-undefined
 ---
@@ -1586,6 +1721,9 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: user-preference-api
+  title: "User Preference API"
+  description: "Stores preference information associated with a HMPPs Auth User"
 spec:
   owner: hmpps-undefined
 ---
@@ -1617,6 +1755,9 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: whereabouts-api
+  title: "Whereabouts API"
+  description: "Provides and creates appointment information about prisoners"
 spec:
   owner: hmpps-undefined
 ---
@@ -1649,12 +1790,18 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: workload-measurement-tool
+  title: "Workload Measurement Tool"
+  description: "(WMT) Helps probation practitioners schedule their time based on service user risk"
 spec:
   owner: hmpps-undefined
 ---
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: manage-recalls
+  title: "Manage Recalls"
+  description: "The case management system for recalls"
 spec:
   owner: hmpps-undefined
 ---
@@ -1701,6 +1848,9 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: prison-register
+  title: "Prison register"
+  description: "Provides a reference data around prisons"
 spec:
   owner: hmpps-undefined
 ---
@@ -1732,6 +1882,9 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: pathfinder
+  title: "Pathfinder"
+  description: "The case management system for Pathfinder nominals"
 spec:
   owner: hmpps-undefined
 ---
