@@ -3,6 +3,9 @@ structurizr-*.json
 structurizr-*.puml
 structurizr-*.png
 
+# backstage export
+backstage-*.yaml
+
 # generated documentation
 docs/
 
