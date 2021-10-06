@@ -14,7 +14,12 @@ import uk.gov.justice.hmpps.architecture.export.backstage.model.BackstageAPISpec
 import uk.gov.justice.hmpps.architecture.export.backstage.model.BackstageAPISpecType.OPEN_API
 import uk.gov.justice.hmpps.architecture.export.backstage.model.BackstageComponent
 import uk.gov.justice.hmpps.architecture.export.backstage.model.BackstageComponentSpec
+import uk.gov.justice.hmpps.architecture.export.backstage.model.BackstageComponentSpecType
+import uk.gov.justice.hmpps.architecture.export.backstage.model.BackstageComponentSpecType.DATABASE
+import uk.gov.justice.hmpps.architecture.export.backstage.model.BackstageComponentSpecType.FRONTEND
+import uk.gov.justice.hmpps.architecture.export.backstage.model.BackstageComponentSpecType.QUEUE
 import uk.gov.justice.hmpps.architecture.export.backstage.model.BackstageComponentSpecType.SERVICE
+import uk.gov.justice.hmpps.architecture.export.backstage.model.BackstageComponentSpecType.TOPIC
 import uk.gov.justice.hmpps.architecture.export.backstage.model.BackstageLifecycle
 import uk.gov.justice.hmpps.architecture.export.backstage.model.BackstageLifecycle.DEPRECATED
 import uk.gov.justice.hmpps.architecture.export.backstage.model.BackstageLifecycle.PRODUCTION
@@ -22,6 +27,7 @@ import uk.gov.justice.hmpps.architecture.export.backstage.model.BackstageMetadat
 import uk.gov.justice.hmpps.architecture.export.backstage.model.BackstageMetadataLink
 import uk.gov.justice.hmpps.architecture.export.backstage.model.BackstageMetadataLinkIcon.GITHUB
 import uk.gov.justice.hmpps.architecture.export.backstage.model.BackstageSystem
+import java.util.Locale
 
 class BackstageExporter(private val openApiSpecFinder: OpenApiSpecFinder = OpenApiSpecFinder()) {
 
@@ -79,9 +85,19 @@ class BackstageExporter(private val openApiSpecFinder: OpenApiSpecFinder = OpenA
     return if (hasTag(Tags.DEPRECATED.name)) DEPRECATED else PRODUCTION
   }
 
+  private fun Container.type(): BackstageComponentSpecType {
+    return when {
+      hasTag(Tags.DATABASE.name) -> DATABASE
+      hasTag(Tags.QUEUE.name) -> QUEUE
+      hasTag(Tags.TOPIC.name) -> TOPIC
+      hasTag(Tags.WEB_BROWSER.name) -> FRONTEND
+      else -> SERVICE
+    }
+  }
+
   private fun Container.api(): BackstageAPI? {
     return properties[API_DOCS_URL]
-      ?.let { openApiSpecFinder.findOpenApiSpecFor(it) }
+      ?.let { openApiSpecFinder.deriveApiSpecFor(it) }
       ?.let {
         BackstageAPI(
           metadata = BackstageMetadata(
@@ -113,10 +129,10 @@ class BackstageExporter(private val openApiSpecFinder: OpenApiSpecFinder = OpenA
         annotations = url?.let { mapOf("backstage.io/source-location" to "url:$url") }
       ),
       spec = BackstageComponentSpec(
-        type = SERVICE,
+        type = type(),
         lifecycle = lifecycle(),
         system = softwareSystem.backstageId(),
-        providesApis = api?.let { listOf(it.metadata.name) },
+        providesApis = listOfNotNull(api?.metadata?.name),
         consumesApis = relationships.map { it.backstageId() },
         dependsOn = relationships.map { "Component:${it.backstageId()}" },
       ),
@@ -125,11 +141,20 @@ class BackstageExporter(private val openApiSpecFinder: OpenApiSpecFinder = OpenA
   }
 
   private fun SoftwareSystem.backstageId(): String {
-    return backstageId(this.name)
+    return backstageId(name)
   }
 
   private fun Container.backstageId(): String {
-    return backstageId(this.name)
+    val idWithContext = backstageId("${softwareSystem.name}-$name")
+    val genericContainerName = "^(database|backend|frontend)$".toRegex()
+
+    if (genericContainerName.matches(name.lowercase(Locale.getDefault()))) return idWithContext
+
+    if ("api".equals(name, ignoreCase = true)) {
+      return if (softwareSystem.name.endsWith("api", ignoreCase = true)) softwareSystem.name else idWithContext
+    }
+
+    return backstageId(name)
   }
 
   private fun backstageId(name: String): String {

@@ -5,10 +5,13 @@ import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonInclude.Include.NON_EMPTY
 import com.fasterxml.jackson.annotation.JsonProperty
 import uk.gov.justice.hmpps.architecture.export.backstage.model.BackstageModelType.COMPONENT
-import uk.gov.justice.hmpps.architecture.export.backstage.model.BackstageModelType.SYSTEM
 
 enum class BackstageComponentSpecType {
   @JsonProperty("service") SERVICE,
+  @JsonProperty("database") DATABASE,
+  @JsonProperty("queue") QUEUE,
+  @JsonProperty("topic") TOPIC,
+  @JsonProperty("frontend") FRONTEND,
 }
 
 @JsonInclude(NON_EMPTY)
@@ -17,9 +20,9 @@ data class BackstageComponentSpec(
   val lifecycle: BackstageLifecycle,
   val system: String,
   val owner: String = "hmpps-undefined",
-  val dependsOn: List<String>? = null,
-  val providesApis: List<String>? = null,
-  val consumesApis: List<String>? = null,
+  val dependsOn: List<String> = emptyList(),
+  val providesApis: List<String> = emptyList(),
+  val consumesApis: List<String> = emptyList(),
 )
 
 data class BackstageComponent(
@@ -27,7 +30,5 @@ data class BackstageComponent(
   val spec: BackstageComponentSpec,
 
   @JsonIgnore
-  val api: BackstageAPI? = null
+  val api: BackstageAPI? = null,
 ) : BackstageModel(kind = COMPONENT, metadata = metadata)
-
-

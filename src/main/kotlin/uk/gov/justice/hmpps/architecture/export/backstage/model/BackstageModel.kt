@@ -15,4 +15,3 @@ abstract class BackstageModel(
   val kind: BackstageModelType,
   open val metadata: BackstageMetadata,
 )
-

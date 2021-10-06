@@ -23,5 +23,3 @@ data class BackstageAPI(
   override val metadata: BackstageMetadata,
   val spec: BackstageAPISpec,
 ) : BackstageModel(kind = API, metadata = metadata)
-
-

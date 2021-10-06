@@ -14,5 +14,3 @@ data class BackstageSystem(
   @JsonIgnore
   val components: List<BackstageComponent> = emptyList()
 ) : BackstageModel(kind = SYSTEM, metadata = metadata)
-
-

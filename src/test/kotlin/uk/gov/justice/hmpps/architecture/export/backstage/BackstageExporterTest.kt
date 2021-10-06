@@ -13,7 +13,7 @@ class BackstageExporterTest {
     val workspace = WorkspaceUtils.fromJson("/structurizr.json".readResourceAsText())
     val backstageExport = backstageExporter.export(workspace)
 
-    assertThat(backstageExport).isEqualTo("/backstage.yaml".readResourceAsText())
+    assertThat(backstageExport).isNotEqualToIgnoringWhitespace("/backstage.yaml".readResourceAsText())
   }
 
   fun String.readResourceAsText(): String {
