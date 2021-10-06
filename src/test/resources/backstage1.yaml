@@ -1,0 +1,42 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: hmpps-auth
+  title: "HMPPS Auth"
+  description: "Allows users to login into digital services"
+spec:
+  owner: hmpps-undefined
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: s31-internal-auth-database
+  title: "Internal Auth Database"
+  description: "Holds explicit credentials, roles, multi-factor settings and banning data"
+spec:
+  type: service
+  lifecycle: production
+  owner: hmpps-undefined
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: s31-hmpps-auth
+  title: "HMPPS Auth"
+  description: "UI and OAuth2 server"
+spec:
+  type: service
+  lifecycle: production
+  owner: hmpps-undefined
+  dependsOn:
+    - Component:s31-internal-auth-database
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: dps-used-by-digital-prison-team-applications-and-services
+  title: "DPS - used by Digital Prison team applications and services"
+  description: "HTTPS"
+spec:
+  owner: hmpps-undefined

@@ -3,7 +3,7 @@ package uk.gov.justice.hmpps.architecture
 import com.structurizr.Workspace
 import com.structurizr.api.StructurizrClient
 import com.structurizr.util.WorkspaceUtils
-import uk.gov.justice.hmpps.architecture.export.BackstageExporter
+import uk.gov.justice.hmpps.architecture.export.backstage.BackstageExporter
 import java.io.File
 
 object App {

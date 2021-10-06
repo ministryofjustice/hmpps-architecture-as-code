@@ -1,0 +1,18 @@
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "System"
+metadata:
+  name: "hmpps-auth"
+  title: "HMPPS Auth"
+  description: "Allows users to login into digital services"
+spec:
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "System"
+metadata:
+  name: "prison-staff-hub"
+  title: "Prison Staff Hub"
+  description: "The web app that contains the main features"
+spec:
+  owner: "hmpps-undefined"

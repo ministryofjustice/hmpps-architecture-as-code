@@ -10,7 +10,7 @@ class APIDocs(private val url: String) {
 
   companion object {
     fun getFrom(element: Element): String? {
-      return element.properties["api-docs-url"]
+      return element.properties[""]
     }
   }
 }

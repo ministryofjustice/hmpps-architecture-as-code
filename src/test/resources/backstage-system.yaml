@@ -1,0 +1,7 @@
+---
+kind: "System"
+apiVersion: "backstage.io/v1alpha1"
+metadata:
+  name: "system1"
+  title: "System 1"
+  description: "System 1 description"

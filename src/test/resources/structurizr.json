@@ -1,0 +1,84 @@
+{
+  "id": 123,
+  "name": "HM Prison and Probation Service",
+  "description": "Systems related to the custody and probation of offenders",
+  "configuration": {},
+  "model": {
+    "enterprise": {
+      "name": "HM Prison and Probation Service"
+    },
+    "people": [
+      {
+        "id": "11",
+        "tags": "Element,Person",
+        "name": "DPS User",
+        "description": "User that logs into DPS via HMPPS Auth",
+        "relationships": [
+          {
+            "id": "21",
+            "tags": "Relationship",
+            "sourceId": "11",
+            "destinationId": "31",
+            "description": "Logs in to HMPPS Auth"
+          }
+        ]
+      }
+    ],
+    "softwareSystems": [
+      {
+        "id": "31",
+        "tags": "Element,Software System",
+        "name": "HMPPS Auth",
+        "description": "Allows users to login into digital services",
+        "location": "Internal",
+        "containers": [
+          {
+            "id": "51",
+            "tags": "Element,Container,WEB_BROWSER",
+            "url": "https://github.com/ministryofjustice/hmpps-auth",
+            "properties": {
+              "api-docs-url": "https://sign-in-dev.hmpps.service.justice.gov.uk/auth/swagger-ui.html"
+            },
+            "name": "HMPPS Auth",
+            "description": "UI and OAuth2 server",
+            "relationships": [
+              {
+                "id": "61",
+                "tags": "Relationship",
+                "sourceId": "51",
+                "destinationId": "52",
+                "description": "connects to"
+              }
+            ],
+            "technology": "Spring Boot + Java"
+          },
+          {
+            "id": "52",
+            "tags": "Element,Container,DATABASE",
+            "name": "Internal Auth Database",
+            "description": "Holds explicit credentials, roles, multi-factor settings and banning data",
+            "technology": "Microsoft SQL Server"
+          }
+        ]
+      },
+      {
+        "id": "32",
+        "tags": "Element,Software System",
+        "name": "Prison Staff Hub",
+        "description": "The web app that contains the main features",
+        "location": "Internal",
+        "relationships": [
+          {
+            "id": "71",
+            "tags": "Relationship",
+            "sourceId": "32",
+            "destinationId": "31",
+            "description": "authorises users and requests access tokens from",
+            "technology": "OAuth2/JWT"
+          }
+        ]
+      }
+    ]
+  }
+}
+
