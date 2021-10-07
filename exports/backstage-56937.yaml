@@ -1351,8 +1351,8 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
-  name: prison-staff-hub
-  title: "Prison Staff Hub"
+  name: digital-prison-services
+  title: "Digital Prison Services"
   description: "Gives Prison Staff access to the data and operation they need on a day-to-day basis. Contains a subset of the functionality in C-NOMIS."
 spec:
   owner: hmpps-undefined
@@ -1360,8 +1360,8 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: s327-prison-staff-hub
-  title: "Prison Staff Hub"
+  name: s327-digital-prison-services
+  title: "Digital Prison Services"
   description: "The web app that contains the main features"
 spec:
   type: service
