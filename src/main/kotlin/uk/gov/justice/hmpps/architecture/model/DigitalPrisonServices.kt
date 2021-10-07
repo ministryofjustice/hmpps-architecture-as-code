@@ -6,7 +6,7 @@ import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ViewSet
 import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
 
-class PrisonStaffHub private constructor() {
+class DigitalPrisonServices private constructor() {
 
   companion object : HMPPSSoftwareSystem {
     lateinit var model: Model
@@ -19,7 +19,7 @@ class PrisonStaffHub private constructor() {
       this.model = model
 
       system = model.addSoftwareSystem(
-        "Prison Staff Hub",
+        "Digital Prison Services",
         """
         Gives Prison Staff access to the data and operation they need on a day-to-day basis. Contains a subset of the functionality in C-NOMIS.
         """.trimIndent()
@@ -33,8 +33,8 @@ class PrisonStaffHub private constructor() {
         setUrl("https://github.com/ministryofjustice/hmpps-restricted-patients")
       }
 
-      mainApp = system.addContainer("Prison Staff Hub", "The web app that contains the main features").apply {
-        setUrl("https://github.com/ministryofjustice/prisonstaffhub")
+      mainApp = system.addContainer("Digital Prison Services", "The web app that contains the main features").apply {
+        setUrl("https://github.com/ministryofjustice/digital-prison-services")
         uses(keyworkerUi, "Provides links to")
         uses(restrictedPatientsUi, "Provides links to")
       }
