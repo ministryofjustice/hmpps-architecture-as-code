@@ -6,6 +6,7 @@ import com.structurizr.model.Person
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
+import uk.gov.justice.hmpps.architecture.annotations.Notifier
 import uk.gov.justice.hmpps.architecture.annotations.OutsideHMPPS
 import uk.gov.justice.hmpps.architecture.annotations.ProblemArea
 
@@ -47,9 +48,13 @@ class ManageASupervision private constructor() {
       manageASupervisionUi.uses(Delius.communityApi, "Gets SU and past-offence details from")
       manageASupervisionUi.uses(AssessRisksAndNeeds.riskNeedsService, "Fetches risk and criminogenic need data from")
 
-      manageASupervisionUi.uses(Notify.system, "delivers notifications via")
-      Notify.system.delivers(ProbationPractitioners.nps, "sends booked appointment details to", "email")
-      Notify.system.delivers(serviceUser, "sends appointment reminders to", "email and SMS")
+      Notifier.delivers(
+        manageASupervisionUi,
+        listOf(
+          Triple(listOf(ProbationPractitioners.nps), "sends booked appointment details to", "email"),
+          Triple(listOf(serviceUser), "sends appointment reminders to", "email and SMS")
+        )
+      )
     }
 
     override fun defineViews(views: ViewSet) {

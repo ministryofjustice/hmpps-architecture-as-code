@@ -6,6 +6,7 @@ import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
 import uk.gov.justice.hmpps.architecture.annotations.ADRSource
+import uk.gov.justice.hmpps.architecture.annotations.Notifier
 import uk.gov.justice.hmpps.architecture.annotations.ProblemArea
 import uk.gov.justice.hmpps.architecture.annotations.Tags
 
@@ -98,9 +99,13 @@ class Interventions private constructor() {
       InterventionTeams.crsProvider.uses(ui, "maintains directory and delivery of dynamic framework interventions and services in")
       ProbationPractitioners.nps.uses(ui, "refers and monitors progress of their service users' interventions and services in")
 
-      service.uses(Notify.system, "delivers notifications via")
-      Notify.system.delivers(InterventionTeams.crsProvider, "emails new referrals", "email")
-      Notify.system.delivers(ProbationPractitioners.nps, "emails attendance and safeguarding issues", "email")
+      Notifier.delivers(
+        service,
+        listOf(
+          Triple(listOf(InterventionTeams.crsProvider), "emails new referrals", "email"),
+          Triple(listOf(ProbationPractitioners.nps), "emails attendance and safeguarding issues", "email")
+        )
+      )
     }
 
     override fun defineViews(views: ViewSet) {

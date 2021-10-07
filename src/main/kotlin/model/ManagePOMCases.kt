@@ -6,6 +6,7 @@ import com.structurizr.model.Person
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
+import uk.gov.justice.hmpps.architecture.annotations.Notifier
 import uk.gov.justice.hmpps.architecture.annotations.Tags
 
 class ManagePOMCases private constructor() {
@@ -127,12 +128,11 @@ class ManagePOMCases private constructor() {
         "consumes and processes the queue"
       )
 
-      activeJob.uses(Notify.system, "delivers notifications via")
-
-      Notify.system.delivers(
-        ldu,
-        "notifies community allocation requests to",
-        "email"
+      Notifier.delivers(
+        activeJob,
+        listOf(
+          Triple(listOf(ldu), "notifies community allocation requests to", "email")
+        )
       )
     }
 
