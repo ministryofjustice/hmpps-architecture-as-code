@@ -21,6 +21,7 @@ import uk.gov.justice.hmpps.architecture.model.CourtUsers
 import uk.gov.justice.hmpps.architecture.model.Curious
 import uk.gov.justice.hmpps.architecture.model.Delius
 import uk.gov.justice.hmpps.architecture.model.DigitalPrisonsNetwork
+import uk.gov.justice.hmpps.architecture.model.DigitalPrisonServices
 import uk.gov.justice.hmpps.architecture.model.EPF
 import uk.gov.justice.hmpps.architecture.model.EQuiP
 import uk.gov.justice.hmpps.architecture.model.HMPPSAuth
@@ -43,7 +44,6 @@ import uk.gov.justice.hmpps.architecture.model.OASys
 import uk.gov.justice.hmpps.architecture.model.PolicyTeams
 import uk.gov.justice.hmpps.architecture.model.PrepareCaseForSentence
 import uk.gov.justice.hmpps.architecture.model.PrisonRegister
-import uk.gov.justice.hmpps.architecture.model.DigitalPrisonServices
 import uk.gov.justice.hmpps.architecture.model.PrisonToProbationUpdate
 import uk.gov.justice.hmpps.architecture.model.PrisonVisitsBooking
 import uk.gov.justice.hmpps.architecture.model.PrisonerContentHub
