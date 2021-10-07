@@ -20,8 +20,8 @@ import uk.gov.justice.hmpps.architecture.model.CourtRegister
 import uk.gov.justice.hmpps.architecture.model.CourtUsers
 import uk.gov.justice.hmpps.architecture.model.Curious
 import uk.gov.justice.hmpps.architecture.model.Delius
-import uk.gov.justice.hmpps.architecture.model.DigitalPrisonsNetwork
 import uk.gov.justice.hmpps.architecture.model.DigitalPrisonServices
+import uk.gov.justice.hmpps.architecture.model.DigitalPrisonsNetwork
 import uk.gov.justice.hmpps.architecture.model.EPF
 import uk.gov.justice.hmpps.architecture.model.EQuiP
 import uk.gov.justice.hmpps.architecture.model.HMPPSAuth
