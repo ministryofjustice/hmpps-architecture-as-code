@@ -43,7 +43,7 @@ import uk.gov.justice.hmpps.architecture.model.OASys
 import uk.gov.justice.hmpps.architecture.model.PolicyTeams
 import uk.gov.justice.hmpps.architecture.model.PrepareCaseForSentence
 import uk.gov.justice.hmpps.architecture.model.PrisonRegister
-import uk.gov.justice.hmpps.architecture.model.PrisonStaffHub
+import uk.gov.justice.hmpps.architecture.model.DigitalPrisonServices
 import uk.gov.justice.hmpps.architecture.model.PrisonToProbationUpdate
 import uk.gov.justice.hmpps.architecture.model.PrisonVisitsBooking
 import uk.gov.justice.hmpps.architecture.model.PrisonerContentHub
@@ -93,7 +93,7 @@ private val MODEL_ITEMS = listOf(
   PrisonerMoney,
   PrepareCaseForSentence,
   PrisonerContentHub,
-  PrisonStaffHub,
+  DigitalPrisonServices,
   PrisonToProbationUpdate,
   PrisonVisitsBooking,
   ProbationCaseSampler,
