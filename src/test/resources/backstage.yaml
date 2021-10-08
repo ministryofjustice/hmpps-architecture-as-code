@@ -1,0 +1,70 @@
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "System"
+metadata:
+  name: "hmpps-auth"
+  title: "HMPPS Auth"
+  description: "Allows users to login into digital services"
+spec:
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "hmpps-auth"
+  title: "HMPPS Auth"
+  description: "UI and OAuth2 server"
+  links:
+    - url: "https://github.com/ministryofjustice/hmpps-auth"
+      title: "GitHub Repo"
+      icon: "github"
+    - url: "https://sign-in-dev.hmpps.service.justice.gov.uk/auth/swagger-ui.html"
+      title: "API Docs"
+  annotations:
+    backstage.io/source-location: "url:https://github.com/ministryofjustice/hmpps-auth"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "hmpps-auth"
+  owner: "hmpps-undefined"
+  dependsOn:
+    - "Component:internal-auth-database"
+  providesApis:
+    - "hmpps-auth"
+  consumesApis:
+    - "internal-auth-database"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "hmpps-auth"
+  description: "API provided by hmpps-auth"
+spec:
+  type: "openapi"
+  lifecycle: "production"
+  system: "hmpps-auth"
+  owner: "hmpps-undefined"
+  definition:
+    $text: "https://sign-in-dev.hmpps.service.justice.gov.uk/auth/v3/api-docs"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "internal-auth-database"
+  title: "Internal Auth Database"
+  description: "Holds explicit credentials, roles, multi-factor settings and banning\
+    \ data"
+spec:
+  type: "database"
+  lifecycle: "production"
+  system: "hmpps-auth"
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "System"
+metadata:
+  name: "prison-staff-hub"
+  title: "Prison Staff Hub"
+  description: "The web app that contains the main features"
+spec:
+  owner: "hmpps-undefined"

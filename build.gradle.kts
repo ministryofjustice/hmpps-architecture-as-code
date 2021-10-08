@@ -16,8 +16,9 @@ dependencies {
   implementation("com.structurizr:structurizr-client:1.9.3")
   implementation("com.structurizr:structurizr-core:1.9.3")
   implementation("com.structurizr:structurizr-adr-tools:1.3.7")
-  implementation("com.structurizr:structurizr-export:1.0.1")
   implementation("org.eclipse.jgit:org.eclipse.jgit:5.11.0.202103091610-r")
+  implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.0")
+  implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0")
 
   testImplementation("org.assertj:assertj-core:3.19.0")
   testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.2")
