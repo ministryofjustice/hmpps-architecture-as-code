@@ -3,6 +3,7 @@ package uk.gov.justice.hmpps.architecture
 import com.structurizr.Workspace
 import com.structurizr.api.StructurizrClient
 import com.structurizr.graphviz.GraphvizAutomaticLayout
+import com.structurizr.graphviz.RankDirection
 import com.structurizr.util.WorkspaceUtils
 import uk.gov.justice.hmpps.architecture.export.backstage.BackstageExporter
 import java.io.File
@@ -19,6 +20,9 @@ object App {
     val workspace = defineWorkspace()
 
     val graphviz = GraphvizAutomaticLayout(EXPORT_LOCATION)
+    graphviz.setRankDirection(RankDirection.TopBottom)
+    graphviz.setRankSeparation(400.0)
+    graphviz.setNodeSeparation(300.0)
     graphviz.apply(workspace)
 
     if (args.isEmpty()) {
