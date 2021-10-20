@@ -11,5 +11,3 @@ ext/
 .idea/
 
 .DS_Store
-/exports/*.dot
-/exports/*.svg

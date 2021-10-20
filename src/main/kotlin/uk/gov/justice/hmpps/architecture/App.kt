@@ -2,6 +2,7 @@ package uk.gov.justice.hmpps.architecture
 
 import com.structurizr.Workspace
 import com.structurizr.api.StructurizrClient
+import com.structurizr.graphviz.GraphvizAutomaticLayout
 import com.structurizr.util.WorkspaceUtils
 import uk.gov.justice.hmpps.architecture.export.backstage.BackstageExporter
 import java.io.File
@@ -16,6 +17,9 @@ object App {
   @JvmStatic
   fun main(args: Array<String>) {
     val workspace = defineWorkspace()
+
+    val graphviz = GraphvizAutomaticLayout(EXPORT_LOCATION)
+    graphviz.apply(workspace)
 
     if (args.isEmpty()) {
       writeToFile(workspace)

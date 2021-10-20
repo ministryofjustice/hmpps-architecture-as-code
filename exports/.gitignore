@@ -2,6 +2,8 @@
 structurizr-*.json
 structurizr-*.puml
 structurizr-*.png
+*.dot
+*.svg
 
 # backstage export
 backstage-*.yaml
