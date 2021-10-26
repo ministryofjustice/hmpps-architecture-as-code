@@ -16,7 +16,9 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - run: ./gradlew build
+      - run: |
+          sudo apt-get -y install graphviz
+          ./gradlew build
       - name: Push to workspace
         env:
           STRUCTURIZR_API_KEY: ${{ secrets.STRUCTURIZR_API_KEY }}
