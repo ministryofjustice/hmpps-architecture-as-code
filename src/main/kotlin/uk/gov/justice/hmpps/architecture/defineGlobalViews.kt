@@ -21,8 +21,6 @@ fun defineGlobalViews(model: Model, views: ViewSet) {
     val noisyHubSystems = listOf(NDH.system)
     noisySignOnSystems.forEach(::remove)
     noisyHubSystems.forEach(::remove)
-
-    enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
   }
 
   // lifted from probation views
@@ -44,12 +42,13 @@ fun defineGlobalViews(model: Model, views: ViewSet) {
   // lifted from prison views
   val pathfinder = model.getSoftwareSystemWithName("Pathfinder")!!
   views.createContainerView(pathfinder, "pathfinderContainer", "The container diagram for the Pathfinder System.").apply {
-    addDefaultElements()
+    model.people.filter { it.hasEfferentRelationshipWith(pathfinder) }.map { add(it) }
+    pathfinder.containers.map { add(it) }
     add(NOMIS.db)
     add(NOMIS.prisonApi)
     add(NOMIS.system.getContainerWithName("ElasticSearch store"))
     add(NOMIS.offenderSearch)
-    add(Delius.system.getContainerWithName("nDelius database"))
+    add(Delius.database)
     add(Delius.communityApi)
     add(Delius.system.getContainerWithName("ElasticSearch store"))
     add(Delius.offenderSearch)

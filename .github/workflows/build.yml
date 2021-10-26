@@ -11,7 +11,9 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '11'
-      - run: ./gradlew build
+      - run: |
+          sudo apt-get -y install graphviz
+          ./gradlew build
       - name: Test code by creating local workspace file
         run: ./gradlew run
   lint:
