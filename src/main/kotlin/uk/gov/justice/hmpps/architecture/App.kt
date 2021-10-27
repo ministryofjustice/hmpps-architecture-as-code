@@ -37,6 +37,7 @@ object App {
     val client = StructurizrClient(System.getenv("STRUCTURIZR_API_KEY"), System.getenv("STRUCTURIZR_API_SECRET"))
     val workspaceId = System.getenv("STRUCTURIZR_WORKSPACE_ID")?.toLongOrNull() ?: workspace.id
     client.workspaceArchiveLocation = EXPORT_LOCATION
+    client.setMergeFromRemote(false)
 
     workspace.version = System.getenv("BUILD_VERSION")
     client.putWorkspace(workspaceId, workspace)

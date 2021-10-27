@@ -50,7 +50,7 @@ fun defineGlobalViews(model: Model, views: ViewSet) {
     add(NOMIS.offenderSearch)
     add(Delius.database)
     add(Delius.communityApi)
-    add(Delius.system.getContainerWithName("ElasticSearch store"))
+    add(Delius.offenderElasticsearchStore)
     add(Delius.offenderSearch)
     add(HMPPSAuth.system)
     enableAutomaticLayout()
