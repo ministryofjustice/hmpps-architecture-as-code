@@ -328,7 +328,7 @@ kind: "Component"
 metadata:
   name: "community-api"
   title: "Community API"
-  description: "API over the nDelius DB used by HMPPS Digital team applications and\
+  description: "API over the NDelius DB used by HMPPS Digital team applications and\
     \ services"
   links:
   - url: "https://github.com/ministryofjustice/community-api"
@@ -346,13 +346,11 @@ spec:
   dependsOn:
   - "Component:ndelius-database"
   - "Component:delius-api"
-  - "Component:hmpps-auth"
   providesApis:
   - "community-api"
   consumesApis:
   - "ndelius-database"
   - "delius-api"
-  - "hmpps-auth"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "API"
@@ -464,11 +462,11 @@ spec:
   dependsOn:
   - "Component:court-case-service"
   - "Component:crime-portal-gateway-queue"
-  - "Component:probation-offender-search"
+  - "Component:probation-offender-search-api"
   consumesApis:
   - "court-case-service"
   - "crime-portal-gateway-queue"
-  - "probation-offender-search"
+  - "probation-offender-search-api"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
@@ -681,8 +679,8 @@ kind: "Component"
 metadata:
   name: "delius-api"
   title: "Delius API"
-  description: "API over the nDelius DB used by HMPPS Digital team applications and\
-    \ services"
+  description: "Write API over the NDelius DB used by HMPPS Digital team applications\
+    \ and services"
   links:
   - url: "https://github.com/ministryofjustice/hmpps-delius-api"
     title: "GitHub Repo"
@@ -696,10 +694,8 @@ spec:
   owner: "hmpps-undefined"
   dependsOn:
   - "Component:ndelius-database"
-  - "Component:hmpps-auth"
   consumesApis:
   - "ndelius-database"
-  - "hmpps-auth"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "System"
@@ -794,18 +790,6 @@ kind: "Component"
 metadata:
   name: "elasticsearch-store"
   title: "ElasticSearch store"
-  description: "Data store for Delius content"
-spec:
-  type: "database"
-  lifecycle: "production"
-  system: "ndelius"
-  owner: "hmpps-undefined"
----
-apiVersion: "backstage.io/v1alpha1"
-kind: "Component"
-metadata:
-  name: "elasticsearch-store"
-  title: "ElasticSearch store"
   description: "Data store for NOMIS content"
 spec:
   type: "database"
@@ -862,6 +846,24 @@ spec:
   consumesApis:
   - "elasticsearch-store"
   - "google-data-studio"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "gdpr-service"
+  title: "GDPR Service"
+  description: "NDelius GDPR service"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "ndelius"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:ndelius-user-management-tool"
+  - "Component:ndelius-database"
+  consumesApis:
+  - "ndelius-user-management-tool"
+  - "ndelius-database"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
@@ -1416,6 +1418,24 @@ spec:
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
 metadata:
+  name: "merge-service"
+  title: "Merge Service"
+  description: "NDelius Offender Merge service"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "ndelius"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:ndelius-user-management-tool"
+  - "Component:ndelius-database"
+  consumesApis:
+  - "ndelius-user-management-tool"
+  - "ndelius-database"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
   name: "message-store"
   title: "Message Store"
   description: "Holds CPG messages data and meta-data"
@@ -1504,7 +1524,7 @@ apiVersion: "backstage.io/v1alpha1"
 kind: "System"
 metadata:
   name: "ndelius"
-  title: "nDelius"
+  title: "NDelius"
   description: "(National Delius) Supporting the management of offenders and delivering\
     \ national reporting and performance monitoring data"
 spec:
@@ -1514,8 +1534,8 @@ apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
 metadata:
   name: "ndelius-application"
-  title: "nDelius application"
-  description: "Application logic for Delius"
+  title: "NDelius application"
+  description: "Application logic for NDelius"
   links:
   - url: "https://github.com/ministryofjustice/delius"
     title: "GitHub Repo"
@@ -1529,19 +1549,66 @@ spec:
   owner: "hmpps-undefined"
   dependsOn:
   - "Component:ndelius-database"
+  - "Component:ndelius-document-store"
+  - "Component:ndelius-user-directory"
   consumesApis:
   - "ndelius-database"
+  - "ndelius-document-store"
+  - "ndelius-user-directory"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
 metadata:
   name: "ndelius-database"
-  title: "nDelius database"
+  title: "NDelius database"
+  description: "NPS supervision and case management data"
 spec:
   type: "database"
   lifecycle: "production"
   system: "ndelius"
   owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "ndelius-document-store"
+  title: "NDelius Document Store"
+  description: "Storage of documents relating to NPS supervision and case management"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "ndelius"
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "ndelius-user-directory"
+  title: "NDelius User Directory"
+  description: "Store of NDelius users and roles and provider of authentication services"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "ndelius"
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "ndelius-user-management-tool"
+  title: "NDelius User Management Tool"
+  description: "NDelius user and role management"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "ndelius"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:ndelius-database"
+  - "Component:ndelius-user-directory"
+  consumesApis:
+  - "ndelius-database"
+  - "ndelius-user-directory"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "System"
@@ -1624,6 +1691,22 @@ spec:
   lifecycle: "production"
   system: "ndmis"
   owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "nextcloud"
+  title: "NextCloud"
+  description: "NDelius shared file storage for accessing exported data etc."
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "ndelius"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:ndelius-user-directory"
+  consumesApis:
+  - "ndelius-user-directory"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "System"
@@ -1740,6 +1823,18 @@ spec:
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
 metadata:
+  name: "offender-elasticsearch-store"
+  title: "Offender Elasticsearch store"
+  description: "Data store for Delius offender data content"
+spec:
+  type: "database"
+  lifecycle: "production"
+  system: "ndelius"
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
   name: "offender-management-allocation-manager"
   title: "Offender Management Allocation Manager"
   description: "Main Manage POM Cases (MPC) application component which holds the\
@@ -1761,7 +1856,7 @@ spec:
   dependsOn:
   - "Component:community-api"
   - "Component:prison-api"
-  - "Component:probation-offender-search"
+  - "Component:probation-offender-search-api"
   - "Component:prisonersearch"
   - "Component:mpc-database"
   - "Component:in-memory-data-store"
@@ -1770,7 +1865,7 @@ spec:
   consumesApis:
   - "community-api"
   - "prison-api"
-  - "probation-offender-search"
+  - "probation-offender-search-api"
   - "prisonersearch"
   - "mpc-database"
   - "in-memory-data-store"
@@ -1809,6 +1904,38 @@ spec:
   - "Component:oasys-assessments-database"
   consumesApis:
   - "oasys-assessments-database"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "offloc-consumer-dss-batch-job"
+  title: "OFFLOC Consumer/DSS Batch Job"
+  description: "Download PNOMIS data and insert into NDelius database"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "ndelius"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:ndelius-application"
+  consumesApis:
+  - "ndelius-application"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "password-reset"
+  title: "Password Reset"
+  description: "NDelius password reset tool"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "ndelius"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:ndelius-user-directory"
+  consumesApis:
+  - "ndelius-user-directory"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "System"
@@ -1869,13 +1996,13 @@ spec:
   - "Component:prison-api"
   - "Component:prisonersearch"
   - "Component:community-api"
-  - "Component:probation-offender-search"
+  - "Component:probation-offender-search-api"
   consumesApis:
   - "pathfinder-database"
   - "prison-api"
   - "prisonersearch"
   - "community-api"
-  - "probation-offender-search"
+  - "probation-offender-search-api"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "System"
@@ -2484,9 +2611,9 @@ spec:
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
 metadata:
-  name: "probation-offender-search"
-  title: "Probation Offender Search"
-  description: "API over the nDelius offender data held in Elasticsearch"
+  name: "probation-offender-search-api"
+  title: "Probation Offender Search API"
+  description: "API over the NDelius offender data held in Elasticsearch"
   links:
   - url: "https://github.com/ministryofjustice/probation-offender-search"
     title: "GitHub Repo"
@@ -2501,19 +2628,19 @@ spec:
   system: "ndelius"
   owner: "hmpps-undefined"
   dependsOn:
-  - "Component:elasticsearch-store"
+  - "Component:offender-elasticsearch-store"
   - "Component:probation-offender-search-indexer"
   providesApis:
-  - "probation-offender-search"
+  - "probation-offender-search-api"
   consumesApis:
-  - "elasticsearch-store"
+  - "offender-elasticsearch-store"
   - "probation-offender-search-indexer"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "API"
 metadata:
-  name: "probation-offender-search"
-  description: "API provided by probation-offender-search"
+  name: "probation-offender-search-api"
+  description: "API provided by probation-offender-search-api"
 spec:
   type: "openapi"
   lifecycle: "production"
@@ -2527,7 +2654,7 @@ kind: "Component"
 metadata:
   name: "probation-offender-search-indexer"
   title: "Probation Offender Search Indexer"
-  description: "Service to update nDelius offender data held in Elasticsearch"
+  description: "Service to update NDelius offender data held in Elasticsearch"
   links:
   - url: "https://github.com/ministryofjustice/probation-offender-search-indexer"
     title: "GitHub Repo"
@@ -2542,13 +2669,13 @@ spec:
   system: "ndelius"
   owner: "hmpps-undefined"
   dependsOn:
-  - "Component:elasticsearch-store"
+  - "Component:offender-elasticsearch-store"
   - "Component:probation-offender-events-topic"
   - "Component:community-api"
   providesApis:
   - "probation-offender-search-indexer"
   consumesApis:
-  - "elasticsearch-store"
+  - "offender-elasticsearch-store"
   - "probation-offender-events-topic"
   - "community-api"
 ---
@@ -2564,6 +2691,33 @@ spec:
   owner: "hmpps-undefined"
   definition:
     $text: "https://probation-search-indexer-dev.hmpps.service.justice.gov.uk/v3/api-docs"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "probation-offender-search-webapp-psr-new-tech-"
+  title: "Probation Offender Search Webapp / PSR (New Tech)"
+  description: "Search front end for NDelius offender data held in Elasticsearch /\
+    \ Pre-Sentence Report generation"
+  links:
+  - url: "https://github.com/ministryofjustice/ndelius-new-tech"
+    title: "GitHub Repo"
+    icon: "github"
+  annotations:
+    backstage.io/source-location: "url:https://github.com/ministryofjustice/ndelius-new-tech"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "ndelius"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:probation-offender-search-api"
+  - "Component:ndelius-document-store"
+  - "Component:community-api"
+  consumesApis:
+  - "probation-offender-search-api"
+  - "ndelius-document-store"
+  - "community-api"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
