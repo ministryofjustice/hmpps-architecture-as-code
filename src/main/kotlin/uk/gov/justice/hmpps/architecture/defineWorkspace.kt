@@ -83,6 +83,7 @@ private val MODEL_ITEMS = listOf(
   Licences,
   MoJSignOn,
   NationalPrisonRadio,
+  Notify,
   NDH,
   NID,
   NOMIS,
