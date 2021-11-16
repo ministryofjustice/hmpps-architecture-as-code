@@ -7,6 +7,7 @@ import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
 import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
+import uk.gov.justice.hmpps.architecture.annotations.Notifier
 
 class BookVideoLink private constructor() {
 
@@ -47,7 +48,6 @@ class BookVideoLink private constructor() {
 
       omuStaff = model.addPerson("OMU staff user", "Prison staff who works in the offender management unit")
     }
-
     override fun defineRelationships() {
       bookVideoLinkService.uses(NOMIS.prisonApi, "HTTPS Rest API")
       bookVideoLinkService.uses(HMPPSAuth.system, "HTTPS Rest API")
@@ -56,9 +56,16 @@ class BookVideoLink private constructor() {
       bookVideoLinkService.uses(TokenVerificationApi.api, "validates API tokens via", "HTTPS Rest API")
       bookVideoLinkService.uses(UserPreferenceApi.api, "Stores user's preferred courts in", "HTTPS Rest API")
 
-      bookVideoLinkService.delivers(courtStaff, "emails booking/amendment/cancellation confirmations", "gov.uk notify")
-      bookVideoLinkService.delivers(vccStaff, "emails requests/booking/amendment/cancellation notifications", "gov.uk notify")
-      bookVideoLinkService.delivers(omuStaff, "emails booking/amendment/cancellation notifications", "gov.uk notify")
+      Notifier.delivers(
+        bookVideoLinkService,
+        listOf(
+          Triple(
+            listOf(courtStaff, vccStaff, omuStaff),
+            "emails booking/amendment/cancellation confirmations",
+            "email"
+          ),
+        )
+      )
     }
 
     override fun defineViews(views: ViewSet) {
