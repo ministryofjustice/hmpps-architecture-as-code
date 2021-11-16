@@ -901,6 +901,15 @@ spec:
 apiVersion: "backstage.io/v1alpha1"
 kind: "System"
 metadata:
+  name: "gov-uk-notify"
+  title: "GOV.UK Notify"
+  description: "Centralized goverment notification system"
+spec:
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "System"
+metadata:
   name: "hmcts-crime-portal"
   title: "HMCTS Crime Portal"
   description: "Case Management for HMCTS holding data relating to court cases"
