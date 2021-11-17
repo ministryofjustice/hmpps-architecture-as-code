@@ -6,7 +6,6 @@ import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
 import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
-import uk.gov.justice.hmpps.architecture.annotations.ADRSource
 import uk.gov.justice.hmpps.architecture.annotations.Notifier
 import uk.gov.justice.hmpps.architecture.annotations.ProblemArea
 import uk.gov.justice.hmpps.architecture.annotations.Tags
@@ -24,7 +23,6 @@ class Interventions private constructor() {
         "Refer and monitor an intervention",
         "Refer and monitor an intervention for service users (offenders)"
       ).apply {
-        ADRSource("https://github.com/ministryofjustice/hmpps-interventions-docs").addTo(this)
         ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)
       }
 
