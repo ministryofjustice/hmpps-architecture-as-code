@@ -48,10 +48,11 @@ private fun writeDependencies(w: PrintWriter, containersWithGit: List<Container>
 
   w.println("- Latest [CircleCI orb](https://circleci.com/developer/orbs/orb/ministryofjustice/hmpps)")
   w.println("- Latest [gradle-spring-boot](https://plugins.gradle.org/plugin/uk.gov.justice.hmpps.gradle-spring-boot)")
+  w.println("- Latest [helm charts](https://github.com/ministryofjustice/hmpps-helm-charts/releases)")
   w.println("")
 
-  w.println("| Software System | Application | CircleCI orb versions | gradle-spring-boot version |")
-  w.println("| --- | --- | --- | --- |")
+  w.println("| Software System | Application | CircleCI orb versions | gradle-spring-boot version | helm charts")
+  w.println("| --- | --- | --- | --- | --- |")
 
   parseVersions(containersWithGit)
     .forEach { writeDependency(w, it) }
@@ -69,6 +70,9 @@ fun writeDependency(w: PrintWriter, v: Version) {
 
   w.print("| ")
   w.print(v.gradleBootPluginVersion)
+
+  w.print("| ")
+  w.print(v.chartVersions)
 
   w.println("|")
 }

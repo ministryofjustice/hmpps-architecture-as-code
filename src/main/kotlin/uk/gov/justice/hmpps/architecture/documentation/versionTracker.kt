@@ -1,5 +1,7 @@
 package uk.gov.justice.hmpps.architecture.documentation
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.structurizr.model.Container
 import uk.gov.justice.hmpps.architecture.cloneRepository
 import java.io.File
@@ -10,6 +12,7 @@ data class Version(
   val applicationUrl: String,
   val circleciOrbVersion: String,
   val gradleBootPluginVersion: String,
+  val chartVersions: String,
 )
 
 fun parseVersions(containersWithGit: List<Container>): List<Version> {
@@ -25,7 +28,8 @@ private fun parseVersion(container: Container): Version? {
     application = container.name,
     applicationUrl = container.url,
     circleciOrbVersion = readCircleOrbVersion(r),
-    gradleBootPluginVersion = readGradlePluginVersion(r)
+    gradleBootPluginVersion = readGradlePluginVersion(r),
+    chartVersions = readHelmChartDependencies(r)
   )
 }
 
@@ -46,4 +50,15 @@ private fun readGradlePluginVersion(repo: File): String {
     Regex(GRADLE_PATTERN).find(buildFileKt)?.groups?.get(1)?.value,
     Regex(GRADLE_PATTERN).find(buildFile)?.groups?.get(1)?.value,
   ).joinToString("<br>")
+}
+
+private fun readHelmChartDependencies(repo: File): String {
+  val chartFile = repo.resolve("helm_deploy")
+    .walkTopDown().find { it.name == "Chart.yaml" }
+    ?: return "no helm chart"
+
+  val dependencies = ObjectMapper(YAMLFactory()).readTree(chartFile).get("dependencies")
+    ?: return "standalone chart"
+
+  return dependencies.joinToString("<br>") { "${it.get("name").textValue()}@${it.get("version").textValue()}" }
 }
