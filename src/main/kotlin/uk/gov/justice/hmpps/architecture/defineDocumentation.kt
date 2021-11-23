@@ -4,6 +4,8 @@ import com.structurizr.Workspace
 import com.structurizr.documentation.AutomaticDocumentationTemplate
 import com.structurizr.model.Container
 import uk.gov.justice.hmpps.architecture.annotations.APIDocs
+import uk.gov.justice.hmpps.architecture.documentation.Version
+import uk.gov.justice.hmpps.architecture.documentation.parseVersions
 import java.io.File
 import java.io.IOException
 import java.io.PrintWriter
@@ -46,30 +48,31 @@ private fun writeDependencies(w: PrintWriter, containersWithGit: List<Container>
 
   w.println("- Latest [CircleCI orb](https://circleci.com/developer/orbs/orb/ministryofjustice/hmpps)")
   w.println("- Latest [gradle-spring-boot](https://plugins.gradle.org/plugin/uk.gov.justice.hmpps.gradle-spring-boot)")
+  w.println("- Latest [helm charts](https://github.com/ministryofjustice/hmpps-helm-charts/releases)")
   w.println("")
 
-  w.println("| Software System | Application | CircleCI orb versions | gradle-spring-boot version |")
-  w.println("| --- | --- | --- | --- |")
+  w.println("| Software System | Application | CircleCI orb versions | gradle-spring-boot version | helm charts")
+  w.println("| --- | --- | --- | --- | --- |")
 
-  containersWithGit
-    .also { println("[defineDocumentation] Found ${it.size} applications with github repos") }
+  parseVersions(containersWithGit)
     .forEach { writeDependency(w, it) }
 }
 
-fun writeDependency(w: PrintWriter, app: Container) {
-  val r = cloneRepository(app) ?: return
+fun writeDependency(w: PrintWriter, v: Version) {
+  w.print("| ")
+  w.print(v.softwareSystem)
 
   w.print("| ")
-  w.print(app.softwareSystem.name)
+  w.print("[${v.application}](${v.applicationUrl})")
 
   w.print("| ")
-  w.print("[${app.name}](${app.url})")
+  w.print(v.circleciOrbVersion)
 
   w.print("| ")
-  w.print(readCircleOrbVersion(r))
+  w.print(v.gradleBootPluginVersion)
 
   w.print("| ")
-  w.print(readGradlePluginVersion(r))
+  w.print(v.chartVersions)
 
   w.println("|")
 }
@@ -131,23 +134,4 @@ private fun readAPIDocsURLFromRepoReadmeBadge(app: Container): String? {
 
   val m = BADGE_URL_PATTERN.find(readmeContents)
   return m?.groups?.get(1)?.value
-}
-
-private fun readCircleOrbVersion(repo: File): String {
-  val circleConfig = repo.resolve(".circleci").resolve("config.yml").takeIf { it.exists() }?.readText().orEmpty()
-
-  val circleOrb = Regex("ministryofjustice/(hmpps@[\\d.]*)").find(circleConfig)?.groups?.get(1)?.value
-  val dpsOrb = Regex("ministryofjustice/(dps@[\\d.]*)").find(circleConfig)?.groups?.get(1)?.value
-  return listOfNotNull(circleOrb, dpsOrb).joinToString("<br>")
-}
-
-const val GRADLE_PATTERN = """id\("uk.gov.justice.hmpps.gradle-spring-boot"\) version "([^"]*)""""
-private fun readGradlePluginVersion(repo: File): String {
-  val buildFileKt = repo.resolve("build.gradle.kts").takeIf { it.exists() }?.readText().orEmpty()
-  val buildFile = repo.resolve("build.gradle").takeIf { it.exists() }?.readText().orEmpty()
-
-  return listOfNotNull(
-    Regex(GRADLE_PATTERN).find(buildFileKt)?.groups?.get(1)?.value,
-    Regex(GRADLE_PATTERN).find(buildFile)?.groups?.get(1)?.value,
-  ).joinToString("<br>")
 }

@@ -20,7 +20,7 @@ fun cloneRepository(e: Element): File? {
 }
 
 fun cloneRepository(repoUrl: String, e: Element): File? {
-  val cloneDir = App.EXPORT_LOCATION.resolve("clones").resolve(e.id)
+  val cloneDir = App.EXPORT_LOCATION.resolve("clones").resolve(File(repoUrl).name)
 
   try {
     if (cloneDir.resolve(".git").exists()) {
