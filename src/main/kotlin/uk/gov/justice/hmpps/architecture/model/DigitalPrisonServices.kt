@@ -14,6 +14,7 @@ class DigitalPrisonServices private constructor() {
     lateinit var mainApp: Container
     lateinit var keyworkerUi: Container
     lateinit var restrictedPatientsUi: Container
+    lateinit var adjudicationsUi: Container
 
     override fun defineModelEntities(model: Model) {
       this.model = model
@@ -33,10 +34,15 @@ class DigitalPrisonServices private constructor() {
         setUrl("https://github.com/ministryofjustice/hmpps-restricted-patients")
       }
 
+      adjudicationsUi = system.addContainer("Manage Adjudications", "Web app that contains functionality to report and view Adjudications").apply {
+        setUrl("https://github.com/ministryofjustice/hmpps-manage-adjudications")
+      }
+
       mainApp = system.addContainer("Digital Prison Services", "The web app that contains the main features").apply {
         setUrl("https://github.com/ministryofjustice/digital-prison-services")
         uses(keyworkerUi, "Provides links to")
         uses(restrictedPatientsUi, "Provides links to")
+        uses(adjudicationsUi, "Provides links to")
       }
     }
 
@@ -58,6 +64,11 @@ class DigitalPrisonServices private constructor() {
       restrictedPatientsUi.uses(HMPPSAuth.system, "HTTPS Rest API")
       restrictedPatientsUi.uses(TokenVerificationApi.api, "validates API tokens via", "HTTPS Rest API")
       restrictedPatientsUi.uses(RestrictedPatientsApi.api, "HTTPS Rest API")
+
+      adjudicationsUi.uses(NOMIS.prisonApi, "lookup visits, canteen, etc.")
+      adjudicationsUi.uses(HMPPSAuth.system, "HTTPS Rest API")
+      adjudicationsUi.uses(TokenVerificationApi.api, "validates API tokens via", "HTTPS Rest API")
+      adjudicationsUi.uses(AdjudicationsApi.api, "HTTPS Rest API")
     }
 
     override fun defineViews(views: ViewSet) {

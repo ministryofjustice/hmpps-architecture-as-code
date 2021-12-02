@@ -7,6 +7,7 @@ import com.structurizr.model.Location
 import com.structurizr.model.Model
 import com.structurizr.view.ViewSet
 import uk.gov.justice.hmpps.architecture.model.AWS
+import uk.gov.justice.hmpps.architecture.model.AdjudicationsApi
 import uk.gov.justice.hmpps.architecture.model.AnalyticalPlatform
 import uk.gov.justice.hmpps.architecture.model.AssessRisksAndNeeds
 import uk.gov.justice.hmpps.architecture.model.Azure
@@ -60,6 +61,7 @@ import uk.gov.justice.hmpps.architecture.model.WMT
 import uk.gov.justice.hmpps.architecture.model.WhereaboutsApi
 
 private val MODEL_ITEMS = listOf(
+  AdjudicationsApi,
   AnalyticalPlatform,
   AssessRisksAndNeeds,
   AzureADTenantJusticeUK,
