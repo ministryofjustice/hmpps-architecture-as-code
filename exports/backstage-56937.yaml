@@ -2,6 +2,49 @@
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
 metadata:
+  name: "Adjudications API"
+  title: "API"
+  description: "API"
+  links:
+  - url: "https://github.com/ministryofjustice/hmpps-manage-adjudications-api"
+    title: "GitHub Repo"
+    icon: "github"
+  - url: "https://manage-adjudications-api-dev.hmpps.service.justice.gov.uk/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config"
+    title: "API Docs"
+  annotations:
+    backstage.io/source-location: "url:https://github.com/ministryofjustice/hmpps-manage-adjudications-api"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "adjudications-api"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:adjudications-api-database"
+  - "Component:hmpps-auth"
+  - "Component:prison-api"
+  providesApis:
+  - "Adjudications API"
+  consumesApis:
+  - "adjudications-api-database"
+  - "hmpps-auth"
+  - "prison-api"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "Adjudications API"
+  description: "API provided by Adjudications API"
+spec:
+  type: "openapi"
+  lifecycle: "production"
+  system: "adjudications-api"
+  owner: "hmpps-undefined"
+  definition:
+    $text: "https://manage-adjudications-api-dev.hmpps.service.justice.gov.uk/v3/api-docs"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
   name: "Keyworker API"
   title: "API"
   description: "API"
@@ -160,6 +203,27 @@ spec:
   - "whereabouts-api-database"
   - "hmpps-auth"
   - "prison-api"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "System"
+metadata:
+  name: "adjudications-api"
+  title: "Adjudications API"
+  description: "Allows reporting and viewing of Adjudications"
+spec:
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "adjudications-api-database"
+  title: "Database"
+  description: "Storage for adjudication information"
+spec:
+  type: "database"
+  lifecycle: "production"
+  system: "adjudications-api"
+  owner: "hmpps-undefined"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "System"
@@ -727,6 +791,7 @@ spec:
   dependsOn:
   - "Component:manage-key-workers"
   - "Component:manage-restricted-patients"
+  - "Component:manage-adjudications"
   - "Component:prison-api"
   - "Component:prisonersearch"
   - "Component:Token verification API"
@@ -734,6 +799,7 @@ spec:
   consumesApis:
   - "manage-key-workers"
   - "manage-restricted-patients"
+  - "manage-adjudications"
   - "prison-api"
   - "prisonersearch"
   - "Token verification API"
@@ -1270,6 +1336,32 @@ spec:
   consumesApis:
   - "community-api"
   - "risks-and-needs-service"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "manage-adjudications"
+  title: "Manage Adjudications"
+  description: "Web app that contains functionality to report and view Adjudications"
+  links:
+  - url: "https://github.com/ministryofjustice/hmpps-manage-adjudications"
+    title: "GitHub Repo"
+    icon: "github"
+  annotations:
+    backstage.io/source-location: "url:https://github.com/ministryofjustice/hmpps-manage-adjudications"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "digital-prison-services"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:prison-api"
+  - "Component:Token verification API"
+  - "Component:Adjudications API"
+  consumesApis:
+  - "prison-api"
+  - "Token verification API"
+  - "Adjudications API"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
