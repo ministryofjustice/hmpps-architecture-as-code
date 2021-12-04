@@ -1002,7 +1002,7 @@ metadata:
   - url: "https://github.com/ministryofjustice/hmpps-auth"
     title: "GitHub Repo"
     icon: "github"
-  - url: "https://sign-in-dev.hmpps.service.justice.gov.uk/auth/swagger-ui.html"
+  - url: "https://sign-in-dev.hmpps.service.justice.gov.uk/auth/swagger-ui/?configUrl=/v2/api-docs"
     title: "API Docs"
   annotations:
     backstage.io/source-location: "url:https://github.com/ministryofjustice/hmpps-auth"
