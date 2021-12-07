@@ -16,10 +16,10 @@ fun containersWithGit(model: Model): List<Container> {
 }
 
 fun cloneRepository(e: Element): File? {
-  return cloneRepository(e.url, e)
+  return cloneRepository(e.url)
 }
 
-fun cloneRepository(repoUrl: String, e: Element): File? {
+fun cloneRepository(repoUrl: String): File? {
   val cloneDir = App.EXPORT_LOCATION.resolve("clones").resolve(File(repoUrl).name)
 
   try {

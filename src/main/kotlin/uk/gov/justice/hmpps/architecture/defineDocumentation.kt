@@ -4,7 +4,9 @@ import com.structurizr.Workspace
 import com.structurizr.documentation.AutomaticDocumentationTemplate
 import com.structurizr.model.Container
 import uk.gov.justice.hmpps.architecture.annotations.APIDocs
+import uk.gov.justice.hmpps.architecture.documentation.BranchMetric
 import uk.gov.justice.hmpps.architecture.documentation.Version
+import uk.gov.justice.hmpps.architecture.documentation.parseBranchMetrics
 import uk.gov.justice.hmpps.architecture.documentation.parseVersions
 import java.io.File
 import java.io.IOException
@@ -16,13 +18,18 @@ fun defineDocumentation(workspace: Workspace) {
 
   val containersWithGitRepos = containersWithGit(workspace.model)
 
-  File(docsRoot, "apidocs.md").printWriter().let {
+  File(docsRoot, "01-apidocs.md").printWriter().let {
     writeAPIs(it, containersWithGitRepos)
     it.close()
   }
 
-  File(docsRoot, "dependencies.md").printWriter().let {
+  File(docsRoot, "02-dependencies.md").printWriter().let {
     writeDependencies(it, containersWithGitRepos)
+    it.close()
+  }
+
+  File(docsRoot, "03-branches.md").printWriter().let {
+    writeBranchMetrics(it, containersWithGitRepos)
     it.close()
   }
 
@@ -73,6 +80,36 @@ fun writeDependency(w: PrintWriter, v: Version) {
 
   w.print("| ")
   w.print(v.chartVersions)
+
+  w.println("|")
+}
+
+private fun writeBranchMetrics(w: PrintWriter, containersWithGit: List<Container>) {
+  w.println("## Branches")
+  w.println("")
+
+  w.println("| Software System | Application | Unmerged branches | Oldest unmerged branch | Oldest branch date")
+  w.println("| --- | --- | --- | --- | --- |")
+
+  parseBranchMetrics(containersWithGit)
+    .forEach { writeBranchMetric(w, it) }
+}
+
+fun writeBranchMetric(w: PrintWriter, m: BranchMetric) {
+  w.print("| ")
+  w.print(m.softwareSystem)
+
+  w.print("| ")
+  w.print("[${m.application}](${m.applicationUrl})")
+
+  w.print("| ")
+  w.print(m.unmergedBranches)
+
+  w.print("| ")
+  w.print(m.oldestUnmergedBranch?.name ?: "")
+
+  w.print("| ")
+  w.print(m.oldestUnmergedBranch?.latestCommitTime?.toLocalDate() ?: "")
 
   w.println("|")
 }
