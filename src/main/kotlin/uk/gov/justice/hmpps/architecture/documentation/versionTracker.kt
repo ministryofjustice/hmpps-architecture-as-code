@@ -10,9 +10,9 @@ data class Version(
   val softwareSystem: String,
   val application: String,
   val applicationUrl: String,
-  val circleciOrbVersion: String,
+  val circleciOrbVersions: List<String>,
   val gradleBootPluginVersion: String,
-  val chartVersions: String,
+  val chartVersions: List<String>,
 )
 
 fun parseVersions(containersWithGit: List<Container>): List<Version> {
@@ -27,18 +27,18 @@ private fun parseVersion(container: Container): Version? {
     softwareSystem = container.softwareSystem.name,
     application = container.name,
     applicationUrl = container.url,
-    circleciOrbVersion = readCircleOrbVersion(r),
+    circleciOrbVersions = readCircleOrbVersion(r),
     gradleBootPluginVersion = readGradlePluginVersion(r),
     chartVersions = readHelmChartDependencies(r)
   )
 }
 
-private fun readCircleOrbVersion(repo: File): String {
+private fun readCircleOrbVersion(repo: File): List<String> {
   val circleConfig = repo.resolve(".circleci").resolve("config.yml").takeIf { it.exists() }?.readText().orEmpty()
 
   val circleOrb = Regex("ministryofjustice/(hmpps@[\\d.]*)").find(circleConfig)?.groups?.get(1)?.value
   val dpsOrb = Regex("ministryofjustice/(dps@[\\d.]*)").find(circleConfig)?.groups?.get(1)?.value
-  return listOfNotNull(circleOrb, dpsOrb).joinToString("<br>")
+  return listOfNotNull(circleOrb, dpsOrb)
 }
 
 const val GRADLE_PATTERN = """id\("uk.gov.justice.hmpps.gradle-spring-boot"\) version "([^"]*)""""
@@ -49,16 +49,16 @@ private fun readGradlePluginVersion(repo: File): String {
   return listOfNotNull(
     Regex(GRADLE_PATTERN).find(buildFileKt)?.groups?.get(1)?.value,
     Regex(GRADLE_PATTERN).find(buildFile)?.groups?.get(1)?.value,
-  ).joinToString("<br>")
+  ).firstOrNull() ?: ""
 }
 
-private fun readHelmChartDependencies(repo: File): String {
+private fun readHelmChartDependencies(repo: File): List<String> {
   val chartFile = repo.resolve("helm_deploy")
     .walkTopDown().find { it.name == "Chart.yaml" }
-    ?: return "no helm chart"
+    ?: return listOf("no helm chart")
 
   val dependencies = ObjectMapper(YAMLFactory()).readTree(chartFile).get("dependencies")
-    ?: return "standalone chart"
+    ?: return listOf("standalone chart")
 
-  return dependencies.joinToString("<br>") { "${it.get("name").textValue()}@${it.get("version").textValue()}" }
+  return dependencies.map { "${it.get("name").textValue()}@${it.get("version").textValue()}" }
 }

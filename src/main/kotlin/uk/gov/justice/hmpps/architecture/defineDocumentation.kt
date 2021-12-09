@@ -66,13 +66,13 @@ fun writeDependency(w: PrintWriter, v: Version) {
   w.print("[${v.application}](${v.applicationUrl})")
 
   w.print("| ")
-  w.print(v.circleciOrbVersion)
+  w.print(v.circleciOrbVersions.joinToString(", "))
 
   w.print("| ")
   w.print(v.gradleBootPluginVersion)
 
   w.print("| ")
-  w.print(v.chartVersions)
+  w.print(v.chartVersions.joinToString(", "))
 
   w.println("|")
 }
