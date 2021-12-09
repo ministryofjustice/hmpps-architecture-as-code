@@ -56,6 +56,7 @@ import uk.gov.justice.hmpps.architecture.model.Reporting
 import uk.gov.justice.hmpps.architecture.model.RestrictedPatientsApi
 import uk.gov.justice.hmpps.architecture.model.TierService
 import uk.gov.justice.hmpps.architecture.model.TokenVerificationApi
+import uk.gov.justice.hmpps.architecture.model.UseOfForce
 import uk.gov.justice.hmpps.architecture.model.UserPreferenceApi
 import uk.gov.justice.hmpps.architecture.model.WMT
 import uk.gov.justice.hmpps.architecture.model.WhereaboutsApi
@@ -107,6 +108,7 @@ private val MODEL_ITEMS = listOf(
   TierService,
   TokenVerificationApi,
   UserPreferenceApi,
+  UseOfForce,
   WhereaboutsApi,
   WMT,
   ManageRecalls,
