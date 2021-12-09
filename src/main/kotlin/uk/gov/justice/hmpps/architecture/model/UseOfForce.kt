@@ -61,9 +61,9 @@ class UseOfForce private constructor() {
 
       reportCreator = model.addPerson("Report creator user", "Prison staff who creates reports and provides statements").apply {
         uses(useOfForceService, "Creates Use of Force reports")
-      coordinator = model.addPerson("Coordinator user", "Prison staff who can view all complete and in progress reports and statements across their caseload")
-      reviewer = model.addPerson("Reviewer user", "Prison staff who can review and maintain reports across their caseload")
-      involvedStaff = model.addPerson("Involved staff user", "Prison staff who provides statements")
+        coordinator = model.addPerson("Coordinator user", "Prison staff who can view all complete and in progress reports and statements across their caseload")
+        reviewer = model.addPerson("Reviewer user", "Prison staff who can review and maintain reports across their caseload")
+        involvedStaff = model.addPerson("Involved staff user", "Prison staff who provides statements")
       }
     }
 
