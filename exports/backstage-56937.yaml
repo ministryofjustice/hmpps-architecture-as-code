@@ -1085,6 +1085,18 @@ spec:
   owner: "hmpps-undefined"
 ---
 apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "in-memory-data-store"
+  title: "In-memory data store"
+  description: "handles processing queues for email distribution and NOMIS movements"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "use-of-force"
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
 kind: "System"
 metadata:
   name: "integrated-crc-software-systems"
@@ -3202,6 +3214,53 @@ metadata:
     \ or been revoked"
 spec:
   owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "System"
+metadata:
+  name: "use-of-force"
+  title: "Use of Force"
+  description: "A system for allowing prison staff to report a Use of Force instance"
+spec:
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "use-of-force-database"
+  title: "Use of Force Database"
+  description: "Database to store Use of Force reports"
+spec:
+  type: "database"
+  lifecycle: "production"
+  system: "use-of-force"
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "use-of-force-service"
+  title: "Use of Force service"
+  description: "Allows prison staff to report a Use of Force instance"
+  links:
+  - url: "https://github.com/ministryofjustice/use-of-force"
+    title: "GitHub Repo"
+    icon: "github"
+  annotations:
+    backstage.io/source-location: "url:https://github.com/ministryofjustice/use-of-force"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "use-of-force"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:prison-api"
+  - "Component:prisonersearch"
+  - "Component:Token verification API"
+  consumesApis:
+  - "prison-api"
+  - "prisonersearch"
+  - "Token verification API"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "System"
