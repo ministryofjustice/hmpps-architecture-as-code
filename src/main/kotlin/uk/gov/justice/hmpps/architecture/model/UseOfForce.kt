@@ -74,7 +74,6 @@ class UseOfForce private constructor() {
       involvedStaff = model.addPerson("Involved staff user", "Prison staff who provides statements").apply {
         uses(useOfForceService, "Submits Use of Force statements")
       }
-
     }
 
     override fun defineRelationships() {
