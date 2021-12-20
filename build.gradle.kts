@@ -17,7 +17,7 @@ dependencies {
   implementation("com.structurizr:structurizr-core:1.9.10")
   implementation("com.structurizr:structurizr-graphviz:1.6.1")
   implementation("org.eclipse.jgit:org.eclipse.jgit:6.0.0.202111291000-r")
-  implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.0")
+  implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.1")
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0")
 
   testImplementation("org.assertj:assertj-core:3.21.0")
