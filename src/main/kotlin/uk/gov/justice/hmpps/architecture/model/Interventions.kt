@@ -16,7 +16,8 @@ class Interventions private constructor() {
     lateinit var ui: Container
     lateinit var service: Container
     lateinit var database: Container
-    lateinit var collector: Container
+    lateinit var dataCollector: Container
+    lateinit var misCollector: Container
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
@@ -58,13 +59,22 @@ class Interventions private constructor() {
         CloudPlatform.rds.add(this)
       }
 
-      collector = system.addContainer(
-        "Intervention data collector",
-        "Collects daily snapshots of intervention data for hand-off to S3 landing buckets for reporting or analytics",
+      dataCollector = system.addContainer(
+        "Analytical platform data collector",
+        "Collects daily snapshots of intervention data for hand-off to S3 landing buckets for the analytical platform",
         "cronjob with data-engineering-data-extractor"
       ).apply {
         uses(database, "reads snapshots of the intervention data from")
         Tags.REUSABLE_COMPONENT.addTo(this)
+        CloudPlatform.kubernetes.add(this)
+      }
+
+      misCollector = system.addContainer(
+        "MIS data collector",
+        "Generates daily interventions report for reporting",
+        "cronjob with spring-batch, running the service container"
+      ).apply {
+        uses(database, "reads intervention data from")
         CloudPlatform.kubernetes.add(this)
       }
     }
@@ -91,8 +101,8 @@ class Interventions private constructor() {
       service.uses(Delius.communityApi, "books and reschedules appointments with", "REST/HTTP")
       service.uses(Delius.communityApi, "creates activities (NSI), notifications of progress, records appointment outcomes with", "Spring Application Events+REST/HTTP")
 
-      collector.uses(Reporting.landingBucket, "pushes intervention data and custom reports daily to")
-      collector.uses(AnalyticalPlatform.landingBucket, "pushes intervention data daily to")
+      misCollector.uses(Reporting.landingBucket, "pushes intervention reports daily to")
+      dataCollector.uses(AnalyticalPlatform.landingBucket, "pushes intervention data daily to")
     }
 
     private fun defineUsers() {
