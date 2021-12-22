@@ -4,6 +4,7 @@ structurizr-*.puml
 structurizr-*.png
 *.dot
 *.svg
+*.cmapx
 
 # backstage export
 backstage-*.yaml
