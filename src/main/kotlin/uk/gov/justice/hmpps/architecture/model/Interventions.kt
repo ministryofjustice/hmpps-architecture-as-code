@@ -18,6 +18,7 @@ class Interventions private constructor() {
     lateinit var database: Container
     lateinit var dataCollector: Container
     lateinit var misCollector: Container
+    lateinit var deliusEventListener: Container
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
@@ -45,6 +46,16 @@ class Interventions private constructor() {
         url = "https://github.com/ministryofjustice/hmpps-interventions-ui"
         uses(service, "implements intervention processes via")
         Tags.WEB_BROWSER.addTo(this)
+        CloudPlatform.kubernetes.add(this)
+      }
+
+      deliusEventListener = system.addContainer(
+        "Interventions-to-Delius event listener",
+        "Subscribes to intervention domain events and deals with its consequences for nDelius, eg. NSIs",
+        "Kotlin + hmpps-sqs-spring-boot-starter"
+      ).apply {
+        url = "https://github.com/ministryofjustice/hmpps-delius-interventions-event-listener"
+        Tags.PLANNED.addTo(this) // not in production yet
         CloudPlatform.kubernetes.add(this)
       }
 
@@ -100,6 +111,10 @@ class Interventions private constructor() {
       service.uses(HMPPSDomainEvents.topic, "publishes intervention domain events to", "SNS")
       service.uses(Delius.communityApi, "books and reschedules appointments with", "REST/HTTP")
       service.uses(Delius.communityApi, "creates activities (NSI), notifications of progress, records appointment outcomes with", "Spring Application Events+REST/HTTP")
+
+      // remove "records appointment outcomes" from service once this is live
+      deliusEventListener.uses(Delius.communityApi, "records appointment outcomes with", "REST/HTTP")
+      deliusEventListener.uses(HMPPSDomainEvents.topic, "subscribes to intervention domain events", "SQS")
 
       misCollector.uses(Reporting.landingBucket, "pushes intervention reports daily to")
       dataCollector.uses(AnalyticalPlatform.landingBucket, "pushes intervention data daily to")
