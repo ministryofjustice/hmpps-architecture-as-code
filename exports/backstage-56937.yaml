@@ -2163,7 +2163,7 @@ metadata:
   - url: "https://github.com/ministryofjustice/prison-api"
     title: "GitHub Repo"
     icon: "github"
-  - url: "https://api-dev.prison.service.justice.gov.uk/swagger-ui/"
+  - url: "https://api-dev.prison.service.justice.gov.uk/swagger-ui/?configUrl=/api/swagger.json"
     title: "API Docs"
   annotations:
     backstage.io/source-location: "url:https://github.com/ministryofjustice/prison-api"
