@@ -21,17 +21,18 @@ class Interventions private constructor() {
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
         "Refer and monitor an intervention",
-        "Refer and monitor an intervention for service users (offenders)"
+        "Refer and monitor an intervention for people on probation"
       ).apply {
         ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)
       }
 
       service = system.addContainer(
-        "Intervention service",
-        "Tracks the lifecycle of dynamic framework interventions and services, including publishing, finding, referring, delivering and monitoring",
+        "Intervention service (REST API)",
+        "Domain API for tracking the lifecycle of CRS (Commissioned Rehabilitative Services) interventions and services, " +
+          "including finding, referring, delivering and monitoring",
         "Kotlin + Spring Boot"
       ).apply {
-        setUrl("https://github.com/ministryofjustice/hmpps-interventions-service")
+        url = "https://github.com/ministryofjustice/hmpps-interventions-service"
         CloudPlatform.kubernetes.add(this)
       }
 
@@ -40,7 +41,7 @@ class Interventions private constructor() {
         "Responsible for curating and delivering published interventions and services",
         "Node + Express"
       ).apply {
-        setUrl("https://github.com/ministryofjustice/hmpps-interventions-ui")
+        url = "https://github.com/ministryofjustice/hmpps-interventions-ui"
         uses(service, "implements intervention processes via")
         Tags.WEB_BROWSER.addTo(this)
         CloudPlatform.kubernetes.add(this)
@@ -48,8 +49,8 @@ class Interventions private constructor() {
 
       database = system.addContainer(
         "Intervention database",
-        "Authoritative source for dynamic framework interventions, service categories, complexity levels; " +
-          "Potential source for dynamic framework providers",
+        "Authoritative source for CRS (Commissioned Rehabilitative Services) interventions, their service categories, " +
+          "complexity levels, CRS providers and subcontractors.",
         "PostgreSQL"
       ).apply {
         service.uses(this, "connects to", "JDBC")
@@ -60,7 +61,7 @@ class Interventions private constructor() {
       collector = system.addContainer(
         "Intervention data collector",
         "Collects daily snapshots of intervention data for hand-off to S3 landing buckets for reporting or analytics",
-        "data-engineering-data-extractor"
+        "cronjob with data-engineering-data-extractor"
       ).apply {
         uses(database, "reads snapshots of the intervention data from")
         Tags.REUSABLE_COMPONENT.addTo(this)
