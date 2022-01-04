@@ -20,7 +20,7 @@ dependencies {
   implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.1")
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1")
 
-  testImplementation("org.assertj:assertj-core:3.21.0")
+  testImplementation("org.assertj:assertj-core:3.22.0")
   testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
 }
