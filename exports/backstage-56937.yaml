@@ -9,7 +9,7 @@ metadata:
   - url: "https://github.com/ministryofjustice/hmpps-manage-adjudications-api"
     title: "GitHub Repo"
     icon: "github"
-  - url: "https://manage-adjudications-api-dev.hmpps.service.justice.gov.uk/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config"
+  - url: "https://manage-adjudications-api-dev.hmpps.service.justice.gov.uk/swagger-ui/?configUrl=/v3/api-docs"
     title: "API Docs"
   annotations:
     backstage.io/source-location: "url:https://github.com/ministryofjustice/hmpps-manage-adjudications-api"
@@ -97,7 +97,7 @@ metadata:
   - url: "https://github.com/ministryofjustice/hmpps-restricted-patients-api"
     title: "GitHub Repo"
     icon: "github"
-  - url: "https://restricted-patients-api-dev.hmpps.service.justice.gov.uk/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config"
+  - url: "https://restricted-patients-api-dev.hmpps.service.justice.gov.uk/swagger-ui/?configUrl=/v3/api-docs"
     title: "API Docs"
   annotations:
     backstage.io/source-location: "url:https://github.com/ministryofjustice/hmpps-restricted-patients-api"
