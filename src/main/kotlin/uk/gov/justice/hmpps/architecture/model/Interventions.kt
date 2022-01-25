@@ -16,22 +16,25 @@ class Interventions private constructor() {
     lateinit var ui: Container
     lateinit var service: Container
     lateinit var database: Container
-    lateinit var collector: Container
+    lateinit var dataCollector: Container
+    lateinit var misCollector: Container
+    lateinit var deliusEventListener: Container
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
         "Refer and monitor an intervention",
-        "Refer and monitor an intervention for service users (offenders)"
+        "Refer and monitor an intervention for people on probation"
       ).apply {
         ProblemArea.GETTING_THE_RIGHT_REHABILITATION.addTo(this)
       }
 
       service = system.addContainer(
-        "Intervention service",
-        "Tracks the lifecycle of dynamic framework interventions and services, including publishing, finding, referring, delivering and monitoring",
+        "Intervention service (REST API)",
+        "Domain API for tracking the lifecycle of CRS (Commissioned Rehabilitative Services) interventions and services, " +
+          "including finding, referring, delivering and monitoring",
         "Kotlin + Spring Boot"
       ).apply {
-        setUrl("https://github.com/ministryofjustice/hmpps-interventions-service")
+        url = "https://github.com/ministryofjustice/hmpps-interventions-service"
         CloudPlatform.kubernetes.add(this)
       }
 
@@ -40,16 +43,26 @@ class Interventions private constructor() {
         "Responsible for curating and delivering published interventions and services",
         "Node + Express"
       ).apply {
-        setUrl("https://github.com/ministryofjustice/hmpps-interventions-ui")
+        url = "https://github.com/ministryofjustice/hmpps-interventions-ui"
         uses(service, "implements intervention processes via")
         Tags.WEB_BROWSER.addTo(this)
         CloudPlatform.kubernetes.add(this)
       }
 
+      deliusEventListener = system.addContainer(
+        "Interventions-to-Delius event listener",
+        "Subscribes to intervention domain events and deals with its consequences for nDelius, eg. NSIs",
+        "Kotlin + hmpps-sqs-spring-boot-starter"
+      ).apply {
+        url = "https://github.com/ministryofjustice/hmpps-delius-interventions-event-listener"
+        Tags.PLANNED.addTo(this) // not in production yet
+        CloudPlatform.kubernetes.add(this)
+      }
+
       database = system.addContainer(
         "Intervention database",
-        "Authoritative source for dynamic framework interventions, service categories, complexity levels; " +
-          "Potential source for dynamic framework providers",
+        "Authoritative source for CRS (Commissioned Rehabilitative Services) interventions, their service categories, " +
+          "complexity levels, CRS providers and subcontractors.",
         "PostgreSQL"
       ).apply {
         service.uses(this, "connects to", "JDBC")
@@ -57,13 +70,22 @@ class Interventions private constructor() {
         CloudPlatform.rds.add(this)
       }
 
-      collector = system.addContainer(
-        "Intervention data collector",
-        "Collects daily snapshots of intervention data for hand-off to S3 landing buckets for reporting or analytics",
-        "data-engineering-data-extractor"
+      dataCollector = system.addContainer(
+        "Analytical platform data collector",
+        "Collects daily snapshots of intervention data for hand-off to S3 landing buckets for the analytical platform",
+        "cronjob with data-engineering-data-extractor"
       ).apply {
         uses(database, "reads snapshots of the intervention data from")
         Tags.REUSABLE_COMPONENT.addTo(this)
+        CloudPlatform.kubernetes.add(this)
+      }
+
+      misCollector = system.addContainer(
+        "MIS data collector",
+        "Generates daily interventions report for reporting",
+        "cronjob with spring-batch, running the service container"
+      ).apply {
+        uses(database, "reads intervention data from")
         CloudPlatform.kubernetes.add(this)
       }
     }
@@ -90,8 +112,12 @@ class Interventions private constructor() {
       service.uses(Delius.communityApi, "books and reschedules appointments with", "REST/HTTP")
       service.uses(Delius.communityApi, "creates activities (NSI), notifications of progress, records appointment outcomes with", "Spring Application Events+REST/HTTP")
 
-      collector.uses(Reporting.landingBucket, "pushes intervention data and custom reports daily to")
-      collector.uses(AnalyticalPlatform.landingBucket, "pushes intervention data daily to")
+      // remove "records appointment outcomes" from service once this is live
+      deliusEventListener.uses(Delius.communityApi, "records appointment outcomes with", "REST/HTTP")
+      deliusEventListener.uses(HMPPSDomainEvents.topic, "subscribes to intervention domain events", "SQS")
+
+      misCollector.uses(Reporting.landingBucket, "pushes intervention reports daily to")
+      dataCollector.uses(AnalyticalPlatform.landingBucket, "pushes intervention data daily to")
     }
 
     private fun defineUsers() {
