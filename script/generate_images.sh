@@ -4,7 +4,7 @@ ext_dir="$root_dir/ext"
 exports_dir="$root_dir/exports"
 mkdir -p "$ext_dir"
 
-cli_version="1.10.1"
+cli_version="1.16.0"
 cli_zip="$ext_dir/cli-${cli_version}.zip"
 if [ ! -f "$cli_zip" ]; then
   echo
@@ -13,7 +13,7 @@ if [ ! -f "$cli_zip" ]; then
   unzip -o -d"$ext_dir" "$cli_zip"
 fi
 
-plantuml_version="1.2021.7"
+plantuml_version="1.2021.16.patched"
 plantuml_jar="$ext_dir/plantuml-nodot.${plantuml_version}.jar"
 if [ ! -f "$plantuml_jar" ]; then
   echo
