@@ -236,6 +236,25 @@ spec:
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
 metadata:
+  name: "analytical-platform-data-collector"
+  title: "Analytical platform data collector"
+  description: "Collects daily snapshots of intervention data for hand-off to S3 landing\
+    \ buckets for the analytical platform"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "refer-and-monitor-an-intervention"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:intervention-database"
+  - "Component:analytical-platform-landing-bucket"
+  consumesApis:
+  - "intervention-database"
+  - "analytical-platform-landing-bucket"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
   name: "analytical-platform-landing-bucket"
   title: "Analytical Platform landing bucket"
   description: "Storage area where data ingestion for analytics and data science starts"
@@ -1121,31 +1140,11 @@ spec:
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
 metadata:
-  name: "intervention-data-collector"
-  title: "Intervention data collector"
-  description: "Collects daily snapshots of intervention data for hand-off to S3 landing\
-    \ buckets for reporting or analytics"
-spec:
-  type: "service"
-  lifecycle: "production"
-  system: "refer-and-monitor-an-intervention"
-  owner: "hmpps-undefined"
-  dependsOn:
-  - "Component:intervention-database"
-  - "Component:ndmis-etl-reporting-landing-bucket"
-  - "Component:analytical-platform-landing-bucket"
-  consumesApis:
-  - "intervention-database"
-  - "ndmis-etl-reporting-landing-bucket"
-  - "analytical-platform-landing-bucket"
----
-apiVersion: "backstage.io/v1alpha1"
-kind: "Component"
-metadata:
   name: "intervention-database"
   title: "Intervention database"
-  description: "Authoritative source for dynamic framework interventions, service\
-    \ categories, complexity levels; Potential source for dynamic framework providers"
+  description: "Authoritative source for CRS (Commissioned Rehabilitative Services)\
+    \ interventions, their service categories, complexity levels, CRS providers and\
+    \ subcontractors."
 spec:
   type: "database"
   lifecycle: "production"
@@ -1155,10 +1154,11 @@ spec:
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
 metadata:
-  name: "intervention-service"
-  title: "Intervention service"
-  description: "Tracks the lifecycle of dynamic framework interventions and services,\
-    \ including publishing, finding, referring, delivering and monitoring"
+  name: "intervention-service-rest-api-"
+  title: "Intervention service (REST API)"
+  description: "Domain API for tracking the lifecycle of CRS (Commissioned Rehabilitative\
+    \ Services) interventions and services, including finding, referring, delivering\
+    \ and monitoring"
   links:
   - url: "https://github.com/ministryofjustice/hmpps-interventions-service"
     title: "GitHub Repo"
@@ -1178,7 +1178,7 @@ spec:
   - "Component:community-api"
   - "Component:community-api"
   providesApis:
-  - "intervention-service"
+  - "intervention-service-rest-api-"
   consumesApis:
   - "intervention-database"
   - "hmpps-auth"
@@ -1188,8 +1188,8 @@ spec:
 apiVersion: "backstage.io/v1alpha1"
 kind: "API"
 metadata:
-  name: "intervention-service"
-  description: "API provided by intervention-service"
+  name: "intervention-service-rest-api-"
+  description: "API provided by intervention-service-rest-api-"
 spec:
   type: "openapi"
   lifecycle: "production"
@@ -1217,12 +1217,12 @@ spec:
   system: "refer-and-monitor-an-intervention"
   owner: "hmpps-undefined"
   dependsOn:
-  - "Component:intervention-service"
+  - "Component:intervention-service-rest-api-"
   - "Component:hmpps-auth"
   - "Component:community-api"
   - "Component:risks-and-needs-service"
   consumesApis:
-  - "intervention-service"
+  - "intervention-service-rest-api-"
   - "hmpps-auth"
   - "community-api"
   - "risks-and-needs-service"
@@ -1255,6 +1255,29 @@ metadata:
     \ progress on them"
 spec:
   owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "interventions-to-delius-event-listener"
+  title: "Interventions-to-Delius event listener"
+  description: "Subscribes to intervention domain events and deals with its consequences\
+    \ for nDelius, eg. NSIs"
+  links:
+  - url: "https://github.com/ministryofjustice/hmpps-delius-interventions-event-listener"
+    title: "GitHub Repo"
+    icon: "github"
+  annotations:
+    backstage.io/source-location: "url:https://github.com/ministryofjustice/hmpps-delius-interventions-event-listener"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "refer-and-monitor-an-intervention"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:community-api"
+  consumesApis:
+  - "community-api"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
@@ -1557,6 +1580,24 @@ spec:
   lifecycle: "production"
   system: "prepare-a-case-for-sentence"
   owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "mis-data-collector"
+  title: "MIS data collector"
+  description: "Generates daily interventions report for reporting"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "refer-and-monitor-an-intervention"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:intervention-database"
+  - "Component:ndmis-etl-reporting-landing-bucket"
+  consumesApis:
+  - "intervention-database"
+  - "ndmis-etl-reporting-landing-bucket"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "System"
@@ -2968,7 +3009,7 @@ kind: "System"
 metadata:
   name: "refer-and-monitor-an-intervention"
   title: "Refer and monitor an intervention"
-  description: "Refer and monitor an intervention for service users (offenders)"
+  description: "Refer and monitor an intervention for people on probation"
 spec:
   owner: "hmpps-undefined"
 ---
