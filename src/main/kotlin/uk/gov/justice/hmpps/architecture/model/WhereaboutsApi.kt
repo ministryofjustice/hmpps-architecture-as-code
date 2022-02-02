@@ -17,7 +17,8 @@ class WhereaboutsApi private constructor() {
         "Whereabouts API",
         "Provides and creates appointment information about prisoners"
       ).apply {
-        Tags.PRISONS_API.addTo(this)
+        Tags.DOMAIN_API.addTo(this)
+        Tags.AREA_PRISONS.addTo(this)
       }
 
       api = system.addContainer("API", "API", "Kotlin + Spring Boot").apply {

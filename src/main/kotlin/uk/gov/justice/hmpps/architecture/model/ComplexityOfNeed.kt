@@ -29,7 +29,8 @@ class ComplexityOfNeed private constructor() {
           "Exposes a REST API for mastered data.",
         "Ruby on Rails"
       ).apply {
-        Tags.PRISONS_API.addTo(this)
+        Tags.DOMAIN_API.addTo(this)
+        Tags.AREA_PRISONS.addTo(this)
         setUrl("https://github.com/ministryofjustice/hmpps-complexity-of-need")
         CloudPlatform.kubernetes.add(this)
       }

@@ -32,7 +32,8 @@ class NOMIS private constructor() {
         "Provided REST access to the Nomis Oracle DB offender information - deprecated; use prison-api instead",
         "Java"
       ).apply {
-        Tags.PRISONS_API.addTo(this)
+        Tags.DATA_API.addTo(this)
+        Tags.AREA_PRISONS.addTo(this)
         Tags.DEPRECATED.addTo(this)
         setUrl("https://github.com/ministryofjustice/custody-api")
         uses(db, "connects to", "JDBC")
@@ -42,7 +43,8 @@ class NOMIS private constructor() {
         "Prison API",
         "API over the NOMIS DB used by Digital Prison team applications and services", "Java"
       ).apply {
-        Tags.PRISONS_API.addTo(this)
+        Tags.DATA_API.addTo(this)
+        Tags.AREA_PRISONS.addTo(this)
         addProperty("previous-name", "Elite2 API")
         url = "https://github.com/ministryofjustice/prison-api"
         uses(db, "connects to", "JDBC")
@@ -70,7 +72,8 @@ class NOMIS private constructor() {
         "PrisonerSearch", "API over the NOMIS prisoner data held in Elasticsearch",
         "Kotlin"
       ).apply {
-        Tags.PRISONS_API.addTo(this)
+        Tags.DOMAIN_API.addTo(this)
+        Tags.AREA_PRISONS.addTo(this)
         uses(elasticSearchStore, "Queries prisoner data from NOMIS Elasticsearch Index")
         setUrl("https://github.com/ministryofjustice/prisoner-offender-search")
         CloudPlatform.kubernetes.add(this)

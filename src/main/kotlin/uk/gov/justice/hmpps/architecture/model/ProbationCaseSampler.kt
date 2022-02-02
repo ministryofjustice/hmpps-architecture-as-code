@@ -16,7 +16,8 @@ class ProbationCaseSampler private constructor() {
         "API which produces a representative and evenly distributed list of probation cases " +
           "within a region and date range which form the basis of an on-site inspection"
       ).apply {
-        Tags.PROBATION_API.addTo(this)
+        Tags.DOMAIN_API.addTo(this)
+        Tags.AREA_PROBATION.addTo(this)
         setUrl("https://dsdmoj.atlassian.net/wiki/spaces/NDSS/pages/1989181486/HMIP+Case+Sampling")
       }
     }

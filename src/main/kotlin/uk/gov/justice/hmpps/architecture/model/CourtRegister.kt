@@ -16,7 +16,10 @@ class CourtRegister private constructor() {
       system = model.addSoftwareSystem(
         "Court register",
         "Provides and creates appointment information about prisoners"
-      )
+      ).apply {
+        Tags.DOMAIN_API.addTo(this)
+        Tags.AREA_PROBATION.addTo(this)
+      }
 
       api = system.addContainer("API", "API", "Kotlin + Spring Boot").apply {
         url = "https://github.com/ministryofjustice/court-register"

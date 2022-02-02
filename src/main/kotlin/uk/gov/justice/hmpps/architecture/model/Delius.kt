@@ -57,7 +57,8 @@ class Delius private constructor() {
         "Delius API",
         "Write API over the NDelius DB used by HMPPS Digital team applications and services", "Kotlin"
       ).apply {
-        Tags.PROBATION_API.addTo(this)
+        Tags.DATA_API.addTo(this)
+        Tags.AREA_PROBATION.addTo(this)
         url = "https://github.com/ministryofjustice/hmpps-delius-api"
         uses(database, "connects to", "JDBC")
         ecs.add(this)
@@ -67,7 +68,8 @@ class Delius private constructor() {
         "Community API",
         "API over the NDelius DB used by HMPPS Digital team applications and services", "Java"
       ).apply {
-        Tags.PROBATION_API.addTo(this)
+        Tags.DATA_API.addTo(this)
+        Tags.AREA_PROBATION.addTo(this)
         url = "https://github.com/ministryofjustice/community-api"
         uses(database, "connects to", "JDBC")
         uses(deliusApi, "Writes data to NDelius using")
@@ -206,7 +208,8 @@ class Delius private constructor() {
         "API over the NDelius offender data held in Elasticsearch",
         "Kotlin"
       ).apply {
-        Tags.PROBATION_API.addTo(this)
+        Tags.DATA_API.addTo(this)
+        Tags.AREA_PROBATION.addTo(this)
         url = "https://github.com/ministryofjustice/probation-offender-search"
         uses(offenderElasticsearchStore, "Queries offender data from NDelius Elasticsearch Index")
         uses(offenderSearchIndexer, "To synchronise date from NDelius to Elasticsearch")

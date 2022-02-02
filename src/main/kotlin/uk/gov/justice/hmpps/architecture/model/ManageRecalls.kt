@@ -38,7 +38,8 @@ class ManageRecalls private constructor() {
         "REST API for the case management of recalls",
         "Kotlin Spring Boot App"
       ).apply {
-        Tags.PRISONS_API.addTo(this)
+        Tags.DOMAIN_API.addTo(this)
+        Tags.AREA_PRISONS.addTo(this)
         setUrl("https://github.com/ministryofjustice/manage-recalls-api")
         CloudPlatform.kubernetes.add(this)
         CloudPlatform.s3.add(this)

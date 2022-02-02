@@ -28,7 +28,8 @@ class OASys private constructor() {
       }
 
       assessmentsApi = system.addContainer("Offender Assessments API", "REST access to the OASYS Oracle DB offender assessment information", "Kotlin + Spring Boot").apply {
-        Tags.PROBATION_API.addTo(this)
+        Tags.DATA_API.addTo(this)
+        Tags.AREA_PROBATION.addTo(this)
         uses(oasysDB, "connects to", "JDBC")
         setUrl("https://github.com/ministryofjustice/offender-assessments-api-kotlin")
         APIDocs("https://offender-dev.aks-dev-1.studio-hosting.service.justice.gov.uk/swagger-ui/").addTo(this)
@@ -44,7 +45,8 @@ class OASys private constructor() {
         "Write API layer for OASys",
         "Kotlin + Spring Boot"
       ).apply {
-        Tags.PROBATION_API.addTo(this)
+        Tags.DATA_API.addTo(this)
+        Tags.AREA_PROBATION.addTo(this)
         uses(oasysDB, "connects to", "JDBC")
         setUrl("https://github.com/ministryofjustice/offender-assessments-updates")
       }

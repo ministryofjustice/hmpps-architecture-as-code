@@ -26,7 +26,8 @@ class Curious private constructor() {
         "Curious API",
         "API over the Curious application - a contract management system for Education Providers", "Java"
       ).apply {
-        Tags.PRISONS_API.addTo(this)
+        Tags.DOMAIN_API.addTo(this)
+        Tags.AREA_PRISONS.addTo(this)
         url = "https://github.com/ministryofjustice/curious-API"
       }
 

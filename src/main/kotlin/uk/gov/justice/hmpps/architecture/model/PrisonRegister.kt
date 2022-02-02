@@ -19,7 +19,8 @@ class PrisonRegister private constructor() {
       )
 
       api = system.addContainer("Prison Register API", "API", "Kotlin + Spring Boot").apply {
-        Tags.PRISONS_API.addTo(this)
+        Tags.DOMAIN_API.addTo(this)
+        Tags.AREA_PRISONS.addTo(this)
         url = "https://github.com/ministryofjustice/prison-register"
       }
 

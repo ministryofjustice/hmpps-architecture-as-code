@@ -17,7 +17,8 @@ class KeyworkerApi private constructor() {
         "Keyworker API",
         "Provides and creates information about keyworkers of prisoners"
       ).apply {
-        Tags.PRISONS_API.addTo(this)
+        Tags.DOMAIN_API.addTo(this)
+        Tags.AREA_PRISONS.addTo(this)
       }
 
       api = system.addContainer("API", "API", "Kotlin + Spring Boot").apply {
