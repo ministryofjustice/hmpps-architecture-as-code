@@ -4,7 +4,7 @@ ext_dir="$root_dir/ext"
 exports_dir="$root_dir/exports"
 mkdir -p "$ext_dir"
 
-cli_version="1.16.0"
+cli_version="1.17.0"
 cli_zip="$ext_dir/cli-${cli_version}.zip"
 if [ ! -f "$cli_zip" ]; then
   echo
@@ -27,11 +27,15 @@ echo "🚧 Generating Structurizr workspaces..."
 
 echo
 echo "🌿 Generating PlantUML..."
-(cd "$exports_dir"; \
+(
+  cd "$exports_dir"
   find "$root_dir" -name 'structurizr-*-local.json' \
-    -exec "$ext_dir/structurizr.sh" export -workspace {} -f plantuml \;)
+    -exec "$ext_dir/structurizr.sh" export -workspace {} -f plantuml \;
+)
 
 echo
 echo "🖼 Generating images..."
-(cd "$exports_dir"; \
-  java -Djava.awt.headless=true -jar "$plantuml_jar" -SmaxMessageSize=100 -tpng structurizr-*.puml)
+(
+  cd "$exports_dir"
+  java -Djava.awt.headless=true -jar "$plantuml_jar" -SmaxMessageSize=100 -tpng structurizr-*.puml
+)
