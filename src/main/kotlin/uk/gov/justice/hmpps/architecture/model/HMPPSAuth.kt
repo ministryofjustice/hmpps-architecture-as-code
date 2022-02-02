@@ -11,6 +11,7 @@ class HMPPSAuth private constructor() {
   companion object : HMPPSSoftwareSystem {
     lateinit var system: SoftwareSystem
     lateinit var app: Container
+    lateinit var database: Container
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem("HMPPS Auth", "Allows users to login into digital services")
@@ -21,10 +22,11 @@ class HMPPSAuth private constructor() {
         "Spring Boot + Java"
       ).apply {
         Tags.WEB_BROWSER.addTo(this)
+        Tags.AUTH_API.addTo(this)
         url = "https://github.com/ministryofjustice/hmpps-auth"
       }
 
-      val database = system.addContainer(
+      database = system.addContainer(
         "Internal Auth Database",
         "Holds explicit credentials, roles, multi-factor settings and banning data",
         "Microsoft SQL Server"

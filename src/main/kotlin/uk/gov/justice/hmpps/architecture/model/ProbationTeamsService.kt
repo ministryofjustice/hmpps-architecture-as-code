@@ -17,7 +17,9 @@ class ProbationTeamsService private constructor() {
       system = model.addSoftwareSystem(
         "Probation team contact and reference service",
         "Exposes probation areas and Local Delivery Unit 'functional' mailboxes as an API"
-      )
+      ).apply {
+        Tags.PROBATION_API.addTo(this)
+      }
 
       api = system.addContainer("API", "API", "Kotlin + Spring Boot").apply {
         url = "https://github.com/ministryofjustice/probation-teams"

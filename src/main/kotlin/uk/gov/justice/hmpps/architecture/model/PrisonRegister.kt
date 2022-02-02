@@ -18,7 +18,8 @@ class PrisonRegister private constructor() {
         "Provides a reference data around prisons"
       )
 
-      api = system.addContainer("API", "API", "Kotlin + Spring Boot").apply {
+      api = system.addContainer("Prison Register API", "API", "Kotlin + Spring Boot").apply {
+        Tags.PRISONS_API.addTo(this)
         url = "https://github.com/ministryofjustice/prison-register"
       }
 

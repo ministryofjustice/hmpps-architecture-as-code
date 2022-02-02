@@ -26,7 +26,8 @@ class PrisonVisitsBooking private constructor() {
         CloudPlatform.kubernetes.add(this)
       }
 
-      backend = system.addContainer("Backend", "API for the frontend and admin interface for staff to manage bookings", "Ruby on Rails").apply {
+      backend = system.addContainer("Prison Visits Booking Backend", "API for the frontend and admin interface for staff to manage bookings", "Ruby on Rails").apply {
+        Tags.PRISONS_API.addTo(this)
         setUrl("https://github.com/ministryofjustice/prison-visits-2")
         CloudPlatform.kubernetes.add(this)
       }

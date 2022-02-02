@@ -57,6 +57,7 @@ class PrepareCaseForSentence private constructor() {
         "Court case business logic and REST API consumed by the Prepare a Case web application",
         "Java + Spring Boot"
       ).apply {
+        Tags.PROBATION_API.addTo(this)
         uses(casesDb, "connects to", "JDBC")
         setUrl("https://github.com/ministryofjustice/court-case-service")
       }

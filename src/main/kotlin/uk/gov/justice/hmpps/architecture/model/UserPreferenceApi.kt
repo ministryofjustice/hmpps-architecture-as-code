@@ -15,8 +15,10 @@ class UserPreferenceApi private constructor() {
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
         "User Preference API",
-        "Stores preference information associated with a HMPPs Auth User"
-      )
+        "Stores preference information associated with a HMPPS Auth User"
+      ).apply {
+        Tags.AUTH_API.addTo(this)
+      }
 
       api = system.addContainer("API", "API", "Kotlin + Spring Boot").apply {
         url = "https://github.com/ministryofjustice/hmpps-user-preferences"

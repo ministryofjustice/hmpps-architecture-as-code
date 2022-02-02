@@ -16,7 +16,9 @@ class AdjudicationsApi private constructor() {
       system = model.addSoftwareSystem(
         "Adjudications API",
         "Allows reporting and viewing of Adjudications"
-      )
+      ).apply {
+        Tags.PRISONS_API.addTo(this)
+      }
 
       api = system.addContainer("API", "API", "Kotlin + Spring Boot").apply {
         url = "https://github.com/ministryofjustice/hmpps-manage-adjudications-api"

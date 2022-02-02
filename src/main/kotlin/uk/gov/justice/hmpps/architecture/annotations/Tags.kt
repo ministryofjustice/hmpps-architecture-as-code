@@ -16,7 +16,10 @@ enum class Tags : addTo {
   },
   PLANNED,
   DEPRECATED,
-  SOFTWARE_AS_A_SERVICE;
+  SOFTWARE_AS_A_SERVICE,
+  AUTH_API,
+  PROBATION_API,
+  PRISONS_API;
 
   // Usage example: Tags.DATABASE.addTo(any_model_element)
   override fun addTo(element: Element) {

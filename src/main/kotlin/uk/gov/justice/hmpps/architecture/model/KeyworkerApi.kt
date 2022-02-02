@@ -16,7 +16,9 @@ class KeyworkerApi private constructor() {
       system = model.addSoftwareSystem(
         "Keyworker API",
         "Provides and creates information about keyworkers of prisoners"
-      )
+      ).apply {
+        Tags.PRISONS_API.addTo(this)
+      }
 
       api = system.addContainer("API", "API", "Kotlin + Spring Boot").apply {
         url = "https://github.com/ministryofjustice/keyworker-api"

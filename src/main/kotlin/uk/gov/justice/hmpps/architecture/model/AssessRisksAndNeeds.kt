@@ -47,6 +47,7 @@ class AssessRisksAndNeeds private constructor() {
         "Assessments business logic, providing REST API consumed by Risk Assessment UI web application, Authoritative source for assessment data",
         "Kotlin + Spring Boot"
       ).apply {
+        Tags.PROBATION_API.addTo(this)
         uses(assessmentDb, "connects to", "JDBC")
         setUrl("https://github.com/ministryofjustice/hmpps-assessments-api")
         CloudPlatform.kubernetes.add(this)

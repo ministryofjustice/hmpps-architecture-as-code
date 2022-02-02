@@ -7,6 +7,7 @@ import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
 import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
 import uk.gov.justice.hmpps.architecture.annotations.APIDocs
+import uk.gov.justice.hmpps.architecture.annotations.Tags
 
 class OASys private constructor() {
   companion object : HMPPSSoftwareSystem {
@@ -15,15 +16,19 @@ class OASys private constructor() {
     lateinit var assessmentsApi: Container
     lateinit var assessmentsEvents: Container
     lateinit var assessmentsUpdateApi: Container
+    lateinit var oasysDB: Container
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem("OASys", "(Offender Assessment System) Assesses the risks and needs of offenders").apply {
         setUrl("https://dsdmoj.atlassian.net/wiki/spaces/~474366104/pages/2046820357/OASys+Overview")
       }
 
-      val oasysDB = system.addContainer("OASys Assessments Database", null, "Oracle")
+      oasysDB = system.addContainer("OASys Assessments Database", null, "Oracle").apply {
+        Tags.DATABASE.addTo(this)
+      }
 
       assessmentsApi = system.addContainer("Offender Assessments API", "REST access to the OASYS Oracle DB offender assessment information", "Kotlin + Spring Boot").apply {
+        Tags.PROBATION_API.addTo(this)
         uses(oasysDB, "connects to", "JDBC")
         setUrl("https://github.com/ministryofjustice/offender-assessments-api-kotlin")
         APIDocs("https://offender-dev.aks-dev-1.studio-hosting.service.justice.gov.uk/swagger-ui/").addTo(this)
@@ -39,6 +44,7 @@ class OASys private constructor() {
         "Write API layer for OASys",
         "Kotlin + Spring Boot"
       ).apply {
+        Tags.PROBATION_API.addTo(this)
         uses(oasysDB, "connects to", "JDBC")
         setUrl("https://github.com/ministryofjustice/offender-assessments-updates")
       }

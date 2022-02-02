@@ -15,6 +15,7 @@ class NOMIS private constructor() {
     lateinit var offenderSearch: Container
     lateinit var custodyApi: Container
     lateinit var prisonApi: Container
+    lateinit var elasticSearchStore: Container
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
@@ -31,8 +32,9 @@ class NOMIS private constructor() {
         "Provided REST access to the Nomis Oracle DB offender information - deprecated; use prison-api instead",
         "Java"
       ).apply {
-        setUrl("https://github.com/ministryofjustice/custody-api")
+        Tags.PRISONS_API.addTo(this)
         Tags.DEPRECATED.addTo(this)
+        setUrl("https://github.com/ministryofjustice/custody-api")
         uses(db, "connects to", "JDBC")
       }
 
@@ -40,6 +42,7 @@ class NOMIS private constructor() {
         "Prison API",
         "API over the NOMIS DB used by Digital Prison team applications and services", "Java"
       ).apply {
+        Tags.PRISONS_API.addTo(this)
         addProperty("previous-name", "Elite2 API")
         url = "https://github.com/ministryofjustice/prison-api"
         uses(db, "connects to", "JDBC")
@@ -54,7 +57,7 @@ class NOMIS private constructor() {
         uses(Curious.system, "Consumes")
       }
 
-      val elasticSearchStore = system.addContainer(
+      elasticSearchStore = system.addContainer(
         "ElasticSearch store",
         "Data store for NOMIS content", "ElasticSearch"
       ).apply {
@@ -67,6 +70,7 @@ class NOMIS private constructor() {
         "PrisonerSearch", "API over the NOMIS prisoner data held in Elasticsearch",
         "Kotlin"
       ).apply {
+        Tags.PRISONS_API.addTo(this)
         uses(elasticSearchStore, "Queries prisoner data from NOMIS Elasticsearch Index")
         setUrl("https://github.com/ministryofjustice/prisoner-offender-search")
         CloudPlatform.kubernetes.add(this)
