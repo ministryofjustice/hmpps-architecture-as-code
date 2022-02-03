@@ -36,6 +36,8 @@ class TierService private constructor() {
         "Tier micro-service containing business logic, persistence logic and REST API",
         "Kotlin + Spring Boot"
       ).apply {
+        Tags.DOMAIN_API.addTo(this)
+        Tags.AREA_PROBATION.addTo(this)
         CloudPlatform.kubernetes.add(this)
         uses(tierDb, "connects to", "JDBC")
         setUrl("https://github.com/ministryofjustice/hmpps-tier")

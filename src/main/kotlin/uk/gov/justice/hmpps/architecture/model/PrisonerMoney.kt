@@ -63,6 +63,8 @@ class PrisonerMoney private constructor() {
         "Prisoner Money API",
         "API over the Prisoner Money DB used by internal applications", "Django App"
       ).apply {
+        Tags.DOMAIN_API.addTo(this)
+        Tags.AREA_PRISONS.addTo(this)
         setUrl("https://github.com/ministryofjustice/money-to-prisoners-api")
         uses(db, "psyCopg2 remote connection")
         CloudPlatform.kubernetes.add(this)

@@ -16,7 +16,10 @@ class WhereaboutsApi private constructor() {
       system = model.addSoftwareSystem(
         "Whereabouts API",
         "Provides and creates appointment information about prisoners"
-      )
+      ).apply {
+        Tags.DOMAIN_API.addTo(this)
+        Tags.AREA_PRISONS.addTo(this)
+      }
 
       api = system.addContainer("API", "API", "Kotlin + Spring Boot").apply {
         url = "https://github.com/ministryofjustice/whereabouts-api"

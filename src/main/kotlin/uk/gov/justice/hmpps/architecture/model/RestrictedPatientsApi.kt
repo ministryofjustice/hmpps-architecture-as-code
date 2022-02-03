@@ -16,7 +16,10 @@ class RestrictedPatientsApi private constructor() {
       system = model.addSoftwareSystem(
         "Restricted Patients API",
         "Provides and creates information about restricted patiente"
-      )
+      ).apply {
+        Tags.DOMAIN_API.addTo(this)
+        Tags.AREA_PRISONS.addTo(this)
+      }
 
       api = system.addContainer("API", "API", "Kotlin + Spring Boot").apply {
         url = "https://github.com/ministryofjustice/hmpps-restricted-patients-api"

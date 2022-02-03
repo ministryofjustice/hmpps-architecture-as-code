@@ -6,6 +6,7 @@ import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ViewSet
 import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
 import uk.gov.justice.hmpps.architecture.annotations.OutsideHMPPS
+import uk.gov.justice.hmpps.architecture.annotations.Tags
 
 class Curious private constructor() {
   companion object : HMPPSSoftwareSystem {
@@ -25,6 +26,8 @@ class Curious private constructor() {
         "Curious API",
         "API over the Curious application - a contract management system for Education Providers", "Java"
       ).apply {
+        Tags.DOMAIN_API.addTo(this)
+        Tags.AREA_PRISONS.addTo(this)
         url = "https://github.com/ministryofjustice/curious-API"
       }
 

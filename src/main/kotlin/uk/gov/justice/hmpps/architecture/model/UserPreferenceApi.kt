@@ -5,6 +5,7 @@ import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ViewSet
 import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
+import uk.gov.justice.hmpps.architecture.annotations.Capability
 import uk.gov.justice.hmpps.architecture.annotations.Tags
 
 class UserPreferenceApi private constructor() {
@@ -15,8 +16,10 @@ class UserPreferenceApi private constructor() {
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
         "User Preference API",
-        "Stores preference information associated with a HMPPs Auth User"
-      )
+        "Stores preference information associated with a HMPPS Auth User"
+      ).apply {
+        Capability.IDENTITY.addTo(this)
+      }
 
       api = system.addContainer("API", "API", "Kotlin + Spring Boot").apply {
         url = "https://github.com/ministryofjustice/hmpps-user-preferences"

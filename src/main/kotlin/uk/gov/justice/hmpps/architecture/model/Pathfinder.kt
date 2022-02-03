@@ -40,6 +40,9 @@ class Pathfinder(model: Model) {
       "Pathfinder API",
       "API over the Pathfinder DB used by internal applications", "Kotlin Spring Boot App"
     ).apply {
+      Tags.DOMAIN_API.addTo(this)
+      Tags.AREA_PRISONS.addTo(this)
+      Tags.AREA_PROBATION.addTo(this)
       setUrl("https://github.com/ministryofjustice/pathfinder-api")
       uses(db, "JDBC")
       CloudPlatform.kubernetes.add(this)

@@ -50,6 +50,8 @@ class ManagePOMCases private constructor() {
           "if further fields are required.",
         "Ruby on Rails"
       ).apply {
+        Tags.DOMAIN_API.addTo(this)
+        Tags.AREA_PRISONS.addTo(this)
         setUrl("https://github.com/ministryofjustice/offender-management-allocation-manager")
         CloudPlatform.kubernetes.add(this)
       }

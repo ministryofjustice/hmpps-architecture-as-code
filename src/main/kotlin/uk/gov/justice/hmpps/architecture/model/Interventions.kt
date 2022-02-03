@@ -34,6 +34,8 @@ class Interventions private constructor() {
           "including finding, referring, delivering and monitoring",
         "Kotlin + Spring Boot"
       ).apply {
+        Tags.DOMAIN_API.addTo(this)
+        Tags.AREA_PROBATION.addTo(this)
         url = "https://github.com/ministryofjustice/hmpps-interventions-service"
         CloudPlatform.kubernetes.add(this)
       }
