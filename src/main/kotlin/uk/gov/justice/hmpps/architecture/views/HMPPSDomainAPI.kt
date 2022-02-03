@@ -1,6 +1,7 @@
 package uk.gov.justice.hmpps.architecture.views
 
 import com.structurizr.view.ViewSet
+import uk.gov.justice.hmpps.architecture.annotations.Capability
 import uk.gov.justice.hmpps.architecture.model.Delius
 import uk.gov.justice.hmpps.architecture.model.HMPPSAPI
 import uk.gov.justice.hmpps.architecture.model.HMPPSAuth
@@ -39,9 +40,9 @@ class HMPPSDomainAPI private constructor() {
         "HMPPSAPIAuthView",
         "HMPPS Internal API Authentication services"
       ).apply {
-        model.softwareSystems.filter { it.hasTag("AUTH_API") }.map { add(it) }
+        model.softwareSystems.filter { Capability.IDENTITY.isOn(it) }.map { add(it) }
         model.softwareSystems.forEach {
-          it.containers.filter { it.hasTag("AUTH_API") }.map { add(it) }
+          it.containers.filter { Capability.IDENTITY.isOn(it) }.map { add(it) }
         }
 
         add(Delius.communityApi)

@@ -5,6 +5,7 @@ import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ViewSet
 import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
+import uk.gov.justice.hmpps.architecture.annotations.Capability
 import uk.gov.justice.hmpps.architecture.annotations.Tags
 
 class TokenVerificationApi private constructor() {
@@ -17,7 +18,7 @@ class TokenVerificationApi private constructor() {
         "Token verification API",
         "Verifies API tokens issues by HMPPS Auth to ensure they haven't expired or been revoked"
       ).apply {
-        Tags.AUTH_API.addTo(this)
+        Capability.IDENTITY.addTo(this)
       }
 
       api = system.addContainer("API", "API", "Kotlin + Spring Boot").apply {

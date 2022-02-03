@@ -19,7 +19,6 @@ enum class Tags : addTo {
   SOFTWARE_AS_A_SERVICE,
   DATA_API,
   DOMAIN_API,
-  AUTH_API,
   AREA_PROBATION,
   AREA_PRISONS;
 

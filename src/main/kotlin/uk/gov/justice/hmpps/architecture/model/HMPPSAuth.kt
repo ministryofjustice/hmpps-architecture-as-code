@@ -5,6 +5,7 @@ import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ViewSet
 import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
+import uk.gov.justice.hmpps.architecture.annotations.Capability
 import uk.gov.justice.hmpps.architecture.annotations.Tags
 
 class HMPPSAuth private constructor() {
@@ -22,7 +23,7 @@ class HMPPSAuth private constructor() {
         "Spring Boot + Java"
       ).apply {
         Tags.WEB_BROWSER.addTo(this)
-        Tags.AUTH_API.addTo(this)
+        Capability.IDENTITY.addTo(this)
         url = "https://github.com/ministryofjustice/hmpps-auth"
       }
 
