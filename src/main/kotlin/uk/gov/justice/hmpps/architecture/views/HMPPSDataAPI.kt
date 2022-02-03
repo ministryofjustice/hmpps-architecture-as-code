@@ -1,29 +1,18 @@
-package uk.gov.justice.hmpps.architecture.model
+package uk.gov.justice.hmpps.architecture.views
 
-import com.structurizr.model.Model
-import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ViewSet
-import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
+import uk.gov.justice.hmpps.architecture.model.Delius
+import uk.gov.justice.hmpps.architecture.model.HMPPSAPI
+import uk.gov.justice.hmpps.architecture.model.NOMIS
+import uk.gov.justice.hmpps.architecture.model.OASys
 
 class HMPPSDataAPI private constructor() {
-  companion object : HMPPSSoftwareSystem {
-    lateinit var system: SoftwareSystem
 
-    override fun defineModelEntities(model: Model) {
-
-      system = model.addSoftwareSystem(
-        "HMPPS Data APIs",
-        "Internal Data API Systems"
-      )
-    }
-
-    override fun defineRelationships() {
-    }
+  companion object : HMPPSView {
 
     override fun defineViews(views: ViewSet) {
-
       views.createContainerView(
-        system,
+        HMPPSAPI.system,
         "HMPPSAPIProbationDataView",
         "HMPPS Probation Data API services"
       ).apply {
@@ -44,7 +33,7 @@ class HMPPSDataAPI private constructor() {
       }
 
       views.createContainerView(
-        system,
+        HMPPSAPI.system,
         "HMPPSAPIPrisonsDataView",
         "HMPPS Prisons Data API services"
       ).apply {
@@ -65,7 +54,7 @@ class HMPPSDataAPI private constructor() {
       }
 
       views.createContainerView(
-        system,
+        HMPPSAPI.system,
         "HMPPSAPIDeliusDataView",
         "HMPPS Delius Data API services"
       ).apply {
@@ -81,7 +70,7 @@ class HMPPSDataAPI private constructor() {
       }
 
       views.createContainerView(
-        system,
+        HMPPSAPI.system,
         "HMPPSAPIOASysDataView",
         "HMPPS OASys Data API services"
       ).apply {

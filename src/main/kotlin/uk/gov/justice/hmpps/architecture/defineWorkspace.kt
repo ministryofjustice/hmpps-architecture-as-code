@@ -27,8 +27,6 @@ import uk.gov.justice.hmpps.architecture.model.EPF
 import uk.gov.justice.hmpps.architecture.model.EQuiP
 import uk.gov.justice.hmpps.architecture.model.HMPPSAPI
 import uk.gov.justice.hmpps.architecture.model.HMPPSAuth
-import uk.gov.justice.hmpps.architecture.model.HMPPSDataAPI
-import uk.gov.justice.hmpps.architecture.model.HMPPSDomainAPI
 import uk.gov.justice.hmpps.architecture.model.HMPPSDomainEvents
 import uk.gov.justice.hmpps.architecture.model.Heroku
 import uk.gov.justice.hmpps.architecture.model.IM
@@ -63,6 +61,9 @@ import uk.gov.justice.hmpps.architecture.model.UseOfForce
 import uk.gov.justice.hmpps.architecture.model.UserPreferenceApi
 import uk.gov.justice.hmpps.architecture.model.WMT
 import uk.gov.justice.hmpps.architecture.model.WhereaboutsApi
+import uk.gov.justice.hmpps.architecture.views.HMPPSDataAPI
+import uk.gov.justice.hmpps.architecture.views.HMPPSDomainAPI
+import uk.gov.justice.hmpps.architecture.views.HMPPSInternalAPI
 
 private val MODEL_ITEMS = listOf(
   AdjudicationsApi,
@@ -81,10 +82,8 @@ private val MODEL_ITEMS = listOf(
   EPF,
   EQuiP,
   HMPPSAuth,
-  HMPPSDomainEvents,
   HMPPSAPI,
-  HMPPSDataAPI,
-  HMPPSDomainAPI,
+  HMPPSDomainEvents,
   IM,
   Interventions,
   InterventionTeams,
@@ -121,6 +120,12 @@ private val MODEL_ITEMS = listOf(
   PrisonRegister
 )
 
+private val VIEWS = listOf(
+  HMPPSInternalAPI,
+  HMPPSDomainAPI,
+  HMPPSDataAPI
+)
+
 private fun defineModelItems(model: Model) {
   model.setImpliedRelationshipsStrategy(
     CreateImpliedRelationshipsUnlessSameRelationshipExistsStrategy()
@@ -148,6 +153,8 @@ private fun defineRelationships() {
 
 private fun defineViews(model: Model, views: ViewSet) {
   MODEL_ITEMS.forEach { it.defineViews(views) }
+  VIEWS.forEach { it.defineViews(views) }
+
   defineGlobalViews(model, views)
 }
 

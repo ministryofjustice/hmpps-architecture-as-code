@@ -1,29 +1,17 @@
-package uk.gov.justice.hmpps.architecture.model
+package uk.gov.justice.hmpps.architecture.views
 
-import com.structurizr.model.Model
-import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ViewSet
-import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
+import uk.gov.justice.hmpps.architecture.model.Delius
+import uk.gov.justice.hmpps.architecture.model.HMPPSAPI
+import uk.gov.justice.hmpps.architecture.model.HMPPSAuth
+import uk.gov.justice.hmpps.architecture.model.NOMIS
 
 class HMPPSDomainAPI private constructor() {
-  companion object : HMPPSSoftwareSystem {
-    lateinit var system: SoftwareSystem
-
-    override fun defineModelEntities(model: Model) {
-
-      system = model.addSoftwareSystem(
-        "HMPPS Domain APIs",
-        "Domain API Systems"
-      )
-    }
-
-    override fun defineRelationships() {
-    }
-
+  companion object : HMPPSView {
     override fun defineViews(views: ViewSet) {
 
       views.createContainerView(
-        system,
+        HMPPSAPI.system,
         "HMPPSAPIProbationDomainView",
         "HMPPS Internal Probation Domain API services"
       ).apply {
@@ -35,7 +23,7 @@ class HMPPSDomainAPI private constructor() {
       }
 
       views.createContainerView(
-        system,
+        HMPPSAPI.system,
         "HMPPSAPIPrisonsDomainView",
         "HMPPS Internal Prisons Domain API services"
       ).apply {
@@ -47,7 +35,7 @@ class HMPPSDomainAPI private constructor() {
       }
 
       views.createContainerView(
-        system,
+        HMPPSAPI.system,
         "HMPPSAPIAuthView",
         "HMPPS Internal API Authentication services"
       ).apply {
