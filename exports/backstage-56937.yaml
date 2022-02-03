@@ -1004,6 +1004,15 @@ spec:
 apiVersion: "backstage.io/v1alpha1"
 kind: "System"
 metadata:
+  name: "hmpps-api"
+  title: "HMPPS API"
+  description: "HMPPS API Systems"
+spec:
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "System"
+metadata:
   name: "hmpps-auth"
   title: "HMPPS Auth"
   description: "Allows users to login into digital services"
@@ -1908,7 +1917,7 @@ metadata:
   name: "oasys-assessments-database"
   title: "OASys Assessments Database"
 spec:
-  type: "service"
+  type: "database"
   lifecycle: "production"
   system: "oasys"
   owner: "hmpps-undefined"
@@ -2285,7 +2294,7 @@ apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
 metadata:
   name: "prison-register-api"
-  title: "API"
+  title: "Prison Register API"
   description: "API"
   links:
   - url: "https://github.com/ministryofjustice/prison-register"
@@ -2357,7 +2366,7 @@ apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
 metadata:
   name: "prison-visits-booking-backend"
-  title: "Backend"
+  title: "Prison Visits Booking Backend"
   description: "API for the frontend and admin interface for staff to manage bookings"
   links:
   - url: "https://github.com/ministryofjustice/prison-visits-2"
@@ -3251,7 +3260,7 @@ kind: "System"
 metadata:
   name: "token-verification-api"
   title: "Token verification API"
-  description: "Verifies API tokens issues by HMPPs Auth to ensure they haven't expired\
+  description: "Verifies API tokens issues by HMPPS Auth to ensure they haven't expired\
     \ or been revoked"
 spec:
   owner: "hmpps-undefined"
@@ -3308,7 +3317,7 @@ kind: "System"
 metadata:
   name: "user-preference-api"
   title: "User Preference API"
-  description: "Stores preference information associated with a HMPPs Auth User"
+  description: "Stores preference information associated with a HMPPS Auth User"
 spec:
   owner: "hmpps-undefined"
 ---
