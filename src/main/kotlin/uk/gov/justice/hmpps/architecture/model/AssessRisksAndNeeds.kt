@@ -70,6 +70,8 @@ class AssessRisksAndNeeds private constructor() {
         "Risks and Needs business logic, Authoritative source for risk and needs data for offenders",
         "Kotlin + Spring Boot"
       ).apply {
+        Tags.DOMAIN_API.addTo(this)
+        Tags.AREA_PROBATION.addTo(this)
         uses(assessRiskNeedsDb, "connects to", "JDBC")
         setUrl("https://github.com/ministryofjustice/hmpps-assess-risks-and-needs")
         CloudPlatform.kubernetes.add(this)
