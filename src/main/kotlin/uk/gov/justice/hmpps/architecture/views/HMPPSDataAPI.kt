@@ -1,6 +1,7 @@
 package uk.gov.justice.hmpps.architecture.views
 
 import com.structurizr.view.ViewSet
+import uk.gov.justice.hmpps.architecture.model.AssessRisksAndNeeds
 import uk.gov.justice.hmpps.architecture.model.Delius
 import uk.gov.justice.hmpps.architecture.model.HMPPSAPI
 import uk.gov.justice.hmpps.architecture.model.NOMIS
@@ -78,6 +79,7 @@ class HMPPSDataAPI private constructor() {
         // API services
         add(OASys.assessmentsApi)
         add(OASys.assessmentsUpdateApi)
+        add(AssessRisksAndNeeds.riskNeedsService)
 
         // API data sources
         add(OASys.oasysDB)

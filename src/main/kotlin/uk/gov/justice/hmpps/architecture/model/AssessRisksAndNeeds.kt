@@ -35,7 +35,7 @@ class AssessRisksAndNeeds private constructor() {
 
       val assessRiskNeedsDb = system.addContainer(
         "Risks and Needs Database",
-        "Holds offendr risks and needs data, Authoritative source for supplementary risk data",
+        "Holds offender risks and needs data, Authoritative source for supplementary risk data",
         "PostgreSQL"
       ).apply {
         Tags.DATABASE.addTo(this)
@@ -50,8 +50,9 @@ class AssessRisksAndNeeds private constructor() {
         Tags.DOMAIN_API.addTo(this)
         Tags.AREA_PROBATION.addTo(this)
         uses(assessmentDb, "connects to", "JDBC")
-        setUrl("https://github.com/ministryofjustice/hmpps-assessments-api")
+        url = "https://github.com/ministryofjustice/hmpps-assessments-api"
         CloudPlatform.kubernetes.add(this)
+        CloudPlatform.elasticache.add(this)
       }
 
       riskAssessmentUi = system.addContainer(
@@ -60,9 +61,10 @@ class AssessRisksAndNeeds private constructor() {
         "Node + Express"
       ).apply {
         uses(assessmentService, "Display assessment questions and save answers using ")
-        setUrl("https://github.com/ministryofjustice/hmpps-risk-assessment-ui")
+        url = "https://github.com/ministryofjustice/hmpps-risk-assessment-ui"
         Tags.WEB_BROWSER.addTo(this)
         CloudPlatform.kubernetes.add(this)
+        CloudPlatform.elasticache.add(this)
       }
 
       riskNeedsService = system.addContainer(
@@ -73,7 +75,7 @@ class AssessRisksAndNeeds private constructor() {
         Tags.DOMAIN_API.addTo(this)
         Tags.AREA_PROBATION.addTo(this)
         uses(assessRiskNeedsDb, "connects to", "JDBC")
-        setUrl("https://github.com/ministryofjustice/hmpps-assess-risks-and-needs")
+        url = "https://github.com/ministryofjustice/hmpps-assess-risks-and-needs"
         CloudPlatform.kubernetes.add(this)
       }
 
@@ -97,7 +99,7 @@ class AssessRisksAndNeeds private constructor() {
       assessmentService.uses(OASys.assessmentsApi, "get offender past assessment details from")
       assessmentService.uses(OASys.assessmentsUpdateApi, "pushes offender assessment details into")
       riskNeedsService.uses(OASys.assessmentsApi, "get offender risk and needs data from")
-
+      riskNeedsService.uses(HMPPSDomainEvents.topic, "publishes risk domain events to", "SNS")
       ProbationPractitioners.nps.uses(riskAssessmentUi, "records offender risks and needs")
     }
 
