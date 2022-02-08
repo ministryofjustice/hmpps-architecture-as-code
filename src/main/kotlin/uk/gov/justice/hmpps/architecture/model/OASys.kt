@@ -6,7 +6,6 @@ import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ViewSet
 import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
-import uk.gov.justice.hmpps.architecture.annotations.APIDocs
 import uk.gov.justice.hmpps.architecture.annotations.Tags
 
 class OASys private constructor() {
@@ -39,7 +38,6 @@ class OASys private constructor() {
         uses(oasysDB, "connects to", "JDBC")
         url = "https://github.com/ministryofjustice/offender-assessments-events"
         Azure.kubernetes.add(this)
-
       }
 
       assessmentsUpdateApi = system.addContainer(
