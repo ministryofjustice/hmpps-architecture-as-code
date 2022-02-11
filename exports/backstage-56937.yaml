@@ -3070,7 +3070,7 @@ kind: "Component"
 metadata:
   name: "risks-and-needs-database"
   title: "Risks and Needs Database"
-  description: "Holds offendr risks and needs data, Authoritative source for supplementary\
+  description: "Holds offender risks and needs data, Authoritative source for supplementary\
     \ risk data"
 spec:
   type: "database"
