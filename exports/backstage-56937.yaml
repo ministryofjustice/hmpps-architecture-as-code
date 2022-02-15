@@ -1463,7 +1463,7 @@ metadata:
   - url: "https://github.com/ministryofjustice/manage-recalls-api"
     title: "GitHub Repo"
     icon: "github"
-  - url: "https://manage-recalls-api-dev.hmpps.service.justice.gov.uk/swagger-ui/"
+  - url: "https://manage-recalls-api-dev.hmpps.service.justice.gov.uk/swagger-ui/index.html"
     title: "API Docs"
   annotations:
     backstage.io/source-location: "url:https://github.com/ministryofjustice/manage-recalls-api"
