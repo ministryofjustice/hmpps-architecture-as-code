@@ -1,7 +1,7 @@
 package uk.gov.justice.hmpps.architecture
 
 import com.structurizr.Workspace
-import com.structurizr.documentation.AutomaticDocumentationTemplate
+import com.structurizr.documentation.template.StructurizrDocumentationTemplate
 import com.structurizr.model.Container
 import uk.gov.justice.hmpps.architecture.annotations.APIDocs
 import uk.gov.justice.hmpps.architecture.documentation.BranchMetric
@@ -18,23 +18,28 @@ fun defineDocumentation(workspace: Workspace) {
 
   val containersWithGitRepos = containersWithGit(workspace.model)
 
-  File(docsRoot, "01-apidocs.md").printWriter().let {
+  val docs = File(docsRoot, "01-apidocs.md")
+  docs.printWriter().let {
     writeAPIs(it, containersWithGitRepos)
     it.close()
   }
 
-  File(docsRoot, "02-dependencies.md").printWriter().let {
+  val dependencies = File(docsRoot, "02-dependencies.md")
+  dependencies.printWriter().let {
     writeDependencies(it, containersWithGitRepos)
     it.close()
   }
 
-  File(docsRoot, "03-branches.md").printWriter().let {
+  val branches = File(docsRoot, "03-branches.md")
+  branches.printWriter().let {
     writeBranchMetrics(it, containersWithGitRepos)
     it.close()
   }
 
-  val template = AutomaticDocumentationTemplate(workspace)
-  template.addSections(docsRoot)
+  val template = StructurizrDocumentationTemplate(workspace)
+  template.addSection("API docs", docs)
+  template.addSection("Dependencies", dependencies)
+  template.addSection("Branches", branches)
 }
 
 private fun writeAPIs(w: PrintWriter, containersWithGit: List<Container>) {
