@@ -1954,7 +1954,7 @@ metadata:
   - url: "https://github.com/ministryofjustice/offender-assessments-api-kotlin"
     title: "GitHub Repo"
     icon: "github"
-  - url: "https://offender-dev.aks-dev-1.studio-hosting.service.justice.gov.uk/swagger-ui/"
+  - url: "https://offender-dev.aks-dev-1.studio-hosting.service.justice.gov.uk/swagger-ui.html"
     title: "API Docs"
   annotations:
     backstage.io/source-location: "url:https://github.com/ministryofjustice/offender-assessments-api-kotlin"
