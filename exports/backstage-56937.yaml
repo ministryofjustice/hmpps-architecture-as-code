@@ -2822,8 +2822,6 @@ metadata:
   - url: "https://github.com/ministryofjustice/probation-offender-search-indexer"
     title: "GitHub Repo"
     icon: "github"
-  - url: "https://probation-search-indexer-dev.hmpps.service.justice.gov.uk/swagger-ui.html"
-    title: "API Docs"
   annotations:
     backstage.io/source-location: "url:https://github.com/ministryofjustice/probation-offender-search-indexer"
 spec:
@@ -2835,25 +2833,10 @@ spec:
   - "Component:offender-elasticsearch-store"
   - "Component:probation-offender-events-topic"
   - "Component:community-api"
-  providesApis:
-  - "probation-offender-search-indexer"
   consumesApis:
   - "offender-elasticsearch-store"
   - "probation-offender-events-topic"
   - "community-api"
----
-apiVersion: "backstage.io/v1alpha1"
-kind: "API"
-metadata:
-  name: "probation-offender-search-indexer"
-  description: "API provided by probation-offender-search-indexer"
-spec:
-  type: "openapi"
-  lifecycle: "production"
-  system: "ndelius"
-  owner: "hmpps-undefined"
-  definition:
-    $text: "https://probation-search-indexer-dev.hmpps.service.justice.gov.uk/v3/api-docs"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
