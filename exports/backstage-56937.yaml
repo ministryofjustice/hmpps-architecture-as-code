@@ -142,6 +142,8 @@ metadata:
   - url: "https://github.com/ministryofjustice/token-verification-api"
     title: "GitHub Repo"
     icon: "github"
+  - url: "https://token-verification-api-dev.prison.service.justice.gov.uk/swagger-ui/index.html?configUrl=/v3/api-docs"
+    title: "API Docs"
   annotations:
     backstage.io/source-location: "url:https://github.com/ministryofjustice/token-verification-api"
 spec:
@@ -151,8 +153,23 @@ spec:
   owner: "hmpps-undefined"
   dependsOn:
   - "Component:redis"
+  providesApis:
+  - "Token verification API"
   consumesApis:
   - "redis"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "Token verification API"
+  description: "API provided by Token verification API"
+spec:
+  type: "openapi"
+  lifecycle: "production"
+  system: "token-verification-api"
+  owner: "hmpps-undefined"
+  definition:
+    $text: "https://token-verification-api-dev.prison.service.justice.gov.uk/v3/api-docs"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
