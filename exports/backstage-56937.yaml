@@ -434,7 +434,7 @@ metadata:
   - url: "https://github.com/ministryofjustice/community-api"
     title: "GitHub Repo"
     icon: "github"
-  - url: "https://community-api-public.test.probation.service.justice.gov.uk/swagger-ui/index.html"
+  - url: "https://community-api.test.probation.service.justice.gov.uk/swagger-ui/index.html"
     title: "API Docs"
   annotations:
     backstage.io/source-location: "url:https://github.com/ministryofjustice/community-api"
@@ -463,7 +463,7 @@ spec:
   system: "ndelius"
   owner: "hmpps-undefined"
   definition:
-    $text: "https://community-api-public.test.probation.service.justice.gov.uk/v3/api-docs"
+    $text: "https://community-api.test.probation.service.justice.gov.uk/v3/api-docs"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "System"
