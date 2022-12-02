@@ -1,18 +1,6 @@
 ![Publish](https://github.com/ministryofjustice/hmpps-architecture-as-code/workflows/Publish/badge.svg)
 ![Build and validate](https://github.com/ministryofjustice/hmpps-architecture-as-code/workflows/Build%20and%20validate/badge.svg)
 
-# ❗️ Transition notice
-
-_13 April 2022_: For a "catalog" of software systems, components and APIs, we started using the [MoJ developer portal](https://developer-portal.apps.live.cloud-platform.service.justice.gov.uk).
-
-Please self-describe your repository in your git repository with a `catalog-info.yaml` file. Examples:
-
-- [System, service, resource, API example](https://github.com/ministryofjustice/hmpps-delius-api/blob/main/catalog-info.yaml)
-- [UI component example](https://github.com/ministryofjustice/hmpps-interventions-ui/blob/main/catalog-info.yaml)
-- [Another service example](https://github.com/ministryofjustice/hmpps-interventions-service/blob/main/catalog-info.yaml)
-
-This repo is still useful but will most likely morph to use the developer portal as input.
-
 # hmpps-architecture-as-code
 
 Modelling architecture in HM Prisons and Probations Service (HMPPS) with the [C4 model][c4] and [Structurizr][structurizr].
