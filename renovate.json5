@@ -1,0 +1,12 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["github>ministryofjustice/hmpps-renovate-config:base"],
+  "packageRules": [
+    {
+      "matchManagers": ["gradle"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "all gradle dependencies",
+      "schedule": ["before 7am on Monday"],
+    },
+  ]
+}
