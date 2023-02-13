@@ -55,6 +55,7 @@ import uk.gov.justice.hmpps.architecture.model.ProbationPractitioners
 import uk.gov.justice.hmpps.architecture.model.ProbationTeamsService
 import uk.gov.justice.hmpps.architecture.model.Reporting
 import uk.gov.justice.hmpps.architecture.model.RestrictedPatientsApi
+import uk.gov.justice.hmpps.architecture.model.StaffLookupApi
 import uk.gov.justice.hmpps.architecture.model.TierService
 import uk.gov.justice.hmpps.architecture.model.TokenVerificationApi
 import uk.gov.justice.hmpps.architecture.model.UseOfForce
@@ -117,7 +118,8 @@ private val MODEL_ITEMS = listOf(
   WhereaboutsApi,
   WMT,
   ManageRecalls,
-  PrisonRegister
+  PrisonRegister,
+  StaffLookupApi
 )
 
 private val VIEWS = listOf(
