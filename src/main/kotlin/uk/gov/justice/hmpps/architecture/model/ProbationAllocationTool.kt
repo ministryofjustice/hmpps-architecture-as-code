@@ -12,7 +12,6 @@ class ProbationAllocationTool private constructor() {
   companion object : HMPPSSoftwareSystem {
     lateinit var system: SoftwareSystem
     lateinit var ui: Container
-    lateinit var workloadApi: Container
     lateinit var allocationsApi: Container
 
     override fun defineModelEntities(model: Model) {
@@ -25,24 +24,17 @@ class ProbationAllocationTool private constructor() {
         url = "https://github.com/ministryofjustice/manage-a-workforce-ui"
       }
 
-      workloadApi = system.addContainer("Workload API", "Provides information related to workload data", "Kotlin").apply {
-        url = "https://github.com/ministryofjustice/hmpps-workload"
-      }
       allocationsApi = system.addContainer("Allocations API", "Provides information related to unallocated cases", "Kotlin").apply {
         url = "https://github.com/ministryofjustice/hmpps-allocations"
       }
 
-      val workloadDb = system.addContainer("Database", "Storage for workload data", "PostgreSQL").apply {
-        Tags.DATABASE.addTo(this)
-      }
       val allocationsDb = system.addContainer("Database", "Storage for current unallocated cases", "PostgreSQL").apply {
         Tags.DATABASE.addTo(this)
       }
 
-      workloadApi.uses(workloadDb, "connects to")
       allocationsApi.uses(allocationsDb, "connects to")
 
-      ui.uses(workloadApi, "connects to")
+      ui.uses(WMT.workloadApi, "connects to")
       ui.uses(allocationsApi, "connects to")
     }
 

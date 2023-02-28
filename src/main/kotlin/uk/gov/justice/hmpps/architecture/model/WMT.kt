@@ -13,6 +13,7 @@ class WMT private constructor() {
     lateinit var system: SoftwareSystem
     lateinit var ui: Container
     lateinit var batchProcessor: Container
+    lateinit var workloadApi: Container
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
@@ -27,6 +28,9 @@ class WMT private constructor() {
       batchProcessor = system.addContainer("WMT Worker", "Overnight processing of NART report extract", "Node").apply {
         url = "https://github.com/ministryofjustice/wmt-worker"
       }
+      workloadApi = system.addContainer("Workload API", "Provides information related to workload data", "Kotlin").apply {
+        url = "https://github.com/ministryofjustice/hmpps-workload"
+      }
 
       val db = system.addContainer("Database", "Storage for workload data", "PostgreSQL").apply {
         Tags.DATABASE.addTo(this)
@@ -34,6 +38,7 @@ class WMT private constructor() {
 
       ui.uses(db, "connects to")
       batchProcessor.uses(db, "connects to")
+      workloadApi.uses(db, "connects to")
     }
 
     override fun defineRelationships() {
