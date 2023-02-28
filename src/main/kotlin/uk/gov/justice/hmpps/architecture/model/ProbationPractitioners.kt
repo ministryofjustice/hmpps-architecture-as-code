@@ -10,11 +10,16 @@ class ProbationPractitioners private constructor() {
   companion object : HMPPSSoftwareSystem {
     lateinit var nps: Person
     lateinit var crc: Person
+    lateinit var spo: Person
 
     override fun defineModelEntities(model: Model) {
       nps = model.addPerson(
         "NPS probation practitioner",
         "National Probation Service employed probation officers in custody, court and the community"
+      )
+      spo = model.addPerson(
+        "NPS senior probation officer",
+        "National Probation Service employed senior probation officers"
       )
       crc = model.addPerson(
         "CRC offender manager",

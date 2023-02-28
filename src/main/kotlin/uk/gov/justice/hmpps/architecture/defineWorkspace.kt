@@ -50,6 +50,7 @@ import uk.gov.justice.hmpps.architecture.model.PrisonToProbationUpdate
 import uk.gov.justice.hmpps.architecture.model.PrisonVisitsBooking
 import uk.gov.justice.hmpps.architecture.model.PrisonerContentHub
 import uk.gov.justice.hmpps.architecture.model.PrisonerMoney
+import uk.gov.justice.hmpps.architecture.model.ProbationAllocationTool
 import uk.gov.justice.hmpps.architecture.model.ProbationCaseSampler
 import uk.gov.justice.hmpps.architecture.model.ProbationPractitioners
 import uk.gov.justice.hmpps.architecture.model.ProbationTeamsService
@@ -106,6 +107,7 @@ private val MODEL_ITEMS = listOf(
   DigitalPrisonServices,
   PrisonToProbationUpdate,
   PrisonVisitsBooking,
+  ProbationAllocationTool,
   ProbationCaseSampler,
   ProbationPractitioners,
   ProbationTeamsService,
