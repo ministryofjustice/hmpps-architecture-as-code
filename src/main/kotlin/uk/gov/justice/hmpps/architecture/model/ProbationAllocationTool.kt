@@ -34,7 +34,6 @@ class ProbationAllocationTool private constructor() {
 
       allocationsApi.uses(allocationsDb, "connects to")
 
-      ui.uses(WMT.workloadApi, "connects to")
       ui.uses(allocationsApi, "connects to")
     }
 
@@ -42,6 +41,8 @@ class ProbationAllocationTool private constructor() {
       ProbationPractitioners.spo.uses(system, "find and allocates unallocated cases by looking at")
       system.uses(Delius.communityApi, "gets probation case data from")
       system.uses(OASys.system, "gets PoP risk data from")
+
+      ui.uses(WMT.workloadApi, "connects to")
     }
 
     override fun defineViews(views: ViewSet) {
