@@ -26,6 +26,8 @@ class ProbationAllocationTool private constructor() {
 
       allocationsApi = system.addContainer("Allocations API", "Provides information related to unallocated cases", "Kotlin").apply {
         url = "https://github.com/ministryofjustice/hmpps-allocations"
+        Tags.DOMAIN_API.addTo(this)
+        Tags.AREA_PROBATION.addTo(this)
       }
 
       val allocationsDb = system.addContainer("Database", "Storage for current unallocated cases", "PostgreSQL").apply {
