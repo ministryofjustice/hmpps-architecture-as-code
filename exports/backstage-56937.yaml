@@ -243,6 +243,45 @@ spec:
   owner: "hmpps-undefined"
 ---
 apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "allocations-api"
+  title: "Allocations API"
+  description: "Provides information related to unallocated cases"
+  links:
+  - url: "https://github.com/ministryofjustice/hmpps-allocations"
+    title: "GitHub Repo"
+    icon: "github"
+  - url: "https://hmpps-allocations-dev.hmpps.service.justice.gov.uk/swagger-ui.html"
+    title: "API Docs"
+  annotations:
+    backstage.io/source-location: "url:https://github.com/ministryofjustice/hmpps-allocations"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "probation-case-allocation-tool"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:probation-case-allocation-tool-database"
+  providesApis:
+  - "allocations-api"
+  consumesApis:
+  - "probation-case-allocation-tool-database"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "allocations-api"
+  description: "API provided by allocations-api"
+spec:
+  type: "openapi"
+  lifecycle: "production"
+  system: "probation-case-allocation-tool"
+  owner: "hmpps-undefined"
+  definition:
+    $text: "https://hmpps-allocations-dev.hmpps.service.justice.gov.uk/v3/api-docs"
+---
+apiVersion: "backstage.io/v1alpha1"
 kind: "System"
 metadata:
   name: "analytical-platform"
@@ -1397,6 +1436,30 @@ spec:
   consumesApis:
   - "community-api"
   - "risks-and-needs-service"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "manage-a-workforce-ui"
+  title: "Manage a Workforce UI"
+  description: "UI for allocating cases"
+  links:
+  - url: "https://github.com/ministryofjustice/manage-a-workforce-ui"
+    title: "GitHub Repo"
+    icon: "github"
+  annotations:
+    backstage.io/source-location: "url:https://github.com/ministryofjustice/manage-a-workforce-ui"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "probation-case-allocation-tool"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:workload-api"
+  - "Component:allocations-api"
+  consumesApis:
+  - "workload-api"
+  - "allocations-api"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
@@ -2727,6 +2790,28 @@ spec:
 apiVersion: "backstage.io/v1alpha1"
 kind: "System"
 metadata:
+  name: "probation-case-allocation-tool"
+  title: "Probation Case Allocation tool"
+  description: "Allows users to allocate probation practitioners to PoPs (People on\
+    \ Probation)"
+spec:
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "probation-case-allocation-tool-database"
+  title: "Database"
+  description: "Storage for current unallocated cases"
+spec:
+  type: "database"
+  lifecycle: "production"
+  system: "probation-case-allocation-tool"
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "System"
+metadata:
   name: "probation-case-sampler"
   title: "Probation Case Sampler"
   description: "API which produces a representative and evenly distributed list of\
@@ -3418,6 +3503,89 @@ spec:
   owner: "hmpps-undefined"
 ---
 apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "wmt-web"
+  title: "WMT Web"
+  description: "View workload data"
+  links:
+  - url: "https://github.com/ministryofjustice/wmt-web"
+    title: "GitHub Repo"
+    icon: "github"
+  annotations:
+    backstage.io/source-location: "url:https://github.com/ministryofjustice/wmt-web"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "workload-measurement-tool"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:workload-measurement-tool-database"
+  consumesApis:
+  - "workload-measurement-tool-database"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "wmt-worker"
+  title: "WMT Worker"
+  description: "Overnight processing of NART report extract"
+  links:
+  - url: "https://github.com/ministryofjustice/wmt-worker"
+    title: "GitHub Repo"
+    icon: "github"
+  annotations:
+    backstage.io/source-location: "url:https://github.com/ministryofjustice/wmt-worker"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "workload-measurement-tool"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:workload-measurement-tool-database"
+  consumesApis:
+  - "workload-measurement-tool-database"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "workload-api"
+  title: "Workload API"
+  description: "Provides information related to workload data"
+  links:
+  - url: "https://github.com/ministryofjustice/hmpps-workload"
+    title: "GitHub Repo"
+    icon: "github"
+  - url: "https://hmpps-workload-dev.hmpps.service.justice.gov.uk/swagger-ui.html"
+    title: "API Docs"
+  annotations:
+    backstage.io/source-location: "url:https://github.com/ministryofjustice/hmpps-workload"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "workload-measurement-tool"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:workload-measurement-tool-database"
+  providesApis:
+  - "workload-api"
+  consumesApis:
+  - "workload-measurement-tool-database"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "workload-api"
+  description: "API provided by workload-api"
+spec:
+  type: "openapi"
+  lifecycle: "production"
+  system: "workload-measurement-tool"
+  owner: "hmpps-undefined"
+  definition:
+    $text: "https://hmpps-workload-dev.hmpps.service.justice.gov.uk/v3/api-docs"
+---
+apiVersion: "backstage.io/v1alpha1"
 kind: "System"
 metadata:
   name: "workload-measurement-tool"
@@ -3425,6 +3593,18 @@ metadata:
   description: "(WMT) Helps probation practitioners schedule their time based on service\
     \ user risk"
 spec:
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "workload-measurement-tool-database"
+  title: "Database"
+  description: "Storage for workload data"
+spec:
+  type: "database"
+  lifecycle: "production"
+  system: "workload-measurement-tool"
   owner: "hmpps-undefined"
 ---
 apiVersion: "backstage.io/v1alpha1"
