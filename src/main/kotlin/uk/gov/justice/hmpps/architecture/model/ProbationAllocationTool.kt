@@ -13,6 +13,7 @@ class ProbationAllocationTool private constructor() {
     lateinit var system: SoftwareSystem
     lateinit var ui: Container
     lateinit var allocationsApi: Container
+    lateinit var allocationsDb: Container
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
@@ -30,13 +31,9 @@ class ProbationAllocationTool private constructor() {
         Tags.AREA_PROBATION.addTo(this)
       }
 
-      val allocationsDb = system.addContainer("Database", "Storage for current unallocated cases", "PostgreSQL").apply {
+      allocationsDb = system.addContainer("Database", "Storage for current unallocated cases", "PostgreSQL").apply {
         Tags.DATABASE.addTo(this)
       }
-
-      allocationsApi.uses(allocationsDb, "connects to")
-
-      ui.uses(allocationsApi, "connects to")
     }
 
     override fun defineRelationships() {
@@ -44,7 +41,9 @@ class ProbationAllocationTool private constructor() {
       system.uses(Delius.communityApi, "gets probation case data from")
       system.uses(OASys.system, "gets PoP risk data from")
 
+      allocationsApi.uses(allocationsDb, "connects to")
       ui.uses(WMT.workloadApi, "connects to")
+      ui.uses(allocationsApi, "connects to")
     }
 
     override fun defineViews(views: ViewSet) {

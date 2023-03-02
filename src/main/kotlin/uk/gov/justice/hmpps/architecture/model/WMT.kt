@@ -14,6 +14,7 @@ class WMT private constructor() {
     lateinit var ui: Container
     lateinit var batchProcessor: Container
     lateinit var workloadApi: Container
+    lateinit var db: Container
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
@@ -32,18 +33,20 @@ class WMT private constructor() {
         url = "https://github.com/ministryofjustice/hmpps-workload"
       }
 
-      val db = system.addContainer("Database", "Storage for workload data", "PostgreSQL").apply {
+      db = system.addContainer("Database", "Storage for workload data", "PostgreSQL").apply {
         Tags.DATABASE.addTo(this)
       }
-
-      ui.uses(db, "connects to")
-      batchProcessor.uses(db, "connects to")
-      workloadApi.uses(db, "connects to")
     }
 
     override fun defineRelationships() {
       ProbationPractitioners.nps.uses(system, "finds out their community case load by looking at")
       system.uses(Reporting.ndmis, "draws offender risk and allocation data from")
+
+      workloadApi.uses(HMPPSDomainEvents.topic, "Publishes allocation event messages")
+
+      ui.uses(db, "connects to")
+      batchProcessor.uses(db, "connects to")
+      workloadApi.uses(db, "connects to")
     }
 
     override fun defineViews(views: ViewSet) {
