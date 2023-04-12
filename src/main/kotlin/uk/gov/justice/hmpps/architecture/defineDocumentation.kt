@@ -1,6 +1,7 @@
 package uk.gov.justice.hmpps.architecture
 
 import com.structurizr.Workspace
+import com.structurizr.documentation.Format
 import com.structurizr.documentation.template.StructurizrDocumentationTemplate
 import com.structurizr.model.Container
 import uk.gov.justice.hmpps.architecture.annotations.APIDocs
@@ -37,9 +38,9 @@ fun defineDocumentation(workspace: Workspace) {
   }
 
   val template = StructurizrDocumentationTemplate(workspace)
-  template.addSection("API docs", docs)
-  template.addSection("Dependencies", dependencies)
-  template.addSection("Branches", branches)
+  template.addSection("API docs", Format.Markdown, docs.toString())
+  template.addSection("Dependencies", Format.Markdown, dependencies.toString())
+  template.addSection("Branches", Format.Markdown, branches.toString())
 }
 
 private fun writeAPIs(w: PrintWriter, containersWithGit: List<Container>) {
