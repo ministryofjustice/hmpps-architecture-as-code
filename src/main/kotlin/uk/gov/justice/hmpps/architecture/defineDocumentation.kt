@@ -38,9 +38,9 @@ fun defineDocumentation(workspace: Workspace) {
   }
 
   val template = workspace.documentation
-  template.addSection(Section(Format.Markdown, docs.toString()))
-  template.addSection(Section(Format.Markdown, dependencies.toString()))
-  template.addSection(Section(Format.Markdown, branches.toString()))
+  template.addSection(Section(Format.Markdown, docs.bufferedReader().use { it.readText() }))
+  template.addSection(Section(Format.Markdown, dependencies.bufferedReader().use { it.readText() }))
+  template.addSection(Section(Format.Markdown, branches.bufferedReader().use { it.readText() }))
 }
 
 private fun writeAPIs(w: PrintWriter, containersWithGit: List<Container>) {
