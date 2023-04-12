@@ -6,7 +6,14 @@
       "matchManagers": ["gradle"],
       "matchUpdateTypes": ["patch", "minor"],
       "groupName": "all gradle dependencies",
-      "schedule": ["before 7am on Monday"],
+      "schedule": ["before 7am on Monday"]
     },
+    {
+      "matchPackageNames": [
+        "com.structurizr:structurizr-client",
+        "com.structurizr:structurizr-core"
+      ],
+      "allowedVersions": "1.21.0"
+    }
   ]
 }
