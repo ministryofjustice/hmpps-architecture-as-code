@@ -33,29 +33,10 @@ class OASys private constructor() {
         url = "https://github.com/ministryofjustice/offender-assessments-api-kotlin"
         Azure.kubernetes.add(this)
       }
-
-      assessmentsEvents = system.addContainer("Offender Assessment Events", "Pushes assessment events to SQS", "Kotlin + Spring Boot").apply {
-        uses(oasysDB, "connects to", "JDBC")
-        url = "https://github.com/ministryofjustice/offender-assessments-events"
-        Azure.kubernetes.add(this)
-      }
-
-      assessmentsUpdateApi = system.addContainer(
-        "Offender Updates Service",
-        "Write API layer for OASys",
-        "Kotlin + Spring Boot"
-      ).apply {
-        Tags.DATA_API.addTo(this)
-        Tags.AREA_PROBATION.addTo(this)
-        uses(oasysDB, "connects to", "JDBC")
-        url = "https://github.com/ministryofjustice/offender-assessments-updates"
-        Azure.kubernetes.add(this)
-      }
     }
 
     override fun defineRelationships() {
       ProbationPractitioners.nps.uses(system, "records offender risk (attendance, contact, etc.) and assessment in")
-      assessmentsEvents.uses(HMPPSDomainEvents.topic, "publishes assessment domain events to", "SNS")
     }
 
     override fun defineViews(views: ViewSet) {

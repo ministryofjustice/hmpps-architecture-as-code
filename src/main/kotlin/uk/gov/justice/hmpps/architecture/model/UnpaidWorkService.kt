@@ -8,7 +8,7 @@ import com.structurizr.view.ViewSet
 import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
 import uk.gov.justice.hmpps.architecture.annotations.Tags
 
-class AssessRisksAndNeeds private constructor() {
+class UnpaidWorkService private constructor() {
   companion object : HMPPSSoftwareSystem {
     lateinit var system: SoftwareSystem
     lateinit var riskAssessmentUi: Container
@@ -18,7 +18,7 @@ class AssessRisksAndNeeds private constructor() {
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
-        "Assess Risks And Needs",
+        "Unpaid Work Assessment Service",
         "Digital Service for ongoing offender risk and needs assessments, " +
           "gathering offender risks and needs information, " +
           "calculating risk scores, showing changes over time"
@@ -98,7 +98,7 @@ class AssessRisksAndNeeds private constructor() {
       assessmentService.uses(PrepareCaseForSentence.courtCaseService, "Gets offender and offence details from")
       assessmentService.uses(OASys.assessmentsApi, "get offender past assessment details from")
       riskNeedsService.uses(OASys.assessmentsApi, "get offender risk and needs data from")
-      riskNeedsService.uses(HMPPSDomainEvents.topic, "publishes risk domain events to", "SNS")
+      riskNeedsService.uses(HMPPSDomainEvents.topic, "publishes notification of completed unpaid work assessment to", "SNS")
       ProbationPractitioners.nps.uses(riskAssessmentUi, "records offender risks and needs")
     }
 
