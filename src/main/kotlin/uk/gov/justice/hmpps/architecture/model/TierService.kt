@@ -65,7 +65,7 @@ class TierService private constructor() {
     override fun defineRelationships() {
       tierService.uses(Delius.probationOffenderEvents, "to know when to recalculate a tier, consumes management tier updated events from", "SNS+SQS")
       tierService.uses(Delius.communityApi, "retrieves data required for tier calculation from", "REST")
-      tierService.uses(OASys.assessmentsApi, "retrieves data required for tier calculation from", "REST")
+      tierService.uses(AssessRisksAndNeeds.riskNeedsService, "retrieves data required for tier calculation from", "REST")
       tierService.uses(HMPPSDomainEvents.topic, "publishes tier update events to", "SNS")
 
       tierToDeliusUpdate.uses(HMPPSDomainEvents.topic, "consumes tier updates events from", "SNS+SQS")
