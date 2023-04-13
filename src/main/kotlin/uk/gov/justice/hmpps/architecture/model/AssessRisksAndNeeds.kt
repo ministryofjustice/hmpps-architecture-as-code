@@ -19,9 +19,7 @@ class AssessRisksAndNeeds private constructor() {
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
         "Assess Risks And Needs",
-        "Digital Service for ongoing offender risk and needs assessments, " +
-          "gathering offender risks and needs information, " +
-          "calculating risk scores, showing changes over time"
+        "API Service for exposing risk and needs information to other digital services"
       )
 
       val assessmentDb = system.addContainer(
@@ -98,8 +96,6 @@ class AssessRisksAndNeeds private constructor() {
       assessmentService.uses(PrepareCaseForSentence.courtCaseService, "Gets offender and offence details from")
       assessmentService.uses(OASys.assessmentsApi, "get offender past assessment details from")
       riskNeedsService.uses(OASys.assessmentsApi, "get offender risk and needs data from")
-      riskNeedsService.uses(HMPPSDomainEvents.topic, "publishes risk domain events to", "SNS")
-      ProbationPractitioners.nps.uses(riskAssessmentUi, "records offender risks and needs")
     }
 
     override fun defineViews(views: ViewSet) {
