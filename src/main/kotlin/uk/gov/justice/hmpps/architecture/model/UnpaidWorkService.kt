@@ -13,29 +13,17 @@ class UnpaidWorkService private constructor() {
     lateinit var system: SoftwareSystem
     lateinit var riskAssessmentUi: Container
     lateinit var assessmentService: Container
-    lateinit var riskNeedsService: Container
     lateinit var collector: Container
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
         "Unpaid Work Assessment Service",
-        "Digital Service for ongoing offender risk and needs assessments, " +
-          "gathering offender risks and needs information, " +
-          "calculating risk scores, showing changes over time"
+        "Digital Service for assessing a PoP's needs ahead of unpaid work (ie community payback) sessions"
       )
 
       val assessmentDb = system.addContainer(
         "Assessments Database",
-        "Holds assessment questionnaire (pre-sentence, ROSH, etc), and offender assessment data",
-        "PostgreSQL"
-      ).apply {
-        Tags.DATABASE.addTo(this)
-        CloudPlatform.rds.add(this)
-      }
-
-      val assessRiskNeedsDb = system.addContainer(
-        "Risks and Needs Database",
-        "Holds offender risks and needs data, Authoritative source for supplementary risk data",
+        "Holds unpaid work assessment questionnaire and assessment data",
         "PostgreSQL"
       ).apply {
         Tags.DATABASE.addTo(this)
@@ -44,7 +32,7 @@ class UnpaidWorkService private constructor() {
 
       assessmentService = system.addContainer(
         "Assessment Service",
-        "Assessments business logic, providing REST API consumed by Risk Assessment UI web application, Authoritative source for assessment data",
+        "Assessments business logic, providing REST API consumed by Risk Assessment UI web application, Authoritative source for unpaid work assessment data",
         "Kotlin + Spring Boot"
       ).apply {
         Tags.DOMAIN_API.addTo(this)
@@ -52,7 +40,6 @@ class UnpaidWorkService private constructor() {
         uses(assessmentDb, "connects to", "JDBC")
         url = "https://github.com/ministryofjustice/hmpps-assessments-api"
         CloudPlatform.kubernetes.add(this)
-        CloudPlatform.elasticache.add(this)
       }
 
       riskAssessmentUi = system.addContainer(
@@ -64,41 +51,18 @@ class UnpaidWorkService private constructor() {
         url = "https://github.com/ministryofjustice/hmpps-risk-assessment-ui"
         Tags.WEB_BROWSER.addTo(this)
         CloudPlatform.kubernetes.add(this)
-        CloudPlatform.elasticache.add(this)
       }
 
-      riskNeedsService = system.addContainer(
-        "Risks and Needs Service",
-        "Risks and Needs business logic, Authoritative source for risk and needs data for offenders",
-        "Kotlin + Spring Boot"
-      ).apply {
-        Tags.DOMAIN_API.addTo(this)
-        Tags.AREA_PROBATION.addTo(this)
-        uses(assessRiskNeedsDb, "connects to", "JDBC")
-        url = "https://github.com/ministryofjustice/hmpps-assess-risks-and-needs"
-        CloudPlatform.kubernetes.add(this)
-      }
-
-      collector = system.addContainer(
-        "ARN data collector",
-        "Collects daily snapshots of risk data for hand-off to S3 landing buckets for reporting or analytics",
-        "data-engineering-data-extractor"
-      ).apply {
-        uses(assessRiskNeedsDb, "reads snapshots of the ARN data from")
-        Tags.REUSABLE_COMPONENT.addTo(this)
-        CloudPlatform.kubernetes.add(this)
-      }
     }
 
     override fun defineRelationships() {
-      listOf(riskAssessmentUi, assessmentService, riskNeedsService)
+      listOf(riskAssessmentUi, assessmentService)
         .forEach { it.uses(HMPPSAuth.system, "authenticates via") }
 
+      assessmentService.uses(AssessRisksAndNeeds.riskNeedsService, "Gets risk information from")
       assessmentService.uses(Delius.communityApi, "Gets offender and offence details from")
       assessmentService.uses(PrepareCaseForSentence.courtCaseService, "Gets offender and offence details from")
       assessmentService.uses(OASys.assessmentsApi, "get offender past assessment details from")
-      riskNeedsService.uses(OASys.assessmentsApi, "get offender risk and needs data from")
-      riskNeedsService.uses(HMPPSDomainEvents.topic, "publishes notification of completed unpaid work assessment to", "SNS")
       ProbationPractitioners.nps.uses(riskAssessmentUi, "records offender risks and needs")
     }
 
