@@ -105,19 +105,19 @@ class UnpaidWorkService private constructor() {
     override fun defineViews(views: ViewSet) {
       views.createSystemContextView(
         system,
-        "assess-risks-and-needs-context", null
+        "unpaid-work-service-context", null
       ).apply {
         addDefaultElements()
         removeRelationshipsNotConnectedToElement(system)
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 500, 500)
       }
 
-      views.createDeploymentView(system, "assess-risks-and-needs-deployment", "Deployment overview of the assess risks and needs services").apply {
+      views.createDeploymentView(system, "unpaid-work-service-deployment", "Deployment overview of the assess risks and needs services").apply {
         add(AWS.london)
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
       }
 
-      views.createContainerView(system, "assess-risks-and-needs-container", null).apply {
+      views.createContainerView(system, "unpaid-work-service-container", null).apply {
         addDefaultElements()
         addAllContainersAndInfluencers()
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
