@@ -78,6 +78,7 @@ class HMPPSDataAPI private constructor() {
 
         // API services
         add(OASys.assessmentsApi)
+        add(OASys.ORDSApi)
         add(AssessRisksAndNeeds.riskNeedsService)
 
         // API data sources
