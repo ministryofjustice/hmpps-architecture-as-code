@@ -13,6 +13,7 @@ class OASys private constructor() {
     lateinit var system: SoftwareSystem
     lateinit var arn: Container
     lateinit var assessmentsApi: Container
+    lateinit var ORDSApi: Container
     lateinit var assessmentsEvents: Container
     lateinit var assessmentsUpdateApi: Container
     lateinit var oasysDB: Container
@@ -22,8 +23,9 @@ class OASys private constructor() {
         url = "https://dsdmoj.atlassian.net/wiki/spaces/~474366104/pages/2046820357/OASys+Overview"
       }
 
-      oasysDB = system.addContainer("OASys Assessments Database", null, "Oracle").apply {
+      oasysDB = system.addContainer("OASys Database", null, "Oracle").apply {
         Tags.DATABASE.addTo(this)
+        Azure.nomsdigitech.add(this)
       }
 
       assessmentsApi = system.addContainer("Offender Assessments API", "REST access to the OASYS Oracle DB offender assessment information", "Kotlin + Spring Boot").apply {
@@ -34,28 +36,17 @@ class OASys private constructor() {
         Azure.kubernetes.add(this)
       }
 
-      assessmentsEvents = system.addContainer("Offender Assessment Events", "Pushes assessment events to SQS", "Kotlin + Spring Boot").apply {
-        uses(oasysDB, "connects to", "JDBC")
-        url = "https://github.com/ministryofjustice/offender-assessments-events"
-        Azure.kubernetes.add(this)
-      }
-
-      assessmentsUpdateApi = system.addContainer(
-        "Offender Updates Service",
-        "Write API layer for OASys",
-        "Kotlin + Spring Boot"
-      ).apply {
+      ORDSApi = system.addContainer("ORDS API endpoints", "REST access to custom Oracle DB queries", "Java").apply {
         Tags.DATA_API.addTo(this)
         Tags.AREA_PROBATION.addTo(this)
         uses(oasysDB, "connects to", "JDBC")
-        url = "https://github.com/ministryofjustice/offender-assessments-updates"
-        Azure.kubernetes.add(this)
+        Azure.nomsdigitech.add(this)
       }
     }
 
     override fun defineRelationships() {
       ProbationPractitioners.nps.uses(system, "records offender risk (attendance, contact, etc.) and assessment in")
-      assessmentsEvents.uses(HMPPSDomainEvents.topic, "publishes assessment domain events to", "SNS")
+      assessmentsApi.uses(ORDSApi, "connects to", "REST")
     }
 
     override fun defineViews(views: ViewSet) {
@@ -69,6 +60,12 @@ class OASys private constructor() {
 
       views.createContainerView(system, "OASYS-container", null).apply {
         addDefaultElements()
+        enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
+      }
+
+      views.createDeploymentView(OASys.system, "OASYS-deployment", "Deployment overview of OASys").apply {
+        add(Azure.kubernetes)
+        add(Azure.nomsdigitech)
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
       }
     }
