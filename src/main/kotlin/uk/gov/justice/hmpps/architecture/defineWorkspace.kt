@@ -1,5 +1,4 @@
 package uk.gov.justice.hmpps.architecture
-
 import com.structurizr.Workspace
 import com.structurizr.model.CreateImpliedRelationshipsUnlessSameRelationshipExistsStrategy
 import com.structurizr.model.Enterprise
@@ -10,7 +9,6 @@ import uk.gov.justice.hmpps.architecture.model.AWS
 import uk.gov.justice.hmpps.architecture.model.AdjudicationsApi
 import uk.gov.justice.hmpps.architecture.model.AnalyticalPlatform
 import uk.gov.justice.hmpps.architecture.model.AssessRisksAndNeeds
-import uk.gov.justice.hmpps.architecture.model.UnpaidWorkService
 import uk.gov.justice.hmpps.architecture.model.Azure
 import uk.gov.justice.hmpps.architecture.model.AzureADTenantJusticeUK
 import uk.gov.justice.hmpps.architecture.model.BookVideoLink
@@ -60,6 +58,7 @@ import uk.gov.justice.hmpps.architecture.model.RestrictedPatientsApi
 import uk.gov.justice.hmpps.architecture.model.StaffLookupApi
 import uk.gov.justice.hmpps.architecture.model.TierService
 import uk.gov.justice.hmpps.architecture.model.TokenVerificationApi
+import uk.gov.justice.hmpps.architecture.model.UnpaidWorkService
 import uk.gov.justice.hmpps.architecture.model.UseOfForce
 import uk.gov.justice.hmpps.architecture.model.UserPreferenceApi
 import uk.gov.justice.hmpps.architecture.model.WMT

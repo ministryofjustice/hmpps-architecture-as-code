@@ -40,7 +40,6 @@ class AssessRisksAndNeeds private constructor() {
         url = "https://github.com/ministryofjustice/hmpps-assess-risks-and-needs"
         CloudPlatform.kubernetes.add(this)
       }
-
     }
 
     override fun defineRelationships() {
