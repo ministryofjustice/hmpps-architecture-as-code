@@ -39,7 +39,7 @@ class MakeARecallDecision private constructor() {
         "Kotlin Spring Boot App"
       ).apply {
         Tags.DOMAIN_API.addTo(this)
-        Tags.AREA_PRISONS.addTo(this)
+        Tags.AREA_PROBATION.addTo(this)
         setUrl("https://github.com/ministryofjustice/make-recall-decision-api")
         CloudPlatform.kubernetes.add(this)
       }
