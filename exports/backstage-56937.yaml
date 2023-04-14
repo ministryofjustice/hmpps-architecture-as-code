@@ -321,30 +321,12 @@ spec:
   owner: "hmpps-undefined"
 ---
 apiVersion: "backstage.io/v1alpha1"
-kind: "Component"
-metadata:
-  name: "arn-data-collector"
-  title: "ARN data collector"
-  description: "Collects daily snapshots of risk data for hand-off to S3 landing buckets\
-    \ for reporting or analytics"
-spec:
-  type: "service"
-  lifecycle: "production"
-  system: "assess-risks-and-needs"
-  owner: "hmpps-undefined"
-  dependsOn:
-  - "Component:risks-and-needs-database"
-  consumesApis:
-  - "risks-and-needs-database"
----
-apiVersion: "backstage.io/v1alpha1"
 kind: "System"
 metadata:
   name: "assess-risks-and-needs"
   title: "Assess Risks And Needs"
-  description: "Digital Service for ongoing offender risk and needs assessments, gathering\
-    \ offender risks and needs information, calculating risk scores, showing changes\
-    \ over time"
+  description: "API Service for exposing risk and needs information to other digital\
+    \ services"
 spec:
   owner: "hmpps-undefined"
 ---
@@ -354,7 +336,7 @@ metadata:
   name: "assessment-service"
   title: "Assessment Service"
   description: "Assessments business logic, providing REST API consumed by Risk Assessment\
-    \ UI web application, Authoritative source for assessment data"
+    \ UI web application, Authoritative source for unpaid work assessment data"
   links:
   - url: "https://github.com/ministryofjustice/hmpps-assessments-api"
     title: "GitHub Repo"
@@ -364,32 +346,31 @@ metadata:
 spec:
   type: "service"
   lifecycle: "production"
-  system: "assess-risks-and-needs"
+  system: "unpaid-work-assessment-service"
   owner: "hmpps-undefined"
   dependsOn:
   - "Component:assessments-database"
+  - "Component:risks-and-needs-service"
   - "Component:community-api"
   - "Component:court-case-service"
   - "Component:offender-assessments-api"
-  - "Component:offender-updates-service"
   consumesApis:
   - "assessments-database"
+  - "risks-and-needs-service"
   - "community-api"
   - "court-case-service"
   - "offender-assessments-api"
-  - "offender-updates-service"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
 metadata:
   name: "assessments-database"
   title: "Assessments Database"
-  description: "Holds assessment questionnaire (pre-sentence, ROSH, etc), and offender\
-    \ assessment data"
+  description: "Holds unpaid work assessment questionnaire and assessment data"
 spec:
   type: "database"
   lifecycle: "production"
-  system: "assess-risks-and-needs"
+  system: "unpaid-work-assessment-service"
   owner: "hmpps-undefined"
 ---
 apiVersion: "backstage.io/v1alpha1"
@@ -1994,35 +1975,13 @@ spec:
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
 metadata:
-  name: "oasys-assessments-database"
-  title: "OASys Assessments Database"
+  name: "oasys-database"
+  title: "OASys Database"
 spec:
   type: "database"
   lifecycle: "production"
   system: "oasys"
   owner: "hmpps-undefined"
----
-apiVersion: "backstage.io/v1alpha1"
-kind: "Component"
-metadata:
-  name: "offender-assessment-events"
-  title: "Offender Assessment Events"
-  description: "Pushes assessment events to SQS"
-  links:
-  - url: "https://github.com/ministryofjustice/offender-assessments-events"
-    title: "GitHub Repo"
-    icon: "github"
-  annotations:
-    backstage.io/source-location: "url:https://github.com/ministryofjustice/offender-assessments-events"
-spec:
-  type: "service"
-  lifecycle: "production"
-  system: "oasys"
-  owner: "hmpps-undefined"
-  dependsOn:
-  - "Component:oasys-assessments-database"
-  consumesApis:
-  - "oasys-assessments-database"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
@@ -2044,11 +2003,13 @@ spec:
   system: "oasys"
   owner: "hmpps-undefined"
   dependsOn:
-  - "Component:oasys-assessments-database"
+  - "Component:oasys-database"
+  - "Component:ords-api-endpoints"
   providesApis:
   - "offender-assessments-api"
   consumesApis:
-  - "oasys-assessments-database"
+  - "oasys-database"
+  - "ords-api-endpoints"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "API"
@@ -2129,28 +2090,6 @@ spec:
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
 metadata:
-  name: "offender-updates-service"
-  title: "Offender Updates Service"
-  description: "Write API layer for OASys"
-  links:
-  - url: "https://github.com/ministryofjustice/offender-assessments-updates"
-    title: "GitHub Repo"
-    icon: "github"
-  annotations:
-    backstage.io/source-location: "url:https://github.com/ministryofjustice/offender-assessments-updates"
-spec:
-  type: "service"
-  lifecycle: "production"
-  system: "oasys"
-  owner: "hmpps-undefined"
-  dependsOn:
-  - "Component:oasys-assessments-database"
-  consumesApis:
-  - "oasys-assessments-database"
----
-apiVersion: "backstage.io/v1alpha1"
-kind: "Component"
-metadata:
   name: "offloc-consumer-dss-batch-job"
   title: "OFFLOC Consumer/DSS Batch Job"
   description: "Download PNOMIS data and insert into NDelius database"
@@ -2163,6 +2102,22 @@ spec:
   - "Component:ndelius-application"
   consumesApis:
   - "ndelius-application"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "ords-api-endpoints"
+  title: "ORDS API endpoints"
+  description: "REST access to custom Oracle DB queries"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "oasys"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:oasys-database"
+  consumesApis:
+  - "oasys-database"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
@@ -3143,7 +3098,7 @@ metadata:
 spec:
   type: "frontend"
   lifecycle: "production"
-  system: "assess-risks-and-needs"
+  system: "unpaid-work-assessment-service"
   owner: "hmpps-undefined"
   dependsOn:
   - "Component:assessment-service"
@@ -3185,11 +3140,15 @@ spec:
   owner: "hmpps-undefined"
   dependsOn:
   - "Component:risks-and-needs-database"
+  - "Component:community-api"
+  - "Component:offender-assessments-api"
   - "Component:offender-assessments-api"
   providesApis:
   - "risks-and-needs-service"
   consumesApis:
   - "risks-and-needs-database"
+  - "community-api"
+  - "offender-assessments-api"
   - "offender-assessments-api"
 ---
 apiVersion: "backstage.io/v1alpha1"
@@ -3410,6 +3369,16 @@ metadata:
   title: "Token verification API"
   description: "Verifies API tokens issues by HMPPS Auth to ensure they haven't expired\
     \ or been revoked"
+spec:
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "System"
+metadata:
+  name: "unpaid-work-assessment-service"
+  title: "Unpaid Work Assessment Service"
+  description: "Digital Service for assessing a PoP's needs ahead of unpaid work (ie\
+    \ community payback) sessions"
 spec:
   owner: "hmpps-undefined"
 ---
