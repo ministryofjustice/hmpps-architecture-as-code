@@ -13,6 +13,8 @@ class UnpaidWorkService private constructor() {
     lateinit var system: SoftwareSystem
     lateinit var riskAssessmentUi: Container
     lateinit var assessmentService: Container
+    lateinit var storage: Container
+    lateinit var gotenburg: Container
     lateinit var collector: Container
 
     override fun defineModelEntities(model: Model) {
@@ -30,20 +32,39 @@ class UnpaidWorkService private constructor() {
         CloudPlatform.rds.add(this)
       }
 
+      gotenburg = system.addContainer(
+        "Gotenburg PDF Generator",
+        "Generates PDFs from data",
+        "Java"
+      ).apply {
+        CloudPlatform.kubernetes.add(this)
+      }
+
+      storage = system.addContainer(
+        "Assessments storage",
+        "Storage for PDFs of completed assessments",
+        "S3"
+      ).apply {
+        Tags.DATABASE.addTo(this)
+        CloudPlatform.s3.add(this)
+      }
+
       assessmentService = system.addContainer(
-        "Assessment Service",
+        "Assessments API",
         "Assessments business logic, providing REST API consumed by Risk Assessment UI web application, Authoritative source for unpaid work assessment data",
         "Kotlin + Spring Boot"
       ).apply {
         Tags.DOMAIN_API.addTo(this)
         Tags.AREA_PROBATION.addTo(this)
         uses(assessmentDb, "connects to", "JDBC")
+        uses(gotenburg, "Creates assessments in PDF form", "REST")
+        uses(storage, "Stores assessments in PDF form", "AWS API (REST)")
         url = "https://github.com/ministryofjustice/hmpps-assessments-api"
         CloudPlatform.kubernetes.add(this)
       }
 
       riskAssessmentUi = system.addContainer(
-        "Risk Assessment UI",
+        "Assessments UI",
         "Web application, presenting risk assessment questionnaires",
         "Node + Express"
       ).apply {
@@ -52,6 +73,8 @@ class UnpaidWorkService private constructor() {
         Tags.WEB_BROWSER.addTo(this)
         CloudPlatform.kubernetes.add(this)
       }
+
+
     }
 
     override fun defineRelationships() {
@@ -62,6 +85,7 @@ class UnpaidWorkService private constructor() {
       assessmentService.uses(Delius.communityApi, "Gets offender and offence details from")
       assessmentService.uses(PrepareCaseForSentence.courtCaseService, "Gets offender and offence details from")
       assessmentService.uses(OASys.assessmentsApi, "get offender past assessment details from")
+      assessmentService.uses(HMPPSDomainEvents.topic, "fires events when new UPW assessment is complete")
       ProbationPractitioners.nps.uses(riskAssessmentUi, "records offender risks and needs")
     }
 
