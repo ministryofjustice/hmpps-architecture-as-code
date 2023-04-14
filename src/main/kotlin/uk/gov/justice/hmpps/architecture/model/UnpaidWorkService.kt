@@ -73,8 +73,6 @@ class UnpaidWorkService private constructor() {
         Tags.WEB_BROWSER.addTo(this)
         CloudPlatform.kubernetes.add(this)
       }
-
-
     }
 
     override fun defineRelationships() {
