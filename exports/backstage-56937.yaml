@@ -1158,6 +1158,33 @@ spec:
 apiVersion: "backstage.io/v1alpha1"
 kind: "System"
 metadata:
+  name: "hmpps-audit"
+  title: "HMPPS Audit"
+  description: "Stores audit records when business interactions occur"
+spec:
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "hmpps-audit"
+  title: "HMPPS Audit"
+  description: "HMPPS Audit service"
+  links:
+  - url: "https://github.com/ministryofjustice/hmpps-audit"
+    title: "GitHub Repo"
+    icon: "github"
+  annotations:
+    backstage.io/source-location: "url:https://github.com/ministryofjustice/hmpps-audit"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "hmpps-audit"
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "System"
+metadata:
   name: "hmpps-auth"
   title: "HMPPS Auth"
   description: "Allows users to login into digital services"
