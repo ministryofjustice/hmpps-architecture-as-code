@@ -25,6 +25,7 @@ import uk.gov.justice.hmpps.architecture.model.DigitalPrisonsNetwork
 import uk.gov.justice.hmpps.architecture.model.EPF
 import uk.gov.justice.hmpps.architecture.model.EQuiP
 import uk.gov.justice.hmpps.architecture.model.HMPPSAPI
+import uk.gov.justice.hmpps.architecture.model.HMPPSAudit
 import uk.gov.justice.hmpps.architecture.model.HMPPSAuth
 import uk.gov.justice.hmpps.architecture.model.HMPPSDomainEvents
 import uk.gov.justice.hmpps.architecture.model.Heroku
@@ -84,6 +85,7 @@ private val MODEL_ITEMS = listOf(
   DigitalPrisonsNetwork,
   EPF,
   EQuiP,
+  HMPPSAudit,
   HMPPSAuth,
   HMPPSAPI,
   HMPPSDomainEvents,
