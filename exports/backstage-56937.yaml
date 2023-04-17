@@ -1386,6 +1386,77 @@ spec:
 apiVersion: "backstage.io/v1alpha1"
 kind: "System"
 metadata:
+  name: "make-a-recall-decision"
+  title: "Make A Recall Decision"
+  description: "A service to help making decisions around recalls"
+spec:
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "make-a-recall-decision-api"
+  title: "Make A Recall Decision API"
+  description: "REST API for the Make A Recall Decision service"
+  links:
+  - url: "https://github.com/ministryofjustice/make-recall-decision-api"
+    title: "GitHub Repo"
+    icon: "github"
+  annotations:
+    backstage.io/source-location: "url:https://github.com/ministryofjustice/make-recall-decision-api"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "make-a-recall-decision"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:make-a-recall-decision-api-database"
+  - "Component:probation-offender-search-api"
+  - "Component:community-api"
+  - "Component:risks-and-needs-service"
+  consumesApis:
+  - "make-a-recall-decision-api-database"
+  - "probation-offender-search-api"
+  - "community-api"
+  - "risks-and-needs-service"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "make-a-recall-decision-api-database"
+  title: "Make A Recall Decision API Database"
+  description: "Database to store recalls caseworking info"
+spec:
+  type: "database"
+  lifecycle: "production"
+  system: "make-a-recall-decision"
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "make-a-recall-decision-web-application"
+  title: "Make A Recall Decision Web Application"
+  description: "Web application for the Make A Recall Decision service"
+  links:
+  - url: "https://github.com/ministryofjustice/make-recall-decision-ui"
+    title: "GitHub Repo"
+    icon: "github"
+  annotations:
+    backstage.io/source-location: "url:https://github.com/ministryofjustice/make-recall-decision-ui"
+spec:
+  type: "frontend"
+  lifecycle: "production"
+  system: "make-a-recall-decision"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:make-a-recall-decision-api"
+  consumesApis:
+  - "make-a-recall-decision-api"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "System"
+metadata:
   name: "manage-a-supervision"
   title: "Manage A Supervision"
   description: "Digital service to support probation practitioners in managing probation\
@@ -1504,94 +1575,6 @@ metadata:
   description: "A service for handling the handover of offenders from prison to probation"
 spec:
   owner: "hmpps-undefined"
----
-apiVersion: "backstage.io/v1alpha1"
-kind: "System"
-metadata:
-  name: "manage-recalls"
-  title: "Manage Recalls"
-  description: "The case management system for recalls"
-spec:
-  owner: "hmpps-undefined"
----
-apiVersion: "backstage.io/v1alpha1"
-kind: "Component"
-metadata:
-  name: "manage-recalls-api"
-  title: "Manage Recalls API"
-  description: "REST API for the case management of recalls"
-  links:
-  - url: "https://github.com/ministryofjustice/manage-recalls-api"
-    title: "GitHub Repo"
-    icon: "github"
-  - url: "https://manage-recalls-api-dev.hmpps.service.justice.gov.uk/swagger-ui/index.html"
-    title: "API Docs"
-  annotations:
-    backstage.io/source-location: "url:https://github.com/ministryofjustice/manage-recalls-api"
-spec:
-  type: "service"
-  lifecycle: "production"
-  system: "manage-recalls"
-  owner: "hmpps-undefined"
-  dependsOn:
-  - "Component:manage-recalls-api-database"
-  - "Component:prison-register-api"
-  providesApis:
-  - "manage-recalls-api"
-  consumesApis:
-  - "manage-recalls-api-database"
-  - "prison-register-api"
----
-apiVersion: "backstage.io/v1alpha1"
-kind: "API"
-metadata:
-  name: "manage-recalls-api"
-  description: "API provided by manage-recalls-api"
-spec:
-  type: "openapi"
-  lifecycle: "production"
-  system: "manage-recalls"
-  owner: "hmpps-undefined"
-  definition:
-    $text: "https://manage-recalls-api-dev.hmpps.service.justice.gov.uk/v3/api-docs"
----
-apiVersion: "backstage.io/v1alpha1"
-kind: "Component"
-metadata:
-  name: "manage-recalls-api-database"
-  title: "Manage Recalls API Database"
-  description: "Database to store recalls caseworking info"
-spec:
-  type: "database"
-  lifecycle: "production"
-  system: "manage-recalls"
-  owner: "hmpps-undefined"
----
-apiVersion: "backstage.io/v1alpha1"
-kind: "Component"
-metadata:
-  name: "manage-recalls-web-application"
-  title: "Manage Recalls Web Application"
-  description: "Web application for the case management of recalls"
-  links:
-  - url: "https://github.com/ministryofjustice/manage-recalls-ui"
-    title: "GitHub Repo"
-    icon: "github"
-  annotations:
-    backstage.io/source-location: "url:https://github.com/ministryofjustice/manage-recalls-ui"
-spec:
-  type: "frontend"
-  lifecycle: "production"
-  system: "manage-recalls"
-  owner: "hmpps-undefined"
-  dependsOn:
-  - "Component:prison-register-api"
-  - "Component:prisonersearch"
-  - "Component:manage-recalls-api"
-  consumesApis:
-  - "prison-register-api"
-  - "prisonersearch"
-  - "manage-recalls-api"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
