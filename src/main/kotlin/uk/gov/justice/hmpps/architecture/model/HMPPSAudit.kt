@@ -5,7 +5,6 @@ import com.structurizr.model.Model
 import com.structurizr.model.SoftwareSystem
 import com.structurizr.view.ViewSet
 import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
-import uk.gov.justice.hmpps.architecture.annotations.Capability
 import uk.gov.justice.hmpps.architecture.annotations.Tags
 
 class HMPPSAudit private constructor() {
