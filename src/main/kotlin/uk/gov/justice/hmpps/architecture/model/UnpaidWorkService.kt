@@ -84,6 +84,7 @@ class UnpaidWorkService private constructor() {
       assessmentService.uses(PrepareCaseForSentence.courtCaseService, "Gets offender and offence details from")
       assessmentService.uses(OASys.assessmentsApi, "get offender past assessment details from")
       assessmentService.uses(HMPPSDomainEvents.topic, "fires events when new UPW assessment is complete")
+      riskAssessmentUi.uses(HMPPSAudit.system, "records user interactions", "HTTPS")
       ProbationPractitioners.nps.uses(riskAssessmentUi, "records offender risks and needs")
     }
 

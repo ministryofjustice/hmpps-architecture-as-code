@@ -64,6 +64,7 @@ class MakeARecallDecision private constructor() {
       makeARecallDecisionApi.uses(AssessRisksAndNeeds.riskNeedsService, "retrieves risk information", "REST+HTTP")
       makeARecallDecisionApi.uses(HMPPSDomainEvents.topic, "publishes finalised decisions events to", "SNS")
 
+      makeARecallDecisionUi.uses(HMPPSAudit.system, "records user interactions", "HTTPS")
       makeARecallDecisionUi.uses(makeARecallDecisionApi, "operates on", "HTTPS")
       ProbationPractitioners.nps.uses(makeARecallDecisionUi, "Reviews information on offender, records recall decision")
     }
