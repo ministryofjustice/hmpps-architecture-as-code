@@ -16,12 +16,12 @@ class AssessRisksAndNeeds private constructor() {
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
-        "Assess Risks And Needs",
+        "Assess Risks And Needs API",
         "API Service for exposing risk and needs information to other digital services"
       )
 
       val assessRiskNeedsDb = system.addContainer(
-        "Risks and Needs Database",
+        "Assess Risks and Needs Database",
         "Holds offender risks and needs data, Authoritative source for supplementary risk data",
         "PostgreSQL"
       ).apply {
@@ -30,8 +30,8 @@ class AssessRisksAndNeeds private constructor() {
       }
 
       riskNeedsService = system.addContainer(
-        "Risks and Needs Service",
-        "Risks and Needs business logic, Authoritative source for risk and needs data for offenders",
+        "Assess Risks and Needs API",
+        "Source of risk and needs data for offenders",
         "Kotlin + Spring Boot"
       ).apply {
         Tags.DOMAIN_API.addTo(this)
