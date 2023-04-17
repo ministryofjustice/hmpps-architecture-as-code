@@ -323,8 +323,8 @@ spec:
 apiVersion: "backstage.io/v1alpha1"
 kind: "System"
 metadata:
-  name: "assess-risks-and-needs"
-  title: "Assess Risks And Needs"
+  name: "assess-risks-and-needs-api"
+  title: "Assess Risks And Needs API"
   description: "API Service for exposing risk and needs information to other digital\
     \ services"
 spec:
@@ -333,8 +333,66 @@ spec:
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
 metadata:
-  name: "assessment-service"
-  title: "Assessment Service"
+  name: "assess-risks-and-needs-api"
+  title: "Assess Risks and Needs API"
+  description: "Source of risk and needs data for offenders"
+  links:
+  - url: "https://github.com/ministryofjustice/hmpps-assess-risks-and-needs"
+    title: "GitHub Repo"
+    icon: "github"
+  - url: "https://assess-risks-and-needs-dev.hmpps.service.justice.gov.uk/swagger-ui/index.html"
+    title: "API Docs"
+  annotations:
+    backstage.io/source-location: "url:https://github.com/ministryofjustice/hmpps-assess-risks-and-needs"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "assess-risks-and-needs-api"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:assess-risks-and-needs-database"
+  - "Component:community-api"
+  - "Component:offender-assessments-api"
+  - "Component:offender-assessments-api"
+  providesApis:
+  - "assess-risks-and-needs-api"
+  consumesApis:
+  - "assess-risks-and-needs-database"
+  - "community-api"
+  - "offender-assessments-api"
+  - "offender-assessments-api"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "assess-risks-and-needs-api"
+  description: "API provided by assess-risks-and-needs-api"
+spec:
+  type: "openapi"
+  lifecycle: "production"
+  system: "assess-risks-and-needs-api"
+  owner: "hmpps-undefined"
+  definition:
+    $text: "https://assess-risks-and-needs-dev.hmpps.service.justice.gov.uk/v3/api-docs"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "assess-risks-and-needs-database"
+  title: "Assess Risks and Needs Database"
+  description: "Holds offender risks and needs data, Authoritative source for supplementary\
+    \ risk data"
+spec:
+  type: "database"
+  lifecycle: "production"
+  system: "assess-risks-and-needs-api"
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "assessments-api"
+  title: "Assessments API"
   description: "Assessments business logic, providing REST API consumed by Risk Assessment\
     \ UI web application, Authoritative source for unpaid work assessment data"
   links:
@@ -350,13 +408,17 @@ spec:
   owner: "hmpps-undefined"
   dependsOn:
   - "Component:assessments-database"
-  - "Component:risks-and-needs-service"
+  - "Component:gotenburg-pdf-generator"
+  - "Component:assessments-storage"
+  - "Component:assess-risks-and-needs-api"
   - "Component:community-api"
   - "Component:court-case-service"
   - "Component:offender-assessments-api"
   consumesApis:
   - "assessments-database"
-  - "risks-and-needs-service"
+  - "gotenburg-pdf-generator"
+  - "assessments-storage"
+  - "assess-risks-and-needs-api"
   - "community-api"
   - "court-case-service"
   - "offender-assessments-api"
@@ -372,6 +434,40 @@ spec:
   lifecycle: "production"
   system: "unpaid-work-assessment-service"
   owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "assessments-storage"
+  title: "Assessments storage"
+  description: "Storage for PDFs of completed assessments"
+spec:
+  type: "database"
+  lifecycle: "production"
+  system: "unpaid-work-assessment-service"
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "assessments-ui"
+  title: "Assessments UI"
+  description: "Web application, presenting risk assessment questionnaires"
+  links:
+  - url: "https://github.com/ministryofjustice/hmpps-risk-assessment-ui"
+    title: "GitHub Repo"
+    icon: "github"
+  annotations:
+    backstage.io/source-location: "url:https://github.com/ministryofjustice/hmpps-risk-assessment-ui"
+spec:
+  type: "frontend"
+  lifecycle: "production"
+  system: "unpaid-work-assessment-service"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:assessments-api"
+  consumesApis:
+  - "assessments-api"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "System"
@@ -1012,6 +1108,18 @@ spec:
   owner: "hmpps-undefined"
 ---
 apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "gotenburg-pdf-generator"
+  title: "Gotenburg PDF Generator"
+  description: "Generates PDFs from data"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "unpaid-work-assessment-service"
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
 kind: "System"
 metadata:
   name: "gov-pay"
@@ -1266,12 +1374,12 @@ spec:
   - "Component:intervention-service-rest-api-"
   - "Component:hmpps-auth"
   - "Component:community-api"
-  - "Component:risks-and-needs-service"
+  - "Component:assess-risks-and-needs-api"
   consumesApis:
   - "intervention-service-rest-api-"
   - "hmpps-auth"
   - "community-api"
-  - "risks-and-needs-service"
+  - "assess-risks-and-needs-api"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
@@ -1413,12 +1521,12 @@ spec:
   - "Component:make-a-recall-decision-api-database"
   - "Component:probation-offender-search-api"
   - "Component:community-api"
-  - "Component:risks-and-needs-service"
+  - "Component:assess-risks-and-needs-api"
   consumesApis:
   - "make-a-recall-decision-api-database"
   - "probation-offender-search-api"
   - "community-api"
-  - "risks-and-needs-service"
+  - "assess-risks-and-needs-api"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
@@ -1484,10 +1592,10 @@ spec:
   owner: "hmpps-undefined"
   dependsOn:
   - "Component:community-api"
-  - "Component:risks-and-needs-service"
+  - "Component:assess-risks-and-needs-api"
   consumesApis:
   - "community-api"
-  - "risks-and-needs-service"
+  - "assess-risks-and-needs-api"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
@@ -3065,87 +3173,6 @@ spec:
   lifecycle: "production"
   system: "restricted-patients-api"
   owner: "hmpps-undefined"
----
-apiVersion: "backstage.io/v1alpha1"
-kind: "Component"
-metadata:
-  name: "risk-assessment-ui"
-  title: "Risk Assessment UI"
-  description: "Web application, presenting risk assessment questionnaires"
-  links:
-  - url: "https://github.com/ministryofjustice/hmpps-risk-assessment-ui"
-    title: "GitHub Repo"
-    icon: "github"
-  annotations:
-    backstage.io/source-location: "url:https://github.com/ministryofjustice/hmpps-risk-assessment-ui"
-spec:
-  type: "frontend"
-  lifecycle: "production"
-  system: "unpaid-work-assessment-service"
-  owner: "hmpps-undefined"
-  dependsOn:
-  - "Component:assessment-service"
-  consumesApis:
-  - "assessment-service"
----
-apiVersion: "backstage.io/v1alpha1"
-kind: "Component"
-metadata:
-  name: "risks-and-needs-database"
-  title: "Risks and Needs Database"
-  description: "Holds offender risks and needs data, Authoritative source for supplementary\
-    \ risk data"
-spec:
-  type: "database"
-  lifecycle: "production"
-  system: "assess-risks-and-needs"
-  owner: "hmpps-undefined"
----
-apiVersion: "backstage.io/v1alpha1"
-kind: "Component"
-metadata:
-  name: "risks-and-needs-service"
-  title: "Risks and Needs Service"
-  description: "Risks and Needs business logic, Authoritative source for risk and\
-    \ needs data for offenders"
-  links:
-  - url: "https://github.com/ministryofjustice/hmpps-assess-risks-and-needs"
-    title: "GitHub Repo"
-    icon: "github"
-  - url: "https://assess-risks-and-needs-dev.hmpps.service.justice.gov.uk/swagger-ui/index.html"
-    title: "API Docs"
-  annotations:
-    backstage.io/source-location: "url:https://github.com/ministryofjustice/hmpps-assess-risks-and-needs"
-spec:
-  type: "service"
-  lifecycle: "production"
-  system: "assess-risks-and-needs"
-  owner: "hmpps-undefined"
-  dependsOn:
-  - "Component:risks-and-needs-database"
-  - "Component:community-api"
-  - "Component:offender-assessments-api"
-  - "Component:offender-assessments-api"
-  providesApis:
-  - "risks-and-needs-service"
-  consumesApis:
-  - "risks-and-needs-database"
-  - "community-api"
-  - "offender-assessments-api"
-  - "offender-assessments-api"
----
-apiVersion: "backstage.io/v1alpha1"
-kind: "API"
-metadata:
-  name: "risks-and-needs-service"
-  description: "API provided by risks-and-needs-service"
-spec:
-  type: "openapi"
-  lifecycle: "production"
-  system: "assess-risks-and-needs"
-  owner: "hmpps-undefined"
-  definition:
-    $text: "https://assess-risks-and-needs-dev.hmpps.service.justice.gov.uk/v3/api-docs"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
