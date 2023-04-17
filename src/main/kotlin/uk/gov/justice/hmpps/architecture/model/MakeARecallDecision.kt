@@ -59,13 +59,13 @@ class MakeARecallDecision private constructor() {
       listOf(makeARecallDecisionApi, makeARecallDecisionUi)
         .forEach { it.uses(HMPPSAuth.system, "authenticates via") }
       makeARecallDecisionApi.uses(db, "queries", "JDBC")
-      makeARecallDecisionUi.uses(Delius.offenderSearch, "searches for offender")
-      makeARecallDecisionUi.uses(Delius.communityApi, "retrieves offender information", "REST+HTTP")
-      makeARecallDecisionUi.uses(AssessRisksAndNeeds.riskNeedsService, "retrieves risk information", "REST+HTTP")
+      makeARecallDecisionApi.uses(Delius.offenderSearch, "searches for offender")
+      makeARecallDecisionApi.uses(Delius.communityApi, "retrieves offender information", "REST+HTTP")
+      makeARecallDecisionApi.uses(AssessRisksAndNeeds.riskNeedsService, "retrieves risk information", "REST+HTTP")
       makeARecallDecisionApi.uses(HMPPSDomainEvents.topic, "publishes finalised decisions events to", "SNS")
 
       makeARecallDecisionUi.uses(makeARecallDecisionApi, "operates on", "HTTPS")
-      ProbationPractitioners.nps.uses(makeARecallDecisionApi, "Reviews information on offender, records recall decision")
+      ProbationPractitioners.nps.uses(makeARecallDecisionUi, "Reviews information on offender, records recall decision")
     }
 
     override fun defineViews(views: ViewSet) {
