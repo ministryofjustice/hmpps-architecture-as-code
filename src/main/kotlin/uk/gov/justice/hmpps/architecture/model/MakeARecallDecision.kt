@@ -60,7 +60,7 @@ class MakeARecallDecision private constructor() {
         .forEach { it.uses(HMPPSAuth.system, "authenticates via") }
       makeARecallDecisionApi.uses(db, "queries", "JDBC")
       makeARecallDecisionApi.uses(Delius.offenderSearch, "searches for offender")
-      makeARecallDecisionApi.uses(Delius.communityApi, "retrieves offender information", "REST+HTTP")
+      makeARecallDecisionApi.uses(Delius.MRDIntegrationService, "retrieves offender information", "REST+HTTP")
       makeARecallDecisionApi.uses(AssessRisksAndNeeds.riskNeedsService, "retrieves risk information", "REST+HTTP")
       makeARecallDecisionApi.uses(HMPPSDomainEvents.topic, "publishes finalised decisions events to", "SNS")
 

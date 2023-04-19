@@ -20,6 +20,8 @@ class Delius private constructor() {
     lateinit var supportTeam: Person
     lateinit var deliusApi: Container
     lateinit var probationOffenderEvents: Container
+    lateinit var MRDIntegrationService: Container
+    lateinit var UPWIntegrationService: Container
 
     override fun defineModelEntities(model: Model) {
 
@@ -227,6 +229,26 @@ class Delius private constructor() {
         uses(communityApi, "Accesses NDelius information using")
         ecs.add(this)
       }
+
+      MRDIntegrationService = system.addContainer(
+        "Make Recall Decisions Integration Service",
+        "Integration service that responds to events raised by MRD",
+        "Kotlin"
+      ).apply {
+        url = "https://github.com/ministryofjustice/hmpps-probation-integration-services"
+        uses(database, "Saves Part-A/DNTR documents to Delius using")
+        CloudPlatform.kubernetes.add(this)
+      }
+
+      UPWIntegrationService = system.addContainer(
+        "Unpaid Work Integration Service",
+        "Integration service that responds to events raised by UPW",
+        "Kotlin"
+      ).apply {
+        url = "https://github.com/ministryofjustice/hmpps-probation-integration-services"
+        uses(database, "Saves assessment documents to Delius using")
+        CloudPlatform.kubernetes.add(this)
+      }
     }
 
     override fun defineRelationships() {
@@ -242,6 +264,10 @@ class Delius private constructor() {
 
       communityApi.uses(HMPPSAuth.system, "Authenticates using")
       deliusApi.uses(HMPPSAuth.system, "Authenticates using")
+      MRDIntegrationService.uses(MakeARecallDecision.makeARecallDecisionApi, "Requests decision dossier documents using", "REST+HTTP")
+      MRDIntegrationService.uses(HMPPSDomainEvents.topic, "Waits for specific events")
+      UPWIntegrationService.uses(MakeARecallDecision.makeARecallDecisionApi, "Requests unpaid work assessment PDFs using", "REST+HTTP")
+      UPWIntegrationService.uses(HMPPSDomainEvents.topic, "Waits for specific events")
     }
 
     override fun defineViews(views: ViewSet) {
@@ -265,6 +291,8 @@ class Delius private constructor() {
         add(database)
         addNearestNeighbours(deliusApi)
         addNearestNeighbours(communityApi)
+        addNearestNeighbours(MRDIntegrationService)
+        addNearestNeighbours(UPWIntegrationService)
         remove(HMPPSAuth.system)
       }
 
