@@ -74,7 +74,6 @@ class UnpaidWorkService private constructor() {
         CloudPlatform.kubernetes.add(this)
       }
 
-
     }
 
     override fun defineRelationships() {
