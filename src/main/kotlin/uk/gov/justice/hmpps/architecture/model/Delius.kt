@@ -236,7 +236,7 @@ class Delius private constructor() {
         "Kotlin"
       ).apply {
         url = "https://github.com/ministryofjustice/hmpps-probation-integration-services"
-        uses(deliusApi, "Saves Part-A/DNTR documents to Delius using")
+        uses(database, "Saves Part-A/DNTR documents to Delius using")
         CloudPlatform.kubernetes.add(this)
       }
 
@@ -246,7 +246,7 @@ class Delius private constructor() {
         "Kotlin"
       ).apply {
         url = "https://github.com/ministryofjustice/hmpps-probation-integration-services"
-        uses(deliusApi, "Saves assessment documents to Delius using")
+        uses(database, "Saves assessment documents to Delius using")
         CloudPlatform.kubernetes.add(this)
       }
     }

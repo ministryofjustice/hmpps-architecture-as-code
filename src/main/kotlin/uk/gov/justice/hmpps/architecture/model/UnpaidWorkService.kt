@@ -73,6 +73,8 @@ class UnpaidWorkService private constructor() {
         Tags.WEB_BROWSER.addTo(this)
         CloudPlatform.kubernetes.add(this)
       }
+
+
     }
 
     override fun defineRelationships() {
@@ -80,7 +82,7 @@ class UnpaidWorkService private constructor() {
         .forEach { it.uses(HMPPSAuth.system, "authenticates via") }
 
       assessmentService.uses(AssessRisksAndNeeds.riskNeedsService, "Gets risk information from")
-      assessmentService.uses(Delius.communityApi, "Gets offender and offence details from")
+      assessmentService.uses(Delius.UPWIntegrationService, "Gets offender and offence details from")
       assessmentService.uses(PrepareCaseForSentence.courtCaseService, "Gets offender and offence details from")
       assessmentService.uses(OASys.assessmentsApi, "get offender past assessment details from")
       assessmentService.uses(HMPPSDomainEvents.topic, "fires events when new UPW assessment is complete")
