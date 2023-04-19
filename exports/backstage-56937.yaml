@@ -411,7 +411,7 @@ spec:
   - "Component:gotenburg-pdf-generator"
   - "Component:assessments-storage"
   - "Component:assess-risks-and-needs-api"
-  - "Component:community-api"
+  - "Component:unpaid-work-integration-service"
   - "Component:court-case-service"
   - "Component:offender-assessments-api"
   consumesApis:
@@ -419,7 +419,7 @@ spec:
   - "gotenburg-pdf-generator"
   - "assessments-storage"
   - "assess-risks-and-needs-api"
-  - "community-api"
+  - "unpaid-work-integration-service"
   - "court-case-service"
   - "offender-assessments-api"
 ---
@@ -1547,12 +1547,12 @@ spec:
   dependsOn:
   - "Component:make-a-recall-decision-api-database"
   - "Component:probation-offender-search-api"
-  - "Component:community-api"
+  - "Component:make-recall-decisions-integration-service"
   - "Component:assess-risks-and-needs-api"
   consumesApis:
   - "make-a-recall-decision-api-database"
   - "probation-offender-search-api"
-  - "community-api"
+  - "make-recall-decisions-integration-service"
   - "assess-risks-and-needs-api"
 ---
 apiVersion: "backstage.io/v1alpha1"
@@ -1587,6 +1587,30 @@ spec:
   dependsOn:
   - "Component:make-a-recall-decision-api"
   consumesApis:
+  - "make-a-recall-decision-api"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "make-recall-decisions-integration-service"
+  title: "Make Recall Decisions Integration Service"
+  description: "Integration service that responds to events raised by MRD"
+  links:
+  - url: "https://github.com/ministryofjustice/hmpps-probation-integration-services"
+    title: "GitHub Repo"
+    icon: "github"
+  annotations:
+    backstage.io/source-location: "url:https://github.com/ministryofjustice/hmpps-probation-integration-services"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "ndelius"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:ndelius-database"
+  - "Component:make-a-recall-decision-api"
+  consumesApis:
+  - "ndelius-database"
   - "make-a-recall-decision-api"
 ---
 apiVersion: "backstage.io/v1alpha1"
@@ -3418,6 +3442,30 @@ metadata:
     \ community payback) sessions"
 spec:
   owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "unpaid-work-integration-service"
+  title: "Unpaid Work Integration Service"
+  description: "Integration service that responds to events raised by UPW"
+  links:
+  - url: "https://github.com/ministryofjustice/hmpps-probation-integration-services"
+    title: "GitHub Repo"
+    icon: "github"
+  annotations:
+    backstage.io/source-location: "url:https://github.com/ministryofjustice/hmpps-probation-integration-services"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "ndelius"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:ndelius-database"
+  - "Component:make-a-recall-decision-api"
+  consumesApis:
+  - "ndelius-database"
+  - "make-a-recall-decision-api"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "System"
