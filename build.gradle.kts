@@ -1,5 +1,5 @@
 plugins {
-  kotlin("jvm") version "1.8.21"
+  kotlin("jvm") version "1.8.22"
   application
 }
 
@@ -17,7 +17,7 @@ dependencies {
   implementation("com.structurizr:structurizr-core:1.24.1")
   implementation("com.structurizr:structurizr-import:1.4.1")
   implementation("com.structurizr:structurizr-graphviz:2.0.1")
-  implementation("org.eclipse.jgit:org.eclipse.jgit:6.5.0.202303070854-r")
+  implementation("org.eclipse.jgit:org.eclipse.jgit:6.6.0.202305301015-r")
   implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.2")
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2")
 
