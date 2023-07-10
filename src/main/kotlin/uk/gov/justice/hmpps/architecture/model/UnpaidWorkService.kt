@@ -16,6 +16,7 @@ class UnpaidWorkService private constructor() {
     lateinit var storage: Container
     lateinit var gotenburg: Container
     lateinit var collector: Container
+    lateinit var redis: Container
 
     override fun defineModelEntities(model: Model) {
       system = model.addSoftwareSystem(
@@ -49,6 +50,16 @@ class UnpaidWorkService private constructor() {
         CloudPlatform.s3.add(this)
       }
 
+      redis = system.addContainer(
+        "Redis",
+        "In-memory k-v store",
+        "REDIS"
+      ).apply {
+        Tags.DATABASE.addTo(this)
+        Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
+        CloudPlatform.elasticache.add(this)
+      }
+
       assessmentService = system.addContainer(
         "Assessments API",
         "Assessments business logic, providing REST API consumed by Risk Assessment UI web application, Authoritative source for unpaid work assessment data",
@@ -56,9 +67,9 @@ class UnpaidWorkService private constructor() {
       ).apply {
         Tags.DOMAIN_API.addTo(this)
         Tags.AREA_PROBATION.addTo(this)
-        uses(assessmentDb, "connects to", "JDBC")
         uses(gotenburg, "Creates assessments in PDF form", "REST")
         uses(storage, "Stores assessments in PDF form", "AWS API (REST)")
+        uses(assessmentDb, "connects to", "JDBC")
         url = "https://github.com/ministryofjustice/hmpps-assessments-api"
         CloudPlatform.kubernetes.add(this)
       }
@@ -69,6 +80,7 @@ class UnpaidWorkService private constructor() {
         "Node + Express"
       ).apply {
         uses(assessmentService, "Display assessment questions and save answers using ")
+        uses(redis, "Caches backend API calls using")
         url = "https://github.com/ministryofjustice/hmpps-risk-assessment-ui"
         Tags.WEB_BROWSER.addTo(this)
         CloudPlatform.kubernetes.add(this)
@@ -79,10 +91,10 @@ class UnpaidWorkService private constructor() {
       listOf(riskAssessmentUi, assessmentService)
         .forEach { it.uses(HMPPSAuth.system, "authenticates via") }
 
+      assessmentService.uses(OASys.assessmentsApi, "get offender past assessment details from")
       assessmentService.uses(AssessRisksAndNeeds.riskNeedsService, "Gets risk information from")
       assessmentService.uses(Delius.UPWIntegrationService, "Gets offender and offence details from")
       assessmentService.uses(PrepareCaseForSentence.courtCaseService, "Gets offender and offence details from")
-      assessmentService.uses(OASys.assessmentsApi, "get offender past assessment details from")
       assessmentService.uses(HMPPSDomainEvents.topic, "fires events when new UPW assessment is complete")
       riskAssessmentUi.uses(HMPPSAudit.system, "records user interactions", "HTTPS")
       ProbationPractitioners.nps.uses(riskAssessmentUi, "records offender risks and needs")

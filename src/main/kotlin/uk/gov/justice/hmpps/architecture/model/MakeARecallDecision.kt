@@ -9,6 +9,7 @@ import com.structurizr.view.ViewSet
 import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
 import uk.gov.justice.hmpps.architecture.annotations.Tags
 
+//@todo: rename this to consider a recall
 class MakeARecallDecision private constructor() {
   companion object : HMPPSSoftwareSystem {
     lateinit var system: SoftwareSystem
@@ -16,6 +17,7 @@ class MakeARecallDecision private constructor() {
     lateinit var makeARecallDecisionUi: Container
     lateinit var makeARecallDecisionApi: Container
     lateinit var db: Container
+    lateinit var redis: Container
 
     override fun defineModelEntities(model: Model) {
 
@@ -31,6 +33,16 @@ class MakeARecallDecision private constructor() {
       ).apply {
         Tags.DATABASE.addTo(this)
         CloudPlatform.rds.add(this)
+      }
+
+      redis = system.addContainer(
+        "Redis",
+        "In-memory k-v store",
+        "REDIS"
+      ).apply {
+        Tags.DATABASE.addTo(this)
+        Tags.SOFTWARE_AS_A_SERVICE.addTo(this)
+        CloudPlatform.elasticache.add(this)
       }
 
       makeARecallDecisionApi = system.addContainer(
@@ -59,6 +71,7 @@ class MakeARecallDecision private constructor() {
       listOf(makeARecallDecisionApi, makeARecallDecisionUi)
         .forEach { it.uses(HMPPSAuth.system, "authenticates via") }
       makeARecallDecisionApi.uses(db, "queries", "JDBC")
+      makeARecallDecisionApi.uses(redis, "caches backend API calls using")
       makeARecallDecisionApi.uses(Delius.offenderSearch, "searches for offender")
       makeARecallDecisionApi.uses(Delius.MRDIntegrationService, "retrieves offender information", "REST+HTTP")
       makeARecallDecisionApi.uses(AssessRisksAndNeeds.riskNeedsService, "retrieves risk information", "REST+HTTP")
