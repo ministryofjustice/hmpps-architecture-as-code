@@ -264,9 +264,9 @@ class Delius private constructor() {
 
       communityApi.uses(HMPPSAuth.system, "Authenticates using")
       deliusApi.uses(HMPPSAuth.system, "Authenticates using")
-      MRDIntegrationService.uses(MakeARecallDecision.makeARecallDecisionApi, "Requests decision dossier documents using", "REST+HTTP")
+      MRDIntegrationService.uses(ConsiderARecall.considerARecallApi, "Requests decision dossier documents using", "REST+HTTP")
       MRDIntegrationService.uses(HMPPSDomainEvents.topic, "Waits for specific events")
-      UPWIntegrationService.uses(MakeARecallDecision.makeARecallDecisionApi, "Requests unpaid work assessment PDFs using", "REST+HTTP")
+      UPWIntegrationService.uses(UnpaidWorkService.assessmentService, "Requests unpaid work assessment PDFs using", "REST+HTTP")
       UPWIntegrationService.uses(HMPPSDomainEvents.topic, "Waits for specific events")
     }
 

@@ -9,23 +9,23 @@ import com.structurizr.view.ViewSet
 import uk.gov.justice.hmpps.architecture.HMPPSSoftwareSystem
 import uk.gov.justice.hmpps.architecture.annotations.Tags
 
-class MakeARecallDecision private constructor() {
+class ConsiderARecall private constructor() {
   companion object : HMPPSSoftwareSystem {
     lateinit var system: SoftwareSystem
     lateinit var ppcsCaseWorker: Person
-    lateinit var makeARecallDecisionUi: Container
-    lateinit var makeARecallDecisionApi: Container
+    lateinit var considerARecallUi: Container
+    lateinit var considerARecallApi: Container
     lateinit var db: Container
 
     override fun defineModelEntities(model: Model) {
 
       system = model.addSoftwareSystem(
-        "Make A Recall Decision",
-        "A service to help making decisions around recalls"
+        "Consider A Recall",
+        "A service to help making decisions around recalls. Previously called Make A Recall Decision."
       )
 
       db = system.addContainer(
-        "Make A Recall Decision API Database",
+        "Consider A Recall API Database",
         "Database to store recalls caseworking info",
         "RDS Postgres DB"
       ).apply {
@@ -33,9 +33,9 @@ class MakeARecallDecision private constructor() {
         CloudPlatform.rds.add(this)
       }
 
-      makeARecallDecisionApi = system.addContainer(
-        "Make A Recall Decision API",
-        "REST API for the Make A Recall Decision service",
+      considerARecallApi = system.addContainer(
+        "Consider A Recall API",
+        "REST API for the Consider A Recall service",
         "Kotlin Spring Boot App"
       ).apply {
         Tags.DOMAIN_API.addTo(this)
@@ -44,9 +44,9 @@ class MakeARecallDecision private constructor() {
         CloudPlatform.kubernetes.add(this)
       }
 
-      makeARecallDecisionUi = system.addContainer(
-        "Make A Recall Decision Web Application",
-        "Web application for the Make A Recall Decision service",
+      considerARecallUi = system.addContainer(
+        "Consider A Recall Web Application",
+        "Web application for the Consider A Recall service",
         "Node Express app"
       ).apply {
         setUrl("https://github.com/ministryofjustice/make-recall-decision-ui")
@@ -56,23 +56,23 @@ class MakeARecallDecision private constructor() {
     }
 
     override fun defineRelationships() {
-      listOf(makeARecallDecisionApi, makeARecallDecisionUi)
+      listOf(considerARecallApi, considerARecallUi)
         .forEach { it.uses(HMPPSAuth.system, "authenticates via") }
-      makeARecallDecisionApi.uses(db, "queries", "JDBC")
-      makeARecallDecisionApi.uses(Delius.offenderSearch, "searches for offender")
-      makeARecallDecisionApi.uses(Delius.MRDIntegrationService, "retrieves offender information", "REST+HTTP")
-      makeARecallDecisionApi.uses(AssessRisksAndNeeds.riskNeedsService, "retrieves risk information", "REST+HTTP")
-      makeARecallDecisionApi.uses(HMPPSDomainEvents.topic, "publishes finalised decisions events to", "SNS")
+      considerARecallApi.uses(db, "queries", "JDBC")
+      considerARecallApi.uses(Delius.offenderSearch, "searches for offender")
+      considerARecallApi.uses(Delius.MRDIntegrationService, "retrieves offender information", "REST+HTTP")
+      considerARecallApi.uses(AssessRisksAndNeeds.riskNeedsService, "retrieves risk information", "REST+HTTP")
+      considerARecallApi.uses(HMPPSDomainEvents.topic, "publishes finalised decisions events to", "SNS")
 
-      makeARecallDecisionUi.uses(HMPPSAudit.system, "records user interactions", "HTTPS")
-      makeARecallDecisionUi.uses(makeARecallDecisionApi, "operates on", "HTTPS")
-      ProbationPractitioners.nps.uses(makeARecallDecisionUi, "Reviews information on offender, records recall decision")
+      considerARecallUi.uses(HMPPSAudit.system, "records user interactions", "HTTPS")
+      considerARecallUi.uses(considerARecallApi, "operates on", "HTTPS")
+      ProbationPractitioners.nps.uses(considerARecallUi, "Reviews information on offender, records recall decision")
     }
 
     override fun defineViews(views: ViewSet) {
       views.createSystemContextView(
         system,
-        "make-a-recall-decision-context",
+        "consider-a-recall-context",
         null
       ).apply {
         addDefaultElements()
@@ -81,14 +81,14 @@ class MakeARecallDecision private constructor() {
 
       views.createContainerView(
         system,
-        "make-a-recall-decision-container",
+        "consider-a-recall-container",
         null
       ).apply {
         addDefaultElements()
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
       }
 
-      views.createDeploymentView(MakeARecallDecision.system, "make-a-recall-decision-deployment", "Deployment overview of the make a recall decision service").apply {
+      views.createDeploymentView(ConsiderARecall.system, "consider-a-recall-deployment", "Deployment overview of the Consider A Recall service").apply {
         add(AWS.london)
         enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 300)
       }

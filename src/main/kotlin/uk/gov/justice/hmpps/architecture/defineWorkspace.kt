@@ -34,7 +34,7 @@ import uk.gov.justice.hmpps.architecture.model.InterventionTeams
 import uk.gov.justice.hmpps.architecture.model.Interventions
 import uk.gov.justice.hmpps.architecture.model.KeyworkerApi
 import uk.gov.justice.hmpps.architecture.model.Licences
-import uk.gov.justice.hmpps.architecture.model.MakeARecallDecision
+import uk.gov.justice.hmpps.architecture.model.ConsiderARecall
 import uk.gov.justice.hmpps.architecture.model.ManageASupervision
 import uk.gov.justice.hmpps.architecture.model.ManagePOMCases
 import uk.gov.justice.hmpps.architecture.model.MoJSignOn
@@ -122,7 +122,7 @@ private val MODEL_ITEMS = listOf(
   UseOfForce,
   WhereaboutsApi,
   WMT,
-  MakeARecallDecision,
+  ConsiderARecall,
   PrisonRegister,
   StaffLookupApi
 )
