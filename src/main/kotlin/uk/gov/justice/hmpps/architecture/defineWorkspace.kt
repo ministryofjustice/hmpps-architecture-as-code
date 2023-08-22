@@ -16,8 +16,10 @@ import uk.gov.justice.hmpps.architecture.model.CRCSystem
 import uk.gov.justice.hmpps.architecture.model.CaseNotesToProbation
 import uk.gov.justice.hmpps.architecture.model.CloudPlatform
 import uk.gov.justice.hmpps.architecture.model.ComplexityOfNeed
+import uk.gov.justice.hmpps.architecture.model.ConsiderARecall
 import uk.gov.justice.hmpps.architecture.model.CourtRegister
 import uk.gov.justice.hmpps.architecture.model.CourtUsers
+import uk.gov.justice.hmpps.architecture.model.CreateAndVaryALicence
 import uk.gov.justice.hmpps.architecture.model.Curious
 import uk.gov.justice.hmpps.architecture.model.Delius
 import uk.gov.justice.hmpps.architecture.model.DigitalPrisonServices
@@ -34,7 +36,6 @@ import uk.gov.justice.hmpps.architecture.model.InterventionTeams
 import uk.gov.justice.hmpps.architecture.model.Interventions
 import uk.gov.justice.hmpps.architecture.model.KeyworkerApi
 import uk.gov.justice.hmpps.architecture.model.Licences
-import uk.gov.justice.hmpps.architecture.model.ConsiderARecall
 import uk.gov.justice.hmpps.architecture.model.ManageASupervision
 import uk.gov.justice.hmpps.architecture.model.ManagePOMCases
 import uk.gov.justice.hmpps.architecture.model.MoJSignOn
@@ -124,7 +125,8 @@ private val MODEL_ITEMS = listOf(
   WMT,
   ConsiderARecall,
   PrisonRegister,
-  StaffLookupApi
+  StaffLookupApi,
+  CreateAndVaryALicence
 )
 
 private val VIEWS = listOf(
