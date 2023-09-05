@@ -65,36 +65,6 @@ class ConsiderARecall private constructor() {
       }
     }
 
-    /*
-    override fun defineRelationships() {
-      considerARecallApi.uses(db, "queries", "JDBC")
-      considerARecallApi.uses(Delius.offenderSearch, "searches for offender")
-      considerARecallApi.uses(Delius.MRDIntegrationService, "retrieves offender information", "REST+HTTP")
-
-      considerARecallApi = system.addContainer(
-        "Consider A Recall API",
-        "REST API for the Consider A Recall service",
-        "Kotlin Spring Boot App"
-      ).apply {
-        Tags.DOMAIN_API.addTo(this)
-        Tags.AREA_PROBATION.addTo(this)
-        setUrl("https://github.com/ministryofjustice/make-recall-decision-api")
-        CloudPlatform.kubernetes.add(this)
-      }
-
-      considerARecallUi = system.addContainer(
-        "Consider A Recall Web Application",
-        "Web application for the Consider A Recall service",
-        "Node Express app"
-      ).apply {
-        setUrl("https://github.com/ministryofjustice/make-recall-decision-ui")
-        Tags.WEB_BROWSER.addTo(this)
-        CloudPlatform.kubernetes.add(this)
-      }
-    }
-
-     */
-
     override fun defineRelationships() {
       considerARecallApi.uses(db, "queries", "JDBC")
       considerARecallApi.uses(Delius.offenderSearch, "searches for offender")
