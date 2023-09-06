@@ -450,6 +450,18 @@ spec:
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
 metadata:
+  name: "assessments-storage"
+  title: "Assessments storage"
+  description: "Storage for PDFs of licences"
+spec:
+  type: "database"
+  lifecycle: "production"
+  system: "create-and-vary-a-licence"
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
   name: "assessments-ui"
   title: "Assessments UI"
   description: "Web application, presenting risk assessment questionnaires"
@@ -646,6 +658,84 @@ spec:
   owner: "hmpps-undefined"
 ---
 apiVersion: "backstage.io/v1alpha1"
+kind: "System"
+metadata:
+  name: "consider-a-recall"
+  title: "Consider A Recall"
+  description: "A service to help making decisions around recalls. Previously called\
+    \ Make A Recall Decision."
+spec:
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "consider-a-recall-api"
+  title: "Consider A Recall API"
+  description: "REST API for the Consider A Recall service"
+  links:
+  - url: "https://github.com/ministryofjustice/make-recall-decision-api"
+    title: "GitHub Repo"
+    icon: "github"
+  annotations:
+    backstage.io/source-location: "url:https://github.com/ministryofjustice/make-recall-decision-api"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "consider-a-recall"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:consider-a-recall-api-database"
+  - "Component:probation-offender-search-api"
+  - "Component:make-recall-decisions-integration-service"
+  - "Component:assess-risks-and-needs-api"
+  - "Component:create-and-vary-a-licence-api"
+  consumesApis:
+  - "consider-a-recall-api-database"
+  - "probation-offender-search-api"
+  - "make-recall-decisions-integration-service"
+  - "assess-risks-and-needs-api"
+  - "create-and-vary-a-licence-api"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "consider-a-recall-api-database"
+  title: "Consider A Recall API Database"
+  description: "Database to store recalls caseworking info"
+spec:
+  type: "database"
+  lifecycle: "production"
+  system: "consider-a-recall"
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "consider-a-recall-web-application"
+  title: "Consider A Recall Web Application"
+  description: "Web application for the Consider A Recall service"
+  links:
+  - url: "https://github.com/ministryofjustice/make-recall-decision-ui"
+    title: "GitHub Repo"
+    icon: "github"
+  annotations:
+    backstage.io/source-location: "url:https://github.com/ministryofjustice/make-recall-decision-ui"
+spec:
+  type: "frontend"
+  lifecycle: "production"
+  system: "consider-a-recall"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:redis-cache"
+  - "Component:consider-a-recall-api"
+  - "Component:consider-a-recall-api"
+  consumesApis:
+  - "redis-cache"
+  - "consider-a-recall-api"
+  - "consider-a-recall-api"
+---
+apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
 metadata:
   name: "content-store"
@@ -772,6 +862,102 @@ spec:
   lifecycle: "production"
   system: "court-register"
   owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "System"
+metadata:
+  name: "create-and-vary-a-licence"
+  title: "Create And Vary A Licence"
+  description: "A service to help create and manage licences."
+spec:
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "create-and-vary-a-licence-api"
+  title: "Create And Vary A Licence API"
+  description: "REST API for the Create And Vary A Licence service"
+  links:
+  - url: "https://github.com/ministryofjustice/create-and-vary-a-licence-api"
+    title: "GitHub Repo"
+    icon: "github"
+  - url: "https://create-and-vary-a-licence-api-dev.hmpps.service.justice.gov.uk/swagger-ui/index.html"
+    title: "API Docs"
+  annotations:
+    backstage.io/source-location: "url:https://github.com/ministryofjustice/create-and-vary-a-licence-api"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "create-and-vary-a-licence"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:create-and-vary-a-licence-api-database"
+  providesApis:
+  - "create-and-vary-a-licence-api"
+  consumesApis:
+  - "create-and-vary-a-licence-api-database"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "create-and-vary-a-licence-api"
+  description: "API provided by create-and-vary-a-licence-api"
+spec:
+  type: "openapi"
+  lifecycle: "production"
+  system: "create-and-vary-a-licence"
+  owner: "hmpps-undefined"
+  definition:
+    $text: "https://create-and-vary-a-licence-api-dev.hmpps.service.justice.gov.uk/v3/api-docs"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "create-and-vary-a-licence-api-database"
+  title: "Create And Vary A Licence API Database"
+  description: "Database to store licence data"
+spec:
+  type: "database"
+  lifecycle: "production"
+  system: "create-and-vary-a-licence"
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "create-and-vary-a-licence-web-application"
+  title: "Create And Vary A Licence Web Application"
+  description: "Web application for the Create And Vary A Licence service"
+  links:
+  - url: "https://github.com/ministryofjustice/create-and-vary-a-licence"
+    title: "GitHub Repo"
+    icon: "github"
+  annotations:
+    backstage.io/source-location: "url:https://github.com/ministryofjustice/create-and-vary-a-licence"
+spec:
+  type: "frontend"
+  lifecycle: "production"
+  system: "create-and-vary-a-licence"
+  owner: "hmpps-undefined"
+  dependsOn:
+  - "Component:prison-register-api"
+  - "Component:prisonersearch"
+  - "Component:prison-api"
+  - "Component:probation-offender-search-api"
+  - "Component:community-api"
+  - "Component:gotenburg-pdf-generator"
+  - "Component:assessments-storage"
+  - "Component:create-and-vary-a-licence-api"
+  consumesApis:
+  - "prison-register-api"
+  - "prisonersearch"
+  - "prison-api"
+  - "probation-offender-search-api"
+  - "community-api"
+  - "gotenburg-pdf-generator"
+  - "assessments-storage"
+  - "create-and-vary-a-licence-api"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
@@ -1117,6 +1303,18 @@ spec:
   type: "service"
   lifecycle: "production"
   system: "unpaid-work-assessment-service"
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "gotenburg-pdf-generator"
+  title: "Gotenburg PDF Generator"
+  description: "Generates PDFs of licences from data"
+spec:
+  type: "service"
+  lifecycle: "production"
+  system: "create-and-vary-a-licence"
   owner: "hmpps-undefined"
 ---
 apiVersion: "backstage.io/v1alpha1"
@@ -1519,77 +1717,6 @@ spec:
   owner: "hmpps-undefined"
 ---
 apiVersion: "backstage.io/v1alpha1"
-kind: "System"
-metadata:
-  name: "make-a-recall-decision"
-  title: "Make A Recall Decision"
-  description: "A service to help making decisions around recalls"
-spec:
-  owner: "hmpps-undefined"
----
-apiVersion: "backstage.io/v1alpha1"
-kind: "Component"
-metadata:
-  name: "make-a-recall-decision-api"
-  title: "Make A Recall Decision API"
-  description: "REST API for the Make A Recall Decision service"
-  links:
-  - url: "https://github.com/ministryofjustice/make-recall-decision-api"
-    title: "GitHub Repo"
-    icon: "github"
-  annotations:
-    backstage.io/source-location: "url:https://github.com/ministryofjustice/make-recall-decision-api"
-spec:
-  type: "service"
-  lifecycle: "production"
-  system: "make-a-recall-decision"
-  owner: "hmpps-undefined"
-  dependsOn:
-  - "Component:make-a-recall-decision-api-database"
-  - "Component:probation-offender-search-api"
-  - "Component:make-recall-decisions-integration-service"
-  - "Component:assess-risks-and-needs-api"
-  consumesApis:
-  - "make-a-recall-decision-api-database"
-  - "probation-offender-search-api"
-  - "make-recall-decisions-integration-service"
-  - "assess-risks-and-needs-api"
----
-apiVersion: "backstage.io/v1alpha1"
-kind: "Component"
-metadata:
-  name: "make-a-recall-decision-api-database"
-  title: "Make A Recall Decision API Database"
-  description: "Database to store recalls caseworking info"
-spec:
-  type: "database"
-  lifecycle: "production"
-  system: "make-a-recall-decision"
-  owner: "hmpps-undefined"
----
-apiVersion: "backstage.io/v1alpha1"
-kind: "Component"
-metadata:
-  name: "make-a-recall-decision-web-application"
-  title: "Make A Recall Decision Web Application"
-  description: "Web application for the Make A Recall Decision service"
-  links:
-  - url: "https://github.com/ministryofjustice/make-recall-decision-ui"
-    title: "GitHub Repo"
-    icon: "github"
-  annotations:
-    backstage.io/source-location: "url:https://github.com/ministryofjustice/make-recall-decision-ui"
-spec:
-  type: "frontend"
-  lifecycle: "production"
-  system: "make-a-recall-decision"
-  owner: "hmpps-undefined"
-  dependsOn:
-  - "Component:make-a-recall-decision-api"
-  consumesApis:
-  - "make-a-recall-decision-api"
----
-apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
 metadata:
   name: "make-recall-decisions-integration-service"
@@ -1608,10 +1735,10 @@ spec:
   owner: "hmpps-undefined"
   dependsOn:
   - "Component:ndelius-database"
-  - "Component:make-a-recall-decision-api"
+  - "Component:consider-a-recall-api"
   consumesApis:
   - "ndelius-database"
-  - "make-a-recall-decision-api"
+  - "consider-a-recall-api"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "System"
@@ -2390,7 +2517,7 @@ metadata:
   - url: "https://github.com/ministryofjustice/prison-api"
     title: "GitHub Repo"
     icon: "github"
-  - url: "https://api-dev.prison.service.justice.gov.uk/swagger-ui/index.html?configUrl=/api/api-docs"
+  - url: "https://prison-api-dev.prison.service.justice.gov.uk/swagger-ui/index.html?configUrl=/api/api-docs"
     title: "API Docs"
   annotations:
     backstage.io/source-location: "url:https://github.com/ministryofjustice/prison-api"
@@ -2417,7 +2544,7 @@ spec:
   system: "nomis"
   owner: "hmpps-undefined"
   definition:
-    $text: "https://api-dev.prison.service.justice.gov.uk/v3/api-docs"
+    $text: "https://prison-api-dev.prison.service.justice.gov.uk/v3/api-docs"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
@@ -3196,6 +3323,18 @@ spec:
   owner: "hmpps-undefined"
 ---
 apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "redis-cache"
+  title: "Redis Cache"
+  description: "Cache of in-flight recalls"
+spec:
+  type: "database"
+  lifecycle: "production"
+  system: "consider-a-recall"
+  owner: "hmpps-undefined"
+---
+apiVersion: "backstage.io/v1alpha1"
 kind: "System"
 metadata:
   name: "refer-and-monitor-an-intervention"
@@ -3462,10 +3601,10 @@ spec:
   owner: "hmpps-undefined"
   dependsOn:
   - "Component:ndelius-database"
-  - "Component:make-a-recall-decision-api"
+  - "Component:assessments-api"
   consumesApis:
   - "ndelius-database"
-  - "make-a-recall-decision-api"
+  - "assessments-api"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "System"
