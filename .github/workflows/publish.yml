@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.1.1
       - uses: actions/setup-java@v3
         with:
           distribution: 'adopt'
@@ -25,7 +25,7 @@ jobs:
           STRUCTURIZR_API_KEY: ${{ secrets.STRUCTURIZR_API_KEY }}
           STRUCTURIZR_API_SECRET: ${{ secrets.STRUCTURIZR_API_SECRET }}
         run: .github/workflows/set_version ./gradlew run --args='--push --backstage'
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.1.1
         with:
           ref: backstage-export
           path: backstage
