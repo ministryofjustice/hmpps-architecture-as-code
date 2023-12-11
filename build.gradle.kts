@@ -17,7 +17,7 @@ dependencies {
   implementation("com.structurizr:structurizr-core:1.28.0")
   implementation("com.structurizr:structurizr-import:1.7.0")
   implementation("com.structurizr:structurizr-graphviz:2.2.2")
-  implementation("org.eclipse.jgit:org.eclipse.jgit:6.7.0.202309050840-r")
+  implementation("org.eclipse.jgit:org.eclipse.jgit:6.8.0.202311291450-r")
   implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.16.0")
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.0")
 
