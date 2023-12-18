@@ -13,8 +13,8 @@ repositories {
 
 dependencies {
   implementation(kotlin("stdlib"))
-  implementation("com.structurizr:structurizr-client:1.28.0")
-  implementation("com.structurizr:structurizr-core:1.28.0")
+  implementation("com.structurizr:structurizr-client:1.28.1")
+  implementation("com.structurizr:structurizr-core:1.28.1")
   implementation("com.structurizr:structurizr-import:1.7.0")
   implementation("com.structurizr:structurizr-graphviz:2.2.2")
   implementation("org.eclipse.jgit:org.eclipse.jgit:6.8.0.202311291450-r")
