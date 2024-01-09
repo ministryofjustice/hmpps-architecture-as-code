@@ -4,12 +4,12 @@ ext_dir="$root_dir/ext"
 exports_dir="$root_dir/exports"
 mkdir -p "$ext_dir"
 
-cli_version="1.26.0"
-cli_zip="$ext_dir/cli-${cli_version}.zip"
+cli_version="2024.01.02"
+cli_zip="$ext_dir/structurizr-cli.zip"
 if [ ! -f "$cli_zip" ]; then
   echo
   echo "🔧 Downloading Structurizr CLI..."
-  wget "https://github.com/structurizr/cli/releases/download/v$cli_version/structurizr-cli-$cli_version.zip" -O"$cli_zip"
+  wget "https://github.com/structurizr/cli/releases/download/$cli_version/structurizr-cli.zip" -P ext
   unzip -o -d"$ext_dir" "$cli_zip"
 fi
 
