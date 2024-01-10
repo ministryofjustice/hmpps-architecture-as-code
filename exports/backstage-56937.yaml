@@ -340,6 +340,8 @@ metadata:
   - url: "https://github.com/ministryofjustice/hmpps-assess-risks-and-needs"
     title: "GitHub Repo"
     icon: "github"
+  - url: "https://assess-risks-and-needs-dev.hmpps.service.justice.gov.uk/swagger-ui/index.html"
+    title: "API Docs"
   annotations:
     backstage.io/source-location: "url:https://github.com/ministryofjustice/hmpps-assess-risks-and-needs"
 spec:
@@ -352,11 +354,26 @@ spec:
   - "Component:community-api"
   - "Component:offender-assessments-api"
   - "Component:offender-assessments-api"
+  providesApis:
+  - "assess-risks-and-needs-api"
   consumesApis:
   - "assess-risks-and-needs-database"
   - "community-api"
   - "offender-assessments-api"
   - "offender-assessments-api"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "assess-risks-and-needs-api"
+  description: "API provided by assess-risks-and-needs-api"
+spec:
+  type: "openapi"
+  lifecycle: "production"
+  system: "assess-risks-and-needs-api"
+  owner: "hmpps-undefined"
+  definition:
+    $text: "https://assess-risks-and-needs-dev.hmpps.service.justice.gov.uk/v3/api-docs"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
@@ -596,6 +613,8 @@ metadata:
   - url: "https://github.com/ministryofjustice/hmpps-complexity-of-need"
     title: "GitHub Repo"
     icon: "github"
+  - url: "https://editor.swagger.io/?url=https://raw.githubusercontent.com/ministryofjustice/hmpps-complexity-of-need/main/Complexity%20Of%20Need%20API%20Specification.yaml"
+    title: "API Docs"
   annotations:
     backstage.io/source-location: "url:https://github.com/ministryofjustice/hmpps-complexity-of-need"
 spec:
@@ -606,9 +625,24 @@ spec:
   dependsOn:
   - "Component:con-database"
   - "Component:in-memory-data-store"
+  providesApis:
+  - "complexity-of-need-microservice"
   consumesApis:
   - "con-database"
   - "in-memory-data-store"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "complexity-of-need-microservice"
+  description: "API provided by complexity-of-need-microservice"
+spec:
+  type: "openapi"
+  lifecycle: "production"
+  system: "complexity-of-need-microservice"
+  owner: "hmpps-undefined"
+  definition:
+    $text: "https://raw.githubusercontent.com/ministryofjustice/hmpps-complexity-of-need/main/Complexity%20Of%20Need%20API%20Specification.yaml"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
@@ -848,6 +882,8 @@ metadata:
   - url: "https://github.com/ministryofjustice/create-and-vary-a-licence-api"
     title: "GitHub Repo"
     icon: "github"
+  - url: "https://create-and-vary-a-licence-api-dev.hmpps.service.justice.gov.uk/swagger-ui/index.html"
+    title: "API Docs"
   annotations:
     backstage.io/source-location: "url:https://github.com/ministryofjustice/create-and-vary-a-licence-api"
 spec:
@@ -857,8 +893,23 @@ spec:
   owner: "hmpps-undefined"
   dependsOn:
   - "Component:create-and-vary-a-licence-api-database"
+  providesApis:
+  - "create-and-vary-a-licence-api"
   consumesApis:
   - "create-and-vary-a-licence-api-database"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "create-and-vary-a-licence-api"
+  description: "API provided by create-and-vary-a-licence-api"
+spec:
+  type: "openapi"
+  lifecycle: "production"
+  system: "create-and-vary-a-licence"
+  owner: "hmpps-undefined"
+  definition:
+    $text: "https://create-and-vary-a-licence-api-dev.hmpps.service.justice.gov.uk/v3/api-docs"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
@@ -965,6 +1016,8 @@ metadata:
   - url: "https://github.com/ministryofjustice/curious-API"
     title: "GitHub Repo"
     icon: "github"
+  - url: "https://editor.swagger.io/?url=https://raw.githubusercontent.com/ministryofjustice/curious-API/main/curious-api-specification.yaml"
+    title: "API Docs"
   annotations:
     backstage.io/source-location: "url:https://github.com/ministryofjustice/curious-API"
 spec:
@@ -972,6 +1025,21 @@ spec:
   lifecycle: "production"
   system: "curious"
   owner: "hmpps-undefined"
+  providesApis:
+  - "curious-api"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "curious-api"
+  description: "API provided by curious-api"
+spec:
+  type: "openapi"
+  lifecycle: "production"
+  system: "curious"
+  owner: "hmpps-undefined"
+  definition:
+    $text: "https://raw.githubusercontent.com/ministryofjustice/curious-API/main/curious-api-specification.yaml"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
@@ -2249,6 +2317,8 @@ metadata:
   - url: "https://github.com/ministryofjustice/offender-management-allocation-manager"
     title: "GitHub Repo"
     icon: "github"
+  - url: "https://allocation-manager-staging.apps.live-1.cloud-platform.service.justice.gov.uk/api-docs/index.html"
+    title: "API Docs"
   annotations:
     backstage.io/source-location: "url:https://github.com/ministryofjustice/offender-management-allocation-manager"
 spec:
@@ -2263,6 +2333,8 @@ spec:
   - "Component:prisonersearch"
   - "Component:mpc-database"
   - "Component:in-memory-data-store"
+  providesApis:
+  - "offender-management-allocation-manager"
   consumesApis:
   - "community-api"
   - "prison-api"
@@ -2270,6 +2342,19 @@ spec:
   - "prisonersearch"
   - "mpc-database"
   - "in-memory-data-store"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "offender-management-allocation-manager"
+  description: "API provided by offender-management-allocation-manager"
+spec:
+  type: "openapi"
+  lifecycle: "production"
+  system: "manage-pom-cases"
+  owner: "hmpps-undefined"
+  definition:
+    $text: "https://allocation-manager-staging.apps.live-1.cloud-platform.service.justice.gov.uk/api-docs/index.html"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
@@ -2432,6 +2517,8 @@ metadata:
   - url: "https://github.com/ministryofjustice/prison-api"
     title: "GitHub Repo"
     icon: "github"
+  - url: "https://prison-api-dev.prison.service.justice.gov.uk/swagger-ui/index.html?configUrl=/api/api-docs"
+    title: "API Docs"
   annotations:
     backstage.io/source-location: "url:https://github.com/ministryofjustice/prison-api"
 spec:
@@ -2441,8 +2528,23 @@ spec:
   owner: "hmpps-undefined"
   dependsOn:
   - "Component:nomis-database"
+  providesApis:
+  - "prison-api"
   consumesApis:
   - "nomis-database"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "prison-api"
+  description: "API provided by prison-api"
+spec:
+  type: "openapi"
+  lifecycle: "production"
+  system: "nomis"
+  owner: "hmpps-undefined"
+  definition:
+    $text: "https://prison-api-dev.prison.service.justice.gov.uk/v3/api-docs"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
@@ -2952,6 +3054,8 @@ metadata:
   - url: "https://github.com/ministryofjustice/probation-offender-events"
     title: "GitHub Repo"
     icon: "github"
+  - url: "https://probation-offender-events-dev.hmpps.service.justice.gov.uk/swagger-ui.html"
+    title: "API Docs"
   annotations:
     backstage.io/source-location: "url:https://github.com/ministryofjustice/probation-offender-events"
 spec:
@@ -2962,9 +3066,24 @@ spec:
   dependsOn:
   - "Component:community-api"
   - "Component:probation-offender-events-topic"
+  providesApis:
+  - "probation-offender-events"
   consumesApis:
   - "community-api"
   - "probation-offender-events-topic"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "API"
+metadata:
+  name: "probation-offender-events"
+  description: "API provided by probation-offender-events"
+spec:
+  type: "openapi"
+  lifecycle: "production"
+  system: "ndelius"
+  owner: "hmpps-undefined"
+  definition:
+    $text: "https://probation-offender-events-dev.hmpps.service.justice.gov.uk/v3/api-docs"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
