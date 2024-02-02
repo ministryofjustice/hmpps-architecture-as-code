@@ -1400,8 +1400,6 @@ metadata:
   - url: "https://github.com/ministryofjustice/hmpps-auth"
     title: "GitHub Repo"
     icon: "github"
-  - url: "https://sign-in-dev.hmpps.service.justice.gov.uk/auth/swagger-ui/index.html?configUrl=/v3/api-docs"
-    title: "API Docs"
   annotations:
     backstage.io/source-location: "url:https://github.com/ministryofjustice/hmpps-auth"
 spec:
@@ -1415,27 +1413,12 @@ spec:
   - "Component:community-api"
   - "Component:justiceuk-directory"
   - "Component:Token verification API"
-  providesApis:
-  - "hmpps-auth"
   consumesApis:
   - "internal-auth-database"
   - "nomis-database"
   - "community-api"
   - "justiceuk-directory"
   - "Token verification API"
----
-apiVersion: "backstage.io/v1alpha1"
-kind: "API"
-metadata:
-  name: "hmpps-auth"
-  description: "API provided by hmpps-auth"
-spec:
-  type: "openapi"
-  lifecycle: "production"
-  system: "hmpps-auth"
-  owner: "hmpps-undefined"
-  definition:
-    $text: "https://sign-in-dev.hmpps.service.justice.gov.uk/auth/v3/api-docs"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "System"
