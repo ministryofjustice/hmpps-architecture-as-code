@@ -21,9 +21,9 @@ dependencies {
   implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.16.1")
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1")
 
-  testImplementation("org.assertj:assertj-core:3.25.1")
-  testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.1")
-  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.1")
+  testImplementation("org.assertj:assertj-core:3.25.3")
+  testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
+  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.2")
 }
 
 val test by tasks.getting(Test::class) {
