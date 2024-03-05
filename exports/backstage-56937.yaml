@@ -2245,8 +2245,6 @@ metadata:
   - url: "https://github.com/ministryofjustice/offender-assessments-api-kotlin"
     title: "GitHub Repo"
     icon: "github"
-  - url: "https://offender-dev.aks-dev-1.studio-hosting.service.justice.gov.uk/swagger-ui.html"
-    title: "API Docs"
   annotations:
     backstage.io/source-location: "url:https://github.com/ministryofjustice/offender-assessments-api-kotlin"
 spec:
@@ -2257,24 +2255,9 @@ spec:
   dependsOn:
   - "Component:oasys-database"
   - "Component:ords-api-endpoints"
-  providesApis:
-  - "offender-assessments-api"
   consumesApis:
   - "oasys-database"
   - "ords-api-endpoints"
----
-apiVersion: "backstage.io/v1alpha1"
-kind: "API"
-metadata:
-  name: "offender-assessments-api"
-  description: "API provided by offender-assessments-api"
-spec:
-  type: "openapi"
-  lifecycle: "production"
-  system: "oasys"
-  owner: "hmpps-undefined"
-  definition:
-    $text: "https://offender-dev.aks-dev-1.studio-hosting.service.justice.gov.uk/v3/api-docs"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
