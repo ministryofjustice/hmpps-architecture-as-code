@@ -9,8 +9,6 @@ metadata:
   - url: "https://github.com/ministryofjustice/hmpps-manage-adjudications-api"
     title: "GitHub Repo"
     icon: "github"
-  - url: "https://manage-adjudications-api-dev.hmpps.service.justice.gov.uk/swagger-ui.html"
-    title: "API Docs"
   annotations:
     backstage.io/source-location: "url:https://github.com/ministryofjustice/hmpps-manage-adjudications-api"
 spec:
@@ -22,25 +20,10 @@ spec:
   - "Component:adjudications-api-database"
   - "Component:hmpps-auth"
   - "Component:prison-api"
-  providesApis:
-  - "Adjudications API"
   consumesApis:
   - "adjudications-api-database"
   - "hmpps-auth"
   - "prison-api"
----
-apiVersion: "backstage.io/v1alpha1"
-kind: "API"
-metadata:
-  name: "Adjudications API"
-  description: "API provided by Adjudications API"
-spec:
-  type: "openapi"
-  lifecycle: "production"
-  system: "adjudications-api"
-  owner: "hmpps-undefined"
-  definition:
-    $text: "https://manage-adjudications-api-dev.hmpps.service.justice.gov.uk/v3/api-docs"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
@@ -340,8 +323,6 @@ metadata:
   - url: "https://github.com/ministryofjustice/hmpps-assess-risks-and-needs"
     title: "GitHub Repo"
     icon: "github"
-  - url: "https://assess-risks-and-needs-dev.hmpps.service.justice.gov.uk/swagger-ui/index.html"
-    title: "API Docs"
   annotations:
     backstage.io/source-location: "url:https://github.com/ministryofjustice/hmpps-assess-risks-and-needs"
 spec:
@@ -354,26 +335,11 @@ spec:
   - "Component:community-api"
   - "Component:offender-assessments-api"
   - "Component:offender-assessments-api"
-  providesApis:
-  - "assess-risks-and-needs-api"
   consumesApis:
   - "assess-risks-and-needs-database"
   - "community-api"
   - "offender-assessments-api"
   - "offender-assessments-api"
----
-apiVersion: "backstage.io/v1alpha1"
-kind: "API"
-metadata:
-  name: "assess-risks-and-needs-api"
-  description: "API provided by assess-risks-and-needs-api"
-spec:
-  type: "openapi"
-  lifecycle: "production"
-  system: "assess-risks-and-needs-api"
-  owner: "hmpps-undefined"
-  definition:
-    $text: "https://assess-risks-and-needs-dev.hmpps.service.justice.gov.uk/v3/api-docs"
 ---
 apiVersion: "backstage.io/v1alpha1"
 kind: "Component"
