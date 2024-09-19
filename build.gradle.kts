@@ -15,7 +15,7 @@ dependencies {
   implementation(kotlin("stdlib"))
   implementation("com.structurizr:structurizr-client:1.29.0")
   implementation("com.structurizr:structurizr-core:1.29.0")
-  implementation("com.structurizr:structurizr-import:1.7.0")
+  implementation("com.structurizr:structurizr-import:3.0.0")
   implementation("com.structurizr:structurizr-graphviz:2.2.2")
   implementation("org.eclipse.jgit:org.eclipse.jgit:7.0.0.202409031743-r")
   implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.17.2")
