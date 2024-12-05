@@ -1,5 +1,5 @@
 plugins {
-  kotlin("jvm") version "2.0.21"
+  kotlin("jvm") version "2.1.0"
   application
 }
 
@@ -17,9 +17,9 @@ dependencies {
   implementation("com.structurizr:structurizr-core:1.29.0")
   implementation("com.structurizr:structurizr-import:1.7.0")
   implementation("com.structurizr:structurizr-graphviz:2.2.2")
-  implementation("org.eclipse.jgit:org.eclipse.jgit:7.0.0.202409031743-r")
-  implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.1")
-  implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.1")
+  implementation("org.eclipse.jgit:org.eclipse.jgit:7.1.0.202411261347-r")
+  implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.2")
+  implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.2")
 
   testImplementation("org.assertj:assertj-core:3.26.3")
   testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.3")
